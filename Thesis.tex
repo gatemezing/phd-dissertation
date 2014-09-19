@@ -1,0 +1,130 @@
+
+\documentclass[a4paper,11pt,twoside]{ThesisStyle}
+
+%\usepackage{graphicx}
+\usepackage{fancyvrb}
+\bibliographystyle{unsrt}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+
+%\newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{TODO}: #1{\bf \}}}}
+\newcommand{\ghis}[1]{\noindent\textcolor{blue}{{\bf \{Ghis}: #1{\bf \}}}}
+
+\include{formatAndDefs}
+\include{myDefinitions}
+\begin{document}
+%\include{TitlePage}
+\include{TitlePage2}
+\vspace{3cm}
+%\dominitoc
+\pagenumbering{roman}       
+%\cleardoublepage
+
+
+%\section*{}
+%\vspace{118ex}
+%\begin{center}
+%\copyright \hspace{1ex}2014\\Auguste Atemezing\\ALL RIGHTS RESERVED
+%\end{center}
+%\cleardoublepage
+
+\section*{}
+\vspace{40ex}
+\begin{flushright}
+\textcolor{cyan}{
+\textit{To all those who helped me \\
+to make this dream coming true. \\}
+``Things don't have to change \\
+the world to be important''. \\
+     -Steve Jobs - 
+}
+ 
+\end{flushright}
+\cleardoublepage
+
+\begin{center}
+%\section*{\LARGE \textbf{\textcolor{cyan}{Acknowledgments}}}
+%\addcontentsline{toc}{section}{Acknowledgements}
+%\markboth{Acknowledgements}{Acknowledgements}
+\chapter*{Acknowledgements}
+%\input{ACK/ack}
+%\cleardoublepage
+\end{center}
+
+
+\addcontentsline{toc}{section}{Abstract}
+\markboth{Abstract}{Abstract}
+\chapter*{Abstract}
+\input{abstract/abstract}
+\clearpage
+
+%\cleardoublepage
+
+\addcontentsline{toc}{section}{Contents}
+\markboth{Contents}{Contents}
+
+\tableofcontents
+\cleardoublepage
+
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\cleardoublepage
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+\cleardoublepage
+\addcontentsline{toc}{section}{List of Publications}
+\markboth{List ofPublications}{ListofPublications}
+\include{acronyms/publications}
+%\cleardoublepage
+\addcontentsline{toc}{section}{Acronyms}
+\markboth{Acronyms}{Acronyms}
+\include{acronyms/acronyms}
+
+\mainmatter
+
+
+\input{Introduction/intro}
+\clearpage
+
+\input{Part1/part1}
+\clearpage
+\input{Chapter1/ch1}
+\clearpage
+
+\input{Chapter2/ch2}
+\clearpage
+
+\input{Part2/part2}
+
+\input{Part3/part3}
+%\clearpage
+
+
+
+
+\input{conclusions/conclusions}
+
+
+\appendix
+\include{Appendix1}
+%\include{Appendix2}
+%\include{Appendix3}
+
+%
+
+\bibliographystyle{plain}
+\bibliography{thesis}
+\nocite{*}
+\printnomenclature
+
+\chapter*{}
+\chaptermark{}
+%\section*{}
+%\sectionmark{}
+\vspace{-15ex}
+\appendix
+\end{document}
+ 
