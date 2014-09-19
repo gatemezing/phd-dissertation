@@ -1,4 +1,4 @@
 phd-dissertation
 ================
 
-Folder for my PhD Dissertation, starting today 2014/09/19
+Repository for my PhD Dissertation, manuscript editing starting on 2014/09/19
