@@ -1,0 +1,41 @@
+Introduction
+
+Part 1: Modeling, Interconnecting and Generating Geodata on the Web
+
+This part will talk about the various models/vocabs for representing geography/geometry. It will survey the state of the triple stores. It will describe particular problems (coordinate systems, etc.) and highlight our contributions: new vocabularies, an online converter between CRS, etc. It will describe how geography database can then be converted into RDF (Datalift processes). It will then show how those datasets can be interlinked (possibly trying different instance matching tools) and it will conclude with a thorough analysis of those alignments together with an application that could make use of those links.
+
+state of the art of format (geojson, shp, etc.) and GIS tools for handling geo data
+state of the art of vocabularies (geography, geometry) + limitations
+state of the art of geo support in triple stores and other libs (GeoLift, TripleGeo, Geometry2RDF, shp2GeoSPARQL, etc.)
+contrib 1: crs ontology (ignf) + converter + geom
+contrib 2: geofla ontology + dataset + alignment experiments
+contrib 3: bdtopo ontology + dataset + alignment experiments
+contrib 4: Datalift module for geo data
+contrib 5: Concrete applications: PerfectSchool, French Amenities.
+
+
+Part 2: Generating Visualizations for Linked Data
+
+	This part cover three main problematics regarding how to present RDF to end-users. There is a consensus that RDF is not what is shown to the users.  First, we make a state of the art review of existing tools and solutions for visual representation and exploration of RDF (Visualbox, LODSpeaKr, Map4RDF, Linked Data Visualization Model, other works from the SWUI community, from Roberto Garcia, etc.) The, we present our contribution: the wizard for visualizations including the vocabulary for describing visualizations , the prototype itself, etc. Third, we present a  mechanism of extracting and reusing application contests in open data events, and finally we provide some insights on revealing the “important” properties of Entities for visualization.
+
+State of the art on visualizations for RDF
+Contrib 1: Wizard for visualizations
+Contrib 2: Vocabularies for describing visualizations
+Contrib 3: Improving the discovery of application contests in Open Data Events
+Contrib 4: Revealing the “important” properties of Entities for visualizations
+Extracting the Google Panel
+Experiments and Datasets
+User evaluation
+
+
+Part 3: Contribution to Standards
+	
+	In this part, we talk about the various work around Linked Open Vocabularies ( catalog description, vocabulary publications, APIs and endpoints); prefixes harmonization, vocabulary ranking metrics using information content. We also present some insights on checking licenses compatibility between vocabularies and datasets with the defeasible deontic logic for creating an automatic tool for licenses checking.  We then finish by highlighting our contribution to the GLD WG with the 2 document notes and vocabularies standardized: DCAT, Data Cube, ORG, etc. 
+
+LOV and vocabularies publication
+Prefixes harmonization
+Vocabulary Ranking metrics
+Licenses compatibility checker
+Best Practices for publishing Government Data
+ 
+Conclusion
