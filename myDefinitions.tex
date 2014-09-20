@@ -13,7 +13,7 @@
 %\usepackage{todonotes}
 \usepackage{longtable}
 \usepackage{pdflscape}
-\usepackage[ruled,vlined]{algorithm2e}
+%\usepackage[ruled,vlined]{algorithm2e}
 \usepackage{cases}
 \usepackage[retainorgcmds]{IEEEtrantools}
 %\usepackage{wrapfig}
@@ -162,44 +162,4 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \NeedsTeXFormat{LaTeX2e}
-% \ProvidesPackage{lop}[2009/03/04 v0.1 List of Publications]
-% 
-% \newcommand{\lopbibfiles}[1]{\def\@lopbibfiles{#1}}
-% \newcommand{\lopbibstyle}[1]{\def\@lopbibstyle{#1}}
-% \newcommand{\lopname}[1]{\def\@lopname{#1}}
-% 
-% \AtBeginDocument{
-% \newwrite\@lopauxfile
-% \immediate\openout\@lopauxfile=\@lopname .aux
-% }
-% 
-% \AtEndDocument{
-% \immediate\write\@lopauxfile{\string\bibstyle{\@lopbibstyle}}
-% \immediate\write\@lopauxfile{\string\bibdata{\@lopbibfiles}}
-% \immediate\closeout\@lopauxfile
-% }
-% 
-% \newcommand{\loppublication}[1]{
-% \immediate\write\@lopauxfile{\string\citation{#1}}
-% }
-% 
-% \newenvironment{lop}{
-% }{%
-% \begingroup
-% \labelsep 0pt
-% \def\bibitem##1{\par\vspace{1em}}
-% \renewenvironment{thebibliography}[1]{\parindent 0pt}{}
-% %\input{\@lopname.bbl}
-% \endgroup
-% }
-% 
-% \endinput
-% 
 
-
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: "Thesis"
-%%% End: 

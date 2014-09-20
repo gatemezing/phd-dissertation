@@ -19,7 +19,7 @@
 
 \section{A vocabulary for Describing VIsualization Applications} \label{sec:dvia}
 
-We have implemented a vocabulary, DVIA\footnote{\url{http://bit.ly/Vb4L8k}} aims at describing any applications developed to consume datasets in 4-5 stars, using visual tools to showcase the benefits of Linked Data. It reuses four existing vocabularies: \texttt{Dublin Core terms} \footnote{\url{http://purl.org/dc/terms/}}, \texttt{dataset catalogue (DCAT)}\footnote{\url{http://www.w3.org/ns/dcat#}}, \texttt{Dublin Core Metadata Initiative}\footnote{\url{http://purl.org/dc/dcmitype}} and \texttt{Organization vocabulary}\footnote{\url{http://www.w3.org/ns/org#}}.  It is composed of three main classes : 
+We have implemented a vocabulary, DVIA\footnote{\url{http://bit.ly/Vb4L8k}} aims at describing any applications developed to consume datasets in 4-5 stars, using visual tools to showcase the benefits of Linked Data. It reuses four existing vocabularies: Dublin Core terms\footnote{\url{http://purl.org/dc/terms/}}, dataset catalogue (DCA)\footnote{\url{http://www.w3.org/ns/dcat#}}, Dublin Core Metadata Initiative\footnote{\url{http://purl.org/dc/dcmitype}} and the Organization vocabulary \footnote{\url{http://www.w3.org/ns/org#}}.  It is composed of three main classes : 
 
 \begin{itemize}
 \item \textbf{Application}: This class represents the application or the mashup developed for demo-ing or consuming data in LD fashion. It is subclass of \textbf{dctype:Software}
@@ -81,13 +81,14 @@ The full version of this sample description is available at \url{http://www.eure
 \end{figure}
 
 
-\textcolor{red}{
+
 \subsection{Conclusion} \label{sec:conclusion}
 % deploy the vocab and setting up a hub for mashups
 % find patterns for applications
 % develop a recommender for creating applications according to some criteria
-We have presented in this paper an approach that could help reusing tools and libraries in the domain of applications built on top of datasets in Linked Open Data. We first presented our motivation as to demonstrate to the end users or decision makers, there is always a need to develop a showcase, hence sometimes looking for analogous or similar applications in the area to ease the process of creation the mashup. We proceeded by surveying some applications to extract relevant common facts worth reusable, from which we proposed a small vocabulary (DVIA)  to semantically describe visual applications. 
+\textcolor{red}{We have presented in this paper an approach that could help reusing tools and libraries in the domain of applications built on top of datasets in Linked Open Data. We first presented our motivation as to demonstrate to the end users or decision makers, there is always a need to develop a showcase, hence sometimes looking for analogous or similar applications in the area to ease the process of creation the mashup. We proceeded by surveying some applications to extract relevant common facts worth reusable, from which we proposed a small vocabulary (DVIA)  to semantically describe visual applications. 
 
 We need to validate the DVIA by scrapping and reconciling data from all innovative applications websites and exposed them in RDF, starting with some of those we studied and others applications submitted at the Semantic Web Challenge the past three years. We strongly believe that having such a a hub  describing the tools, datasets, etc.  used to build  applications consuming 4-5 stars datasets will contribute to interoperable Applications leading to a Linked Open Visualizations (LOVIZ) on the LOD cloud.
 
 Our ultime goal is to detect patterns used for creating Linked Data visual applications on the web using RDF data. For this challenge, we will need to perform some mining tasks of the underlying data (list of properties, number of triples, categories, etc.), the ontologies used, the templates or libraries for visualizations (Exhibit, GeoAPI, LDA, Sparkl, d3.js, etc) and finally evaluate the efforts for a user to build the application. This could lead to a framework for generating automatically visualizations from heterogeneous datasets by extracting relevant features combined to suitable templates tools for visualizations.}
+
