@@ -9,6 +9,9 @@
 \usepackage{tabularx}
 \usepackage{pdflscape}
 \usepackage{subfigure}
+\usepackage{wrapfig,lipsum,booktabs}
+\usepackage{multirow}
+\usepackage{booktabs}
 
 %\newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{TODO}: #1{\bf \}}}}
 \newcommand{\ghis}[1]{\noindent\textcolor{blue}{{\bf \{Ghis}: #1{\bf \}}}}
@@ -90,17 +93,33 @@ the world to be important''. \\
 \clearpage
 
 \input{Part1/part1}
-\clearpage
+\clearpage 
+
+%%In reality chapter 2 in the document
+%% after the introduction %%%%
 \input{Chapter1/ch1}
 \clearpage
 
 \input{Chapter2/ch2}
 \clearpage
 
+\input{Chapter3/ch3}
+\clearpage
+
 \input{Part2/part2}
+\clearpage
+
+\input{Chapter4/ch4}
+\clearpage
+
+\input{Chapter5/ch5}
+\clearpage
 
 \input{Part3/part3}
-%\clearpage
+\clearpage
+
+\input{Chapter6/ch6}
+\clearpage
 
 
 
@@ -116,6 +135,7 @@ the world to be important''. \\
 %
 
 \bibliographystyle{plain}
+%\bibliographystyle{abbrv}
 \bibliography{thesis}
 \nocite{*}
 \printnomenclature
