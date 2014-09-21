@@ -11,11 +11,321 @@
 \todo{Find intro life-cycle by Sarven -}
 \todo{Start here with the GLD diagram in the publication life-cycle, with emphasis on Datalift one}
 
-\section{Model: LOV and vocabularies}
-\label{sec:lov}
+\section{Catalog of Vocabularies}
+\label{sec:catalog}
+While we refer the reader to~\cite{AquinJoWS12} for a systematic survey of ontology libraries, we give our own classification of ontology repositories (Table~\ref{tab:catalogs}). In particular, we distinguish six categories of catalogs:
+\begin{itemize}
+ \item \textit{Catalogs of generic vocabularies/schemas} similar to the LOV catalog, but without any relations among the vocabularies. Example of catalogs falling in this category are vocab.org\footnote{\url{http://vocab.org/}}, ontologi.es\footnote{\url{http://ontologi.es/}}, JoinUp Semantic Assets or the Open Metadata Registry.
+ \item \textit{Catalogs of ontologies for a specific domain} such as biomedicine with the BioPortal\footnote{\url{http://bioportal.bioontology.org/}}, geospatial ontologies with SOCoP+OOR\footnote{\url{http://socop.oor.net/}}, Marine Metadata Interoperability and the SWEET ontologies\footnote{\url{http://sweet.jpl.nasa.gov/2.1/}}.
+ \item \textit{Catalogs of ontologies from a project} such as the famous DAML repository of ontologies\footnote{\url{http://daml.org/ontologies/}}.
+ \item \textit{Catalogs of ontology Design Patterns (ODP)} focused on reusable patterns in ontology engineering.
+ \item \textit{Catalogs of editors’ ontologies} used to test some features of a tool and to keep track of the ontologies built by a tool, such as Web Protégé or TONES.
+ \item \textit{Catalogs of ontologies maintained by a single organization} which often uses a platform such as Neologism\footnote{\url{http://neologism.deri.ie}} for publishing vocabularies.
+ \item \textit{Vocabularies crawled by Semantic Web search engines} containing snapshots at the time of the crawsuch as Watson\footnote{\url{http://watson.kmi.open.ac.uk/}}, Sindice\footnote{\url{http://www.sindice.com}}, Falcon-s\footnote{\url{http://ws.nju.edu.cn/falcons/}} or Swoogle. %For example, the NanJing Vocabulary Repository (NJVR)- a dump of Falcon-s ontologies, reported as of June, 17th 2,996 vocabularies crawled from 261 pay-level domains.
+\end{itemize}
+
+\begin{table}
+\centering{
+\begin{tabular*}{12cm}{lcccc}
+\specialrule{1pt}{1pt}{1pt}
+ Catalog	& Number of  	& Search Feature 	& Category  & Vocabulary	 \\
+ name       & vocabularies  &  & & maintenance \\
+ \specialrule{1pt}{1pt}{1pt}
+ vocab.org 	&19 				& No & Catalog of & N/A		\\
+		& 				&      &  generic vocabularies &     \\ \hline
+ontologi.es    & 39         &No  & -//-  & N/A \\ \hline
+Joinup Semantic & 112 & Yes & -//- & Yes \\
+Assets &  & & & \\ \hline
+Open Metadata & 308 & Yes & --//-- & Yes \\
+Registry  & & & & \\  \hline
+BioPortal & 355 & Yes & Catalog of & Yes \\
+	    &        &       & Domain vocabularies & \\ \hline
+SOCoP + OOR &40 & Yes & --//-- & Yes \\ \hline
+Marine Metadata & 55 & Yes & --//--& Yes \\
+Interoperability & & & & \\ \hline
+SWEEET 2.2 & 200 & No& --//-- & N/A \\ \hline
+DAML & 282 & No& --//-- &  No   \\ \hline
+ODPs &101 & No& Catalog of ODPs & Yes \\ \hline
+vocab.derie.ie & 68 & No & Catalog of & Yes \\
+		   & & & Organizations & \\ \hline
+data.lirmm.fr & 15 & No & --//- & Yes \\
+ontologies & & & & \\  \hline
+TONES & 219 & No & Catalog of & N/A \\
+           &         &      & editors' vocabularies & \\ \hline	
+Web Prot\'{e}g\'{e} & 69 & No & --//-- & Yes \\
+\specialrule{1pt}{1pt}{1pt}
+\end{tabular*}
+\caption{Catalogs of vocabularies with respectively the number of the ontologies, the presence of a search feature, the catalog category and whether it is maintained or not}
+\label{tab:catalogs}
+}
+\end{table}
+
+We observe that the existing catalogs of vocabularies in the literature have some limitations compared with LOV. In terms of coverage, the number of vocabularies indexed by LOV is constantly growing and it is the only catalog, to the best of our knowledge, that provide all types of search criteria (metadata search, within/across ontologies search), both an API and a SPARQL endpoint access and that can be as well classified as an ``Application platform'' apart from being at the same time an ontology directory and an ontology registry. According to the categories of ontology libraries defined in~\cite{AquinJoWS12}, LOV falls under the category of ``curated ontology directory'' and an ``application platform'' because the ontologies are curated manually with statistics automatically generated, and because it exposes its data via an API. Furthermore, LOV provides an answer to some of the issues mentioned in the survey reported in~\cite{AquinJoWS12}, such as ``where has an ontology been used before?'' or ``is this ontology compatible with mine?''. In particular, LOV provides vocabulary usage statistics of the LOD Cloud datasets and it exposes vocabularies dependency using the Vocabulary-of-A-Friend (VOAF) ontology.
+
+vocab.cc\footnote{\url{http://vocab.cc}} is a service which is similar to prefix.cc since it enables to look up and search for Linked Data vocabularies while providing more specific information about the usage of a particular class or property in the Billion Triple Challenge Dataset (BTCD). It also provides the ranking of those properties or classes. The authors mentioned that ``common prefixes are resolved with data from prefix.cc''. Although they don't give further details, this service is somehow related to prefix.cc. Triple-Checker\footnote{\url{https://github.com/cgutteridge/TripleChecker}} is a web service based on prefix.cc which aims at finding typos and common errors in RDF data. It parses a given URI/URL and the output is divided in two sections: the namespaces and the term section. The former matches against prefix.cc to determine whether they are ``common prefixes'' and the latter provides the term definition.
+
+\section{Model: Linked Open Vocabulary (LOV) and Vocabularies}        \label{sec:lov-approach}
+The Linked Open Vocabularies (LOV) initiative aims to bring more insights about published vocabularies in order to foster their reuse. Compared to other projects, LOV benefits from a community:
+\begin{itemize}
+ \item to assess the quality (including documentation, metadata) and the reuse potential of a vocabulary before it is indexed. LOV contains currently 350+ reusable and well-documented vocabularies;
+ \item to augment vocabularies with explicit information not originally defined in the RDF vocabulary. For example, only 55\% of vocabularies have explicit metadata of at least one creator, contributor or editor. In LOV, we augmented this information leading to more than 85\% of vocabularies with this information;
+ \item to automatically extract the implicit relations between vocabularies using the Vocabulary Of Friend\footnote{\url{http://lov.okfn.org/vocab/voaf/}} (VOAF) ontology. These relations can be used as a new metric for ranking terms based on their popularity at the schema level;
+ \item to consider vocabulary semantic in the result ranking: a literal value matched for the \texttt{rdfs:label} property has a higher score than for the \texttt{dcterms:comment} property.
+\end{itemize}
+
+The way vocabularies are considered in LOV is similar to the way datasets are considered in the LOD cloud~\cite{Bizer2009}. Hence, while the Vocabulary of Interlinked Datasets (VoiD) is used to describe relationships between datasets and their vocabularies~\cite{alexander2009}, VOAF is used to describe the mutual relationships between vocabularies. VOAF itself reuses over popular vocabularies such as Dublin Core Terms (dcterms), Vocabulary Of Interlinked Datasets (VoiD), Vocabulary for ANNotating vocabulary (vann) and the BIBliographic Ontology (bibo). The vocabulary also introduces new classes such as \texttt{voaf:Vocabulary} and \texttt{voaf:VocabularySpace}.
+
+The LOV-Bot is the tool that automatically keeps up-to-date the relationships and the metadata about the vocabularies indexed in LOV, using the following steps:
+\begin{itemize}
+  \item	LOV-Bot daily checks for vocabularies update (any difference in the vocabulary formal description fetched using content negotiation);
+  \item	LOV-Bot uses SPARQL constructs to detect relationships and metadata and creates explicit metadata descriptions in the LOV dataset;
+  \item	LOV-Bot annotations are then listed in a back-office administration dashboard in order to be reviewed. This manual part enables LOV curators to interact with vocabularies authors and the wider community to raise issues and make remarks or suggestions.
+\end{itemize}
+The LOV dataset is synchronized with the information presented in the web site. The latter allows a human user to browse LOV information.  The Linked Open Vocabularies initiative does not only monitor the current state of the ecosystem. It also aims at storing and giving access to vocabularies history. To achieve this goal, the LOV database contains every different version of a vocabulary over the time since its first issue. For each version, a user can access the file and a log of modifications since the previous version.
 
 \section{Prefixes harmonization}
 \label{sec:prefharmoni}
+
+RDF vocabularies bring their meaning to linked data by defining classes and properties, and their formal semantics. Relying on W3C standards RDFS or OWL, those vocabularies are a fundamental layer in the architecture of the Semantic Web. Without the explicit semantics declared in vocabularies, linked data, even using RDF, would be just linked pieces of information where links have no meaning. Interoperability between data and datasets rely heavily on shared vocabularies, but given the distributed nature of the Web, vocabularies are published by independent parties and there is no centralized coordination of this publication, nor should it be. Various independent services have been developed in order to discover vocabularies and provide information about them, and the community of data publishers and vocabulary managers have all interest in complementarity and coordination between such services. In this paper, we focus on a specific aspect of vocabularies: their identification by namespaces and associated prefixes.
+
+In the original XML syntax of RDF, prefixes are simply local shortcuts associated with XML namespaces using \texttt{xmlns} declarations. The usage of prefixes has been further extended to other syntaxes of RDF such as N3 and Turtle. Although a prefix to namespace association is syntactically limited to the local context of the file in which it is declared, common prefixes such as \texttt{rdf:}, \texttt{rdfs:}, \texttt{owl:}, \texttt{skos:}, \texttt{foaf:} and many more have become de facto standards. For example, RDFa has 1.1 has a default profile made of 11 well-used vocabularies based on their general usage on the Semantic Web according to the crawl of Yahoo! and Sindice as of March 2013\footnote{\url{http://www.w3.org/2010/02/rdfa/profile/data/}}. Similarly, the YASGUI SPARQL editor has a list of built-in prefix-namespace associations to ease the construction of SPARQL queries. However, this list of ``standard'' prefixes is open-ended. Interfaces such as SPARQL endpoints (e.g. Virtuoso) use a list of built-in prefixes declaration for more and more namespaces but the choice of entries in this list is all but transparent. Hence, the reason of a given namespace being or not in this list could be interpreted in many ways, a potential source of technical and social conflicts. Therefore, the notion has been slowly spreading, at least implicitly, that common prefixes could and indeed should have a global use, implying some kind of governance and good practices. More and more vocabularies explicitly recommend the prefix that should be used for their namespace, generally using a common if not written good practice to avoid frontal clashes by recommending a prefix not already used. But there is no global policy except implicit rules of fair use to avoid potential conflicts resulting from polysemy (different namespaces using or recommending the same prefix) or synonymy (different prefixes used for the same namespace).
+
+A vocabulary publisher needs to have access to some services capable of monitoring the existing prefixes usage in order to stick to those rules. In this paper, we focus on two services providing such information on prefixes usage namely prefix.cc\footnote{Service: \url{http://prefix.cc/}; Code: \url{https://github.com/cygri/prefix.cc}} and LOV (Linked Open Vocabularies)~\cite{Datalift:D22}. Both services provide associations between prefixes and namespaces but following a different logic. The prefix.cc service allows anybody to suggest a prefix to namespace association. It supports polysemy and synonymy, and has a very loose control on its crowd-sourced information. What it provides is more a measure of popularity of prefixes and namespaces than a way to put order in them. LOV has a much more strict policy forbidding polysemy and synonymy, enforced by a dedicated back-office database infrastructure, ensuring that each vocabulary in the LOV database is uniquely identified by a prefix, this unique identification allowing the usage of prefixes in various LOV publication URIs. This requirement leads sometimes to a situation where LOV uses prefixes different from the ones recommended by the vocabulary publishers.
+
+\subsection{Aligning LOV with Prefix.cc} \label{sec:alignment}
+In this section, we present how we perform the alignment between the two services LOV and prefix.cc. Figure~\ref{fig:evolution} shows the evolution of the number of prefixes registered in these two services between April 2009 and July 2013. Our main goals are to align Qnames (prefix) to a unique URI in LOV and to make sure that all the vocabularies in LOV are actually inserted in prefix.cc.
+
+\begin{figure}[ht]
+\centering
+\resizebox{\textwidth}{!}{
+\input{PGFPlots/prefixcc-lov-evo.tex}
+}
+\vspace{0.1cm}
+\caption{Evolution of the number of prefix-namespace pairs registered in prefix.cc and LOV}
+\label{fig:evolution}
+\end{figure}
+
+We propose to perform SPARQL queries over all the files of prefix.cc at \texttt{http://prefix.cc/popular/all.file.vann} in the FROM clause and compare them to the content of the LOV SPARQL endpoint\footnote{\url{http://lov.okfn.org/endpoint/lov}} via a SERVICE\footnote{\url{http://www.w3.org/2009/sparql/docs/fed/service}} call. The SERVICE keyword defined in the SPARQL 1.1 Query Language instructs a federated query processor to invoke a portion of a SPARQL query against a remote SPARQL endpoint~\cite{eric2013}. Results are returned to the federated query processor and are combined with results from the rest of the query. To be more generic and standards-compliant, the queries could be run with the Jena ARQ command-line tool to produce a CSV or a JSON serialization that could be easily consumed either by the prefix.cc backend via phpMyAdmin or by the LOV backend.
+
+\subsection{First Task: prefixes in LOV not present in Prefix.cc}  \label{sec:notInPrefix}
+First, we compute $<LOV> INTERSECTS <PREFIX.CC>$ and $<LOV> MINUS \, \{<LOV> INTERSECTS <PREFIX.CC> \}$. The following SPARQL query finds namespace URIs in LOV that do not exist in prefix.cc along with their LOV prefix.
+\begin{verbatim}
+PREFIX vann: <http://purl.org/vocab/vann/>
+SELECT ?prefix ?lovURI
+FROM <http://prefix.cc/popular/all.file.vann> {
+  SERVICE <http://lov.okfn.org/endpoint/lov> {
+    SELECT ?prefix ?lovURI {
+      [] vann:preferredNamespacePrefix ?prefix;
+        vann:preferredNamespaceUri ?lovURI;
+    }
+  }
+  FILTER (NOT EXISTS { [] vann:preferredNamespaceUri ?lovURI })
+  OPTIONAL {
+    [] vann:preferredNamespacePrefix ?prefix;
+      vann:preferredNamespaceUri ?pccURI;
+  }
+}
+ORDER BY ?prefix
+\end{verbatim}
+The first results\footnote{This query was performed in two weeks between March, 2nd and March, 20th 2013 and at this time, card(LOV) = 321 vocabularies while card(Prefix.cc) = 925} shown the following: $card(LOV) \bigcap card(PREFIX.cc) = 188$\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/firstAlignments/intersection-prefixLOV-02-03.csv}} and $card (LOV) - card( PREFIX.cc) = 133$\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/firstAlignments/inLovNotINPrefixcc-02-03.csv}} prefixes in LOV not yet registered in prefix.cc. At this point, a first batch of $80$ prefixes/namespaces from LOV were safely imported in prefix.cc since there were no conflicts. For the remaining conflicting ones, they needed more in-depth analysis.
+
+\subsection{Second Task: Dealing with Conflicts between Prefix.cc and LOV}  \label{sec:conflicts}
+In the process of alignment, there were two types of conflicts and we provide appropriate actions and/or solutions accordingly:
+\begin{itemize}
+ \item Clashes: cases where we have in both services the same prefix but different URIs;
+ \item Disagreements on preferred namespace: cases where for the same URI, we found different prefixes.
+\end{itemize}
+
+\subsubsection*{Clashes.} We performed a SPARQL query as above to identify clashes in vocabularies ($30$). In Table~\ref{tab:clashes-types}, we identify seven different types of issues to deal with, such as (i) real conflicts, (ii) URIs are 404, (iii) URIs are obsolete versions and (iv) two URIs redirecting to the same resource.
+\begin{table}
+\centering{
+\begin{tabular*}{12cm}{lcl}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Type of issue}	& \textbf{\# Vocabularies} 	& \textbf{Percentage} 		 \\
+ \specialrule{1pt}{1pt}{1pt}
+ pccURI and lovURI redirect to same resource  & 8 	& 26.67\%		\\
+ lovURI already in prefix.cc as secondary	  & 7   & 23.3\%  		\\
+ Real conflicts 	                & 6 			& 20\% 	 		\\
+ pccURI is 404	                    & 4 			& 13.3\%		\\
+ pccURI is an obsolete version		& 3   			& 10\%  		\\
+ lovURI is 404		                & 1   			& 3.3\%  		\\
+ lovURI is an obsolete version		& 1   			& 3.3\%  		\\
+ \specialrule{1pt}{1pt}{1pt}
+\end{tabular*}
+\caption{Type of issues encountered for vocabulary clashes}
+\label{tab:clashes-types}
+}
+\end{table}
+
+\subsubsection*{Disagreements on namespace URIs.} The general idea is that if vocabulary editors have not included explicitly a \texttt{vann:preferredNamespacePrefix} in their description, the curators of LOV are free to change it and put whatever seems appropriate. At the same time, in prefix.cc, having multiple prefixes for the same namespace IRI in not a problem. However, we computed those prefixes in LOV that have different prefixes in prefix.cc. The following query retrieves the URIs falling in those disagreements:
+\begin{verbatim}
+PREFIX vann: <http://purl.org/vocab/vann/>
+SELECT ?prefix ?lovURI ?prefixcc
+FROM <http://prefix.cc/popular/all.file.vann> {
+  SERVICE <http://lov.okfn.org/endpoint/lov> {
+    SELECT ?prefix ?lovURI {
+      [] vann:preferredNamespacePrefix ?prefix;
+        vann:preferredNamespaceUri ?lovURI;
+    }
+  }
+  FILTER (?pccURI = ?lovURI && ?prefix != ?prefixcc)
+  OPTIONAL {
+    [] vann:preferredNamespacePrefix ?prefixcc;
+      vann:preferredNamespaceUri ?pccURI;
+  }
+}
+ORDER BY ?prefix
+\end{verbatim}
+From the results of this query ($61$ cases), we have three actions to perform:
+\begin{itemize}
+  \item add the lovPrefix (prefix in LOV) in prefix.cc (e.g: adding \\\texttt{geod}:\texttt{http://vocab.lenka.no/geo-deling\#}) to the existing \texttt{ngeoi} in \textit{pccPrefix}.)
+  \item add more alternative URIs to the existing prefix in prefix.cc (e.g: adding \texttt{prov}:\texttt{http://purl.org/net/provenance/ns\#}) to the existing \texttt{hartigprov, prv} in \textit{pccPrefix})
+  \item change a prefix in LOV\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/material/action-sameUriDifferentPrefixes.pdf}} (e.g: lovPrefix \texttt{dc} for \texttt{http://purl.org/dc/terms} not in the list $\{dcterm, dcq, dct, dcterms\}$ has been replaced by \texttt{dce} in LOV).
+  \item No changes when the lovPrefix is contained in the set of prefixes of prefix.cc.
+\end{itemize}
+
+\subsection{Social Aspects} \label{sec: social}
+Several vocabularies are maintained by a community of users. As part of the alignment process, we contacted the authors, creators or maintainers (if they exist) of vocabularies to involve them as well in the process of changing prefixes, and agree with them to fix some issues regarding their vocabularies. From the homepages of the vocabulary authors and editors collected in LOV, we connect to their social platform accounts such as LinkedIn, Google+ or Twitter. Table~\ref{tab:contact-editors} summarizes some cases of real conflicts where the LOV curators have to find and contact the editors of the vocabularies for negotiation.
+
+\begin{table}[htp]
+\centering{
+\begin{tabular*}{12cm}{lll}
+ \specialrule{1pt}{1pt}{1pt}
+ prefix & lovURI		& Remark \\
+ \specialrule{1pt}{1pt}{1pt}
+ sp & \scriptsize{http://data.lirmm.fr/ontologies/sp\#} &	 contact editor at LIRMM ($sp \Rightarrow osp$) \\  %\scriptsize{http://spinrdf.org/sp\#}
+ scot & \scriptsize{http://scot-project.net/scot/ns\#} &  contact editors at lovURI \\   % \scriptsize{http://scot-project.org/scot/ns\#} &
+ media &	\scriptsize{http://purl.org/media\#}	 & contact editors for negotiation \\ %& \scriptsize{http://purl.org/microformat/hmedia/}
+ pro	& \scriptsize{http://purl.org/spar/pro/}  &  contact editors for negotiation \\   % &	\scriptsize{http://purl.org/hpi/patchr\#}
+ swp	& \scriptsize{http://www.w3.org/2004/03/trix/swp-1/}  & contact editors, fix on LOV side \\  %& \scriptsize{http://www.w3.org/2004/03/trix/swp-2/}
+ wo & \scriptsize{http://purl.org/ontology/wo/core\#}	 & contact editors \\  %& \scriptsize{http://purl.org/ontology/wo/}
+ idemo &	\scriptsize{http://rdf.insee.fr/def/demo\#}	 & to resolve with INSEE \\ %& \scriptsize{http://rdf.insee.fr/graphes/def/demo\#}
+ \specialrule{1pt}{1pt}{1pt}
+\end{tabular*}
+\caption{LOV and prefix.cc conflicts resolution leading to contact vocabularies editors for negotiation. We provide the prefix, the URI in LOV and the action undertaken.}
+\label{tab:contact-editors}
+}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  4. Finding Vocabularies in Prefix.cc  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Finding Vocabularies in Prefix.cc}   \label{sec:finding}
+We want to find out in prefix.cc, which of the couples (prefix, URI) could be potentially a vocabulary to be further assess to be included in the LOV catalog. To address this question, we first compute all the differences on prefix.cc NOT in LOV, i.e. $PREFIX.CC$ MINUS $(LOV <INTERSECT> PREFIX.CC)$, performing using a SPARQL query. This results in $742$ URIs to be checked\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/input/notInLOV.json}}.
+
+\subsubsection{LOV Check API}
+We have implemented an API\footnote{\url{http://lov.okfn.org/dataset/lov/apidoc/}} that allows a user to run the LOV-Bot over a distant vocabulary. It takes as parameter the vocabulary URI to process and the time out (integer) specified to stop the process. The result of this action is a set of $26$ property-values from which we are interested in using only $8$ of them, namely:
+\begin{itemize}
+ \item{\textbf{uri} (string) – uri of the vocabulary}.
+ \item {\textbf{namespace} (string) – namespace of the vocabulary}.
+ \item {\textbf{prefix} (string) – prefix of the vocabulary}
+ \item{\textbf{inLOV} (boolean) – indicates if the vocabulary is already in the Linked Open Vocabularies ecosystem}.
+ \item {\textbf{nbClasses} (int) – Number of classes defined in the vocabulary namespace}.
+ \item{\textbf{nbProperties} (int) – Number of properties defined in the vocabulary namespace}.
+ \item{\textbf{dateIssued }(string) – Vocabulary date of issue}.
+ \item{\textbf{title} (Taxonomy) – List of titles with language information if available}.
+\end{itemize}
+
+The code below gives the response of our algorithm for the vocabulary identified at \url{http://ns.aksw.org/Evolution/}.
+\begin{verbatim}[caption={Sample output of a response of the Check API}]
+{
+ "dateIssued": "None",
+ "inLOV": false,
+ "namespace": "http://www.agfa.com/w3c/2009/clinicalProcedure#",
+ "nbClasses": 47,
+ "nbProperties": 29,
+ "pccURI": "http://www.agfa.com/w3c/2009/clinicalProcedure",
+ "prefix": "clinproc",
+ "title": [
+   {
+     "dataType": null,
+     "language": "en",
+     "value": "Clinical Procedure"
+   }
+ ],
+ "uri": "http://www.agfa.com/w3c/2009/clinicalProcedure"
+},
+\end{verbatim}
+
+\subsubsection{Experiments} \label{experiments}
+We wrote a script calling the LOV Check API on the URIs in prefix.cc for determining the candidates vocabularies to be inserted in LOV using the algorithm in Listing~\ref{findvocabInPrefix-algorithm}. We ran four times the experiments (possibly due to some network instabilities) in order to determine from which results what should be assessed. Table~\ref{tab:experiment-choice} gives an overview of the number of URIs with respectively the attribute ``inLOV=false''(TP), ``inLOV=true''(FP) and the errors occurred (Null returned, http/proxy or time out reached by the API).
+
+Regarding the experiments, \texttt{Experiment4} gives stable results with less network errors. Therefore, we stick on this experiment to report our findings and analysis. We found that $227$ ($43.48$\%) are vocabularies in the sense of LOV since they have at least one property or one class. $297$ vocabularies ($56.51$\%) might have some problems (or are even not vocabularies at all) as they have neither classes nor properties. Regarding the presence of prefixes, we found $140$ ($61.67$\%) of them.
+\begin{table}
+\centering{
+\begin{tabular}{lccc}
+ \specialrule{1pt}{1pt}{1pt}
+ 				& TP(inLOV=false) 	& FP(inLOV=true) 	& Errors	 \\
+ \specialrule{1pt}{1pt}{1pt}
+ Experiment1 	& 525 				& 44 				& 173 		 \\
+ Experiment2 	& 403 				& 26				& 313 		 \\
+ Experiment3 	& 351 				& 28				& 363 		 \\
+ Experiment4	& $522$   			& 44   				& 176 		 \\
+ \specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Experiments looking for stable results of finding vocabularies in prefix.cc.}
+\label{tab:experiment-choice}
+}
+\end{table}
+The $227$ vocabularies could all be inserted in the LOV catalog since they fulfill the current requirements of what is a `` LOV-able vocabulary''. In this list, we found vocabularies such as \texttt{rdf, rdfs, owl} that are used to build other vocabularies but are not yet integrated in the LOV catalog.
+
+\begin{algorithm}[H]
+\caption{finding vocabularies NOT in LOV from prefix.cc algorithm} \label{findvocabInPrefix-algorithm}
+\begin{algorithmic}[1]
+    \STATE Open $notInLOV.json file$ containing the prefix.cc URIs \NOT in LOV
+    \STATE initialize $item$ as List
+    \STATE Initialize $result$ as collection of $item$
+    \FOR { each $pccURI \in notInLOV file$}
+      \STATE $uri \leftarrow$ value of $pccURI$
+      \STATE $uriv \leftarrow$ construct-valid $uri$
+      \STATE call LOV-Check API with parameter $uriv$
+      \STATE try/catch HTTPError, URLError, IOError, ValueError
+      \WHILE { no error raised}
+        \STATE initialize $item$ to an empty List
+        \STATE append $pccURI, prefix, inLOV, namespace, title, dateIssued, nbClasses, nbProperties$ in $item$ List
+        \STATE append $item$ to $result$
+      \ENDWHILE
+    \ENDFOR
+    \PRINT $output-result$
+\end{algorithmic}
+\end{algorithm}
+
+From the list of URIs that were not LOV-able vocabularies, we wanted to do more analysis by checking the RDF files using the Triple-Checker tool. Our aim is to be sure if we did not leave out some candidate vocabularies or if there are other type of errors such as parsing errors. Table~\ref{tab:triplechecker-analysis} provides results classified into $4$ categories:
+\begin{itemize}
+ \item General errors such as loading files or proxy errors: 78.30\%
+ \item Candidate LOV-able vocabularies: 12.20\%
+ \item Clearly not vocabularies ($\texttt{nbClasses} = \texttt{nbProperties} = 0 $), typically instances, datasets, html pages: 6.45\%
+ \item Others (mainly parsing errors): 3.05\%
+\end{itemize}
+
+\begin{table}
+\centering{
+\begin{tabular}{lccc}
+ \specialrule{1pt}{1pt}{1pt}
+ \textbf{Total URIs }				& $295$ & 100\% 		\\
+ \specialrule{1pt}{1pt}{1pt}
+ Loading/404 errors			        & $182$ & 61.69\%		\\
+ Vocabularies 						& 36 	& 12.20\% 		\\
+ Proxy errors				        & 27   	& 9.15\%   		\\
+ 50x, 40x errors				    & 22   	& 7.45\%   		\\
+ Parsing errors				        & 9   	& 3.05\%   		\\
+ Web Pages containers				& 9   	& 3.05\%   		\\
+ No triples found				    & 8   	& 2.71\%   		\\
+ RDF data 						    & 2 	& 0.67\%		\\
+\specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Analysis of the URIs with no classes and no properties while using the LOV-Bot API}
+\label{tab:triplechecker-analysis}
+}
+\end{table}
+
+\subsection{Conclusion}    \label{sec:conclusion}
+In this Section, we have analyzed numerous vocabularies referenced in LOV and in prefix.cc and we have presented a way to manage the prefixes of those vocabularies. We have shown that in the process of mapping namespaces with prefixes, some conflicts have to be resolved, often by contacting the editors themselves. One future work is to develop a new strategy for the LOV-Bot API to take into account vocabularies published in other formats such as n3 and turtle. This would require to first test the validity of those formats and to adapt the way namespaces are obtained in order to not check only the presence of the \texttt{vann:preferredNamespace} property but to rely on similarity algorithm in order to guess the closest namespace given a URI vocabulary and some statistics of the number of classes and properties.
+
+The work can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far: \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services; \emph{ii)} bridging the LOV back-office and the prefix-cc database using both services API in order to publish a list of common recommended prefixes. The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
+ 
+This (apparently) simple issue of prefixes and namespaces is providing a good illustration of why some kind of governance is needed in the distributed ecosystem of vocabularies and linked data, pointing to both technical and social aspects, and proposing concrete examples of conflict resolution. There is no, and certainly there should never be any, central attribution authority for prefixes, and the needed regulation has to be made a posteriori, including good practices of cooperation and negotiation between vocabulary publishers. Development and harmonization of services such as LOV and prefix.cc is then to be considered as part of the current and more general effort already started by the DCMI\footnote{Long-term Preservation and Governance of RDF Vocabularies: \url{http://dcevents.dublincore.org/IntConf/index/pages/view/vocPres}} and W3C\footnote{W3C Vocabulary Services: \url{http://www.w3.org/2013/04/vocabs/}} for a sustainable governance of vocabularies.
 
 \section{Vocabulary Ranking metrics}
 \label{sec:vocabranking}
