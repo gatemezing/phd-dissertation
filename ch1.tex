@@ -24,12 +24,12 @@ In France, the National Geographic Institute (IGN) has started to publish more a
 \section{Vocabularies for Geospatial Data}
 \textcolor{red}{Add here the studies of Atemezing:TC12, with update to the current state }
 
-The recent publication of statistics concerning the actual usage of vocabularies on the LOD cloud\footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
+The recent publication of statistics concerning the actual usage of vocabularies on the LOD cloud\footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
 \begin{table*}[!htbp]
 \centering{
-\begin{tabular}{|l|r|r|c| }
+\begin{tabular}{|l|c|r|c| }
 \hline
-\multicolumn{1}{|c|} {Ontologies} & \multicolumn{1}{c|}{\#Datasets using} & \multicolumn{1}{c|}{\#Triples}& \multicolumn{1}{c|}{SPARQL endpoint}\\
+\multicolumn{1}{|c|} {Ontologies} & \multicolumn{1}{c|}{\#Datasets} & \multicolumn{1}{c|}{\#Triples}& \multicolumn{1}{c|}{SPARQL endpoint}\\
 \hline
 W3C Geo  &   21 & 15 543 105 & LOD cache\\
 OS spatialrelations &   10 & 9 412 167 & OS dataset\\
@@ -50,7 +50,7 @@ Modeling of features can be grouped into four categories depending on the struct
 \begin{itemize}
   \item (i): One way for structuring the features is to define high level codes (generally using a small finite set of codes) corresponding to specific
       types. Further, sub-types are attached to those codes in the classification. This approach is used in the Geonames ontology\footnote{\url{http://geonames.org/ontology/ontology_v3.0.rdf}} for codes and classes (A, H, L, P, R, S, T, U, V), with each of the letter corresponding to a precise category (e.g: A for administrative borders). Classes are then defined as \texttt{gn:featureClass a skos:ConceptScheme}, while codes are \texttt{gn:featureCode a skos:Concept}.
-  \item (ii): A second approach consists in defining a complete standalone ontology that does not reuse other vocabularies. A top level class is used under which a taxonomy is formed using the \texttt{rdfs:subClassOf} property. The LinkedGeoData ontology\footnote{\url{http://linkedgeodata.org/ontology}} follows this approach, where the $1294$ classes are built around a nucleus of $16$ high-level concepts which are: \texttt{Aerialway, Aeroway, Amenity, Barrier, Boundary, Highway, Historic, Landuse, Leisure, ManMade, Natural, Place, Power, Route, Tourism} and \texttt{Waterway}. The same approach is used for the French GeOnto ontology (Section~\ref{sec:alignment}), which defined two high-level classes \texttt{ArtificialTopographyEntity} and \texttt{Natural\-TopographyEntity} with a total of $783$ classes.
+  \item (ii): A second approach consists in defining a complete standalone ontology that does not reuse other vocabularies. A top level class is used under which a taxonomy is formed using the \texttt{rdfs:subClassOf} property. The LinkedGeoData ontology\footnote{\url{http://linkedgeodata.org/ontology}} follows this approach, where the $1294$ classes are built around a nucleus of $16$ high-level concepts which are: \texttt{Aerialway, Aeroway, Amenity, Barrier, Boundary, Highway, Historic, Landuse, Leisure, ManMade},\\ \texttt{Natural, Place, Power, Route, Tourism, Waterway}. The same approach is used for the French GeOnto ontology (Section~\ref{sec:alignment}), which defined two high-level classes \texttt{ArtificialTopographyEntity} and \texttt{Natural\-TopographyEntity} with a total of $783$ classes.
   \item (iii): A third approach consists in defining several smaller ontologies, one for each sub-domain. An ontology network is built with a central ontology used to interconnect the different other ontologies. One obvious advantage of this approach is the modularity of the conceptualizing which should ease as much as possible the reuse of modular ontologies. Ordnance Survey (OS) follows this approach providing ontologies for administrative regions\footnote{\url{http://www.ordnancesurvey.co.uk/ontology/admingeo.owl}}, for statistics decomposition\footnote{\url{http://statistics.data.gov.uk/def/administrative-geography}} and for postal codes\footnote{\url{http://www.ordnancesurvey.co.uk/ontology/postcode.owl}}. The \texttt{owl:imports} statements are used in the core ontology. Similarly, GeoLinkedData makes use of three different ontologies covering different domains.
   \item (iv): A fourth approach consists in providing a \textit{nearly flat list} of features or points of interest. This is the approach followed by popular Web APIs such as Foursquare types of venue\footnote{\url{http://aboutfoursquare.com/foursquare-categories/}} or Google Place categories\footnote{\url{https://developers.google.com/maps/documentation/places/supported_types}}. For this last approach, we have built an associated OWL vocabulary composed of alignments with other vocabularies.
 \end{itemize}
@@ -67,12 +67,22 @@ The geometry of a point of interest is also modeled in different ways. We comple
 \end{itemize}
 
 \subsection{GeoSPARQL Standard and specifications}
-OGC has adopted the GeoSPARQL standard to support both representing and querying geospatial data on the Semantic Web. The standard document~\cite{ogc2012} contains 30 requirements. It also defines a vocabulary for representing geospatial data in RDF and provides an extension to the SPARQL query language for processing geospatial data. The proposed standard follows a modular design with five components: (i) A \textit{core component} defining top-level RDFS/OWL classes for spatial objects; (ii) a \textit{geometry component} defining RDFS data types for serializing geometry data, RDFS/OWL classes for geometry object types, geometry-related RDF properties, and non-topological spatial query functions for geometry objects; (iii) a \textit{geometry topology component} defining topological query functions; (iv) a \textit{topological vocabulary component} defining RDF properties for asserting topological relations between spatial objects; and (iv) a \textit{query rewrite component} defining rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions. Each of the components described above has associated requirements. Concerning the vocabulary requirements, Table~\ref{tab:reqgeosparql} summarizes the seventeen requirements presented in the GeoSPARQL draft document.
+OGC has adopted the GeoSPARQL standard to support both representing and querying geospatial data on the Semantic Web. The standard document~\cite{ogc2012} contains 30 requirements. It also defines a vocabulary for representing geospatial data in RDF and provides an extension to the SPARQL query language for processing geospatial data. The proposed standard follows a modular design with five components: 
+\begin{itemize}
+\item (i) A \textit{core component} defining top-level RDFS/OWL classes for spatial objects; 
+\item (ii) a \textit{geometry component} defining RDFS data types for serializing geometry data, RDFS/OWL classes for geometry object types, geometry-related RDF properties, and non-topological spatial query functions for geometry objects; 
+\item (iii) a \textit{geometry topology component} defining topological query functions; 
+\item (iv) a \textit{topological vocabulary component} defining RDF properties for asserting topological relations between spatial objects; and 
+\item (iv) a \textit{query rewrite component} defining rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions.
+\end{itemize}
+
+ Each of the components described above has associated requirements. Concerning the vocabulary requirements, Table~\ref{tab:reqgeosparql} summarizes the seventeen requirements presented in the GeoSPARQL draft document.
 \begin{table}
 \centering{
 \begin{tabularx}{\textwidth}{|X|X|l|}%{l|l|l}
 \hline
-Geographic Aspect	& Requirement   & Implementation Definition \\ \hline
+Geo- 	& Requi-   & Implementation Definition \\ 
+Aspect	& rement   &  \\ \hline
      	 		    & Req 2 		& The Class \texttt{SpatialObject} should be defined \& accepted\\
      	 		    & Req 3 		& Defines \texttt{Feature rdfs:subClassOf SpatialObject} \\
 Feature			& Req 4 			& Defines $8$ Simple Features Object Properties(OP) \\
@@ -82,8 +92,8 @@ Feature			& Req 4 			& Defines $8$ Simple Features Object Properties(OP) \\
 Geometry		& Req 8 			& Defines OP \texttt{hasGeometry} and \texttt{defaultGeometry} \\
 				& Req 9 			& Defines $6$ Data Properties: e.g: \texttt{dimension, isEmpty, etc.}  \\ \hline
 				& Req 10-13			& \texttt{wktLiteral} definitions \& URI encoding  \\
-Serialization	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
-				& Req 15-17			& GMLLiteral should be accepted  \\
+Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
+	zation			& Req 15-17			& GMLLiteral should be accepted  \\
 				& Req 18			& Defines \texttt{asGML} to retrieve GMLLiteral \\
 \hline
 \end{tabularx}
@@ -273,6 +283,8 @@ A Commune has an attribute called \textit{``nature''} whose enumerated values pr
 
 \subsection{A REST Service for Converting Geo Data}
 \label{sec:rest-service}
+\todo{extend this section with current results of the implementations, comparison with existing tools}
+
 As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the de-facto standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}. Some existing tools like Circ\'e or the the world coordinate converter\footnote{\url{http://twcc.free.fr.are}} are good as a standalone tool for end user, but not so great for developers,  as they can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again.  At the moment, the following features are implemented: (i) from/to WGS 84 to/from WGS 84 UTM ; (ii) from/to WGS 84  to/from Lambert 93 and (iii) from/to WGS 84 UTM to/from Lambert 93. The API can also convert a file with space separated values. The API supports JSON as one of the output format. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
 
 \textcolor{red}{
