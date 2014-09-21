@@ -4,18 +4,124 @@
 \begin{itemize}
 \item Traditional GIS data
 \item soA on vocabularies
-\item soA of geo support in triple stores
 \item Contributions
 \item conclusion
 \end{itemize}
 
+\section{Introduction}
+\todo{REUSE: this section below}
+The increasing number of initiatives for sharing geographic information on the web of data has significantly contribute to the interconnection of many data sets exposed as RDF based on the Linked Data principles. Many domains are represented in the web of data (media, events, academic publications, libraries, cultural heritage, life science, government data, etc.) while DBpedia is the most used dataset for interconnection. For many datasets published, geospatial information is required for rendering data on a map. In the current state of the art, different approaches and vocabularies are used to represent the ``features'' and their geometric shape although the POINT is the most common representation making use of the latitude/longitude properties defined in the W3C Geo vocabulary. Other geometries from the OpenGIS standard (POLYGON, LINESTRING, etc.) are more rarely exploited (e.g. LinkedGeoData, GeoLinkedData) while fine-grained geometry representations are often required.
+
+In France, the National Geographic Institute (IGN) has started to publish more and more data in RDF, as illustrated by the recent experimental LOD service \url{http://data.ign.fr}. IGN maintains large databases composed of descriptions of addresses, buildings, topographic information, occupied zones, etc. A few years ago, IGN has developed a core ontology named GeOnto for describing all types of buildings located in the French territory. Integrating these databases will enable answering more complex queries than current GIS systems can handle, such as: ``\emph{show all buildings used as tribunal courts in the 7th Arrondissement of Paris}''. Another use-case is the possibility to reason over parts of a structure: ``\emph{show the points where the river Seine touches a boundary of a district in Paris that contain an activity zone}''.
+
 
 \section{Traditional Geospatial Data}
+\todo{Use some materials from Deliverable spatial data of Datalift}
+
    \subsection{Specifities}
    \subsection{Formats}
 
 \section{Vocabularies for Geospatial Data}
-\textcolor{red}{Add here the studies of Atemezing:TC12 }
+\textcolor{red}{Add here the studies of Atemezing:TC12, with update to the current state }
+
+The recent publication of statistics concerning the actual usage of vocabularies on the LOD cloud\footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
+\begin{table*}[!htbp]
+\centering{
+\begin{tabular}{|l|r|r|c| }
+\hline
+\multicolumn{1}{|c|} {Ontologies} & \multicolumn{1}{c|}{\#Datasets using} & \multicolumn{1}{c|}{\#Triples}& \multicolumn{1}{c|}{SPARQL endpoint}\\
+\hline
+W3C Geo  &   21 & 15 543 105 & LOD cache\\
+OS spatialrelations &   10 & 9 412 167 & OS dataset\\
+Geonames ontology &   5 & 8 272 905 & LOD cache\\
+UK administrative-geography &   3 &  229 689 & OS dataset \\
+\hline
+\end{tabular}
+\caption{Statistics on the usage of the four main geographic vocabularies (LOD cache should be understood as \texttt{http://lod.openlinksw.com/sparql/}). There are many more vocabularies used in the LOD cloud that contain also geographical information but that are never re-used.}
+\label{tab:vocabLOD}
+}
+\end{table*}
+
+\section{Current Modeling Aproach}
+\todo{introduce with some few words}
+
+\subsection{Vocabularies for Features}
+Modeling of features can be grouped into four categories depending on the structure of the data, the intended purpose of the data modeling, and the (re)-use of other resources.
+\begin{itemize}
+  \item (i): One way for structuring the features is to define high level codes (generally using a small finite set of codes) corresponding to specific
+      types. Further, sub-types are attached to those codes in the classification. This approach is used in the Geonames ontology\footnote{\url{http://geonames.org/ontology/ontology_v3.0.rdf}} for codes and classes (A, H, L, P, R, S, T, U, V), with each of the letter corresponding to a precise category (e.g: A for administrative borders). Classes are then defined as \texttt{gn:featureClass a skos:ConceptScheme}, while codes are \texttt{gn:featureCode a skos:Concept}.
+  \item (ii): A second approach consists in defining a complete standalone ontology that does not reuse other vocabularies. A top level class is used under which a taxonomy is formed using the \texttt{rdfs:subClassOf} property. The LinkedGeoData ontology\footnote{\url{http://linkedgeodata.org/ontology}} follows this approach, where the $1294$ classes are built around a nucleus of $16$ high-level concepts which are: \texttt{Aerialway, Aeroway, Amenity, Barrier, Boundary, Highway, Historic, Landuse, Leisure, ManMade, Natural, Place, Power, Route, Tourism} and \texttt{Waterway}. The same approach is used for the French GeOnto ontology (Section~\ref{sec:alignment}), which defined two high-level classes \texttt{ArtificialTopographyEntity} and \texttt{Natural\-TopographyEntity} with a total of $783$ classes.
+  \item (iii): A third approach consists in defining several smaller ontologies, one for each sub-domain. An ontology network is built with a central ontology used to interconnect the different other ontologies. One obvious advantage of this approach is the modularity of the conceptualizing which should ease as much as possible the reuse of modular ontologies. Ordnance Survey (OS) follows this approach providing ontologies for administrative regions\footnote{\url{http://www.ordnancesurvey.co.uk/ontology/admingeo.owl}}, for statistics decomposition\footnote{\url{http://statistics.data.gov.uk/def/administrative-geography}} and for postal codes\footnote{\url{http://www.ordnancesurvey.co.uk/ontology/postcode.owl}}. The \texttt{owl:imports} statements are used in the core ontology. Similarly, GeoLinkedData makes use of three different ontologies covering different domains.
+  \item (iv): A fourth approach consists in providing a \textit{nearly flat list} of features or points of interest. This is the approach followed by popular Web APIs such as Foursquare types of venue\footnote{\url{http://aboutfoursquare.com/foursquare-categories/}} or Google Place categories\footnote{\url{https://developers.google.com/maps/documentation/places/supported_types}}. For this last approach, we have built an associated OWL vocabulary composed of alignments with other vocabularies.
+\end{itemize}
+
+\subsection{Vocabularies for Geometry Shape}
+The geometry of a point of interest is also modeled in different ways. We complete here the survey started by Salas and Harth~\cite{Salas2011}:
+\begin{itemize}
+  \item \textit{Point representation}: the classical way to represent a location by providing the latitude and longitude in a given coordinate reference system (the most used on the web is the WGS84 datum represented in RDF by the W3C Geo vocabulary). For example, Geonames defines the class \texttt{gn:Feature a skos:ConceptScheme} as a \texttt{SpatialThing} in the W3C Geo vocabulary.
+  \item \textit{Rectangle} (``bounding box''): which represents a location with two points or four segments making a geo-referenced rectangle. In this way of modeling, the vocabulary provides more properties for each segment. The FAO Geopolitical ontology\footnote{\url{http://www.fao.org/countryprofiles/geoinfo/geopolitical/resource/}} uses this approach.
+  \item \textit{List of Points}: the geometry shape is a region represented by a collection of points, each of them being described by a unique RDF node identified by a lat/lon value. The \texttt{Node} class is used to connect one point of interest with its geometry representation. The POI are modeled either as \texttt{Node} or as \texttt{Waynode} (surfaces). This approach is followed by LinkedGeoData~\cite{linkedgeodata}.
+  \item \textit{Sequence of Points}: the geometry shape is represented by a group of RDF resources called a ``curve'' (similar to LineString of GML). The POI is connected to its geometry by the property \texttt{formedBy} and an attribute \texttt{order} to specify the position of each node in the sequence. This approach is the one used in GeoLinkedData~\cite{deLeon2010}.
+  \item \textit{Literals}: the vocabulary uses a predicate to include the GML representation of the geometry object, which is embedded in RDF as a literal. This approach is followed by Ordance Survey~\cite{Goodwin2008}.
+  \item \textit{Structured representation}: the geometry shape is represented as a typed resource. In particular, polygons and lines are represented with an RDF collection of basic W3C Geo points. This approach is used by the NeoGeo vocabulary\footnote{\url{http://geovocab.org/doc/neogeo/}}.
+\end{itemize}
+
+\subsection{GeoSPARQL Standard and specifications}
+OGC has adopted the GeoSPARQL standard to support both representing and querying geospatial data on the Semantic Web. The standard document~\cite{ogc2012} contains 30 requirements. It also defines a vocabulary for representing geospatial data in RDF and provides an extension to the SPARQL query language for processing geospatial data. The proposed standard follows a modular design with five components: (i) A \textit{core component} defining top-level RDFS/OWL classes for spatial objects; (ii) a \textit{geometry component} defining RDFS data types for serializing geometry data, RDFS/OWL classes for geometry object types, geometry-related RDF properties, and non-topological spatial query functions for geometry objects; (iii) a \textit{geometry topology component} defining topological query functions; (iv) a \textit{topological vocabulary component} defining RDF properties for asserting topological relations between spatial objects; and (iv) a \textit{query rewrite component} defining rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions. Each of the components described above has associated requirements. Concerning the vocabulary requirements, Table~\ref{tab:reqgeosparql} summarizes the seventeen requirements presented in the GeoSPARQL draft document.
+\begin{table}
+\centering{
+\begin{tabularx}{\textwidth}{|X|X|l|}%{l|l|l}
+\hline
+Geographic Aspect	& Requirement   & Implementation Definition \\ \hline
+     	 		    & Req 2 		& The Class \texttt{SpatialObject} should be defined \& accepted\\
+     	 		    & Req 3 		& Defines \texttt{Feature rdfs:subClassOf SpatialObject} \\
+Feature			& Req 4 			& Defines $8$ Simple Features Object Properties(OP) \\
+				& Req 5 			& Defines $8$ Egenhofer OP with domain and range \\
+				& Req 6			  & Defines $8$ RCC OP with domain and range \\ \hline
+				& Req 7 			& Defines \texttt{Geometry rdfs:subClassOf SpatialObject} \\
+Geometry		& Req 8 			& Defines OP \texttt{hasGeometry} and \texttt{defaultGeometry} \\
+				& Req 9 			& Defines $6$ Data Properties: e.g: \texttt{dimension, isEmpty, etc.}  \\ \hline
+				& Req 10-13			& \texttt{wktLiteral} definitions \& URI encoding  \\
+Serialization	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
+				& Req 15-17			& GMLLiteral should be accepted  \\
+				& Req 18			& Defines \texttt{asGML} to retrieve GMLLiteral \\
+\hline
+\end{tabularx}
+\caption{Requirements and implementations for vocabulary definitions in GeoSPARQL.}
+\label{tab:reqgeosparql}
+}
+\end{table}
+
+
+\subsection{Geospatial Vocabularies and Topological Functions}
+\label{sec:topofunc}
+\todo{update the information in this section}
+
+Based on the GeoSPARQL requirements, we were interested in comparing some geospatial vocabularies\footnote{\url{http://labs.mondeca.com/dataset/lov/vocabularySpace_Space.html}} to see how far they take already into account topological functions and which are the standard they followed among OpenGIS Simple Features (SF), Region Connection Calculus (RCC) and Egenhofer relations. We find that the NeoGeo (Spatial and Geometry) and OS Spatial vocabularies have integrated in their modeling partial or full aspects of topological functions as summarized in Table~\ref{tab:geosparql}.
+
+As geodata has to be stored in triple stores with efficient geospatial indexing and querying capabilities, we also survey the current state of the art  in supporting simple or complex geometries and topological functions compatible with SPARQL 1.1. Table~\ref{tab:triplestore} shows which triple stores can support part of the GeoSPARQL standard regarding serialization and spatial functions.
+\begin{table}
+\begin{tabularx}{\textwidth}{|X|X|X|X|l}
+\hline
+\textbf{Geo-vocabulary} & \textbf{Topological Functions} & \textbf{GeoSPARQL Requirements} & \textbf{Standard Followed}\\
+\hline
+Ordnance Survey Spatial & \texttt{easting, northing, touches, within, contains} & Part of Req 4 & OpenGIS Simple Feature\\ \hline
+Ordnance Survey Topography & \texttt{contains, isContainedIn} & Very small part of Req 4 & OpenGIS Simple Feature\\ \hline
+Place Ontology & \texttt{in, overlaps, bounded\_by} & Small part of Req 4 & N/A\\
+\hline
+NeoGeo Spatial & All RCC8 relations & Part of Req 3; Req 6 & Region Connection Calculus (RCC)\\
+\hline
+NeoGeo Geometry & --- & Req 10 - 14 & N/A\\
+\hline
+FAO Geopolitical & \texttt{isInGroup, hasBorderWith} & -- & --\\
+\hline
+OntoMedia Space & \texttt{adjacent-below, adjacent-above, orbit-around, is\_boundary-of, has-boundary} & -- & --\\
+\hline
+\end{tabularx}
+\caption{Comparison of some geo-vocabularies with respect to the GeoSPARQL requirements.}
+\label{tab:geosparql}
+\end{table}
+
 
 \section{Georeferencing data on the Web}
 \label{sec:georef}
@@ -39,6 +145,17 @@ Modeling indirect location information such as administrative units or named poi
 
 \textcolor{red}{Describe the contributions on geometry and geography vocabularies. Reuse mainly the recent work to be presented at Terra Cognita 2014}
 
+\subsection{Best Practices for Modeling Geospatial vocabularies}
+\subsection{Some Recommendations}
+The alignment of GeOnto provided in the previous section enables interoperability of symbolic descriptions. The need for a better choice of geometric structure, typically the choice between literal versus structured representations depends on three criteria: (i) the coverage of all the complex geometries as they appear in the data; (ii) a rapid mechanism for connecting ``features'' to their respective ``geometry''; (iii) the possibility to serialize geodata into traditional formats used in GIS applications (GML, KML, etc.) and (iv) the choice of triple stores supporting as many as possible functions to perform quantitative reasoning on geodata. It is clear that a trade-off should be taken depending on the technological infrastructure (e.g: data storage capacity, further reasoning on specific points on a complex geometry).
+\begin{itemize}
+\item\textbf{Complex Geometry Coverage:} We have seen that on the Web of Data, there are few modeling of geodata with their correct shape represented as a LINE or POLYGON. However, some content providers (e.g. IGN) need to publish all types of geodata including complex geometries representing roads, rivers, administrative regions, etc. Two representations are suitable: \textit{OS Spatial} and \textit{NeoGeo} ontologies (Table~\ref{tab:reqgeosparql}). Direct representation of the GeoSPARQL vocabulary is also suitable.
+\item \textbf{Features connected to Geometry:} In modeling geodata, we advocate a clear separation between the features and their geometry. This is consistent with the consensus obtained from the different GeoVocamps\footnote{\url{http://www.vocamp.org}} and the outcome of this approach is expressed in the modeling design of NeoGeo. The top level classes \texttt{spatial:Feature} and \texttt{geom:Geometry}are connected with the property \texttt{geom:geometry}.
+
+\item \textbf{Literal versus structured Geometry:} Decomposing a LINE or a POLYGON into multiple results in an ``explosion'' in the size of the dataset and the creation of numerous blank nodes. However, sharing points between descriptions is a use case with such a need. IGN has such use-cases and the natural solution at this stage is to consider reusing the NeoGeo ontology . The choice of the triple store (e.g.,Virtuoso vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
+\end{itemize}
+
+
 \subsection{Vocabularies for Geometries and Feature Types} \label{sec:topovocab}
 
 Direct georeferencing of data implies representing coordinates or geometries and associating them to a CRS.  This requires vocabularies for geometries and CRSs. Besides, indirect georeferencing of data implies associating them to other data on named places. Preferably, these data on named places should be also georeferenced by coordinates in order to serve as basis for data linking between indirectly and directly georeferenced datasets. In this section, we present the vocabularies that we have defined and reused for geographic data publishing.
@@ -53,6 +170,27 @@ In~\cite{Atemezing:TC12}, we already surveyed numerous vocabularies for represen
 \end{itemize}
 In addition to these recommendations, we also think that the domain of the property used to link a feature to its geometry should be left empty in order to accept links between any type of resource and a geometry. This would be useful for example, to associate a person to the coordinates of their birthplace.
 
+\todo{On the current usage of georeferencing resources on the Web of data, it is assumed that the coordinates should be in WGS84, and hence the definition of the point. However, publishers might have data in different CRSs according to the location. Thus, our proposal is to define a more generic class for a POINT  with the benefit of choosing the CRS of the underlying data, as depicted in the Listing 1.1.}
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Definition in Turtle of the axiom defining a POINT. }, label=point, captionpos=b}
+\begin{lstlisting}
+geom:Point a owl:Class;
+  rdfs:label "Point"@en, "Point"@fr;
+  rdfs:subClassOf geom:Geometry;
+  owl:equivalentClass
+    [a owl:Class ;
+	  owl:intersectionOf
+		([a owl:Restriction;
+		   owl:onDataRange xsd:double;
+		   owl:onProperty geom:coordY;
+	       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger]
+         [a owl:Restriction;
+		   owl:onDataRange xsd:double;
+		   owl:onProperty geom:coordX;
+		   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger])
+     ] ;
+     rdfs:subClassOf sf:Point.
+\end{lstlisting}
 
 \subsubsection{Extending GeoSPARQL vocabulary}
 In order to fulfill these recommendations, we have developed a new vocabulary that re-uses and extends the existing vocabularies for representing geometries, namely:
@@ -108,6 +246,14 @@ rtopo &  \url{http://data.ign.fr/id/topo/}
 The Information and Service System for European Coordinate Reference Systems\footnote{\url{http://www.crs-geo.eu}}  provides an access to ISO 19111 standard-based descriptions of the main European CRSs but has the same limitation as the EPSG registry: access to the descriptions is not allowed by URI, but only through a cartographic interface.
 \url{SpatialReference.org} initiative aims at allowing users to use URI-based references to spatial reference systems, including some CRSs defined and maintained by IGN France.  Besides, the proposed URL policy is not very intuitive. As an example, this URL identifies the projected system defined by IGN France, Lambert 93: \url{http://spatialreference.org/ref/sr-org/7527/}. Moreover, the definitions of some deprecated CRSs such as Lambert zone projected CRSs (which are still used in some datasets) seem to be referenced only for the authority EPSG and not for IGNF, which also maintains a registry of CRSs. ISO 19111 standard-based definitions of all CRSs defined and maintained by IGN France are  published in an XML file\footnote{\url{ http://librairies.ign.fr/geoportail/resources/IGNF.xml}}.
 References to equivalent definitions provided by the EPSG registry are explicitly stated with EPSG SRID. CRSs are identified by URIs using short names instead of numeric codes. For example, \url{http://registre.ign.fr/ign/IGNF/crs/NTFLAMB2E}  is the URI designed for the ``Lambert 2 \'{e}tendu'' projected system. Indeed ``NTFLAMB2E'' is used to identify the projected system ``Lambert 2 \'{e}tendu'' which is based on NTF (New French Triangulation) geodetic reference system. Unfortunately, this registry is still in evolution and its URIs are not dereferenceable yet.
+
+\begin{figure}[!htbp]
+ \begin{center}
+  \includegraphics[width=120mm]{img/crs-france.png}
+  \caption{Coordinate Reference Systems used in France. Source: \texttt{http://geodesie.ign.fr/}}
+  \label{fig:crsinfr}
+ \end{center}
+\end{figure}
  
 %\paragraph{Publishing a dataset on French CRSs}
 As no existing registry fulfilled all our requirements, we have developed a vocabulary\footnote{\url{http://data.ign.fr/def/ignf}}, inspired from the ISO 19111 schema for CRSs description. Then we have converted IGNF CRSs registry into RDF, and published this dataset on the Web with the Datalift platform\footnote{A service to lookup CRS in RDF can be found at \url{http://www.eurecom.fr/~atemezin/ignf-lookup/}}. Therefore, the description of the ``NTF Lambert 2 \'{e}tendu'' projected CRS can be retrieved at this URL \url{http://data.ign.fr/id/ignf/crs/NTFLAMB2E}.
@@ -123,6 +269,11 @@ The GEOFLA\circledR 's application schema is composed of classes representing di
 
 Regarding use cases consuming  real-world databases developed using the vocabularies aforementioned, two different applications have been developed. namely \textit{PerfectSchool}\footnote{\url{semantics.eurecom.fr/datalift/PerfectSchool/}}  and \textit{Equipment}\footnote{\url{http://semantics.eurecom.fr/datalift/Equipment/}}. The former is a mobile application intended to provide useful information on schools in France, while the latter is a facet view by categories of facilities in France, specifically in the city of Toulouse. 
 A Commune has an attribute called \textit{``nature''} whose enumerated values precise whether the commune is the capital of a bigger administrative unit, modeled in the vocabulary by the ObjectProperty \texttt{geofla:statut} with range \texttt{skos:Concept} defined in this specific \texttt{skos:ConceptScheme} \url{http://{BASE}/codes/geofla/typedecommune/liste} pointing to the different types of French administrative unit's capital. 
+
+
+\subsection{A REST Service for Converting Geo Data}
+\label{sec:rest-service}
+As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the de-facto standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}. Some existing tools like Circ\'e or the the world coordinate converter\footnote{\url{http://twcc.free.fr.are}} are good as a standalone tool for end user, but not so great for developers,  as they can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again.  At the moment, the following features are implemented: (i) from/to WGS 84 to/from WGS 84 UTM ; (ii) from/to WGS 84  to/from Lambert 93 and (iii) from/to WGS 84 UTM to/from Lambert 93. The API can also convert a file with space separated values. The API supports JSON as one of the output format. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
 
 \textcolor{red}{
 \subsection{Publishing structured geometries from geographic data}
