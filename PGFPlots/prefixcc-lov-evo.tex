@@ -1,0 +1,39 @@
+%\documentclass{standalone}
+%\usepackage{pgfplots}
+%\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+%\begin{semilogxaxis}[
+ cycle list name=exotic,
+ ylabel=number of prefix-namespace,
+ xlabel=month,
+% legend pos=outer north east,
+ legend style={at={(0.02,0.98)},anchor=north west,opacity=0.6},
+% legend columns=2,
+ axis on top,
+ ymin=0,ymax=1300,
+ mark size=0pt,
+ grid=major,
+% minor x tick num=10,
+% minor y tick num=10,
+%xtick={Jan-09,Feb-09,Mar-09,Apr-09,May-09,Jun-09,Jul-09,Aug-09,Sep-09,Oct-09,Nov-09,Dec-09,Jan-10,Feb-10,Mar-10,Apr-10,May-10,Jun-10,Jul-10,Aug-10,Sep-10,Oct-10,Nov-10,Dec-10,Jan-11,Feb-11,Mar-11,Apr-11,May-11,Jun-11,Jul-11,Aug-11,Sep-11,Oct-11,Nov-11,Dec-11,Jan-12,Feb-12,Mar-12,Apr-12,May-12,Jun-12,Jul-12,Aug-12,Sep-12,Oct-12,Nov-12,Dec-12,Jan-13,Feb-13,Mar-13,Apr-13,May-13,Jun-13,Jul-13,Aug-13},
+xtick={Jan-09,Apr-09,Jul-09,Oct-09,Jan-10,Apr-10,Jul-10,Oct-10,Jan-11,Apr-11,Jul-11,Oct-11,Jan-12,Apr-12,Jul-12,Oct-12,Jan-13,Apr-13,Jul-13},
+ ytick={0,100,...,1300},
+ symbolic x coords={Jan-09,Feb-09,Mar-09,Apr-09,May-09,Jun-09,Jul-09,Aug-09,Sep-09,Oct-09,Nov-09,Dec-09,Jan-10,Feb-10,Mar-10,Apr-10,May-10,Jun-10,Jul-10,Aug-10,Sep-10,Oct-10,Nov-10,Dec-10,Jan-11,Feb-11,Mar-11,Apr-11,May-11,Jun-11,Jul-11,Aug-11,Sep-11,Oct-11,Nov-11,Dec-11,Jan-12,Feb-12,Mar-12,Apr-12,May-12,Jun-12,Jul-12,Aug-12,Sep-12,Oct-12,Nov-12,Dec-12,Jan-13,Feb-13,Mar-13,Apr-13,May-13,Jun-13,Jul-13,Aug-13},
+ xmin=Feb-09,xmax=Aug-13,
+ x tick label style={rotate=65,anchor=east,font=\scriptsize}
+ ]
+  
+\pgfplotstableread{PGFPlots/prefixcc-lov-evo.dat}\thisTable
+%\pgfplotstableread{prefixcc-lov-evo.dat}\thisTable
+
+\addplot table[x=month,y=prefix.cc]{\thisTable};
+\addlegendentry{prefix.cc}
+
+\addplot table[x=month,y=LOV]{\thisTable};
+\addlegendentry{LOV}
+
+%\end{semilogxaxis}
+\end{axis}
+\end{tikzpicture}
+%\end{document}
