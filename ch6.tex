@@ -21,7 +21,7 @@ While we refer the reader to~\cite{AquinJoWS12} for a systematic survey of ontol
  \item \textit{Catalogs of ontology Design Patterns (ODP)} focused on reusable patterns in ontology engineering.
  \item \textit{Catalogs of editors’ ontologies} used to test some features of a tool and to keep track of the ontologies built by a tool, such as Web Protégé or TONES.
  \item \textit{Catalogs of ontologies maintained by a single organization} which often uses a platform such as Neologism\footnote{\url{http://neologism.deri.ie}} for publishing vocabularies.
- \item \textit{Vocabularies crawled by Semantic Web search engines} containing snapshots at the time of the crawsuch as Watson\footnote{\url{http://watson.kmi.open.ac.uk/}}, Sindice\footnote{\url{http://www.sindice.com}}, Falcon-s\footnote{\url{http://ws.nju.edu.cn/falcons/}} or Swoogle. %For example, the NanJing Vocabulary Repository (NJVR)- a dump of Falcon-s ontologies, reported as of June, 17th 2,996 vocabularies crawled from 261 pay-level domains.
+ \item \textit{Vocabularies crawled by Semantic Web search engines} containing snapshots at the time of the crawsuch as Watson\footnote{\url{http://watson.kmi.open.ac.uk/}}, Sindice\footnote{\url{http://www.sindice.com}}, Falcon-s\footnote{\url{http://ws.nju.edu.cn/falcons/}} or Swoogle. For example, the NanJing Vocabulary Repository (NJVR)- a dump of Falcon-s ontologies, reported as of June, 17th 2,996 vocabularies crawled from 261 pay-level domains.
 \end{itemize}
 
 \begin{table}
@@ -83,14 +83,119 @@ The LOV-Bot is the tool that automatically keeps up-to-date the relationships an
 \end{itemize}
 The LOV dataset is synchronized with the information presented in the web site. The latter allows a human user to browse LOV information.  The Linked Open Vocabularies initiative does not only monitor the current state of the ecosystem. It also aims at storing and giving access to vocabularies history. To achieve this goal, the LOV database contains every different version of a vocabulary over the time since its first issue. For each version, a user can access the file and a log of modifications since the previous version.
 
+\subsection{Linked Open Vocabularies}     \label{sec:lov}
+
+Started in March 2011, in the framework of the DataLift research project \cite{scharffe_2012} hosted by the Open Knowledge Foundation, the Linked Open Vocabularies (LOV) initiative is now standing as an innovative observatory of the vocabularies ecosystem. It gathers and makes visible indicators not yet harvested before, such as interconnection between vocabularies, versioning history and maintenance policy, past and current referent (individual or organization) if any. The number of vocabularies indexed by LOV is constantly growing (390 as of January 2014) thanks to a community effort and it is the only catalog, to the best of our knowledge, that provide all types of search criteria (metadata search, within/across ontologies search), both an API and a SPARQL endpoint access. According to the categories of ontology libraries defined in~\cite{AquinJoWS12}, LOV falls under the category of \textit{``curated ontology directory''}  and \textit{``application platform''}. 
+
+The development of LOV has highlighted a number of interesting research issues such as ``where to find the best domain vocabulary to reuse?", and ``is it possible to create a curated catalogue of vocabularies that are links?"
+Below we illustrate some of the LOV features useful for ontology search and reuse activities:
+  
+ \begin{description}
+	\item [Domain filtering.] Each vocabulary is inserted into LOV according to its domain and/or scope. This information is guided by the scope of the vocabulary, such as City, Science, Library, Metadata, Media, etc. This feature helps in disambiguating the results of the querying service and to classify vocabularies. 
+	\item [Content aware Search.] If the searched term matches a \url{rdfs:label} it will have a higher score than if it matches \url{dcterms:comment}.
+	\item [Links between vocabularies.] One of the key feature of LOV design is the explicit links between vocabularies, 
+	 \item [Scope of LOV.]The intended use is to promote and facilitate the reuse of vocabularies in the linked data ecosystem.
+	 \item [Vocabulary Curation.]The collection of the vocabularies is maintained by curators in charge of validating and inserting vocabularies in the LOV ecosystem, by taking care of the versions of the vocabulary and giving some reviews. The vocabulary is then automatically enriched with more information about the datasets using it, and relations to other vocabularies.
+ \end{description}
+
+LOV focuses only on vocabularies (subpart of semantic documents of the web) submitted by any user, reviewed and validated by curators. In addition, LOV keeps track of different versions of the vocabularies in the server that can be retrieved for comparing the differences between along the time evolution.  In contrast, Swoogle is designed to automatically discover Semantic Web Documents (SWDs), indexes their metadata and answers queries about it. Thus, the result of a search query retrieved any semantic document. For example, a query of the term \textit{person} gives $16,438$ results while in LOV, only the term appears in $134$ vocabularies. 
+Watson works similarly to Swoogle, crawling and indexing semantic document at a small scale, explicitly distinguishing for each document (resource), concepts, properties and individuals if available. While in Swoogle  the ranking score is displayed, Watson shows the language of the resource and the size. Falcons is a keyword-based search system for concepts and objects on the Semantic Web, and is equipped with entity summarization for browsing. It is notable that Falcons limits the search only to ontologies and a recommendation feature is provided according to users' preferences. However, it does not provide any relationships between the related ontologies, nor any domain classification of the vocabularies.   
+Table \ref{tab:lovfeatures} lists some key features of LOV with respect to Swoogle, Watson and Falcons.
+ \begin{table}[!htb]
+\centering{
+\begin{tabular}{lllll}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Feature}	& Swoogle & Watson & Falcons & LOV 			 \\ \specialrule{1pt}{1pt}{1pt}
+Browsing ontologies	   & Yes & Yes & Yes & Yes \\ 
+Scope & SWDs & SWDs & Concepts & ontologies \\
+Metrics	& Ranking & Ranking & Ranking &  LOD popularity	 \\ 
+Domain filtering & No & No & No & Yes \\
+Comments and review 	& No & Yes & No & Only by curators	\\ 
+Ranking	& Doc. based & Doc. based & Doc. based & Metric-based			\\ 
+Web service access & Yes & Yes & Yes & Yes		\\ 
+SPARQL endpoint	& No & No & No & Yes		\\ 
+Read/Write	& Read & Read \& Write & Read &Read  	\\ 
+Ontology directory & No & No & No &Yes \\
+Application platform & No & No & No & Yes \\
+Storage & Cache & - & - & Dump \& endpoint \\
+Interaction with Contributors & No &  - & No & Yes \\
+
+		\\ \specialrule{1pt}{1pt}{1pt}
+
+\end{tabular}
+\caption{Comparison of LOV, with respect to Swoogle, Watson and Falcons; based on part of the framework defined in \cite{AquinJoWS12}.  }
+\label{tab:lovfeatures}
+}
+\end{table}
+\subsection{LOV vs Neon Methodology}
+\label{sec:Lovandneon}
+
+ LOV is a tool that can fits well within the Neon methodology for building vocabularies and ontologies.  Based on the Neon Methodology's glossary of activities for building ontologies \cite{MC10}, LOV is relevant in four activities:
+		
+		\begin{description}
+		\item [Ontology Search.] Main LOV's feature is the search of vocabulary terms. These vocabularies are categorized within LOV according to the domain they address. In this way, LOV contributes to ontology search by means of (a) keyword search and (b) domain browsing.
+		\item [Ontology Assessment.] LOV provides a score for each term retrieved by a keyword search. This score can be used during the assessment stage and includes a unique term statistical feature\footnote{\url{http://lov.okfn.org/dataset/lov/stats/}} which provides for each term registered in LOV the following information: (a) ``LOV distribution'' that represents the number of vocabularies in LOV that refer to a particular element; (b) ``LOV popularity'' that shows the number of other vocabulary elements that refers to a particular one; and (c) ``LOD distribution'' that refers to the number of datasets in LOD which use a particular vocabulary; and (d) ``LOD popularity'' that refers to the number of vocabulary element occurrences in the LOD.
+		\item [Ontology Mapping.] As explained in section \ref{voafRelations}, vocabularies rely on each other in seven different ways. In LOV these relationships are explicitly stated using VOAF vocabulary. This data could be useful to find alignments between ontologies, for example one user might be interested in finding equivalent classes for a given class or all the equivalent classes among two ontologies. The following example shows the retrieved data when asking for all the equivalent classes and properties between the vocabularies foaf and dcterms by means of the related VOAF query\footnote{\url{http://goo.gl/sTIGQ6}. Prefixes are omitted for readability purpose. You can find the correct namespace for a prefix in LOV.}: 
+				
+		{\small\begin{verbatim}SELECT DISTINCT ?elem1 ?alignment ?elem2 {
+				     {?elem1 <http://www.w3.org/2002/07/owl#equivalentClass> ?elem2}
+				     UNION {?elem1 <http://www.w3.org/2002/07/owl#equivalentProperty> ?elem2}
+				     UNION {?elem2 <http://www.w3.org/2002/07/owl#equivalentClass> ?elem1}
+				     UNION {?elem2 <http://www.w3.org/2002/07/owl#equivalentProperty> ?elem1}
+				     FILTER(!isBlank(?elem2))
+				     FILTER(!isBlank(?elem1))
+				     ?elem1 ?alignment ?elem2.
+				     ?elem1 rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/>.
+				     ?elem2 rdfs:isDefinedBy <http://purl.org/dc/terms/>.
+				} ORDER BY ?alignment\end{verbatim}}
+				
+	Figure \ref{fig:eqCR} shows the alignments between foaf and dcterms vocabularies by mean of \url{owl:equivalentClass} and \url{owl:equivalentProperty}. 
+
+\begin{figure}
+\centering
+  \includegraphics[width=1.0\linewidth]{img/equivalentCandR.png}
+  \caption{Equivalent classes and properties between foaf and dcterms}
+  \label{fig:eqCR}
+\end{figure}
+
+							
+		\item [Ontology Localization.] Labels in different languages are stored in the LOV endpoint for the ontology terms that provide such information. This annotations could be used when translating terms into different languages. This information could be extracted by querying the SPARQL endpoint as in the following example\footnote{\url{http://goo.gl/JJCJ01}} where all the labels defined for the terms that have at least one \url{rdfs:label} containing strictly ``person":
+		
+		{\small\begin{verbatim}SELECT DISTINCT ?label2 ?element{
+								     ?element rdfs:label ?label1 .
+								     ?element rdfs:label ?label2 .
+								     FILTER (?label1 != ?label2 ).
+								     FILTER(REGEX(STR(?label1), "person", "i")).
+							} ORDER BY ?element\end{verbatim}}
+								     
+		An excerpt of the query result is shown in figure \ref{fig:translations}. From that result, ``Persona''@es and ``Personne''@fr could be used as translations for the English term ``Person'' in Spanish and French respectively.
+	\end{description}
+
+\begin{figure}
+\centering
+  \includegraphics[width=.90\linewidth]{img/translations1.png}
+  \caption{Translations example for foaf:Person}
+  \label{fig:translations}
+\end{figure}
+
+		Figure \ref{fig:LOVandNeOn} shows the activities LOV can support within the overall \neon methodologies activity workflow.
+		
+\begin{figure}
+\centering
+  \includegraphics[width=.95\linewidth]{img/neonScenarios.png}
+  \caption{Meeting points between LOV and the NeOn methodology, derived from \cite{MC10}.}
+  \label{fig:LOVandNeOn}
+\end{figure}
+
+
 \section{Prefixes harmonization}
 \label{sec:prefharmoni}
 
-RDF vocabularies bring their meaning to linked data by defining classes and properties, and their formal semantics. Relying on W3C standards RDFS or OWL, those vocabularies are a fundamental layer in the architecture of the Semantic Web. Without the explicit semantics declared in vocabularies, linked data, even using RDF, would be just linked pieces of information where links have no meaning. Interoperability between data and datasets rely heavily on shared vocabularies, but given the distributed nature of the Web, vocabularies are published by independent parties and there is no centralized coordination of this publication, nor should it be. Various independent services have been developed in order to discover vocabularies and provide information about them, and the community of data publishers and vocabulary managers have all interest in complementarity and coordination between such services. In this paper, we focus on a specific aspect of vocabularies: their identification by namespaces and associated prefixes.
+RDF vocabularies bring their meaning to linked data by defining classes and properties, and their formal semantics. Relying on W3C standards RDFS or OWL, those vocabularies are a fundamental layer in the architecture of the Semantic Web. Without the explicit semantics declared in vocabularies, linked data, even using RDF, would be just linked pieces of information where links have no meaning. Interoperability between data and datasets rely heavily on shared vocabularies, but given the distributed nature of the Web, vocabularies are published by independent parties and there is no centralized coordination of this publication, nor should it be. Various independent services have been developed in order to discover vocabularies and provide information about them, and the community of data publishers and vocabulary managers have all interest in complementarity and coordination between such services. In this section, we focus on a specific aspect of vocabularies: their identification by namespaces and associated prefixes.
 
 In the original XML syntax of RDF, prefixes are simply local shortcuts associated with XML namespaces using \texttt{xmlns} declarations. The usage of prefixes has been further extended to other syntaxes of RDF such as N3 and Turtle. Although a prefix to namespace association is syntactically limited to the local context of the file in which it is declared, common prefixes such as \texttt{rdf:}, \texttt{rdfs:}, \texttt{owl:}, \texttt{skos:}, \texttt{foaf:} and many more have become de facto standards. For example, RDFa has 1.1 has a default profile made of 11 well-used vocabularies based on their general usage on the Semantic Web according to the crawl of Yahoo! and Sindice as of March 2013\footnote{\url{http://www.w3.org/2010/02/rdfa/profile/data/}}. Similarly, the YASGUI SPARQL editor has a list of built-in prefix-namespace associations to ease the construction of SPARQL queries. However, this list of ``standard'' prefixes is open-ended. Interfaces such as SPARQL endpoints (e.g. Virtuoso) use a list of built-in prefixes declaration for more and more namespaces but the choice of entries in this list is all but transparent. Hence, the reason of a given namespace being or not in this list could be interpreted in many ways, a potential source of technical and social conflicts. Therefore, the notion has been slowly spreading, at least implicitly, that common prefixes could and indeed should have a global use, implying some kind of governance and good practices. More and more vocabularies explicitly recommend the prefix that should be used for their namespace, generally using a common if not written good practice to avoid frontal clashes by recommending a prefix not already used. But there is no global policy except implicit rules of fair use to avoid potential conflicts resulting from polysemy (different namespaces using or recommending the same prefix) or synonymy (different prefixes used for the same namespace).
 
-A vocabulary publisher needs to have access to some services capable of monitoring the existing prefixes usage in order to stick to those rules. In this paper, we focus on two services providing such information on prefixes usage namely prefix.cc\footnote{Service: \url{http://prefix.cc/}; Code: \url{https://github.com/cygri/prefix.cc}} and LOV (Linked Open Vocabularies)~\cite{Datalift:D22}. Both services provide associations between prefixes and namespaces but following a different logic. The prefix.cc service allows anybody to suggest a prefix to namespace association. It supports polysemy and synonymy, and has a very loose control on its crowd-sourced information. What it provides is more a measure of popularity of prefixes and namespaces than a way to put order in them. LOV has a much more strict policy forbidding polysemy and synonymy, enforced by a dedicated back-office database infrastructure, ensuring that each vocabulary in the LOV database is uniquely identified by a prefix, this unique identification allowing the usage of prefixes in various LOV publication URIs. This requirement leads sometimes to a situation where LOV uses prefixes different from the ones recommended by the vocabulary publishers.
+A vocabulary publisher needs to have access to some services capable of monitoring the existing prefixes usage in order to stick to those rules. Moreover, we focus on two services providing such information on prefixes usage namely prefix.cc\footnote{Service: \url{http://prefix.cc/}; Code: \url{https://github.com/cygri/prefix.cc}} and LOV (Linked Open Vocabularies)~\cite{Datalift:D22}. Both services provide associations between prefixes and namespaces but following a different logic. The prefix.cc service allows anybody to suggest a prefix to namespace association. It supports polysemy and synonymy, and has a very loose control on its crowd-sourced information. What it provides is more a measure of popularity of prefixes and namespaces than a way to put order in them. LOV has a much more strict policy forbidding polysemy and synonymy, enforced by a dedicated back-office database infrastructure, ensuring that each vocabulary in the LOV database is uniquely identified by a prefix, this unique identification allowing the usage of prefixes in various LOV publication URIs. This requirement leads sometimes to a situation where LOV uses prefixes different from the ones recommended by the vocabulary publishers.
 
 \subsection{Aligning LOV with Prefix.cc} \label{sec:alignment}
 In this section, we present how we perform the alignment between the two services LOV and prefix.cc. Figure~\ref{fig:evolution} shows the evolution of the number of prefixes registered in these two services between April 2009 and July 2013. Our main goals are to align Qnames (prefix) to a unique URI in LOV and to make sure that all the vocabularies in LOV are actually inserted in prefix.cc.
