@@ -12,6 +12,285 @@
 
 \end{itemize}
 
+\section{Wizard for Visualizations}
+
+%\ghis{find a good justifying example} \\
+
+With the growing adoption of the Linked Data principles, there is a real need to support data consumers in quickly getting visualizations that enable to explore a dataset. In order to involve more general Web users into the Semantic Web and Linked Data world, there is a need to build tools that reuse existing visualization libraries showing the key information about RDF datasets. Many datasets are published using SPARQL Endpoints and are not ``visually'' accessible. Thus, understanding the underlying graphs and consuming them require lay users to have some knowledge in writing queries. 
+
+The object of visualization is to develop insights from collected data. Moreover, according to Information Theory, vision is the sense that has the largest bandwidth (100 Mbits/s), which makes it the best suited channel to convey information to the brain \cite{Ware:2014}. Based on the Visual Information Seeking Mantra: \textit{``overview first, zoom and filter, then details on demand''} \cite{Shneiderman99}, we advocate for more visual interactive representations of RDF graphs using SPARQL Endpoints.   At the same time,  we use the term ``Linked Data Visualization'', to refer to a \textit{combination of charts, graphics, and other visual elements built on top of 4-5 stars datasets accessible via a SPARQL endpoint}. 
+Despite the presence of more and more datasets published as Linked Data, there is still a need to help end users to discover what (unknown) datasets describe by hiding the complexity of SPARQL queries from such users. Moreover, the task of identifying the key categories of datasets can help in selecting and matching the most suitable visualization types.
+
+In this Section, we propose a first step towards making available a semi-automatic way for the production of possible visualization of linked data sets of high-level categories grouping objects that are worth viewing and we associate them with some very well known vocabularies. Then, we describe the implementation of a Linked Data Visualization Wizard and its main components. This wizard can be used to easily visualize slices of datasets based on generic types detected.
+
+The remainder  of this paper is structured as follows. We first provide some related work that further motivates this study (Section~\ref{sec:related}). In Section~\ref{sec:vizTypes}, we propose some important categories that are worth visualizing and we present a set of mapping views associated with vocabularies (Section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). 
+
+\subsection{Dataset Analysis}
+\label{sec:vizTypes}
+When developing an application, there are some ``important'' classes/categories, objects or datatypes that can be detected first to help to guide in the progress of creating a set of visualizations tied with those categories. We distinguish seven categories while acknowledging that this is not necessary an exhaustive list:
+\begin{itemize}
+ \item{\S~[\textbf{Geographic information}]}: This category is for data modeled using \texttt{geo:SpatialThing}, \texttt{dbpedia-owl:Place}, \texttt{schema:Place} or \texttt{gml:\_Feature} classes.
+ \item{\S~[\textbf{Temporal information}]}: This category also includes dataset containing date, time (e.g: \texttt{xsd:dateTime}) and period or interval of time, using the OWL Time ontology.
+ \item{\S~[\textbf{Event information}]}: This category is for any action of activity occurring at some place at some time.
+ \item{\S~[\textbf{Agent/Person information}]}: This category is heavily influenced by the use of \texttt{foaf:Person} or \texttt{foaf:Agent}.
+ \item{\S~[\textbf{Organization information}]}: This category is related to organizations or companies data, with the use of the \texttt{org} vocabulary\footnote{\url{http://www.w3.org/TR/vocab-org/}} or the \texttt{foaf:Organization} class.
+ \item{\S~[\textbf{Statistics information}]}: This category refers to statistical data generally modeled using the \texttt{data cube} vocabulary\footnote{\url{http://www.w3.org/TR/vocab-data-cube/}} or the SDMX model\footnote{\url{http://sdmx.org/}}.
+ \item{\S~[\textbf{Knowledge Classification}]}: This category refers to dataset describing schemas, classifications or taxonomies using the \texttt{SKOS} vocabulary.
+\end{itemize}
+
+
+
+\section{Mapping Datatype, Views and Vocabularies}
+\label{sec:mapping}
+%\todo{add ref. to "Interactive Data Visualization" by Ward et al.}
+
+The On-line Library of Information Visualization Environments (OLIVE)\footnote{\url{http://lte-projects.umd.edu/Olive/}} is a web site describing eight categories of information visualization environments differentiated by data type and collected by students, following a visualization course given at Maryland College Park, mostly inspired from the work of Ben Shneiderman \cite{Shneiderman99}. Based on the classification provided by OLIVE, we propose a set of mappings between those categories (excluding the workspace dimension), views that can be applied to this category and a suitable list of vocabularies from the Linked Open Vocabularies catalogue \cite{lov11}\footnote{\url{lov.okfn.org/dataset/lov/}} that correspond to those categories. Those vocabularies are easy to be found as there is a manual classification of vocabularies by the curators of the catalogue based on the content and scope of the terms and properties. According to the seven categories defined in Section ~\ref{sec:vizTypes}, we have identified some of their corresponding one to one mapping with the set of vocabularies:
+ \begin{itemize}
+ \item \textbf{Geography} space, consisting of 21 vocabularies for features: \texttt{geo}, \texttt{gn}, \texttt{gf}, \texttt{om}, \texttt{geop}, \texttt{md}, \texttt{lgdo}, \texttt{loc}, \texttt{igeo}, \texttt{osadm}, \texttt{geod}, \texttt{ostop}, \texttt{place}, \texttt{geos}, \texttt{locn}, \texttt{coun}, \texttt{postcode}, \texttt{osr}, \texttt{geof}, \texttt{g50k} and \texttt{ad}.
+ \item \textbf{Geometry} space, for vocabularies dealing with the geometries, mostly combined with the features, such as: 
+ \item \textbf{Time} space, consisting of 14 vocabularies, such as \texttt{cal}, \texttt{date}, \texttt{gts}, \texttt{interval}, \texttt{ncal}, \texttt{oh}, \texttt{te}, \texttt{thors}, \texttt{ti}, \texttt{time}, \texttt{tl}, \texttt{tm}, \texttt{tvc} and \texttt{tzont}. 
+ \item \textbf{Event} space, containing vocabularies such  as \texttt{event}, \texttt{lode}, \texttt{music}, \texttt{sem}, \texttt{situ}, \texttt{sport}, \texttt{stories}, \texttt{theatre}, \texttt{tis} and \texttt{tisc}.
+ \item \textbf{Government} space, with 9 vocabularies (\texttt{cgov}, \texttt{ctorg}, \texttt{elec}, \texttt{few}, \texttt{gc}, \texttt{gd}, \texttt{oan}, \texttt{odd}, \texttt{parl}) and the \texttt{org} vocabulary belonging to the W3C recommendation vocabularies at \url{ http://lov.okfn.org/dataset/lov/lov#W3C}.
+ \end{itemize} 
+ Metadata vocabularies, such as \texttt{rdfs}, \texttt{dcterms} or \texttt{dce} can be used in association with any of the visual element to give basic description of the resource of a giving dimension. For example, a popup information can be fired on a map view to display the relevant information of a geodata resource such as the label, the abstract or description. 
+Another application can be to detect which visualization is best suited for geodata. Geodata belongs to a  two-Dimension visual representation. Geodata is usually displayed using geographical-based visualizations (map, geo charts, etc.) and it is often modeled by vocabularies in the space named \texttt{Geometry} and \texttt{Geography}\footnote{All the prefixes used for the vocabularies are the same used in LOV catalogue.}   vocabularies in RDF datasets. Hence those vocabularies can be combined to detect the presence or not of geographic information in a dataset, and thus yield to recommend a map view. Table~\ref{tab:taxonomy} gives an overview of those mappings. For the tabular representation, it is the ``default'' visual representation of RDF data and can be used by any vocabulary without restriction. 
+%The Table also 
+\begin{table}[!htbp]
+\centering{
+\begin{tabular}{lllc}
+ \specialrule{1pt}{1pt}{1pt}
+ \textbf{Dimension}	 	& \textbf{Vocabulary Space}  & \textbf{Visual element}		 \\ \specialrule{1pt}{1pt}{1pt}
+ Temporal 	     &  \textsf{Time space} &     TimeLine		      	 		 \\
+ one-Dimension  & \textsf{any}	   & Tabular, text							 \\
+ two-Dimension   & \textsf{Geography space}     & Map view 						\\
+ 			& \textsf{Geometry space}    & Maps view                            \\
+ three-Dimension  	& \textsf{Event space}  	& Map + TimeLine	 			\\
+ Multi-Dimension  & \textsf{qb}, \textsf{sdmx-model}, \textsf{scovo}      & Charts, graphs   			 		\\
+ Tree	      &   \textsf{skos, Government space}            & Treemap, Org view   				\\
+ Network	  & \textsf{any vocab.}   & Graph, network map  			 			
+ \\
+ \specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{A taxonomy of information visualization consuming Linked Datasets with associated views and suitable vocabulary space.}
+\label{tab:taxonomy}
+}
+\end{table}
+
+
+\section{LDVizWiz: a Linked Data Visualization Wizard}
+\label{sec:ldvizwiz}
+
+%\todo{present in detail the queries for detecting ALL the categories} \\
+
+We propose a workflow composed of four principal steps for a Linked Data Visualization Wizard, as depicted in Figure~\ref{fig:workflow}. Our requirement is to provide a tool that hide the complexity of SPARQL to lay users and at the same time, can be embedded in existing Linked Data infrastructure and workflow. First, we proposed to detect the presence of data belonging to one of the seven categories (Table~\ref{tab:taxonomy}) using generic SPARQL queries. More precisely, we perform \texttt{ASK} queries to test whether or not a particular query pattern has a solution. Second, we look at entities in a dataset that have \texttt{owl:sameAs} links with external objects and we retrieve the properties associated to those objects. We argue that the objects that are interlinked with other datasets are of primary importance in a visualization. We show the results of this mining process to the user (the categories that have been detected, the properties going with the categories and the external domain). Based on this information, the user can make a personalized ``mashup'' by aggregating the suitable visualization widgets. Some default visualizations are available according to the top categories detected. The last step is to publish the visualization and a metadata report in RDF/XML TURTLE or N3.
+
+\begin{figure*}[!htbp]
+\begin{center}
+\subfigure[The workflow of the different modules interacting in the Linked Data visualization wizard.]{
+\includegraphics[width=0.5\textwidth]{img/workflow-visu.pdf}
+}
+\subfigure[High level functionalities of the Linked Data visualization wizard ]{
+\includegraphics[width=0.4 \textwidth]{img/architecture-ldwizard.pdf}
+}
+
+
+\caption{Big picture and architecture of the Linked Data visualization wizard.}
+\label{fig:workflow}
+\end{center}
+\end{figure*}
+
+Let consider a graph $<G,c>$ to be $G=\{(s,p,o)| p \in URI, s \in URI, o \in (URI \cup LIT)\} $ where $URI$ is the set of URIs, $LIT$ is the set of literals, and $c$ the context. We define $L=\{V_{1}, V_{2}, ...,V_{n} | V_{i}=P_{i} \cup T_{i}\} $ the list of vocabularies in LOV, with $P_{i}$ and $T_{i}$ respectively the properties and terms of a vocabulary $V_{i}$. Let also $D=\{D_{1}, D_{2}, ..,D_{m} \} $ be the domains of vocabularies. We assume $ \forall V \in L, \exists D_{k} \in \Phi(L,D) $. We define a generic function $\Sigma:(G,c)\mapsto B $ to detect categories in a dataset as follows: $\Sigma((G,c))=\{B| ( \exists(s,p,o) \in G: p \in V) \cup (\exists(s, rdf:type,o) \in G: o \in V)\} $ where $B =\{True, False\} $.
+
+
+In the following sections, we describe each of the steps involved in the Linked Data Visualization Wizard in more details. 
+
+\subsection{Category Detection}
+The goal of the category detection task is to use SPARQL queries to detect the presence of some high level categories in the dataset. We perform \texttt{ASK} queries as implementation of the $\Sigma $ function using standard vocabularies as defined in the Table~\ref{tab:taxonomy}. We start with six categories, namely: geographic information, person, organization, event, time and knowledge organization systems. We select popular vocabularies based on two existing catalogues: LOV~\cite{pyv2012} and prefix.cc\footnote{\url{http://prefix.cc}}.
+
+%asking geodata
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Generic query to detect geo data from a SPARQL endpoint}, label=geodata, captionpos=b}
+\begin{lstlisting}
+ASK WHERE {
+ {
+  ?x a ?o.
+  filter (?o= dbpedia-owl:Place ||
+    ?o=gml:_Feature || 
+    ?o=geo:SpatialFeature || ?o=gn:Feature ||
+    ?o=admingeo:CivilAdministrativeArea ||
+    ?o=spatial:Feature ||
+    ?o=vcard:Location)
+ }
+ UNION {
+  ?x ?p ?o. filter(?p=geo:lat || ?p=geo:long ||
+  ?p=georss:point || ?p=geo:geometry || 
+  geom:geometry)
+ }
+}
+\end{lstlisting}
+
+ Listing~\ref{geodata} shows seven classes of different vocabularies are used, respectively for the namespaces \texttt{dbpedia-owl, geo, gn, admingeo, spatial} and \texttt{vcard}, with relevant classes to check the presence of geographic data.
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Generic query to detect time data from a SPARQL endpoint, using \texttt{time, dbpedia-owl, intervals} vocabularies.}, label=timedata, captionpos=b}
+\begin{lstlisting} 
+	ASK WHERE {{?x a ?o. filter(?o=time:TemporalEntity || 
+	?o=time:Instant || 
+		?o=time:Interval || ?o=dbpedia-owl:TimePeriod || 
+		?o=time:DateTimeInterval || ?o=intervals:CalendarInterval)
+	} 
+	UNION{ ?x ?p ?o. filter(?p=time:duration || 
+	?p=time:hasBeginning || 
+	?p=time:inDateTime || ?p=time:hasDateTimeDescription 
+	|| ?p=time:hasEnd)}
+
+\end{lstlisting}
+
+Listing \ref{timedata} detects the presence of time information, while Listing \ref{persondata}, \ref{orgdata} and \ref{eventdata} detect persons, organizations and events respectively.
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Generic query to detect person categories from a SPARQL endpoint, using \texttt{foaf, dbpedia-owl, vcard} vocabularies.}, label=persondata, captionpos=b}
+\begin{lstlisting}
+	ASK WHERE {?x a ?o. filter(?o = foaf:Person ||
+	 ?o=dbpedia-owl:Person ||
+		?o=vcard:Individual) }
+	
+\end{lstlisting}
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Generic query to detect ORG data from a SPARQL endpoint.}, label=orgdata, captionpos=b}
+\begin{lstlisting}
+PREFIX org:<http://www.w3.org/ns/org#>
+	PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+	PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> 
+	ASK WHERE {?x a ?o . filter (?o=org:Organization || 
+	?o=org:OrganizationalUnit || 
+	?o=foaf:Organization || 
+	?o=dbpedia-owl:Organisation)}
+	
+\end{lstlisting}	
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Generic query to detect event data from a SPARQL endpoint, using \texttt{lode, event, dbpedia-owl} vocabularies.}, label=eventdata, captionpos=b}
+\begin{lstlisting}
+    ASK WHERE{?x a ?o. filter (?o= lode:Event || ?o=event:Event || 
+    ?o=dbpedia-owl:Event)}	
+    
+  \end{lstlisting}
+  
+  
+For detecting data organized as taxonomy, \texttt{skos} vocabulary is used along with the most used classes and properties as showed in Listing \ref{skosdata}.
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white},
+frame=single, caption= {Generic query to detect SKOS data from a SPARQL endpoint, using \texttt{skos} vocabulary.}, label=skosdata, captionpos=b}
+\begin{lstlisting}
+    ASK WHERE {{?x a ?o. filter(?o=skos:Concept ||
+     ?o=skos:ConceptScheme || ?o=skos:Collection )}
+    	 UNION{ ?x ?p ?o. filter(?p=skos:featureCode || 
+    	?p=skos:altLabel || ?p=skos:prefLabel  || ?p=skos:relatedMatch)}}		
+\end{lstlisting}
+
+
+\subsection{Property Aggregation}
+We take the benefits of the \texttt{owl:sameAs} links between entities to have access to the properties of the entities in the external namespaces different from the origin dataset. This module also aggregates the properties found in the dataset with the ones found in the interlinked sets. This is based on the assumption that during the linkage process, external datasets not only help in not breaking the \textit{follow-your-nose} principle, but also add more information to be viewed in visualization applications. As shown in the code below, at this stage, we have collected and aggregated external properties gathered from the enrichment process of the workflow.
+
+\begin{verbatim}
+1-LET Namespace(?s) = S and LET Namespace(?t) =T
+2-SELECT  owl:sameAs links
+	LET SEMTERM = list of ?s owl:sameAs ?t
+	WITH T != S
+3-IN T, SELECT distinct properties used in dataset
+4-AGGREGATE (3) with properties FROM S.
+\end{verbatim}
+
+\subsection{Visualization Generator}
+This module aims at recommending the appropriate visualizations based on the categories detected by the wizard. It might also help the user to make a report summarizing the result of the mining process, and then use different visualization libraries to view the data. This module can be viewed as a recommender system because it derives visualizations based on the categories. The input to build each visualization is the corresponding SELECT query of each ASK queries used to detect the categories. Moreover, some adjustment are made to avoid blank nodes and to get the labels of the resources. The generator can be coupled with a mashup widget generator for some  categories. For example, users could expect for event data, a combination of map view (where), a timeline (when) and facets based on the agents (who).
+
+\subsection{Visualization Publisher}
+The publisher module aims at exporting the combined visualizations, along with the report of all the process of mining the dataset, in a format easy to share, either as HTML, SVG or in the different RDF syntax flavor. For the latter, apart from using metadata information (creator, issued date, license), we model the categories we have detected using the \texttt{dcterms:subject} property of a \texttt{dcat:Dataset}, the queries used (using the \texttt{prov:wasDerivedFrom} property), the sample resources for each category (using the \texttt{void:exampleResource} property) and the visualization generated (using the \texttt{dvia} and \texttt{chart}\footnote{\url{http://data.lirmm.fr/ontologies/chart}} vocabularies).
+
+\section{Experiment and Implementation}
+\label{sec:evaluation}
+In this section, we describe the experiments and report the evaluation on detecting categories on 444 endpoints. We then describe a prototype as a ``\texttt{proof-of-concept}'' of the proposal. 
+
+\subsection{Experiment set up}
+%\todo{explain and discuss in detail the experiment} \\
+We have evaluated our approach on the list of $444$ endpoints referenced at \url{http://sparqles.okfn.org/} monitoring the availability, performance, interoperability and discoverability of SPARQL Endpoints registered in Datahub \cite{buil2013} . We have implemented a script in python to speed up the process and obtain the results. Every ASK query for the different category is implemented in a separate function requesting a JSON response.
+ 
+
+\subsection{Evaluation}
+From the $444$ endpoints used on the detection category module, $278$ endpoints (62.61\%) were able to give satisfactory (yes/no on one of the seven categories) results based on the queries. However, almost 37.38\% of the endpoints were either down at the time of our experiments or the response header was in XML instead of JSON (as set up in the script). This result shows that our proposal with the current implementation (not covering all the vocabularies in LOV) make use of most popular vocabularies reused in the Linked Data. 
+\begin{table}[!htbp]
+\centering{
+\begin{tabular}{lccc}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Category}	& \textbf{number} 	& \textbf{Percentage} 		 \\ \specialrule{1pt}{1pt}{1pt}
+GEO DATA    & 97	    & 21.84\%	 		 \\ 
+EVENT DATA	& 16		& 3.60\%				 \\ 
+TIME DATA 	& 27		& 6.08\%		\\ 
+SKOS DATA	& 2		& 0.45\%			\\ 
+ORG DATA    & 48		& 10.81\%			\\ 
+PERSON DATA & 59   	& 13.28\%  \\		
+STAT DATA   & 29    &  6.6\% 
+		\\ \specialrule{1pt}{1pt}{1pt}
+
+\end{tabular}
+\caption{Classification of the endpoints according to the datatype detected with our SPARQL generic queries}
+\label{tab:experiments}
+}
+\end{table}
+
+This also implies a good coverage of the method that uses standard queries and yet can be extended. The full result of the detection module on the queried services is available at \url{http://cf.datawrapper.de/3FuiV/2/}, where for each column, the value $0$ stands for \textit{no presence} and $1$ for the \textit{presence} of the categories. As provided in Table~\ref{tab:experiments}, 21.84\% of geo data was detected, 13.288\% of person data, 10.81\% of org data and 3.6\% of SKOS data.
+ 
+\begin{table}[!htbp]
+\centering{
+\begin{tabular}{lcccccc}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Endpoint}	& \textbf{event} 	& \textbf{geo} & \textbf{org} & \textbf{person} & \textbf{skos} & \textbf{time} 		 \\ \specialrule{1pt}{1pt}{1pt}
+dbpedia.org & 0 & 1 & 1 & 1 & 0 & 0 \\
+de.dbpedia.org & 0 & 1 & 1 & 1 & 0 & 0 \\
+el.dbpedia.org & 1 & 1 & 1 & 1 & 0 & 0 \\
+fr.dbpedia.org & 1 & 1 & 1 & 1 & 0 & 1 \\
+ja.dbpedia.org & 1 & 1 & 1 & 1 & 0 & 0 \\
+live.dbpedia.org & 1 & 1 & 1 & 1 & 0 & 1 \\
+nl.dbpedia.org & 1 & 1 & 1 & 1 & 0 & 0 \\
+pt.dbepdia.org & 1 & 1 & 1 & 1 & 0 & 0
+		\\ \specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Categories detected in some \textit{dbpedia} endpoint domains, where ``1'' is the presence and ``0'' the absence of the given type of category.}
+\label{tab:catendpoints}
+}
+\end{table}
+
+Table \ref{tab:catendpoints} summarizes some findings for $8$ DBpedia chapters endpoints where it's easy to note the absence of SKOS data, and less presence of data modeled using \texttt{time} vocabulary. The Table also shows the differences in the standard vocabularies used to convert the wikipedia data into RDF across different chapters. 
+
+
+\subsection{Implementation}
+\todo{add a page explaining how to use the tool and alert message} \\
+\todo{Evaluation with real word users (e.g: usability evaluation) and datasets online and offline} \\
+
+A first prototype, implemented with javascript and the Bootstrap framework\footnote{\url{http://getbootstrap.com/}}, is available at \url{http://semantics.eurecom.fr/datalift/rdfViz/apps/}, as a proof of concept. We aim at providing a lightweight tool for lay users to quickly understand what the data is about and so that they get first visualizations based on categories detected in the datasets. We also reuse \textit{sgvizler}~\cite{Martin2012} for generating charts according to the categories retrieved by the wizard. In the current implementation, the user can enter any SPARQL endpoint, and with a ``click'', the user can receive the list of categories detected together with sample resources. In the second step, the wizard retrieves the properties from the objects and subjects part of \texttt{owl:sameAs} links. The last step shows different tabs with the summary of the previous steps, the visualizations available for each categories, and a report both in human and machine readable formats. Figure~\ref{fig:visuSample} depicts a sample visualization generated by the wizard for geo data and statistics data.
+
+The system can be used in any tool consuming Linked Data in which the complexity of SPARQL analysis and visualizations of RDF datasets is hidden to the lay users, with the benefits of showing that information encoded in triples is not only "beautiful", but also useful in the sense of traditional wizard-based tools.
+
+\begin{figure*}[!htbp]
+\begin{center}
+\subfigure[Overview of the first step report on categories detected:(1) categories detected,(2) vocabularies used. ]{
+\includegraphics[width=0.4 \textwidth]{img/checkerCategory.png}
+}
+\subfigure[Overview of the report on categories detected. ]{
+\includegraphics[width=0.4 \textwidth]{img/categories.png}
+}
+\subfigure[Two views generated by the LD wizard, for geodata and stats data]{
+\includegraphics[ width=0.4 \textwidth]{img/samplevisu.png}
+}
+
+
+
+\caption{Categories detected and visualization generated by the Linked Data visualization wizard in the case of EventMedia endpoint service.}
+\label{fig:visuSample}
+\end{center}
+\end{figure*}
+
+
+\subsection{Conclusion}
+\label{sec:conclusion-wizard}
+In this Section we have presented  an approach for creating visualizations on top of Linked Data. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with common Linked Data vocabularies. We then present a description of the main components of LDVizWiz: a Linked Data Visualization Wizard. We describe a lightweight implementation in javascript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow for publishing and linking data on the web, like Datalift\footnote{\url{http://www.datalift.org}} or the GeoKnow stack\footnote{\url{ http://generator.geoknow.eu/ }}. 
 
 \section{A vocabulary for Describing VIsualization Applications} \label{sec:dvia}
 
@@ -178,6 +457,148 @@ Fresnel\footnote{\url{http://www.w3.org/2005/04/fresnel-info/}} is a presentatio
 
 \section{Application consuming Statistics datasets: PerfectSchool}
 \label{sec:perfectSchool}
+
+\subsection{Scope of the Application}
+The \texttt{Perfect School} application is intended to provide useful information on schools in France using semantic technologies, with RDF-ized data enriched with other datasets in the wild. The application and the vocabulary have successfully passed the integrity checker\footnote{\url{http://www.w3.org/2011/gld/wiki/Data_Cube_Implementations}}  of an implementation for the candidate recommendation of Data Cube \url{http://www.w3.org/TR/vocab-data-cube/ } vocabulary at W3C.
+
+\subsection{Legacy Datasets}
+In order to build the application, we had to look at some relevant datasets in data.gouv.fr. The ones selected for building the application are the following:
+
+\begin{itemize}
+\item The file at \url{http://www.data.gouv.fr/DataSet/564055} in CSV format, containing a list of $67, 201$ schools (name, status, type), with geolocation position in Lambert 93, for the academic year 2011-2012. The file contains the following attributes (in French): 
+	\begin{itemize}
+		\item code of the school (e.g. 0010002X), 
+		\item  official name of the school (e.g.: College Saint-Exupery), 
+		\item principal name (e.g. COLLEGE), 
+		\item patronymic name (e.g. Saint-Exupery), 
+		\item status of the school (1 = open, 2 = to be closed and 3 = to be opened), 
+		\item label of the type of school (e.g: 1= first degree, 3 = second degree).
+	\end{itemize}
+\item \url{http://www.data.gouv.fr/DataSet/572165}, in .CSV format giving results for professional schools, indicators), from one academic year (2011-2012). The file contains the following attributes:
+	\begin{itemize}
+		\item name of school, 
+		\item  city code, 
+		\item code of the school, 
+		\item district where the school is located, 
+		\item sector (PR= PRivate, PU= PUblic), 
+		\item several observation measures with statistics on success rates, school versus academic/national rates, name of the academy it belongs to, as well as the department.
+	\end{itemize}
+   \item \url{http://www.data.gouv.fr/DataSet/572162} (.CSV) containing statistics for  $2296$ public high schools and indicators. It complements the statistics from INSEE.
+\end{itemize}
+
+\subsection{Ontology Modeling}
+We have reused some external ontologies for more interoperability:
+\begin{itemize}
+\item \texttt{aiiso}\footnote{http://vocab.org/aiiso/schema} for the type of school and codes of school.
+\item \texttt{geofla}\footnote{http://data.ign.fr/def/geofla\#} since the schools are considered as a topographic entities,
+\item \texttt{geom}\footnote{http://data.ign.fr/def/geometrie\#} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf#} . 
+\item \texttt{skos:Concept} for describing the 30 types of nature of schools. 
+\item \texttt{qb:DimensionProperty}\footnote{http://www.w3.org/TR/vocab-data-cube/} and \texttt{qb:MeasureProperty} for modeling the dimensions and different indicators available for a given school. 
+\end{itemize}
+The resulting vocabulary is available at \url{http://purl.org/ontology/dvia/ecole}. 
+
+We use the Datalift platform for transforming the different CSV files into RDF. The final data is available  at \url{http://eventmedia.eurecom.fr/sparql} with the named graph \texttt{http://data.eurecom.fr/school}.
+
+\subsection{URI Policies}
+We use the following patterns for the URIs of the vocabularies or the resources in our namespace.
+\begin{itemize}
+\item URI for vocabulary: \texttt{http://data.eurecom.fr/ontologies/\{SECTOR\}}. \\
+e.g: \url{<http://data.eurecom.fr/ontologies/ecole>} for the ontology that we have developed.
+
+\item URI for resources: \texttt{http://data.eurecom.fr/id/\{SECTOR\}/\{CLASS\}}. \\
+e.g: \url{<http://data.eurecom.fr/id/school/>} for the schools URIs, \\
+\url{<http://data.eurecom.fr/id/school/slice/>} for \texttt{qb:Slice}s.
+
+\item URI for taxonomies: we use \texttt{SKOS} for modeling concepts and codes as the following: \\
+\texttt{http://data.eurecom.fr/codes/\{SECTOR\}/\{CONCEPT-TYPE\}/\{CODE\}}. 
+e.g.: \url{<http://data.eurecom.fr/codes/ecole/natureUAI>} for the collection of natures of the schools ; \\
+        \url{<http://data.eurecom.fr/codes/ecole/natureUAI/101>} for a particular concept with code \textit{101} and label '''\'{E}cole maternelle".
+
+\end{itemize}
+
+Besides the aforementioned policy, each school in the user interface can be reached on the UI by using directly the following URI: 
+ \url{http://semantics.eurecom.fr/datalift/PerfectSchool/#school/{SCHOOL-CODE/}}, with \{SCHOOL-CODE/\} in lowercase. 
+ 
+\paragraph{\textit{Example:}}
+\textit{The school ``Albert Camus'' in the city ''Le Mans'' with the code school $0720800D$ can we viewed in the application directly at} \url{http://semantics.eurecom.fr/datalift/PerfectSchool/#school/0720800d/}
+
+\subsection{Sample School Data in RDF }
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Snapshot in Turtle for the school ID=0750676C, also at \url{http://semantics.eurecom.fr/datalift/PerfectSchool/\#school/0750676c/}}, label=snapshot, captionpos=b}
+\begin{lstlisting}
+
+school:0750676c 	a	aiiso:School,  geofla:EntiteTopographique .
+school:0750676c 	a	ecole:Etablissement .
+school:0750676c	rdfs:label	"LYCEE DORIAN (PROFESSIONNEL)"@fr ;
+school:0750676c	dcterms:title	"Lycee polyvalent et lycee des metiers de la .."@fr ;
+	aiiso:code	"0750676C" ;
+	ecole:denominationPrincipale "LPO LYCEE DES METIERS"@fr ;
+	ecole:patronyme	"DORIAN"@fr ;
+	ecole:ville	"PARIS 11"@fr ;
+	ecole:codeCommune	"75111" ;
+	ecole:secteur	"PU" ;
+	ecole:academie	"PARIS"@fr ;
+	ecole:departement	"PARIS"@fr ;
+	ecole:cycle	"3"^^xsd:int ;
+	ecole:etat	"1"^^xsd:int ;
+	ecole:nature	bpenat:306 .
+
+slice:0750676c	ecole:etablissement	school:0750676c .
+school:0750676c	geom:geometrie	_:vb42480647 , _:vb42531960 .		 
+
+_:vb42480647 a geom:Point;
+	geom:systCoord ignfr:wgs84g;
+	geom:coordX "48.85429801"^^xsd:double;
+	geom:coordY "2.39231163"^^xsd:double . 
+
+_:vb42531960 a  geom:Point;
+	geom:systCoord ignfr:ntflamb2e ;
+	geom:coordX "655410.1"^^xsd:double;
+	geom:coordY "6861755.9"^^xsd:double .
+     
+	
+\end{lstlisting}
+
+\subsection{Interconnection}
+For the interconnection process, we didn't use the current module. Instead of that we have used the Silk \cite{jentzsch2010silk} platform as it is re-packaged in the workflow of Datalift. We believe the scripts used for this task can be easily reused within the Datalift platform. Two datasets where used for finding \texttt{owl:sameAs} links:
+\begin{enumerate}
+\item DBpedia French chapter\footnote{\url{http://fr.dbpedia.org/sparql}}, as the scope of the application was limited to France. We have found only 7 match links with our schools datasets.
+\item LinkedGeoData\footnote{\url{http://linkedgeodata.org/sparql}}, as the underlying data used comes from the community project Open Street Map (OSM). Here, we got  a total of $601$ matching links in the category of \texttt{lgdo:BuildingSchool}\footnote{\url{http://linkedgeodata.org/ontology/BuildingSchool}}. 
+\end{enumerate}
+
+\subsection{User Interface}
+The target device for the application is Mobile phone, using principally two frameworks: Jquery mobile\footnote{http://jquerymobile.com/} and  backbone javascript\footnote{\url{http://backbonejs.org/}}. 
+The application provides geolocation, search by city/district, graph charts for stats, table views of relevant results aggregated or group by some other aspects. 
+\texttt{Perfect School Application} provides 3 main views:
+\begin{enumerate}
+\item \textbf{Search form:} The interface retrieves the location automatically ( \'{a} la Google Maps API fashion) , and offers box choices based on the School type: First degree / second degree. When choosing first degree, the user can further select one of (primary school, elementary school or other). For the second degree, apart from looking for one of College, high school or other, the user can look for public or private schools. The search button launches the query behind the scene for retrieving the collection of data matching the user's criteria. 
+
+\item \textbf{Results of searching}: The search action returns a collection of schools plotted in a map. A cursor on the left side helps users zoom to get more details about schools retrieved in a given region, or street. When selecting a given school, the name is displayed and with the possibility to see the route from the barycenter of the result on the map.
+\item \textbf{Description of the school:} It is divided in 3 different tabs: (a) General information (name, cycle, principal denomination, nature and patronym used) ; (b) Stats with all the different statistics in form of charts, graphs comparing the school with the others ; and (c) DBpedia-FR\footnote{\url{http://fr.dbpedia.org}} information if available, obtained with the \texttt{owl:sameAs} links for enriching the original dataset with  information such as founder, date of creation, web site, population, head of school etc.
+
+\end{enumerate}
+
+The Figure ~\ref{fig:searchingSchool} shows the three different views on a running example.
+
+
+\begin{figure*}[!htbp]
+\begin{center}
+\subfigure[Search options]{
+\includegraphics[height=62mm,width=42mm]{img/searching.png}
+}
+\subfigure[Results displaying on a map]{
+\includegraphics[height=62mm,width=42mm]{img/result.png}
+}
+\subfigure[Route to the selected school]{
+\includegraphics[height=62mm,width=42mm]{img/routeresult.png}
+}
+\subfigure[Details information with 3 tabs: General, statistics and DBpedia]{
+\includegraphics[height=62mm,width=42mm]{img/tab-result.png}
+}
+\caption{Steps for searching high schools in Antibes in a radius of 4000m, France}
+\label{fig:searchingSchool}
+\end{center}
+\end{figure*}
 
 
 

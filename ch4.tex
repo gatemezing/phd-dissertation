@@ -2,10 +2,30 @@
 \label{ch:ch4}
 
 \begin{itemize}
-\item Survey on visualizations
+\item Tools for visualizations
+\item Survey on visualizations applications
 \item Explore limitations
 \item Find answers
 \end{itemize}
+
+\section{Tools for visualizing RDF Data}
+\label{sec:related}
+%\ghis{add comparison among different SoA work - add Tabulator ref}\\
+
+There are currently many projects aiming at visualizing (RDF) Linked Data. A survey by Dadzie and Rowe \cite{Dadzie:2011} concluded with the fact that many visualization tools are not easy to use by lay users. In~\cite{Klimek2014}, there is a recent review of some visualizations tools that can be summarized as follows:
+\begin{itemize}
+ \item \textit{Vocabulary based visualization tools:} these tools are built for specific vocabularies and that help in visualizing data modelled according to those vocabularies, such as CubeViz \cite{cubeviz:2012}, FOAF explorer\footnote{\url{http://foaf-visualizer.gnu.org.ua/}} and Map4rdf \cite{leon2012}. They aim at visualizing data modelled respectively with \texttt{dq,foaf} and \texttt{geo+scovo}.
+ \item \textit{Mashup tools:} they are used to create mashup visualizations with different widgets and some data analysis, such as DERI Pipes \cite{danh2009}. Mashup tools can be integrated into the LD wizard to combine different visual views.  
+ \item \textit{Generic RDF visualization tools:} they typically support data browsing and entity rendering. They can also be used to build applications. In this category, we can mention Graphity\footnote{\url{https://github.com/Graphity/graphity-browser}}, lodlive\footnote{\url{http://en.lodlive.it/}} and Balloon Synopsis\footnote{\url{https://github.com/schlegel/balloon-synopsis}}.
+\end{itemize}
+While these tools are often extensible and support specific domain datasets, they suffer from the following drawbacks:
+\begin{itemize}
+ \item \textit{They are not easy to set up and use by lay users}. Sometimes, users just need to have a visual summary of a dataset in order to start exploring the data. Our approach to this challenge is to provide such a lightweight javascript-based tool that supports a quick exploration task.
+ \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more target at geodata. A tabular view enables to visualize slices of data and a map view can be activated when there is geo data. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) according to a systematic analysis of what are the high level categories present in a dataset.
+\end{itemize}
+
+Regarding wizard-based tools for visualizing data, similar approaches are available for tools consuming datasets in CSV/TSV. ManyEyes\footnote{\url{http://www-958.ibm.com/software/data/cognos/manyeyes/}} is an IBM online tool that suggest charts according to the columns of a given CSV file. Similarly, Google Charts\footnote{\url{https://developers.google.com/chart/}} help to achieve the same goals for creating embeddable charts by using DSP language in the framework. Datawrapper\footnote{\url{http://datawrapper.de/}} is an open source tool to enable the creation of basic charts originally target at journalists inspired by ManyEyes and Google Charts. All the visualizations are based on the type of the columns/fields of the data. In Linked Data, vocabularies are used for modeling datasets in RDF, thus making it difficult to reuse directly those tools. The benefit of our approach is that it constructs specific SPARQL queries to detect the presence or not of predefined specific types of information, yielding to information type-specific visualisations to enable end users to quickly start to explore dataset in a generic manner. 
+%similarly in the generation of charts, by using directly existing libraries consuming RDF datasets and standard 
 
 \section{Visualization Applications Over Linked Data}
 \label{sec:visAppsLD}
