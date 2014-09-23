@@ -346,13 +346,14 @@ visuapp:eventMedia01
 The full version of this sample description is available at \url{http://www.eurecom.fr/~atemezin/datalift/visumodel/eventMedia-sample.ttl}. The actual version of the DVIA intends to be small enough to cover the concepts that are needed to reuse partial or full parts of applications. 
 
 \begin{figure}[!htbp]
-  \begin{center}
+\vspace{-2.5cm}
+  \centering{
     %\leavevmode
       \includegraphics[ height=5in]{img/visuGraphModel.jpg}
   
     \caption{Conceptual Model of the DVIA vocabulary }
     \label{visuGraphModel}
-  \end{center}
+  }
 \end{figure}
 
 
@@ -370,8 +371,8 @@ The full version of this sample description is available at \url{http://www.eure
 \section{Important Properties for an Entity}
 \label{sec:propEntities}
 In many knowledge bases, entities are described with numerous properties. However, not all properties have the same importance. Some properties are considered as keys for performing instance matching tasks while other properties are generally chosen for quickly providing a summary of the key facts attached to an entity. Our motivation is to provide a method enabling to select what properties should be used when depicting the summary of an entity, for example in a multimedia question answering system such as QakisMedia\footnote{\url{http://qakis.org/}} or in a second screen application providing more information about a particular TV program\footnote{\url{http://www.linkedtv.eu/demos/linkednews/}}. Our approach consists in: (i) reverse engineering the Google Knowledge Panel by extracting the properties that Google considers as sufficiently important to show (Section~\ref{sec:knowledge-graph}), and (ii) analyzing users' preferences by conducting a user survey and comparing the results (Section~\ref{sec:evaluation}). We finally show how we can explicitly represent this knowledge of preferred properties to attach to an entity using the Fresnel vocabulary~\cite{pietriga2006}. \\
-\todo{TODO: ADD reference here?}
-\\todo{ADD figure of GKP search + result of crawling in JSON or implementation code}
+\todo{TODO: ADD reference here?} \\
+\todo{ADD figure of GKP search + result of crawling in JSON or implementation code}
 
 \subsection{Reverse Engineering the Google KG Panel}
 \label{sec:knowledge-graph}
@@ -450,9 +451,148 @@ Fresnel\footnote{\url{http://www.w3.org/2005/04/fresnel-info/}} is a presentatio
 \end{lstlisting}
 \normalsize
 
-\section{Application consuming Event datasets:Confomaton}
+\section{Application consuming Event datasets: Confomaton}
 \label{sec:confomaton}
 
+In this Section, we aim at creating a rich environment to enable users to navigate events as well as their various representative media such as photos, slides and tweets. A typical usage is to gather data about a scientific conference and investigate the added value of collecting scientific related media. A non trivial task in such application is to connect structured data with extremely noisy content, especially in the case of a major conference.
+
+ We consider a scientific conference, the International Semantic Web Conference (ISWC 2011), which took place in Bonn, Germany last November. Broadly speaking, considering all co-authors, people who have participated in the reviewing process, people who have physically attended the conference or tried to follow it on social networks, we estimate that it has attracted more than 1,500 participants. The conference organizers publish a lot of structured data regarding the conference including the list of accepted papers, their authors and institutions, the detailed program composed of sub-events with the exact timetable and the location (rooms) of the talks. This data is modeled using the SWC ontology\footnote{\url{http://data.semanticweb.org/ns/swc/ontology}}, which is designed to describe academic events, and uses classes and properties from other ontologies such as FOAF (for people) and SWRC (BibTeX elements for the papers). The main conference of type \texttt{swc:ConferenceEvent} is related to a set of sub-events, namely (\texttt{WorkshopEvent}, \texttt{TutorialEvent}, \texttt{SessionEvent}, \texttt{TalkEvent}) via the property \texttt{swc:isSuperEventOf}. Table~\ref{tab:dataset-stats} shows some statistics about the data provided by the Dog Food server regarding the ISWC 2011 conference. We first notice that the data is incomplete. The conference has hosted 16 workshops in total, but the 75 papers are only associated to 8 of them while the 8 others did not have any papers according to the corpus. Furthermore, we find 133 papers that are not connected to any of the events via the predicate \texttt{swc:hasRelatedDocument}. Finally, some useful information is also missing such as the keynote speakers and the \emph{Semantic Web Death Match} (panel) event. This lack of knowledge is also a motivation for our work: can we collect and analyse social network activities in order to complete the factual description of this event?
+
+\begin{table}[htbp]
+\footnotesize{
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c}{\textbf{Main Event}} & \multicolumn{1}{|c}{\textbf{Sub-event}} & \multicolumn{1}{|c}{\textbf{Number of events}} & \multicolumn{1}{|c}{\textbf{Papers}} & \multicolumn{1}{|c|}{\textbf{Authors}}\\
+\hline
+& \texttt{Workshop Event} & 16 & 75 & 185\\
+& \texttt{Tutorial Event} & 7 & 7 & 20\\
+\texttt{Conference Event} & \texttt{Session Event} & 1 & 66 & 202\\
+& \texttt{Talk Event} & 93 & 93 & 275\\
+& - & - & 133 & 385\\
+\hline
+\texttt{Total (distinct)} & 4 & 117  & 292 & 735 \\
+\hline
+\end{tabular}
+\vspace{1mm}
+\caption{Metadata provided by the Dog Food Server for the ISWC 2011 conference.}
+\label{tab:dataset-stats}
+\end{center}}
+\end{table}
+
+
+We collected social network data in real time during the six days of the conference using the main tags advertised by the organizers (\texttt{\#iswc2011}, \texttt{\#cold2011}, \texttt{\#derive2011}, etc.). Table~\ref{tab:media-statistics} shows some statistics about the different media services used by the attendees along with the number of items from a number of distinct users. As expected, Twitter is by far the most used service: we have been able to collect 3,390 tweets from 519 different users. A significant proportion of tweets contains hyperlinks that we have further analysed. Hence, we extracted 384 different websites indexed by so-called URL shorteners (such as Bitly) found in 1,464 tweets (43\% of tweets). These links represent a rich source of media, as they pointed to various Web resources categories such as blogs, slides, photos, publications and projects. For example, 25\% of these links pointed to PDF documents that are generally one of the conference papers but could also be related papers relevant for the followers of the conference. We also analyse these links to extract the various media services used by Twitter.
+
+\begin{table}[htbp]
+\centering{
+\begin{tabular}{|ll|r|r|}
+\hline
+\multicolumn{2}{|c}{\textbf{Media Service}} & \multicolumn{1}{|c}{\textbf{Items}} & \multicolumn{1}{|c|}{\textbf{Users}}\\
+\hline
+\multicolumn{2}{|l|}{Twitter} & 3390 tweets & 519\\
+& \hspace{1em}pic.twitter & 12 photos &  6 \\
+& \hspace{1em}yfrog  & 10 photos & 9 \\
+\multicolumn{2}{|l|}{Twitpic} & 10 photos &  6 \\
+\multicolumn{2}{|l|}{Flickr} & 47 photos & 6\\
+\multicolumn{2}{|l|}{Google+} & 30 posts & 26\\
+\multicolumn{2}{|l|}{Slideshare} & 25 slides & 20 \\
+\hline
+\end{tabular}
+\vspace{1mm}
+\caption{Media services used during ISWC 2011 conference}
+\label{tab:media-statistics}
+}
+\end{table}
+
+The name \emph{Confomaton} is a word play on the French term \emph{Photomaton} (English photo booth) and \emph{conference}. Just like a Photomaton illustrates the scene inside of the photo booth, the \emph{Confomaton} illustrates an event such as a conference enriched with social media. \emph{Confomaton} is a Semantic Web application that produces and consumes Linked Data and is composed of four main components (Figure~\ref{fig:architecture}): (i) an Event Collector that extracts events descriptions such as the ones available in the Semantic Web Dog Food corpus; (ii) a media collector that collects social media content and represents it in RDF using various vocabularies; (iii) a Reconciliation Module playing the role of associating social media with sub-events and external knowledge; (iv) a User Interface powered by an instance of the Linked Data API as a logical layer connecting all the data in the triple store with the front-end visualizations.
+
+\begin{figure*}[t!h]
+ \centering
+ \includegraphics[scale=0.35]{img/architecture.png}
+ \caption{\emph{Confomaton} general architecture.}
+ \label{fig:architecture}
+\end{figure*}
+
+
+%%%  3.1 Media Collector  %%%
+\subsection{Media Collector}                                                \label{sec:media-collector}
+In the context of \emph{Confomaton}, we have developed so-called \emph{media collectors} with the purpose of searching various social networks and media platforms for event-related media items such as photos, videos, and slides. We currently support 4 social networks (Google+, MySpace, Facebook, and Twitter) and 7 media platforms (Instagram, YouTube, Flickr, MobyPicture, img.ly, yfrog and Twitpic). Our approach being agnostic of media providers, we offer a common alignment schema for all of them:
+\begin{itemize}
+  \item	\textbf{Media URI}, the deep link to the media item, e.g. \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}
+  \item \textbf{Type}, the type of the media item, e.g.  ``photo''
+  \item \textbf{Story URI}, the URI of the micropost or story where the media item appeared, e.g. \url{http://www.flickr.com/photos/96628098@N00/6290784192/}
+  \item \textbf{Message}, the concrete micropost or description text in raw format, e.g.  ``Laura. \texttt{\#iswc2011}, \texttt{\#semanticweb}, \texttt{\#bonn}, \texttt{\#germany}''
+  \item \textbf{Clean}, the concrete cleaned micropost or description text with some characters (e.g. hash signs) removed, e.g. ``Laura. iswc2011, semanticweb, bonn, germany''
+  \item \textbf{User}, the URI of the author of the micropost, e.g. \url{http://www.flickr.com/photos/96628098@N00/}
+  \item \textbf{Published}, the timestamp of when the micropost was authored, or the media item was uploaded, e.g. \texttt{2011-10-27T12:24:41Z}
+\end{itemize}
+
+\begin{lstlisting}[caption={Sample output of the media collector showing Google+ and Flickr results using \#iswc2011 as query term},label={lst:media}]
+{
+  "GooglePlus": [
+    {
+	  "mediaurl": "http://software.ac.uk/sites/default/files/images/content/Bonn.jpg",
+	  "storyurl": "https://plus.google.com/107504842282779733854/posts/6ucw1Udb5NT",
+	  "message": {...}
+    }],
+    "Flickr": [
+   {
+      "mediaurl": "http://farm7.staticflickr.com/6226/6290782640_e8a1ffdcc2_o.jpg",
+      "storyurl": "http://www.flickr.com/photos/96628098@N00/6290782640/",
+      "message": {..}
+    }]
+ }
+\end{lstlisting}
+
+In order to retrieve data from media providers, we use the particular media provider's search Application Programming Interfaces (API) where they are available, and fall back to Web scraping the media provider's website if not. In some cases, we initially use the search API, but then have to fall back to Web scraping in order to get more details on the results, such as the \textbf{Media URI}, which is not exposed by all APIs. From all media providers, Twitter plays a special role, as it can serve as a host for other media providers. For example, it is very common for tweets to contain links to media items hosted on external media providers such as Twitpic. Other media providers treat media items as first class objects, i.e. have dedicated object keys in their API results for media items, which is not in all cases true for Twitter. We handle this by searching for a list of URIs of known media providers in combination with the actual search term. To illustrate this, when searching for media items for the search term ``ISWC 2012'' on Twitter, we would actually search for ``iswc 2012 AND (twitpic.com OR flic.kr)'' in the background, whereas on all other media providers, the search term ``iswc 2012'' is sufficient. The media collector can be tested at \url{http://webmasterapp.net/social/}.
+
+\subsection{Data Modeling}
+We have developed an Event Collector, which takes as input the Dog Food corpus described using the SWC ontology and converts all events into the LODE ontology\footnote{\url{http://linkedevents.org/ontology/}}, a minimal model that encapsulates the most useful properties for describing events. We use the Room ontology\footnote{\url{http://vocab.deri.ie/rooms}} for describing the various rooms contained in the conference centre. An explicit relationship between an event and its representative media (photo, slide, micropost, etc.) is realised through the \texttt{lode:illustrate} property. For describing those media, we re-use two popular vocabularies: the W3C Ontology for Media Resources\footnote{\url{http://www.w3.org/TR/mediaont-10/}} for photos and videos, and SIOC\footnote{\url{http://rdfs.org/sioc/spec/}} for tweets, status, posts and slides. The example below shows how a tweet is represented in \emph{Confomaton}.
+{\footnotesize 	
+\begin{verbatim}
+<http://data.linkedevents.org/tweet/af557cef-5d5b-49c6-a4c3-bc9c41ce1555>
+ a sioc:Post;
+ dcterms:created "2011-10-23T13:34:03+00:00";
+ sioc:content    "@smeh Good luck for your presentation at #ssn2011...";
+ sioc:hasCreator <http://www.twitter.com/BadmotorF>;
+ lode:illustrate <http://data.semanticweb.org/workshop/ssn/2011>;
+ gc:hashtag      "#ssn2011";
+ owl:sameAs      <http://twitter.com/BadmotorF/status/128071685235671040>.
+\end{verbatim}
+}
+
+Figure~\ref{fig:natasha-example} depicts how all these vocabularies are used together. The ISWC 2011 conference is illustrated by a photo shared on Flickr, has for sub-event the EvoDyn 2011 workshop in which one of the tweets posted mentioned the recognised named entity Nathasha Noy who is also a general chair of the conference. All the data is available in the \emph{Confomaton} graph in a public SPARQL endpoint available at \url{http://semantics.eurecom.fr/sparql}.
+\begin{figure*}[t!h]
+ \centering
+ \includegraphics[scale=0.3]{img/natasha_example.png}
+ \caption{Example of data modeled in \emph{Confomaton} re-using multiple vocabularies}
+ \label{fig:natasha-example}
+\end{figure*}
+
+
+
+\subsection{Event Media Reconciliation Module}
+The event media reconciliation module aims to align the incoming stream of social media with their appropriate events and to interlink some descriptions with general knowledge available in the LOD cloud\footnote{\url{http://lod-cloud.net/}} (e.g. people and institutions descriptions). Attaching social media to fine-grained events is a challenging problem. We tackle it by pre-processing the data with two successive filters in order to reduce the noise: one of them relies on keyword search applied to some fields such as title and tag, while the other one filters data based on temporal clues. The reconciliation is then ensured through a pre-configured mapping between a set of keywords and their associated events. This map enables us to associate media with the macro-events that people explicitly refer to in their posts or photos. For example, we connect all media items containing the tag \texttt{\#iswc2011} with the general ISWC 2011 conference. However, this method is absolutely not convenient to associate media items with sub-events. For instance, in the ISWC 2011 conference, there are 99 sub-events of type \texttt{TalkEvent}, which could be the presentation of a paper, a keynote speech or any other kind of talk. Social network users typically do not specify a particular tag for such events. We hence advocate the need for more advanced classifiers to associate media with sub-events. These classifiers can exploit a variety of parameters such as social network graphs and named entities extracted from media content. 
+
+\subsection{Graphical User Interface}
+The Graphical User Interface (GUI) of \emph{Confomaton} is built around four perspectives characterising an event: (i) \textit{``Where does the event take place?''}, (ii) \textit{``What is the event about?''}, (iii) \textit{``When does the event take place?''}, and finally (iv) \textit{``Who are the attendees of the event?''}. In addition, the user interface offers full text search for these four dimensions. The \emph{Confomaton} user interface is powered by the Linked Data API\footnote{\url{http://code.google.com/p/linked-data-api/wiki/Specification}}, which provides a configurable way to access RDF data using simple RESTful URLs that are translated into queries to our SPARQL endpoint. More precisely, we use the Elda\footnote{\url{http://code.google.com/p/elda}} implementation developed by Epimorphics. Elda comes with some pre-built samples and documentation, which allow to build specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through structure of the URI, or through query parameters.
+
+%\autoref{lst:config} shows an example of the configuration file of the \emph{Confomaton} API specifying the event, media and tweet viewers followed by the events and media properties access.
+%\begin{lstlisting}[caption={Example configuration file of the \emph{Confomaton} API, specifying event properties access.},label={lst:config}]
+%<#MyAPI> a api:API ;
+%	rdfs:label "Confomaton API"@en ;
+%	api:endpoint <#event>,<#media>,<#tweet>,<#agent>, <#venue>,<#user>,<#eventbyid>,<#mediabyid>,<#tweetbyid>,<#agentbyid>,<#venuebyid>,<#userbyid>;
+%	api:sparqlEndpoint <http://semantics.eurecom.fr/sparql> ;
+%# specification of the event viewer (all properties appear in the json file)
+%spec:eventViewer a api:Viewer ;
+%  api:property "title","description","space.lat","space.lon","time.datetime","inagent.label",...
+%<#eventbyid> a api:ItemEndpoint;
+%		api:uriTemplate "/event/{id}";
+%		api:itemTemplate "http://data.linkedevents.org/event/{id}";
+%		api:defaultViewer spec:eventViewer.		
+%\end{lstlisting}
+
+The system is available at \url{http://semantics.eurecom.fr/confomaton/iswc2011}. On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the centre, the default view is a map centred on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, this data being provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims at showing all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
 
 
 \section{Application consuming Statistics datasets: PerfectSchool}

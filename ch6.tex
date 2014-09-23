@@ -104,6 +104,15 @@ Below we illustrate some of the LOV features useful for ontology search and reus
 	 \item [Vocabulary Curation.]The collection of the vocabularies is maintained by curators in charge of validating and inserting vocabularies in the LOV ecosystem, by taking care of the versions of the vocabulary and giving some reviews. The vocabulary is then automatically enriched with more information about the datasets using it, and relations to other vocabularies.
  \end{description}
 
+\todo{reference the image of vocabs evolution in LOV}
+
+\begin{figure}[h!t]
+\centering
+  \includegraphics[width=\linewidth]{img/LOVEvol.png}
+  \caption{Graph evolution of vocabularies inserted into LOV since from 2011 to 2014.}
+  \label{fig:translations}
+\end{figure}
+
 LOV focuses only on vocabularies (subpart of semantic documents of the web) submitted by any user, reviewed and validated by curators. In addition, LOV keeps track of different versions of the vocabularies in the server that can be retrieved for comparing the differences between along the time evolution.  In contrast, Swoogle is designed to automatically discover Semantic Web Documents (SWDs), indexes their metadata and answers queries about it. Thus, the result of a search query retrieved any semantic document. For example, a query of the term \textit{person} gives $16,438$ results while in LOV, only the term appears in $134$ vocabularies. 
 Watson works similarly to Swoogle, crawling and indexing semantic document at a small scale, explicitly distinguishing for each document (resource), concepts, properties and individuals if available. While in Swoogle  the ranking score is displayed, Watson shows the language of the resource and the size. Falcons is a keyword-based search system for concepts and objects on the Semantic Web, and is equipped with entity summarization for browsing. It is notable that Falcons limits the search only to ontologies and a recommendation feature is provided according to users' preferences. However, it does not provide any relationships between the related ontologies, nor any domain classification of the vocabularies.   
 Table \ref{tab:lovfeatures} lists some key features of LOV with respect to Swoogle, Watson and Falcons.
@@ -133,6 +142,8 @@ Interaction with Contributors & No &  - & No & Yes \\
 \label{tab:lovfeatures}
 }
 \end{table}
+
+
 \subsection{LOV vs Neon Methodology}
 \label{sec:Lovandneon}
 
