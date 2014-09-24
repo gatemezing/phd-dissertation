@@ -15,7 +15,6 @@
 
 
 
-
 \section{Geodata Providers and Access}
 So far, the Web of data has taken advantage of geocoding technologies for publishing large amounts of data. For example, Geonames provides more than 10 millions records (e.g. $5,240,032$ resources of the form \url{http://sws.geonames.org/10000/}) while LinkedGeoData has more than $60,356,364$ triples. All the above mentioned data are diverse in their structure, the access point (SPARQL endpoint, web service or API), the entities they represent and the vocabularies used for describing them. Table~\ref{tab:srce-data} summarizes for different providers the number of geodata available (resources, triples) and how the data can be accessed.
 \begin{table}[!htbp]
@@ -107,6 +106,7 @@ In LinkedGeoData, the district is a \texttt{lgdo:Suburb rdfs:subClassOf ldgo:Pla
 These samples from DBpedia, Geonames and LinkedGeoData give an overview of the different views of the same reality, in this case the district of the 7$^{th}$ Arrondissement in Paris. Regarding the ``symbolic representation'', two datasets opted for ``Feature'' (DBpedia and Geonames) while LGD classifies it as a ``Suburb'' or ``Place''. They all represent the shape of the district as a POINT which is not very efficient if we consider a query such as \emph{show all monuments located within the 7th arrondissement of international importance}. To address this type of query and more complicated ones, there is a need for more advanced modeling as we describe in the next section.
 
 \section{Benchmarking Triple Stores}
+\label{sec:benchmarking}
 
 \begin{itemize}
 \item \textbf{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}\footnote{\url{http://www.opensahara.com}}, \texttt{Parliament }\footnote{\url{http://geosparql.bbn.com}},  \texttt{Virtuoso}\footnote{\url{http://www.openlinksw.com}} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata.
@@ -128,3 +128,24 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 \label{tab:triplestore}
 \end{table}
 
+\section{Publishing Addresses of OSM-France in RDF}
+\label{sec:bano2rdf}
+
+Explain briefly the requirements and work on publishing bano2RDF: vocabularies, 4 stars..
+\todo{discuss here if it could be wise to use Linked Data Fragments..maybe as future work?} .
+
+
+
+\section{Status of French Datasets in RDF}
+\label{sec:frenchCloud}
+
+\begin{figure}[h!t]
+%\vspace{-2.5cm}
+  \centering{
+    %\leavevmode
+      \includegraphics[width=\linewidth]{img/frenchCloud.png}
+  
+    \caption{French LOD Cloud based on the different datasets published in 4-5 stars. }
+    \label{visuGraphModel}
+  }
+\end{figure}
