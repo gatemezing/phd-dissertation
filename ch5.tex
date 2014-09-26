@@ -751,10 +751,40 @@ The Figure ~\ref{fig:searchingSchool} shows the three different views on a runni
 \subsection{Background}
 \label{sec:backcontest}
 
+
 \subsection{Modeling events and applications in RDF}
 \label{sec:modeleventsapps}
 
+One of the key factors in improving the discovery of open data events is to present the information in a structured machine readable format, so that applications (such as crawlers) can easily consume the data. This follows the Semantic Web movement, where the goal is to convert the current, unstructured documents (readable by humans) into structured documents.
+
+In order to present the event and application information in structured format, Apps for Europe has created an RDF vocabulary available a \url{https://github.com/mmlab/apps4eu-vocabulary/} for modeling the events and applications. The quality of this vocabulary was tested by manually modeling past events  and applications and looking for potential problems and improvements in the ontology. The problems and improvements made to the ontology is presented below.
+
+\begin{figure}[!htbp]
+
+\includegraphics[]{img/rdfTriplesBeforeChanges.pdf}
+\caption{The RDF triples before changes. Here we state that the application SBA Gems has won an award in the event Apps for Entrepreneurs. }
+\label{fig:modelA}
+\end{figure}
+
+In \ref{fig:modelA}, the model is complex, because it requires us to specify an extra class (\texttt{:Submission}) in order to use the \texttt{:wonAward-property}, and yet we are unable to specify which prize the application won (\$5000 or \$3000). While in ~\ref{fig:modelB}, the model is straightforward to specify that an application (SBA Gems) won a prize, because we don't need to use the Submission intermediate class. We are also able to specify which prize the application won (\texttt{:FirstPrize}). It should be notice  also that now the jury is connected to a prize by specifying a jury-attribute for prizes (instead of having a prize-attribute for the jury i.e. direction of the arrow changed).
+
+\begin{figure}[!htbp]
+
+\includegraphics[]{img/rdfTriplesAfterChanges.pdf}
+\caption{The RDF triples after changes.}
+\label{fig:modelB}
+\end{figure}
+
+
 \subsection{Universal JavaScript plugin for RDF population}
 \label{sec:plugin}
+
+\begin{figure}[!htbp]
+
+\includegraphics[]{img/componentsJSplugin.pdf}
+\caption{Universal JavaScript components}
+\label{fig:jsplugin}
+\end{figure}
+
 
 \subsection{Creating the Knowledge-base for past events}
