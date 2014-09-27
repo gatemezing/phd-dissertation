@@ -17,6 +17,7 @@
 
 \section{Geodata Providers and Access}
 So far, the Web of data has taken advantage of geocoding technologies for publishing large amounts of data. For example, Geonames provides more than 10 millions records (e.g. $5,240,032$ resources of the form \url{http://sws.geonames.org/10000/}) while LinkedGeoData has more than $60,356,364$ triples. All the above mentioned data are diverse in their structure, the access point (SPARQL endpoint, web service or API), the entities they represent and the vocabularies used for describing them. Table~\ref{tab:srce-data} summarizes for different providers the number of geodata available (resources, triples) and how the data can be accessed.
+
 \begin{table}[!htbp]
 \centering{
 \begin{tabular}{|ll|r|r|}
@@ -40,6 +41,7 @@ So far, the Web of data has taken advantage of geocoding technologies for publis
 \label{tab:srce-data}
 }
 \end{table}
+
 
 
 \section{Scenario: 7$^{th}$ Arrondissement of Paris}                      \label{sec:scenario}
@@ -128,6 +130,78 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 \label{tab:triplestore}
 \end{table}
 
+
+\section{Tools for managing Linked Data Publishing Workflow}
+\label{sec:toolLD}
+
+\subsection{GeoKnow}
+\label{sec:geoknow}
+
+\subsubsection{LIMES}
+\todo{rewrite this section and add references of Axel Papers}
+LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{At http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces. It is easily configurable via a web interface. It can also be downloaded as standalone tool for carrying out link discovery locally.
+LIMES implements novel time-efficient approaches for link discovery in metric spaces. Its approaches different approximation techniques to compute estimates of the similarity between instances. These estimates are then used to filter out a large amount of those instance pairs that do not suffice the mapping conditions. By these means, LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. Moreover, LIMES implements supervised and unsupervised machine-learning algorithms for finding accurate link specifications. The algorithms implemented here include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID.
+
+\subsection{Datalift Platform}
+\label{sec:datalift}
+Datalift is an open source platform [ref-datalift] helping to lift raw data sources or legacy data to semantic interlinked data sources.
+The ambition of DataLift is to act as a catalyst for the emergence of the Web of Data by providing a complete path from raw data to fully interlinked, identified, and qualified linked datasets. The Datalift platform supports the following stages in lifting the data:
+\begin{enumerate}
+\item Selection of ontologies for publishing data;
+\item Conversion of data to the appropriate format (e.g., from CSV to RDF);
+\item Interlinking of data with other data sources;
+\item Publication of linked data ;
+\item Access control and license management
+\end{enumerate}
+
+
+
+\subsubsection{Functionalities of the Datalift platform}
+
+The architecture of Datalift is modular. Several levels of abstraction allow decoupling between the different stages from raw data to semantic data. The dataset selection allows us to identify the data to be published and migrate them to a first RDF version. The ontologies selection step asks the user to input a set of vocabularies', terms that will be used to describe the lifted data. Once the terms are selected, they can be mapped to the raw RDF and then converted to properly formatted RDF. The data is then published on the DataLift SPARQL endpoint. Finally, the process aims at providing links from the newly published data to other datasets already published as Linked Data on the Web. Figure \ref{fig:liftprocess} below shows the workflow of converting raw data into ``structured'' RDF data.
+
+
+\begin{enumerate}
+
+\item{Dataset Selection}
+The first step of the data lifting process is to identify and access the datasets to be processed. A dataset is either a file or the result of a query to retrieve data from a datastore. The kinds of files currently considered are CSV, RDF, XML, GML and Shape files. Queries are SQL queries sent to an RDBMS or SPARQL queries on a triple store.
+\item{Ontologies Selection:}
+The publisher of a dataset should be able to select the vocabularies that are the most suitable to describe the data, and the least possible terms should be created specifically for a dataset publication task. The Linked Open Vocabularies[1] (LOV) developed in Datalift provides easy access methods to this ecosystem of vocabularies, and in particular by making explicit the ways they link to each other and providing metrics on how they are used in the linked data cloud. LOV is integrated as module in the DataLift platform to assist the ontology selection.
+\item{Data Conversion:}
+Once URIs are created and a set of vocabulary terms able to represent the data is selected, it is time to convert the source dataset into a more precise RDF representation. Many tools exist to convert various structured data sources to RDF. The major source of structured data on the Web comes from spreadsheets, relational databases and XML files. We propose a two steps approach. First, a conversion from the source format to raw RDF is performed. Second, a conversion of the raw RDF into ``well-formed'' RDF using selected vocabularies is performed using SPARQL Construct queries. Most tools provide spreadsheet conversion to CSV, and CSV to RDF is straightforward, each line becoming a resource, and columns becoming RDF properties. The W3C RDB2RDF WG\footnote{\url{http://www.w3.org/2001/sw/rdb2rdf/}} proposes the Direct Mapping to automatically generate RDF from the tables but without using any vocabulary, and R2RML\footnote{\url{http://www.w3.org/TR/r2rml/}}  to assign vocabulary terms to the database schema. In the case of XML, a generic XSLT transformation is performed to produce RDF from a wide range of XML documents. The DataLift platform provides a graphical interface to help mapping the data to selected vocabulary terms.
+\item{\textbf{Data Protection:}}
+This module is linked to Apache Shiro for obtaining the information, i.e., username and password, about the user who is accessing the platform. The module\footnote{\url{http://wimmics.inria.fr/projects/shi3ld/}} checks which data is targeted by the user's query and then verifies whether the user can access the requested data. This verification leads to three kinds of possible answers, depending on the access privileges of the user: some of the requested data is returned, all the requested data is returned, or no data is returned. This means that the user's query is filtered in such a way that she is allowed to access only the data she is granted access to. The access policies are expressed using RDF and SPARQL 1.1[ref-sparql11] Semantic Web languages thus provide a completely standard way of expressing and enforcing access control rules.
+\item{\textbf{Data Interlinking:}}
+The interlinking step provides means to link datasets published through the Datalift platform with other datasets available on the Web of Data. Technically, the module helps to find equivalence links in the form of ``owl:sameAs'' relations. An analysis of the vocabulary terms used by the published data set and a potential data set to be interlinked is performed. When the vocabulary terms are different, the module checks if alignments between the terms used by the two data sets are available.Here the alignment server provided with the Alignment API\footnote{\url{http://alignapi.gforge.inria.fr/}} is used for that purpose. The correspondences are translated into SPARQL graph patterns and transformation functions are combined into a SILK script.
+\item{\textbf{Data Publication:}}
+This module aims at publishing the data obtained from the previous steps to a triple store, either public or private. The providers can restrict which graphs can be accessible, they could decide whether to provide just a ``Linked Data'' or a ``Linked Open Data''. Datalift comes by default with Sesame , but provides API for connecting to Allegrograph, OWLIM, and Virtuoso triple stores as well.
+\end{enumerate}
+
+
+\begin{figure}[!htp]
+\centering{
+\includegraphics[scale=0.9]{img/liftProcessDatalift.pdf}
+\caption{Lifting process of raw data source into RDF using Datalift Platform}
+\label{fig:liftprocess}
+}
+\end{figure}
+
+\paragraph{Installation:}
+Please find the documentation for installing Datalift at \url{http://datalift.org/wiki/index.php/Platform_installation_(english)}. The latest version of the platform is available at http://datalift.org/en/node/24, which is still a work in progress until the mature and stable version is released by the end of March. 
+
+\paragraph{Usage:}
+The data lifting has several distinct steps. DataLift makes it possible to replay each step in producing different results for each step. To facilitate access to all the different treatments and their results, they are grouped as one project. The project gathers together the various sources used and the results of all treatments done.
+Each module has its own way to be used within the lifting process in DataLift. For more details, the readers are encouraged to read this resource at \url{http://datalift.org/wiki/index.php/How_to_use_the_Datalift_platform_to_publish_a_dataset_on_the_Web#The_lifting_project. 
+}
+
+
+\subsection{Comparison Geoknow vs Datalift}
+
+\todo{add here the comparison}
+
+\section{Publishing Geofla}
+\section{French Gazetteer}
+
 \section{Publishing Addresses of OSM-France in RDF}
 \label{sec:bano2rdf}
 
@@ -138,6 +212,8 @@ Explain briefly the requirements and work on publishing bano2RDF: vocabularies, 
 
 \section{Status of French Datasets in RDF}
 \label{sec:frenchCloud}
+
+\todo{Summarize here our contributions to the French LOD Cloud. Give some statistics and explain the figure}\\
 
 \begin{figure}[h!t]
 %\vspace{-2.5cm}

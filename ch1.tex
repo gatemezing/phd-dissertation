@@ -21,8 +21,8 @@ ADD part of the work of Nathalie thesis \\
 ADD also Ruas thesis \\
 
 
-   \subsection{Specifities}
-   \subsection{Formats}
+ \subsection{Specificities}
+ \subsection{Formats}
 
 \section{Vocabularies for Geospatial Data}
 \textcolor{red}{Add here the studies of Atemezing:TC12, with update to the current state }
@@ -45,7 +45,7 @@ UK administrative-geography &   3 &  229 689 & OS dataset \\
 }
 \end{table*}
 
-\section{Current Modeling Aproach}
+\section{Current Modeling Approach}
 \todo{introduce with some few words}
 
 \subsection{Vocabularies for Features}
@@ -154,13 +154,29 @@ Most of vocabularies dedicated to geometry representation reuse W3C Geo vocabula
 Modeling indirect location information such as administrative units or named points of interest in RDF is preferably done by identifying such geographic features with URIs and describing them by their properties, so that they can be referenced by other datasets. This is the case in one of the most reused datasets of the Web of data, namely Geonames\footnote{\url{http://sws.geonames.org/}}. However, there are yet very few reference datasets for the French territory on the Web of data.  A simple example is the current resource for \textit{Paris} in the French DBpedia\footnote{\url{http://fr.dbpedia.org/resource/Paris}}. The department's name associated to this resource is a literal named ``Paris'' and the different arrondissements composing the city are modeled as \texttt{skos:Concept} instead of \texttt{dbpedia-owl:Place}. Even Geonames data remain very limited, as French administrative units are provided as simple geometries (POINT). The ``Official Geographic Code''\footnote{\url{http://rdf.insee.fr/sparql}} published by the French Statistical Institute (INSEE) is the most up-to-date and accurate dataset on French administrative units, but unfortunately it contains no geometrical description of their boundaries. This has the consequence of not having a baseline during mapping process for application developers trying to consume specific data coming from France. Datasets describing administrative units, points of interest or postal addresses with their labels and geometries, and identifying these features with URIs could be used with benefits not only for georeferencing other datasets, but also for interlinking datasets georeferenced by direct and indirect location information.
 
 
-\section{Contributions}
-
 \textcolor{red}{Describe the contributions on geometry and geography vocabularies. Reuse mainly the recent work to be presented at Terra Cognita 2014}
 
-\subsection{Best Practices for Modeling Geospatial vocabularies}
+
+\section{A REST Service for Converting Geo Data}
+\label{sec:rest-service}
+\todo{extend this section with current results of the implementations, comparison with existing tools}
+
+As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the \textit{de-facto} standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}. Some existing tools like Circ\'e or the the world coordinate converter\footnote{\url{http://twcc.free.fr.are}} are good as a standalone tool for end user, but not so great for developers,  as they can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again.  At the moment, the following features are implemented: (i) from/to WGS 84 to/from WGS 84 UTM ; (ii) from/to WGS 84  to/from Lambert 93 and (iii) from/to WGS 84 UTM to/from Lambert 93. The API can also convert a file with space separated values. The API supports JSON as one of the output format. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
+
+\section{Best Practices for Modeling Geospatial vocabularies}
+\label{sec:bpgeo}
+
+In~\cite{Atemezing:TC12}, we already surveyed numerous vocabularies for representing geographical features and their geometries, either using a literal (e.g. wktLiteral) or a structured representation \`a la NeoGeo. We concluded the survey with some recommendations for geometry descriptions:
+\begin{itemize}
+ \item the distinction of geometry versus feature and a property linking both classes (e.g. for attaching provenance information on how some points of a geometry have been collected),
+ \item the ability to represent structured geometries (e.g. for performing simple spatial queries on the data, even when they are stored in a triple store that do not implement the GeoSPARQL standard),
+ \item the integration of any coordinate reference system  (e.g. for allowing projected coordinates for cartographic purposes).
+\end{itemize}
+In addition to these recommendations, we also think that the domain of the property used to link a feature to its geometry should be left empty in order to accept links between any type of resource and a geometry. This would be useful for example, to associate a person to the coordinates of their birthplace.
+
 \subsection{Some Recommendations}
-The alignment of GeOnto provided in the previous section enables interoperability of symbolic descriptions. The need for a better choice of geometric structure, typically the choice between literal versus structured representations depends on three criteria: (i) the coverage of all the complex geometries as they appear in the data; (ii) a rapid mechanism for connecting ``features'' to their respective ``geometry''; (iii) the possibility to serialize geodata into traditional formats used in GIS applications (GML, KML, etc.) and (iv) the choice of triple stores supporting as many as possible functions to perform quantitative reasoning on geodata. It is clear that a trade-off should be taken depending on the technological infrastructure (e.g: data storage capacity, further reasoning on specific points on a complex geometry).
+The alignment of GeOnto provided in the \textcolor{red}{previous section} enables interoperability of symbolic descriptions. The need for a better choice of geometric structure, typically the choice between literal versus structured representations depends on three criteria: (i) the coverage of all the complex geometries as they appear in the data; (ii) a rapid mechanism for connecting ``features'' to their respective ``geometry''; (iii) the possibility to serialize geodata into traditional formats used in GIS applications (GML, KML, etc.) and (iv) the choice of triple stores supporting as many as possible functions to perform quantitative reasoning on geodata. It is clear that a trade-off should be taken depending on the technological infrastructure (e.g: data storage capacity, further reasoning on specific points on a complex geometry).
+
 \begin{itemize}
 \item\textbf{Complex Geometry Coverage:} We have seen that on the Web of Data, there are few modeling of geodata with their correct shape represented as a LINE or POLYGON. However, some content providers (e.g. IGN) need to publish all types of geodata including complex geometries representing roads, rivers, administrative regions, etc. Two representations are suitable: \textit{OS Spatial} and \textit{NeoGeo} ontologies (Table~\ref{tab:reqgeosparql}). Direct representation of the GeoSPARQL vocabulary is also suitable.
 \item \textbf{Features connected to Geometry:} In modeling geodata, we advocate a clear separation between the features and their geometry. This is consistent with the consensus obtained from the different GeoVocamps\footnote{\url{http://www.vocamp.org}} and the outcome of this approach is expressed in the modeling design of NeoGeo. The top level classes \texttt{spatial:Feature} and \texttt{geom:Geometry}are connected with the property \texttt{geom:geometry}.
@@ -169,19 +185,13 @@ The alignment of GeOnto provided in the previous section enables interoperabilit
 \end{itemize}
 
 
-\subsection{Vocabularies for Geometries and Feature Types} \label{sec:topovocab}
+\section{Vocabularies for Geometries and Feature Types} \label{sec:topovocab}
 
 Direct georeferencing of data implies representing coordinates or geometries and associating them to a CRS.  This requires vocabularies for geometries and CRSs. Besides, indirect georeferencing of data implies associating them to other data on named places. Preferably, these data on named places should be also georeferenced by coordinates in order to serve as basis for data linking between indirectly and directly georeferenced datasets. In this section, we present the vocabularies that we have defined and reused for geographic data publishing.
 This requires reference geographic data on named places and therefore vocabularies for describing feature types and their properties. 
 
 \subsubsection{A vocabulary for geometries} \label{sec:geomvocab}
-In~\cite{Atemezing:TC12}, we already surveyed numerous vocabularies for representing geographical features and their geometries, either using a literal (e.g. wktLiteral) or a structured representation \`a la NeoGeo. We concluded the survey with some recommendations for geometry descriptions:
-\begin{itemize}
- \item the distinction of geometry versus feature and a property linking both classes (e.g. for attaching provenance information on how some points of a geometry have been collected),
- \item the ability to represent structured geometries (e.g. for performing simple spatial queries on the data, even when they are stored in a triple store that do not implement the GeoSPARQL standard),
- \item the integration of any coordinate reference system  (e.g. for allowing projected coordinates for cartographic purposes).
-\end{itemize}
-In addition to these recommendations, we also think that the domain of the property used to link a feature to its geometry should be left empty in order to accept links between any type of resource and a geometry. This would be useful for example, to associate a person to the coordinates of their birthplace.
+
 
 \todo{On the current usage of georeferencing resources on the Web of data, it is assumed that the coordinates should be in WGS84, and hence the definition of the point. However, publishers might have data in different CRSs according to the location. Thus, our proposal is to define a more generic class for a POINT  with the benefit of choosing the CRS of the underlying data, as depicted in the Listing 1.1.}
 
@@ -229,7 +239,10 @@ We have also defined a property \texttt{geom:geometry} with an empty domain. Thu
   \end{center}
 \end{figure}
 
-
+\textcolor{red}{
+\subsection{Publishing structured geometries from geographic data}
+The vocabulary for geometry reused by a geodata converter that takes traditional GIS data as input and outputs RDF data with geometries defined both with a \texttt{gsp:wktLiteral} and with a structured representation compliant with our vocabulary. Geometries are automatically associated with the chosen CRS. This converter is implemented as a plugin of the Datalift platform \todo{reference section} and can be reused easily for geographic data publishing purpose.
+}
 
 \subsection{CRS requirements for the  French territory} \label{sec:reqs}
 
@@ -271,7 +284,7 @@ References to equivalent definitions provided by the EPSG registry are explicitl
 %\paragraph{Publishing a dataset on French CRSs}
 As no existing registry fulfilled all our requirements, we have developed a vocabulary\footnote{\url{http://data.ign.fr/def/ignf}}, inspired from the ISO 19111 schema for CRSs description. Then we have converted IGNF CRSs registry into RDF, and published this dataset on the Web with the Datalift platform\footnote{A service to lookup CRS in RDF can be found at \url{http://www.eurecom.fr/~atemezin/ignf-lookup/}}. Therefore, the description of the ``NTF Lambert 2 \'{e}tendu'' projected CRS can be retrieved at this URL \url{http://data.ign.fr/id/ignf/crs/NTFLAMB2E}.
 
-\subsection{Vocabularies for Geographic Feature Types}
+\section{Vocabularies for Geographic Feature Types}
 \label{sec:vocgeofeature}
 
 Indirect georeferencing of resources on the Web requires reference geographic data on named places and therefore vocabularies for describing feature types and their properties. Therefore, we have chosen to publish a reference dataset on administrative units called GEOFLA\circledR, which is already available in GIS format under an Open Data license. We have also made tests of data conversion and interlinking with another largest dataset on French names places. We have produced and published two vocabularies to describe these datasets, to make sure that all concepts and properties needed would be available.
@@ -284,13 +297,6 @@ The GEOFLA\circledR 's application schema is composed of classes representing di
 A Commune has an attribute called \textit{``nature''} whose enumerated values precise whether the commune is the capital of a bigger administrative unit, modeled in the vocabulary by the ObjectProperty \texttt{geofla:statut} with range \texttt{skos:Concept} defined in this specific \texttt{skos:ConceptScheme} \url{http://{BASE}/codes/geofla/typedecommune/liste} pointing to the different types of French administrative unit's capital. 
 
 
-\subsection{A REST Service for Converting Geo Data}
-\label{sec:rest-service}
-\todo{extend this section with current results of the implementations, comparison with existing tools}
 
-As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the de-facto standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}. Some existing tools like Circ\'e or the the world coordinate converter\footnote{\url{http://twcc.free.fr.are}} are good as a standalone tool for end user, but not so great for developers,  as they can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again.  At the moment, the following features are implemented: (i) from/to WGS 84 to/from WGS 84 UTM ; (ii) from/to WGS 84  to/from Lambert 93 and (iii) from/to WGS 84 UTM to/from Lambert 93. The API can also convert a file with space separated values. The API supports JSON as one of the output format. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
 
-\textcolor{red}{
-\subsection{Publishing structured geometries from geographic data}
-The vocabulary for geometry reused by a geodata converter that takes traditional GIS data as input and outputs RDF data with geometries defined both with a \texttt{gsp:wktLiteral} and with a structured representation compliant with our vocabulary. Geometries are automatically associated with the chosen CRS. This converter is implemented as a plugin of the Datalift platform and can be reused easily for geographic data publishing purpose.
-}
+
