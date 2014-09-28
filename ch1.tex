@@ -161,7 +161,25 @@ Modeling indirect location information such as administrative units or named poi
 \label{sec:rest-service}
 \todo{extend this section with current results of the implementations, comparison with existing tools}
 
-As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the \textit{de-facto} standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}. Some existing tools like Circ\'e or the the world coordinate converter\footnote{\url{http://twcc.free.fr.are}} are good as a standalone tool for end user, but not so great for developers,  as they can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again.  At the moment, the following features are implemented:
+\subsection{Datum}
+The Earth is shaped like a flattened sphere. This shape is called an ellipsoid. A datum is a model of the earth that is used in mapping. The datum consists of a series of numbers that define the shape and size of the ellipsoid and it's orientation in space. A datum is chosen to give the best possible fit to the true shape of the Earth.
+There are a large number of datums in use. Many of them are optimised for use in one particular part of the world. An example is the Geodetic 1949 datum that has been used in New Zealand. Another example, familiar to GPS users, is the WGS-84 datum. WGS-84 is an example of a datum that is used globally.
+A point (location) is referenced by its longitude and latitude values. Longitude and latitude are angles measured from the earth's center to a point on the earth's surface. The angles often are measured in degrees (or in grads). It is important to keep in mind that latitude and longitude are always specified in terms of a datum. The latitude and longitude of one current position are different for different datums. For example, the ``Th\'{e}\^{a}tre National de Nice'' in Nice, France is at \textcolor{red}{43.700594 N, 7.277959° E in WGS 84 coordinates and 43.700570° N, 4.941204° E} in NTF coordinates, an old France CRS. If the latter coordinates are used in WGS 84, they will point to a position which is approximately 295.17 kilometers away from the theater. So when working with latitude/longitude coordinates and getting an error of a couple of hundred meters, it is most likely that the wrong datum is in used.
+
+\subsection{Tools for converting Datum}
+As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the \textit{de-facto} standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. 
+
+A software called Circ\'e\footnote{\url{http://geodesie.ign.fr/?p=53&page=circe}}, published by IGN, provides the abilities to convert coordinate between CRSs in France and WGS 84. It has two conversions mode: standard and grid. In both modes, the user is required to input the source CRS values in order to convert. Based on what datum and projection method used, the number of required fields are different. 
+Circ\'e also has a batch converting mode which is done by supplying a file. The format of the content of the file is simple. The available formats are converted into \textsl{[location name] {Lat/Lon} {Lon/Lat} [Altitude/Height]}. There is an option to choose which format to use. But due to the fact that it is a closed source software, no one can use the software as a service for their system.
+
+Another tool is a web based application called the world coordinate converter at \url{http://twcc.free.fr}. This tool can convert between numerous of CRSs. Unlike Circ\'e which only supports France and WGS 84, this tool supports conversion of international CRSs and nationals' CRSs. The result output from these two tools are the same. However, just like Circ\'e, no API or any open service for the community to use their full power horse unless going to their website and use it like an application.
+
+These tools are great as a standalone tool for end user, but not so great for developer community. The developer can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again. 
+\paragraph{Our proposal:} The purpose of the REST Converter is to propose a web based service to perform conversion between various CRSs.
+
+The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}.
+
+At the moment, the following features are implemented in the Geo Converter:
 \begin{itemize}
 \item from/to WGS 84 to/from WGS 84 UTM ;
 \item from/to WGS 84  to/from Lambert 93 and 
@@ -172,14 +190,111 @@ The API can also convert a file with space separated values. The API supports JS
 
 \subsection{Algorithms Evaluation}
 
-\subsection{API Access and Parameters}
+The table below shows the resulting conversion from our tool, Geo Converter, in comparison with Circ\'e and twcc.free.fr (TWCC).
+\todo{add note DD: Decimal Degree}
 
-\subsection{User Interface}
 
 \begin{figure}[!htbp]
 \centering{
+\includegraphics[scale=0.9]{img/conversion-wgs84-lambert93.pdf}
+\caption{Results of conversion from WGS 84 to Lambert 93}
+\label{fig:convertToLambert93}
+ }
+\end{figure}
+
+
+\begin{figure}[!htbp]
+\centering{
+\includegraphics[scale=0.9]{img/conversion-wgs84-wgs84utm.pdf}
+\caption{Results of conversion from WGS 84 to WGS 84 UTM }
+\label{fig:convertTowgs84utm}
+ }
+\end{figure}
+
+From the figures Fig.\ref{fig:convertToLambert93}, Fig.\ref{fig:convertTowgs84utm}, we can see that the results from Geo Converter are not too much different from Circ\'e and TWCC. This deviation can be tolerated, since when showing on the map, they are basically the same point.
+There is no need for evaluation of conversion between Lambert 93 to UTM, since it is needed an intermediate step of convert to WGS 84. The conversion from Lambert 93 to WGS 84 works well, as well as from WGS 84 to WGS UTM. 
+
+
+
+\subsection{API Access and Parameters}
+\label{sec:access}
+
+\subsubsection{Simple Converter}
+The API is working through URL like any RESTful service does. The syntax for the service is (note that \{\} is required and [] is optional):
+\url{http://{domainname}/eurecom.geo.rest/api/converter/{D1}[P1]{D2}[P2]?{Parameters}} \\
+Where: \\
+\texttt{domainname}: Eurecom domain name.\\
+\texttt{D1} and \texttt{D2}: Datum of source and target CRS respectively.\\
+\texttt{P1} and \texttt{P2}: Projection of source and target CRS respectively.\\
+\texttt{Parameters:} The required parameters as input to the service. See table below for detail of required parameters for each converter. Parameters are provided as p1=v1\&p2=v1 where p1 is the first parameter with v1 is its value, etc.\\
+An example can be:
+\begin{verbatim}
+eurecom.fr/eurecom.geo.rest/api/converter/WGS84RGF93Lambert93?lon=4.7021484375&
+lat=45.2130035559939
+\end{verbatim}
+
+\subsubsection{Batch Converter}
+The API also support batch converter by using file. The URL syntax is:
+\begin{verbatim}
+http://{domainname}/eurecom.geo.rest/api/converter/file/
+{D1}[P1]{D2}[P2]?{Parameters}
+\end{verbatim}
+
+Where D1, P1, D2, and P2 is as before. The parameters are the source file, and the encoding system. 
+The order of the input coordinates in the file is matter, so the exact order is as follow:
+{longitude/x} {latitude/y} [zone] [hemisphere]
+The first value should be longitude, in case geographic coordinate, or x, in case of planimetric coordinate. The second value is latitude or y. In case of UTM coordinates, the following third value is the zone. The last value is hemisphere. 
+
+\subsubsection{Result Format}
+Normally, the API will return the result in form of normal string with the space character as delimiter for each coordinate. In case of batch converter, each location will be in one line. For example:
+\begin{verbatim}
+eurecom.fr/eurecom.geo.rest/api/converter/WGS84RGF93Lambert93?lon=4.7021484375&
+lat=45.2130035559939
+\end{verbatim}
+
+will return a string of:
+\begin{verbatim}
+833607.9336802219 6458515.660215093
+\end{verbatim}
+
+The order of value respond to the order of coordinate as follow:
+\begin{verbatim}
+{longitude/x} {latitude/y} [zone] [hemisphere]
+\end{verbatim}
+
+\paragraph{JSON format result:}
+However, one can ask the API to return the result string in JSON format. To demand the API to do so, simply put the json parameter with the value 1 to the link. For example:
+\begin{verbatim}
+eurecom.fr/eurecom.geo.rest/api/converter/WGS84RGF93Lambert93?lon=4.7021484375&
+lat=45.2130035559939&json=1
+\end{verbatim}
+
+will return a string in JSON format (no line breaking):
+\begin{verbatim}
+{"y":6458515.660215093,"x":833607.9336802219}
+\end{verbatim}
+
+JSON format return can also be applied for batch converter. The command is as before. An example of JSON format return of batch converter from WGS84 to Lambert93:
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Sample output of the batch converter}, label=snapshot, captionpos=b}
+\begin{lstlisting}
+{"point1":{"y":6543019.59988031,"x":882408.2999938729},"point2":{"y":6544401.599880268,"x":881947.5999938913},"point3":{"y":6581538.799879094,"x":849722.3999950405},"point4":{"y":6561282.999879616,"x":917481.0999927416},"point5":{"y":6561139.999879618,"x":917474.5999927415}}
+\end{lstlisting}
+
+For better human readable result, a tool such as JSONLint\footnote{ \url{http://jsonlint.com/}} can be used for the JSON format.
+
+
+\subsection{User Interface}
+To access the User Interface (UI), the URL is: \url{http://{domainname}/eurecom.geo.rest/}. Figure \ref{fig:uiconverter} shows the landing page of the converter. The UI shows two systems, which are the source and the target system, to provide input. Which system is source or target depend on which button at the end is used. If the button \textit{Convert S1-S2} is clicked, then the System 1 will be the source and System 2 is the target, and vice versa for button \textit{Convert S2-S1}.
+The required inputs is just as mentioned before. First is the datum to use. Next is the projection method. If no project method is used then choose None. Next is the inputs of the source system.
+The map under the form will show where the coordinate in the source system point to through a marker. This marker can be used as an input to the source system as well.
+By dragging the marker, the system will update the input values of the source system, which is the system that have the last edited field or act as source system in last conversion, to correspond to the marker position. Furthermore, the "Use Marker's Position" button can be used to take marker's position and convert it to the system which the button resides in. This will not change the source system.
+
+
+\begin{figure}[!htp]
+\centering{
 \includegraphics[scale=0.9]{img/UIconverter.pdf}
-\caption{The UI of the converter}
+\caption{The User Interface of the Geo Converter}
 \label{fig:uiconverter}
  }
 \end{figure}
