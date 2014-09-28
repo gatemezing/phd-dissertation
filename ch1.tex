@@ -161,7 +161,29 @@ Modeling indirect location information such as administrative units or named poi
 \label{sec:rest-service}
 \todo{extend this section with current results of the implementations, comparison with existing tools}
 
-As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the \textit{de-facto} standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}. Some existing tools like Circ\'e or the the world coordinate converter\footnote{\url{http://twcc.free.fr.are}} are good as a standalone tool for end user, but not so great for developers,  as they can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again.  At the moment, the following features are implemented: (i) from/to WGS 84 to/from WGS 84 UTM ; (ii) from/to WGS 84  to/from Lambert 93 and (iii) from/to WGS 84 UTM to/from Lambert 93. The API can also convert a file with space separated values. The API supports JSON as one of the output format. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
+As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the \textit{de-facto} standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one. The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}. Some existing tools like Circ\'e or the the world coordinate converter\footnote{\url{http://twcc.free.fr.are}} are good as a standalone tool for end user, but not so great for developers,  as they can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again.  At the moment, the following features are implemented:
+\begin{itemize}
+\item from/to WGS 84 to/from WGS 84 UTM ;
+\item from/to WGS 84  to/from Lambert 93 and 
+\item from/to WGS 84 UTM to/from Lambert 93
+\end{itemize}   
+
+The API can also convert a file with space separated values. The API supports JSON as one of the output format. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
+
+\subsection{Algorithms Evaluation}
+
+\subsection{API Access and Parameters}
+
+\subsection{User Interface}
+
+\begin{figure}[!htbp]
+\centering{
+\includegraphics[scale=0.9]{img/UIconverter.pdf}
+\caption{The UI of the converter}
+\label{fig:uiconverter}
+ }
+\end{figure}
+
 
 \section{Best Practices for Modeling Geospatial vocabularies}
 \label{sec:bpgeo}
