@@ -379,7 +379,8 @@ In many knowledge bases, entities are described with numerous properties. Howeve
 \label{sec:knowledge-graph}
 Web scraping is a technique for extracting data from Web pages. We aim at capturing the properties depicted in the Google Knowledge Panel (GKP) that are injected in search result pages~\cite{Bergman2012}. We have developed a Node.js application that queries all DBpedia concepts that have at least one instance which is \texttt{owl:sameAs} with a Freebase resource in order to increase the probability that the search engine result page (SERP) for this resource will contain a GKP. We assume in our experiments that the properties displayed for an entity are type and context dependent (country, time, query) which can affect the results. Moreover, we filter out generic concepts by excluding those who are direct subclasses of \texttt{owl:Thing} since they will trigger ambiguous queries. We obtained a list of $352$ concepts\footnote{See also the SPARQL query at \url{http://goo.gl/EYuGm1}}.
 
-\begin{algorithm}[h]\scriptsize
+\begin{algorithm}[h]
+\scriptsize
 \caption{Google Knowledge Panel reverse engineering algorithm} \label{algoscrapping}
 \begin{algorithmic}[1]
     \STATE INITIALIZE $equivalentClasses(DBpedia,Freebase) $ AS $vectorClasses$
@@ -403,8 +404,10 @@ Web scraping is a technique for extracting data from Web pages. We aim at captur
     \ENDFOR
     \RETURN $gkpProperties$
 \end{algorithmic}
+
 \end{algorithm}
-\normalsize
+
+
 For each of these concepts, we retrieve $n$ instances (in our experiment, $n$ was equal to 100 random instances). For each of these instances, we issue a search query to Google containing the instance label. Google does not serve the GKP for all user agents and we had to mimic a browser behavior by setting the $User-Agent$ to a particular browser. We use CSS selectors to check the existence of and to extract data from a GKP. An example of a query selector is $.\_om$ (all elements with class name $\_om$) which returns the property DOM element(s) for the concept described in the GKP. From our experiments, we found out that we do not always get a GKP in a SERP. If this happens, we try to disambiguate the instance by issuing a new query with the concept type attached. However, if no GKP was found again, we capture that for manual inspection later on. Listing~\ref{algoscrapping} gives the high level algorithm for extracting the GKP. The full implementation can be found at \url{https://github.com/ahmadassaf/KBE}. We finally observe that this experiment is only valid for the English Google.com search results since GKP varies according to top level names.
 
 
@@ -578,20 +581,20 @@ The event media reconciliation module aims to align the incoming stream of socia
 \subsection{Graphical User Interface}
 The Graphical User Interface (GUI) of \emph{Confomaton} is built around four perspectives characterising an event: (i) \textit{``Where does the event take place?''}, (ii) \textit{``What is the event about?''}, (iii) \textit{``When does the event take place?''}, and finally (iv) \textit{``Who are the attendees of the event?''}. In addition, the user interface offers full text search for these four dimensions. The \emph{Confomaton} user interface is powered by the Linked Data API\footnote{\url{http://code.google.com/p/linked-data-api/wiki/Specification}}, which provides a configurable way to access RDF data using simple RESTful URLs that are translated into queries to our SPARQL endpoint. More precisely, we use the Elda\footnote{\url{http://code.google.com/p/elda}} implementation developed by Epimorphics. Elda comes with some pre-built samples and documentation, which allow to build specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through structure of the URI, or through query parameters.
 
-%\autoref{lst:config} shows an example of the configuration file of the \emph{Confomaton} API specifying the event, media and tweet viewers followed by the events and media properties access.
-%\begin{lstlisting}[caption={Example configuration file of the \emph{Confomaton} API, specifying event properties access.},label={lst:config}]
-%<#MyAPI> a api:API ;
-%	rdfs:label "Confomaton API"@en ;
-%	api:endpoint <#event>,<#media>,<#tweet>,<#agent>, <#venue>,<#user>,<#eventbyid>,<#mediabyid>,<#tweetbyid>,<#agentbyid>,<#venuebyid>,<#userbyid>;
-%	api:sparqlEndpoint <http://semantics.eurecom.fr/sparql> ;
-%# specification of the event viewer (all properties appear in the json file)
-%spec:eventViewer a api:Viewer ;
-%  api:property "title","description","space.lat","space.lon","time.datetime","inagent.label",...
-%<#eventbyid> a api:ItemEndpoint;
-%		api:uriTemplate "/event/{id}";
-%		api:itemTemplate "http://data.linkedevents.org/event/{id}";
-%		api:defaultViewer spec:eventViewer.		
-%\end{lstlisting}
+\autoref{lst:config} shows an example of the configuration file of the \emph{Confomaton} API specifying the event, media and tweet viewers followed by the events and media properties access.
+\begin{lstlisting}[caption={Example configuration file of the \emph{Confomaton} API, specifying event properties access.},label={lst:config}]
+<#MyAPI> a api:API ;
+	rdfs:label "Confomaton API"@en ;
+	api:endpoint <#event>,<#media>,<#tweet>,<#agent>, <#venue>,<#user>,<#eventbyid>,<#mediabyid>,<#tweetbyid>,<#agentbyid>,<#venuebyid>,<#userbyid>;
+	api:sparqlEndpoint <http://semantics.eurecom.fr/sparql> ;
+# specification of the event viewer (all properties appear in the json file)
+spec:eventViewer a api:Viewer ;
+  api:property "title","description","space.lat","space.lon","time.datetime","inagent.label",...
+<#eventbyid> a api:ItemEndpoint;
+		api:uriTemplate "/event/{id}";
+		api:itemTemplate "http://data.linkedevents.org/event/{id}";
+		api:defaultViewer spec:eventViewer.		
+\end{lstlisting}
 
 The system is available at \url{http://semantics.eurecom.fr/confomaton/iswc2011}. On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the centre, the default view is a map centred on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, this data being provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims at showing all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
 
@@ -769,10 +772,11 @@ In order to present the event and application information in structured format, 
 In \ref{fig:modelA}, the model is complex, because it requires us to specify an extra class (\texttt{:Submission}) in order to use the \texttt{:wonAward-property}, and yet we are unable to specify which prize the application won (\$5000 or \$3000). While in ~\ref{fig:modelB}, the model is straightforward to specify that an application (SBA Gems) won a prize, because we don't need to use the Submission intermediate class. We are also able to specify which prize the application won (\texttt{:FirstPrize}). It should be notice  also that now the jury is connected to a prize by specifying a jury-attribute for prizes (instead of having a prize-attribute for the jury i.e. direction of the arrow changed).
 
 \begin{figure}[!htbp]
-
+\centering{
 \includegraphics[]{img/rdfTriplesAfterChanges.pdf}
 \caption{The RDF triples after changes.}
 \label{fig:modelB}
+}
 \end{figure}
 
 
@@ -780,10 +784,11 @@ In \ref{fig:modelA}, the model is complex, because it requires us to specify an 
 \label{sec:plugin}
 
 \begin{figure}[!htbp]
-
+\centering{
 \includegraphics[]{img/componentsJSplugin.pdf}
 \caption{Universal JavaScript components}
 \label{fig:jsplugin}
+}
 \end{figure}
 
 

@@ -199,8 +199,84 @@ Each module has its own way to be used within the lifting process in DataLift. F
 
 \todo{add here the comparison}
 
-\section{Publishing Geofla}
-\section{French Gazetteer}
+\section{Publishing French Administrative Units (GeoFla)} \label{sec:geofla}
+As a dataset dedicated to administrative units, GEOFLA\circledR is very likely to be reused by other datasets, either by reusing directly its URIs for georeferencing needs, or by reusing its description of administrative units - labels, properties and geometries - for interlinking purposes. 
+
+\subsection{Data conversion}
+\label{sec:dconversion}
+Geofla  is delivered as a set of 4 shapefiles  that describe the boundaries and properties of administrative units of mainland France (for CRS reasons, overseas territories are delivered within different shapefiles) : communes, cantons, arrondissements and departements. For the sake of our application, we have generated another shapefile describing regions by aggregating the geometries of the instances of departments based on their region's foreign key value. This  dataset is updated every year.  Publishing this data in RDF with unique identifiers on the Web will ease the interlinking with some existing datasets describing French boundaries in the wild. We follow a two steps conversion: we use the SHP2RDF module of Datalift to obtain a raw RDF from shapefiles, and the RDF2RDF module of Datalift  using a set of SPARQL construct queries\footnote{ \url{https://github.com/gatemezing/ign-iswc2014/tree/master/rdf2rdf}} for getting a refined RDF datasets using suitable vocabularies.
+
+\subsection{URI design policy} \label{sec:urigeofla}
+
+One of the requirements to publish data is to have unique ids and stable URIs\footnote{\url{http://www.w3.org/TR/ld-bp/}} . Since our legacy databases have unique IDs to refer to the objects, we had to make sure they were unique at Web level. Thus, the base scheme for vocabularies URIs is: \url{http://data.ign.fr/def/}. Besides, the base schema for identifying a real world resource uses \url{http://{BASE}/id/}. For example, IGN main buildings  are located in the commune with the URI \url{rgeofla:commune/94067}, corresponding to Saint-Mand\'{e}, and \url{rgeofla:departement/94} corresponds to the department ``Val de Marne'' to which the commune belongs.
+
+%We had to make choices based on the set of best practices related to URI design\footnote{\url{http://www.w3.org/TR/ld-bp/#HTTP-URIS}} which should guarantee stable and human readable identifiers.
+
+
+\subsection{Interlinking with existing GeoData} \label{sec:mapping}
+We interlinked our datasets with NUTS, DBpedia FR\footnote{\url{http://fr.dbpedia.org/}} and GADM datasets. SILK \cite{jentzsch2010silk} is used to interlink the departments in our dataset with departments in DBpedia FR, using labels and INSEE Code. We obtained $93$ matches (all correct) while three are missing for the departments 07, 09 and 75\footnote{\url{https://github.com/gatemezing/ign-iswc2014/tree/master/interlinking/matched}}. The 
+LIMES tool\footnote{\url{https://github.com/AKSW/LIMES.}} is then used to perform the rest of the interlinking tasks \cite{NGON13} with the trigrams function based on the labels with restriction to France.
+
+\begin{itemize}
+ \item Geofla-RDF with DBpedia FR: \textbf{23 252} links obtained. This results show the missing of nearly 13 435 communes not correctly typed in DBpedia FR as \texttt{Spatial Feature} or \texttt{Place}, or not having a French Wikipedia entry.
+ \item Geofla-RDF with GADM (8 314 443 features): \textbf{70} links obtained: 10 communes, 51 departments and 9 regions. The property \texttt{gadm:in\_country} is used to restrict the interlinking to France. E.g.: The city of Saint-Alban in Quebec is a commune in France.
+ \item Geofla-RDF with NUTS (316 236 triples): Using a \textit{``naive''} script with \texttt{trigrams} function on \texttt{geofla:Commune/rdfs:label} and \texttt{spatial:Feature/ramon:name} reveal two odd results located in Germany and Switzerland. The latter being the \textit{JURA } and the former named \textit{``Celle''}.  In order to remove those odd effects, we add another restrictions based on \textsf{ramon:code} by filtering the ones located in France (136 features) . The final matchings give a total of \textbf{105} correct links: 14 communes, 75 departments and 16 regions.
+\end{itemize}
+
+The above results show good precision of the matching algorithm (score above 0.98) and a rather low recall value with DBPedia-FR (0.627). The few number of matched entities is likely due to the low coverage of French features  in the datasets. 
+
+
+\begin{table}[!htbp]
+\centering{
+\scriptsize
+\begin{tabular}{lccl}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Datasets}	 & Precision & Recall & F1-score \\   \specialrule{1pt}{1pt}{1pt}
+ NUTS & $0.98$ & $1$ & $0.90$   \\
+ GADM & $1$ & $0.86$ & $0.92$  \\
+ DBpedia-FR & $1$ & $0.627$ & $0.77$   
+ \\ \specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Evaluation results in the interlinking process. }
+\label{tab:mappins}
+}
+\end{table}
+
+
+%(\texttt{[filter (contains(ramon:code), ``FR'')]})
+%leading to \texttt{nuts:DE931 sameAs geoign:commune/41030} 
+
+\section{Publishing  French Gazetteer} \label{sec:bdtopo}
+
+In this section, we present some first tests of converting BDTOPO\circledR ~into RDF and interlinking with LinkedGeoData using LIMES. The results confirm the need for geographic publishers to publish georeference data on the Web. 
+%We  then discuss some challenges related to updating the datasets, versioning and license policies. 
+
+\paragraph{Data conversion, URIs and Interlinking:}
+Shapefiles are converted into RDF using the same two conversion process as for GEOFLA\circledR. The URIs for each resource follow the pattern: \url{rtopo:CLASS/ID} for the feature, while  \url{rtopo:geom/CLASS/ID} is used to reference the geometry of the resource.
+The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of  1,137,543 triples (103,413 features). We chose LinkedGeoData (LGD)
+\footnote{\url{http://linkedgeodata.org/sparql}} to perform the alignments using the main class \texttt{lgdo:Amenity}\footnote{\url{http://linkedgeodata.org/ontology/}} (5,543 001 triples), as they are closed to the features contained in the gazetteer. We perform the interlinking on the geometries using the \texttt{hausdorff} metric of LIMES tool. A total of \textbf{654} alignments was obtained above the threshold ($0.9$). This relatively low number of hits can be explained by the coverage of French data in LGD, and the subset of BDTOPO\circledR  ~used for the interlinking. Table~\ref{tab:lgdmapping} provides details of the alignments with subclasses of Amenity.
+
+\begin{table}[!htbp]
+\centering{
+\scriptsize
+\begin{tabular}{lr}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{LGD Class}	& 	\textbf{\#links matched}	  \\ \specialrule{1pt}{1pt}{1pt}
+\textsf{lgdo:Shop} 	   & 252  \\
+\textsf{lgdo:TourismThing} &  30 \\
+\textsf{lgdo:Craft} &  3 \\
+\textsf{lgdo:AerowayThing} &  37 \\
+\textsf{lgdo:AerialwayThing} &  11 \\
+\textsf{lgdo:EmergencyThing} &  56 \\
+\textsf{lgdo:HistoricThing} &  257 \\
+\textsf{lgdo:MilitaryThing} &  8 
+		\\ \specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Interlinking results using the Hausdorff metric of LIMES tool between LinkedGeoData and toponyms in the French Gazetteer}
+\label{tab:lgdmapping}
+}
+\end{table}
+
 
 \section{Publishing Addresses of OSM-France in RDF}
 \label{sec:bano2rdf}
@@ -225,3 +301,17 @@ Explain briefly the requirements and work on publishing bano2RDF: vocabularies, 
     \label{visuGraphModel}
   }
 \end{figure}
+
+
+\section{Opportunities and Challenges}\label{sec:challenges}
+
+ The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is particularly acknowledged by the INSPIRE Directive. For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold. On the one hand, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards. On the other hand, the use of semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. 
+Moreover, there are different types of license policies to access data at IGN (e.g.: research purpose, commercial use, access on demand, etc.), with some of them not necessary ``open'' or free to access: (e.g. BD TOPO\circledR). Although there is a clear understanding of the benefits of publishing and interconnecting data on the web, ongoing investigations on how to combine licenses on datasets are under consideration at IGN. Two solutions are under investigation: (i) different license policies attached to datasets and (ii) the use of a security access mechanism on top of the datasets granting access based on a predetermined configuration on named graphs and resources. 
+According to Linked data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and real world evolutions. This issue will be addressed in a future work, as we plan to release a spatio-temporal dataset describing the evolution of communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
+The last issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
+
+
+%The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is particularly acknowledged by the INSPIRE Directive. This is also true for any georeferenced thematic data, and especially in the context of the Web of data where location properties can be used with benefits for data linking purposes. Particularly, good quality reference geodatasets can be used as the spatial frame for anchoring and combining many thematic data. For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold. On the one hand, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards. On the other hand, the use of semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. However, it may also has the drawback of publishing geographic data twice: following LD principles and according to SDI  standards. This raises the issue of proposing a mediation approach between data access solutions used by SDI and Linked Data.
+%In this article, we have proposed a reference dataset on French administrative units. This dataset is updated annually by IGN France. This raises a first issue on how to deal with data updates and versioning. According to Linked data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and real world evolutions. This issue will be addressed in a future work, as we plan to release a spatio-temporal dataset describing the evolution of French communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
+%Another issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
+
