@@ -462,14 +462,11 @@ The linked data principles have gained significant momentum over the last few ye
 
 To the best of our knowledge, recommending vocabularies to reuse are limited to ``popular'' or ``well-known'' ones. This paper proposes a metric combining different features such as how vocabularies are interlinked, or how they are used in real world datasets. This contribution originates also in the desire to bring the traditional concept of Information Content (IC) into the field of the semantic web applied to vocabularies. Many catalogs of ontologies already provide some ranking metrics based on some features. However, we are interested in applying the principles of IC on vocabularies to investigate if such techniques can give more insights in ontology ranking and ontology usage (e.g in visualization applications).
 
-The paper is organized as follows: Section~\ref{sec:theory} defines the theory of Information Content, and the features used for applying Partition Information Content to vocabularies. We present our experiments on the LOV catalogue in the Section~\ref{sec:experiments}. We discuss how this ranking metric can be used for vocabulary design and maintenance in Section~\ref{sec:application}. We compare our results with other rankings for vocabularies in Section~\ref{sec:related} before concluding and outlining future work (Section~\ref{sec:conclusion}).
-\vspace{-0.2cm}
+This Section is organized as follows: Section~\ref{sec:theory} defines the theory of Information Content, and the features used for applying Partition Information Content to vocabularies. We present our experiments on the LOV catalogue in the Section~\ref{sec:experiments}. We discuss how this ranking metric can be used for vocabulary design and maintenance in Section~\ref{sec:application}. We compare our results with other rankings for vocabularies in Section~\ref{sec:related} before concluding and outlining future work (Section~\ref{sec:conclusion}).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  2. Information Content Metrics  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Information Content Metrics}
+
+\subsection{Information Content Metrics}
 \label{sec:theory}
 Based on probability theory, Information Content (IC) is computed as a measure of generated amount of surprise~\cite{ross02}. More common terms in a given corpus with higher chance of occurrence cause less surprise and accordingly carry less information, whereas infrequent ones are more informative. We reuse the notion of informativeness as the value of information associated with a given entity, where Information Content has a negative relation with its probability. The concept of Information Content can be used to rank each entity, term, or alphabet in the corpus. We apply the Partitioned Information Content to measure the informativeness of Linked Open Vocabularies as a semantic network of resources connected together using different range of relations, as described in~\cite{Meymandpour13}. Partitioned Information Content (PIC) is derived from the IC value using some weights. We empirically set those weights according to three features:
 \begin{itemize}
@@ -511,7 +508,7 @@ We consider very important that a vocabulary is being reused by other vocabulari
 \vspace{-0.2cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  3. Experiments on Vocabularies  %%%
+%%%   Experiments on Vocabularies  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Experiments on Vocabularies}
@@ -672,21 +669,127 @@ In this section, we look at three other catalogues providing rankings for vocabu
 }
 \end{table}
 
-The LODStats ranking is focused on covering the number of datasets reused in the linked open data cloud~\cite{demter:2012}, which is partially taken into account in our approach. The evidence of that is the first three vocabularies used (\texttt{RDF, RDFS, OWL}) which are considered as the meta model for designing vocabularies. Those vocabularies are not included into the LOV catalogue and they do not appear in our ranking. The relative stable position of \texttt{foaf} in the four columns of the table suggests that there are equal popular terms. In addition, two other vocabularies have ``relative'' similar ranking using PIC and LODStats: \texttt{skos} and \texttt{dcterms}. Regardless the metric used, a short list of the ``most popular vocabularies'' based on their presence in the Top-15 of the four catalogues is: \texttt{foaf, skos} followed by \texttt{dcterms, time, dce, prov}.
+The LODStats ranking is focused on covering the number of datasets reused in the linked open data cloud~\cite{demter:2012}, which is partially taken into account in our approach. The evidence of that is the first three vocabularies used (\texttt{RDF, RDFS, OWL}) which are considered as the meta model for designing vocabularies. Those vocabularies are not included into the LOV catalog and they do not appear in our ranking. The relative stable position of \texttt{foaf} in the four columns of the table suggests that there are equal popular terms. In addition, two other vocabularies have ``relative'' similar ranking using PIC and LODStats: \texttt{skos} and \texttt{dcterms}. Regardless the metric used, a short list of the ``most popular vocabularies'' based on their presence in the Top-15 of the four catalogues is: \texttt{foaf, skos} followed by \texttt{dcterms, time, dce, prov}.
 
 Closer to our work, Schaible \emph{et al.} reported on an empirical study involving 75 linked data experts and practitioners assessing reuse strategies based on various ranking decisions~\cite{Schaible:ESWC14}. The goal is to find objective criteria for choosing which vocabularies to reuse and how many can be combined. LODStats and LOV are used to obtain the number of datasets using a specific vocabulary while \textit{vocab.cc} is used for getting the number of occurrence of a vocabulary term. We propose a different metric to rank existing vocabularies that can be furthermore added as a new feature in such a study. One drawback in the model is to use the same weight for two vocabularies with different number of datasets reused. This could be address in the future by using a ``function based'' weighting for datasets reused (e.g. inverse logarithm) for computing the PIC score.
 
 \subsection{Summary}
 We have presented in this Section a different perspective of ranking vocabularies using the principles of Information Content. By applying this concept to Linked Open Vocabularies, we tried to use features that we consider ``relevant'' to be taken into account when comparing vocabularies (e.g: datasets reused, external vocabularies). We compare with other rankings that are mostly based on the ``popularity'' of vocabularies. This work can path the way for assessing vocabularies with applications in a more systemic approach for recommending classes/properties in ontology management, or in visualization applications to propose the most \textit{``oh yeah?''} suitable property to be visualized for RDF entities when there is large a large number of properties.
 
+
+\section{Datalift module for selecting vocabularies}
+\label{sec:data2rdf}
+Here, describe the module for choosing vocabularies of Datalift platform, Data2RDF. 
+
 \section{URI Patterns}
 \label{sec:uris}
 
 Note: Not sure to add this section. Propose the suggestion of patterns in the BP document.
 
-\section{License compatibility checker}
+\section{Licenses compatibility checker}
 \label{sec:checker}
+
+\subsection{Background}
+The license of a dataset in the Web of Data can be specified within the data, or outside of it, for example in a separate document linking the data. In line with the Web of Data philosophy~\cite{LinkedData2011}, licenses for such datasets should be specified in RDF, for instance through the Dublin Core vocabulary\footnote{\url{http://purl.org/dc/terms/license}}. Despite such guidelines, still a lot of effort is needed to enhance the association of licenses to data on the Web, and to process licensed material in an automated way. The scenario becomes even more complex when another essential component in the Web of Data is taken into account: the vocabularies. Our goal is to support the data provider in assigning a license to her data, and verifying its compatibility with the licenses associated to the adopted vocabularies.      
+%
+We answer this question by proposing an online framework called LIVE\footnote{The online tool is available at \url{http://www.eurecom.fr/~atemezin/licenseChecker/}} (LIcenses VErification) that exploits the formal approach to licenses composition proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13} to verify the compatibility of a set of heterogeneous licenses. LIVE, after retrieving the licenses associated to the vocabularies used in the dataset under analysis, supports data providers in verifying whether the license assigned to the dataset is compatible with those of the vocabularies, and returns a warning when this is not the case. 
+
+\subsection{The LIVE framework}
+The LIVE framework is a Javascript application, combining HTML and Bootstrap. Hence, installation has no prerequisite. Since the tool is written in Javascript, the best way to monitor the execution time is with the \texttt{performance.now()} function. We use the $10$ LOD datasets with the highest number of links towards other LOD datasets available at \url{http://lod-cloud.net/state/#links}. For each of the URLs in Datahub, we retrieve the VoID\footnote{\url{http://www.w3.org/TR/void/}} file in Turtle format, and we use the \textit{voidChecker} function\footnote{\url{http://www.eurecom.fr/~atemezin/licenseChecker/voidChecker.html}} of the LIVE tool to retrieve the associated license, if any.  
+The goal of the LIVE framework is to support data producers to assign a license to the data ensuring the consistency of such license with respect to the licenses assigned to the vocabularies she exploits in the dataset. 
+The input of the LIVE framework (Figure~\ref{fig:framework}) consists in the dataset (URI or VOiD) whose license has to be verified. The framework is composed by two modules. The first module takes care of retrieving the vocabularies used in the dataset, and for each vocabulary, retrieves the associate license\footnote{Note that the LIVE framework relies on the dataset of machine-readable licenses (RDF, Turtle syntax) presented in~\cite{CabrioESWC2014}.} (if any) querying the LOV repository. 
+The module searches out also the license associated to the dataset itself. When all the licensing information of interest has been obtained, the module provides such set of licenses to the compatibility checking module. 
+The second module takes as input the set of licenses (i.e., the licenses of the vocabularies used in the dataset as well as the license assigned to the dataset) to verify whether they are compatible with each others. The result returned by the module is a \textit{yes/no} answer. In case of negative answer, the data provider is invited to change the license associated to the dataset and check back again with the LIVE framework whether further inconsistencies arise.
+
+\begin{figure}
+\centering
+\includegraphics[width=12.0cm]{img/live-framework.pdf}
+\caption{LIVE framework architecture.}
+\label{fig:framework}
+\end{figure}
+
+
+\subsection{licensing information from vocabularies and datasets.}
+Two use-cases are taken into account: a SPARQL endpoint, or a VoID file in Turtle syntax. 
+In the first use case, the tool retrieves the named graphs present in the repository, and then the user is asked to select the URI of the graph that needs to be checked. Having that information, a SPARQL query is triggered, looking for entities declared as \texttt{owl:Ontology}, \texttt{voaf:Vocabulary} or object  of the \texttt{void:vocabulary} property. The final step is to look up the LOV catalogue to check whether they declare any license. There are two options for checking the license: \textit{(i)} a \textit{``strict checking'' } where the \texttt{FILTER} clause contains exactly the namespace of the submitted vocabulary, or \textit{(ii)} a \textit{``domain checking''}, where only the domain of the vocabulary is used in the \texttt{FILTER} clause. This latter option is recommended in case only one vocabulary has to be checked for the license. 
+%
+In the second use case, the module parses a VoID file using a N3 parser for Javascript\footnote{\url{https://github.com/RubenVerborgh/N3.js}}, and then collects the declared vocabularies in the file, querying again LOV\footnote{Since LOV endpoint does not support the JSON format in the results, we have uploaded the data in \url{eventmedia.eurecom.fr/sparql}.} to check their licensing information. 
+%
+When the URIs of the licenses associated to the vocabularies and the dataset are retrieved, the module retrieves the machine-readable description of the licenses in the dataset of licenses~\cite{CabrioESWC2014}. More specifically, such dataset is composed by 37 licenses, comprising all the licenses adopted to certify data in the Linked Data cloud (as all the Creative Commons licenses\footnote{\url{http://creativecommons.org/licenses/}}), software licenses (as Mozilla Public License\footnote{\url{http://www.mozilla.org/MPL/2.0/}} and Microsoft License\footnote{\url{http://referencesource.microsoft.com/referencesourcelicensing.aspx}}), and additional licenses for other material on the Web (as the UK Open Government license, and the New Free Documentation License\footnote{\url{http://www.gnu.org/copyleft/fdl.html}}). The dataset provides the licenses in RDF using the Turtle syntax, however Creative Commons licenses are also available in XML/RDF format on the CC website\footnote{For instance, Creative Commons Attribution 4.0 license is available at \url{http://creativecommons.org/licenses/by/4.0/rdf}}.
+
+\subsection{Licenses compatibility verification.}
+The logic proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13} 
+and the licenses compatibility verification process has been implemented using SPINdle~\cite{spindle} 
+-- a defeasible logic reasoner capable of inferencing defeasible theories with hundredth of thousand rules.
+
+%
+\begin{figure}[ht!]
+% \begin{wrapfigure}{r}{.5\textwidth}
+\centering{
+\includegraphics[scale=0.8]{img/composeTheories.pdf}
+\caption{Licenses compatibility module.}
+\label{figure:theoriesReasoningProcess}
+}
+\end{figure}
+%
+
+As depicted in Figure~\ref{figure:theoriesReasoningProcess},
+after receiving queries from users,
+the selected licenses (represented using RDF) will be translated into the DFL formalism supported by SPINdle using the \textit{RDF-Defeasible Theory Translator}. 
+% If, 
+% however,
+% more than one license has been selected, % by user,
+% then in order to verify the compatibility of different licensing terms, 
+% the translated defeasible theories will first be composed into a single defeasible theory~\cite{DBLP:conf/semweb/GovernatoriRVG13} .
+That is,
+each RDF-triple will be translated into a defeasible rule based on the subsumption relation between the \textit{subject} and \textit{object} of a RDF-triples.
+In our case,
+we can use the subject and object of the RDF-triples as the antecedent and head of a defeasible rule, respectively.
+Besides, 
+the translator also supports direct import from the Web and processing of RDF data into SPINdle theories.
+%
+%the \textit{RDF-Defeasible Theory Translator} will translate the RDF-licenses into the DFL formalism supported by \spindle.
+
+The translated defeasible theories will then be composed into a single defeasible theory based on the logic proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13},
+using the \textit{Theories Composer}.
+Afterwards,
+the composed theory, 
+together with other contextual information (as defined by user),
+will be loaded into the SPINdle reasoner to perform a compatibility check before returning the results to the users.
+
+We have evaluated the time performances of the LIVE framework in two steps (Table~\ref{tab:evalTool}).
+
+\begin{table}[ht!]
+\centering{
+\scriptsize
+\begin{tabular}{|l|c|c|c|c|}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Dataset} & \textbf{LicRetrieval(ms)} & \textbf{vocabularies} & \textbf{LicCompatibility(ms)} & \textbf{LIVE(ms)}\\ \hline
+  rkb-explorer-dblp & 4 499 &  1 & 0 & 4499\\ \hline
+  rkb-explorer-southampton & 14 693 & 1 & 0 & 14 693\\ \hline
+  rkb-explorer-eprints & 3 220 & 1 & 0 & 3 220\\ \hline
+  rkb-explorer-acm & 3 007 & 1 &  0 & 3 007\\ \hline
+  rkb-explorer-wiki & 14 598 & 1 & 0& 14 598\\ \hline
+  rkb-explorer-rae2001 & 3 343 & 1 &  0 & 3 343 \\ \hline
+  rkb-explorer-citeseer & 2 760 & 1 & 0 & 2 760\\ \hline
+  rkb-explorer-newcastle & 3 354 & 1 & 0 & 3 354\\ \hline
+  rkb-explorer-kisti & 4 094 & 5 & 6 & 4 100\\ \hline
+  270a.info & 13 202 & 48 & 8 & 13 210 \\ \hline
+ 
+\end{tabular}\normalsize
+\caption{Evaluation of the LIVE framework.}
+\label{tab:evalTool}
+}
+\end{table}
+
+
+First, we evaluate the time performances of the licenses compatibility module: it needs about 6ms to compute the compatibility of two licenses. Second, we evaluate time performances (Chrome v. 34) of the whole LIVE framework for the $10$ LOD datasets with the highest number of links towards other LOD datasets, considering both the licenses retrieval module and the licenses compatibility one. The results show that LIVE provides the compatibility evaluation in less than 5 seconds for $7$ of the selected datasets. Time performances of LIVE are mostly affected by the first module while the compatibility module does not produce a significant overhead. For instance, consider Linked Dataspaces\footnote{\url{http://270a.info/}}, a dataset where we retrieve the licensing information in both the dataset and the adopted vocabularies. In this case, LIVE retrieves in $13.20$s $48$ vocabularies, the license for the dataset is CC-BY, and the PDDL license is attached one of the vocabularies\footnote{\url{http://purl.org/linked-data/cube}}. The time for verifying the compatibility is $8$ms, leading to a total of $13.208$s.
+
+\subsection{Future perspectives}
+We have introduced the LIVE framework for licenses compatibility. The goal of the framework is to verify the compatibility of the licenses associated to the vocabularies exploited to create a RDF dataset and the license associated to the dataset itself. Several points have to be taken into account as future work. More precisely, in the present paper we consider vocabularies as data but this is not the only possible interpretation. For instance, we may see vocabularies as a kind of compiler, such that, after the creation of the dataset then the external vocabularies are no more used. In this case, what is a suitable way of defining a compatibility verification? We will investigate this issue as well as we will evaluate the usability of the online LIVE tool to subsequently improve the user interface.
 
 
 \section{Conclusion}
 Tell the reader the ``take-away-message'' of this chapter.
+
+
