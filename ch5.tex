@@ -753,6 +753,9 @@ The Figure ~\ref{fig:searchingSchool} shows the three different views on a runni
 
 \subsection{Background}
 \label{sec:backcontest}
+One of the challenges in the Apps for Europe -project - and open data projects in general - is the discovery of existing applications using the open data. The discovery of existing applications and ideas is important in order to prevent people from reinventing the wheel, when they instead should put their effort in refining existing applications or developing completely new applications. This will hopefully lead to more diverse applications and furthermore also to higher quality applications, because the existing applications can be enhanced by other people and organizations \cite{apps4eu}. 
+
+In order to promote the reuse and discovery of open data applications, Apps for Europe has created an RDF vocabulary\footnote{\url{https://github.com/mmlab/apps4eu-vocabulary}}  that can be used for describing open data events and also the applications that have been built on top of the open data. Furthermore, Apps for Europe has also developed a Wordpress plugin\footnote{\url{https://github.com/mmlab/AppsForX }}  that open data event organizers can install on their web pages, to make it simpler to populate the RDF data for the events and applications.
 
 
 \subsection{Modeling events and applications in RDF}
@@ -779,9 +782,39 @@ In \ref{fig:modelA}, the model is complex, because it requires us to specify an 
 }
 \end{figure}
 
+\subsection{Improving the model for specifying winners}
+Open data events often include competitions where the best applications are rewarded, and this information was modeled in the Apps for Europe RDF vocabulary as well. However, we found that the current model for this was unnecessarily complicated and therefore the model was simplified. Previously, winning apps required a separate ``Submission''-class in order to state that they had won a competition. Furthermore, the vocabulary didn't allow to state which position (winner, second, third etc.) the winning application was awarded. These problems were fixed by introducing a new property ``wonPrize'' for applications, so that we can directly state that an application won a prize without needing to have an intermediary ``Submission''-class, and by introducing the new classes ``FirstPrize'', ``SecondPrize'', and ``ThirdPrize'' that are all subclasses of the ``Prize''-class. We concluded that it is satisfactory to be able to state positions one to three for the winning apps, and therefore we didn't implement a more complicated vocabulary that would have enabled to state an arbitrary position (by having a position attribute for the prize for example).
+
+Also some other minor changes were suggested for the vocabulary:
+\begin{itemize}
+\item Use the word ``Prize'' instead of ``Award'' (i.e. rename in all places)
+\item Normalize the values for juryRate and usersRate attributes (because otherwise they can't be compared to each other)
+\item alternatively reuse the review vocabulary from vocab.org\footnote{\url{http://vocab.org/review/terms.html }}  or schema.org\footnote{http://schema.org/Review}} 
+\item Introduce properties \texttt{connectedApp} (for Event) and \texttt{connectedEvent} (for Application), so that applications and events can be linked together.
+\end{itemize}
+
 
 \subsection{Universal JavaScript plugin for RDF population}
 \label{sec:plugin}
+
+The inspiration for the JavaScript based solution came from services like \url{https://muut.com/}, which offers embeddable commenting and discussion forums and it can be installed on any web page independent of the CMS. Since almost all people have JavaScript support enabled in their browsers\footnote{ According to a study by Yahoo only about 1\% have JavaScript disabled in their browsers. Source: \url{https://developer.yahoo.com/blogs/ydnfourblog/many-users-javascript-disabled-14121.html} [Referenced 2014-06-02]}  it enables us to implement a solution that can be installed on any web page and also works on almost any browser.
+
+The most striking difference between the CMS based plugin and the JavaScript plugin is the user base, since the JavaScript solution works on any web page while the CMS plugin obviously only can be installed on a dedicated websites. Also the technical approach differs significantly, because in the CMS based approach the server will do all the work for producing the HTML and RDFa markup for the events, while in the JavaScript approach it is the client browser that is responsible for this task.
+
+
+\paragraph{Technical description}
+The JavaScript plugin consists of three distinct parts that are technically independent of each other, but they can still be deployed on the same server if needed:
+
+\begin{enumerate}
+\item RESTful  API for creating, editing and removing events and applications from the database.
+Both interfaces listed below (2 and 3) communicates and manipulates the data using the RESTful API
+\item Admin interface for event organizers
+Event organizers manage their events and applications through this interface, which is provided as a ``software as a service'' (SaaS\footnote{\url{http://en.wikipedia.org/wiki/Software_as_a_service}}).
+\item Embeddable script that will display the event and application information both in human readable form and in computer readable form (RDFa format) on the event organizers web page.
+The script will fetch the event and application information using the RESTful API and then manipulate the document object model (DOM ) after page load and inject the event and application description into the DOM.
+\end{enumerate}
+
+The different components are also presented in Figure \ref{fig:jsplugin}
 
 \begin{figure}[!htbp]
 \centering{
@@ -791,5 +824,84 @@ In \ref{fig:modelA}, the model is complex, because it requires us to specify an 
 }
 \end{figure}
 
+The API was implemented in Node.js\footnote{\url{http://nodejs.org/}} , which is a platform for running applications written in JavaScript on server side. It is built on Google Chrome’s JavaScript runtime and provides very good performance thanks to it’s asynchronous data manipulation model . Node.js has become very popular recently and there is a huge number of third party extensions and frameworks written for it. Furthermore, since the programming language is JavaScript, many libraries and frameworks written for browsers will also function in Node.js.
+
+The data is stored in MongoDB, which is the leading NoSQL database\footnote{\url{http://www.mongodb.com/leading-nosql-database}}. In addition to this Mongoose\footnote{\url{http://mongoosejs.com/index.html}} object data mapper  was used in order to simplify the data manipulation and to give structure to the database. Finally, node-restful  was used to transform the Mongoose schema into a working REST API. Node-restful internally relies on Express , which is the most popular web application framework for Node.js.
+
+\paragraph{Admin Interface}
+The admin interface provides an intuitive and easy-to-use interface for event organizers to manager their events and the related applications. It is provided as software as a service and will be hosted and managed by Apps for Europe. Event organizers will register to the service and after this they have access to all the features of the admin interface. Two screenshots of the service is presented in Figure \ref{fig:adminInterface} .
+
+
+The admin interface is implemented in HTML, CSS and JavaScript. Bootstrap\footnote{\url{http://getbootstrap.com/}}  was used as a CSS framework. It simplifies the development of responsive websites and also provides clean aesthetics for the website. AngularJS\footnote{\url{https://angularjs.org/}}  was used as a JavaScript framework.
+
+\begin{figure}[ht!]
+\includegraphics[scale=0.95]{img/adminInterface.pdf}
+\caption{Screenshots of the admin interface. On the left is the event listing
+ page and on the right is the form for creating an event.}
+ \label{fig:adminInterface}
+\end{figure}
+
+
+\paragraph{Embeddable script}
+The last component of the puzzle is the embeddable script, that is responsible of displaying the event and application information in human readable form on the event organizer's website. The event organizer will get the embed code from the admin interface, which he will then insert into the HTML code of his website. The embed code is just a reference to an external JavaScript file that will be loaded from the Apps for Europe server and then executed in the browser. A detailed description of how the script works is given below:
+\begin{algorithm}
+\textsl{
+1. The event organizer will embed the code on his own web page.\\
+2. On page load, the <script>-tag is parsed by the browser and the actual script is loaded from the Apps for Europe -server.\\
+3.	The script is executed.\\
+(a).	The script will fetch the event or application information using an AJAX-request.\\
+(b).	After the server has responded with the event/application information, the information is displayed on the page in human readable form by modifying the DOM of the page. Furthermore, the same information is presented also in computer readable format by embedding RDFa in the DOM.
+}
+
+\end{algorithm}
+
 
 \subsection{Creating the Knowledge-base for past events}
+The final task was to create the knowledge base for past events by using the Apps for Europe RDF vocabulary and generating data to feed the endpoint at \url{http://apps4europe.eurecom.fr/sparql} . The list of events was extracted from the Apps for Europe Google spreadsheet\footnote{\url{https://docs.google.com/spreadsheet/ccc?key=0AiXRLGASq8I0dDlfZURkWGpSODBJaWotQUp3eGNwNGc&usp=sharing}}.
+
+The goal was to populate the events and applications, so that they would follow and fulfill the Apps for Europe vocabulary as well as possible. However, the format and information provided on the event web pages varied, and therefore we were usually only able to populate the following information for most of the events:
+\begin{itemize}
+\item Title
+\item Dates (start and end date)
+\item Description (free text)
+\item Prizes (if the event included an application contest)
+\item Jury members (if the event included an application contest)
+\item Location (usually only country was known)
+\end{itemize}
+
+Similarly, the information provided for applications varied even more, and sometimes we were able only to populate the title, description and the homepage of the application. Because of these problems, the data populated into the triple store doesn't include all the information we would have hoped to have.
+
+The original idea was to automate the triple store data population as far as possible using content scraping , but because of the heterogeneity of the web pages (in terms of structure and data)  a semi-automated approach was used. Especially the problems listed below prevented a fully automatic approach from being implemented:
+
+\begin{itemize}
+\item because of the heterogeneity in the structure of the web pages, it is for example extremely hard to ``automatically'' know which part of the page contains the event location or application homepage link
+\item many links to the event pages were broken, and thus manual work was required in order to relocate the actual page
+\end{itemize}
+
+In order to be as efficient as possible in the data population the semi-automatic approach was used. Here, the key idea was to populate event pages having only a few application entries (less than 10) manually using the JavaScript plugin, and for the rest of the event pages web scraping was used to populate the application entries (the scraping script had to be configured for each event website separately). \textcolor{red}{The script for this is provided in Appendix B.}
+
+The goal was to populate all the past events (112 in total). However, many of the websites for the past events had already disappeared or didn't include enough information for data population. Furthermore, the data population process turned out to take much more time than anticipated, and therefore we managed to populate only 28 events and in total 889 application entries. The average number of application entries per event was 34 and the median 22.
+
+Visualizations and applications could be built on top of the knowledge base, but because of the small size of the current knowledge base, it is difficult to extract quantitative data from the knowledge base. Some ideas for visualizations are presented below:
+\begin{itemize}
+\item Map visualization of where past events have been organized
+\item Most popular categories/themes for applications
+\item Gallery of application screenshots (visual inspiration for developers).
+\end{itemize}
+
+
+The dataset is available below in different formats as dump for download in RDF/Turtle and MongoDB:
+
+\begin{itemize}
+\item RDF in turtle format: \url{https://www.dropbox.com/s/3075qsblxzau2fk/rdfInTurtleFormat.tar.gz} 
+\item MongoDB dump: \url{https://www.dropbox.com/s/m2sr4na12v3yk07/apps4europe.tar.gz} 
+\end{itemize}
+
+\subsection{Discussion}
+The embeddable script is non-optimal in the sense that the event or application information is loaded only after the actual page (where the script is embedded) has loaded. This causes some additional delay before the page is fully rendered, but the problem can be alleviated by showing loading indicators.
+
+CSS styling for the events and applications is provided using Bootstrap. All CSS rules have been made specific to the container div-element of the plugin, in order to prevent the CSS from conflicting with the CSS of the page. In the future, another solution called shadow DOM could be used to prevent conflicts between different components of the page, but at the moment the browser support for shadow DOM\footnote{\url{http://caniuse.com/shadowdom}} is not satisfactory. Since the event and application information is directly embedded on the page using DOM, the event organizer can add his own CSS styling to the plugin by overriding the provided CSS rules.
+
+The RDF information about events and applications is populated only if event organizers actually use it on their websites, and therefore it is crucial to ensure that the plugin is appealing in the eyes of the event organizers. It would be especially useful to study the usability of the plugin and also discuss with the event organizers how well the Apps for Europe ontology fits with their data model. In addition to this, also the security of the JavaScript-plugin should be improved, although the information entered to the plugin is not very critical from a security perspective.
+
+
