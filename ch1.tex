@@ -210,7 +210,6 @@ Most of vocabularies dedicated to geometry representation reuse W3C Geo vocabula
 \label{sec:indirectgeo}
 Modeling indirect location information such as administrative units or named points of interest in RDF is preferably done by identifying such geographic features with URIs and describing them by their properties, so that they can be referenced by other datasets. This is the case in one of the most reused datasets of the Web of data, namely Geonames\footnote{\url{http://sws.geonames.org/}}. However, there are yet very few reference datasets for the French territory on the Web of data.  A simple example is the current resource for \textit{Paris} in the French DBpedia\footnote{\url{http://fr.dbpedia.org/resource/Paris}}. The department's name associated to this resource is a literal named ``Paris'' and the different arrondissements composing the city are modeled as \texttt{skos:Concept} instead of \texttt{dbpedia-owl:Place}. Even Geonames data remain very limited, as French administrative units are provided as simple geometries (POINT). The ``Official Geographic Code''\footnote{\url{http://rdf.insee.fr/sparql}} published by the French Statistical Institute (INSEE) is the most up-to-date and accurate dataset on French administrative units, but unfortunately it contains no geometrical description of their boundaries. This has the consequence of not having a baseline during mapping process for application developers trying to consume specific data coming from France. Datasets describing administrative units, points of interest or postal addresses with their labels and geometries, and identifying these features with URIs could be used with benefits not only for georeferencing other datasets, but also for interlinking datasets georeferenced by direct and indirect location information.
 
-
 \textcolor{red}{Describe the contributions on geometry and geography vocabularies. Reuse mainly the recent work to be presented at Terra Cognita 2014}
 
 
@@ -470,7 +469,7 @@ References to equivalent definitions provided by the EPSG registry are explicitl
 \begin{figure}[!htbp]
  \begin{center}
   \includegraphics[width=120mm]{img/crs-france.png}
-  \caption{Coordinate Reference Systems used in France. Source: \texttt{http://geodesie.ign.fr/}}
+  \caption{Coordinate Reference Systems used in France}%\footnote{Source: \texttt{http://geodesie.ign.fr/}}
   \label{fig:crsinfr}
  \end{center}
 \end{figure}

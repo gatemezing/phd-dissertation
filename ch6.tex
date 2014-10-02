@@ -398,9 +398,10 @@ Regarding the experiments, \texttt{Experiment4} gives stable results with less n
 The $227$ vocabularies could all be inserted in the LOV catalog since they fulfill the current requirements of what is a `` LOV-able vocabulary''. In this list, we found vocabularies such as \texttt{rdf, rdfs, owl} that are used to build other vocabularies but are not yet integrated in the LOV catalog.
 
 \begin{algorithm}[H]
-\caption{finding vocabularies NOT in LOV from prefix.cc algorithm} \label{findvocabInPrefix-algorithm}
+\caption{finding vocabularies NOT in LOV from prefix.cc algorithm} 
+\label{findvocabInPrefix-algorithm}
 \begin{algorithmic}[1]
-    \STATE Open $notInLOV.json$ file containing the prefix.cc URIs \NOT in LOV 
+    \STATE Open $notInLOV.json$ file containing the prefix.cc URIs \emph{NOT} in LOV 
     \STATE initialize $item$ as List
     \STATE Initialize $result$ as collection of $item$
     \FOR { each $pccURI \in notInLOV file$}
@@ -414,7 +415,7 @@ The $227$ vocabularies could all be inserted in the LOV catalog since they fulfi
         \STATE append $item$ to $result$
       \ENDWHILE
     \ENDFOR
-    \PRINT $output-result$
+    \STATE RETURN $output-result$
 \end{algorithmic}
 \end{algorithm}
 
@@ -575,10 +576,10 @@ The Table~\ref{tab:top20} shows the Top 20 namespaces of vocabularies according 
 }
 \end{table}
 
-\begin{algorithm}[htbp]
+\begin{algorithm}[h]
 \caption{Ranking vocabularies algorithm} \label{rankingvocab}
 \begin{algorithmic}[1]
-  \footnotesize{  \REQUIRE Dump of $lov aggregator$ file
+   \STATE REQUIRE Dump of $lov aggregator$ file
     \STATE Upload in a triple store for querying
     \STATE Select subset of candidate vocabs $ LOV aggregator endpoint $
     \FOR { $term \in lovaggregator$ }
@@ -600,14 +601,12 @@ The Table~\ref{tab:top20} shows the Top 20 namespaces of vocabularies according 
         \STATE $PICvector \leftarrow$ append (PICvocab)
         \STATE ORDER PICvector
     \ENDFOR
-    \RETURN PICvector
-  }
+    \STATE RETURN PICvector
+  
 \end{algorithmic}
 \end{algorithm}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  4. Application of Information Content on Vocabularies  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \subsection{Application of Information Content on Vocabularies}
 \label{sec:application}
