@@ -13,6 +13,14 @@
 \section{Existing Tools for Converting Geospatial Data}
 \label{sec:toolgeo}
 
+\subsection{Geometry2RDF}
+
+\subsection{TripleGeo}
+
+\subsection{shp2GeoSPARQL}
+
+\subsection{GeoLift}
+
 
 
 \section{Geodata Providers and Access}
@@ -104,6 +112,11 @@ In LinkedGeoData, the district is a \texttt{lgdo:Suburb rdfs:subClassOf ldgo:Pla
 \end{verbatim}
 }
 
+\subsection{Linked Geospatial Data for Greece}
+\todo{add a representation of data here}\\
+
+Linked Geospatial Data for Greece - http://www.linkedopendata.gr/ - Linked geospatial data about the Greek Administrative Geography, CORINE Land Use/Land Cover for Greece and the Coastline of Greece.
+
 \subsection{Discussion}
 These samples from DBpedia, Geonames and LinkedGeoData give an overview of the different views of the same reality, in this case the district of the 7$^{th}$ Arrondissement in Paris. Regarding the ``symbolic representation'', two datasets opted for ``Feature'' (DBpedia and Geonames) while LGD classifies it as a ``Suburb'' or ``Place''. They all represent the shape of the district as a POINT which is not very efficient if we consider a query such as \emph{show all monuments located within the 7th arrondissement of international importance}. To address this type of query and more complicated ones, there is a need for more advanced modeling as we describe in the next section.
 
@@ -115,7 +128,12 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 \item The choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
 \end{itemize}
 
-\todo{update the table with recent data}
+\todo{update the table with strabon and changes in virtuoso 7.} \\
+
+\subsection{Strabon}
+\todo{read again the paper}
+Strabon - http://www.strabon.di.uoa.gr - Strabon is a semantic spatio-temporal RDF store. You can use it to store linked geospatial data that changes over time and pose queries using two popular extensions of SPARQL. Strabon is a full implementation of stSPARQL and the GeoSPARQL Core, Geometry extension and Geometry topology extension components. It also offers spatial and temporal selections, spatial and temporal joins, a rich set of spatial functions similar to those offered by geospatial relational database systems and support for multiple Coordinate Reference Systems.
+
 \begin{table}[!htbp]
  \begin{tabularx}{\textwidth}{|X|X|X|X|X|l|}
  \hline
@@ -130,8 +148,10 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 \label{tab:triplestore}
 \end{table}
 
+\subsection{Benchmarks}
+Geographica - http://geographica.di.uoa.gr - A benchmark which uses both real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores.
 
-\section{Tools for managing Linked Data Publishing Workflow}
+\section{Tools for managing Linked (Geo)Data Publishing Workflow}
 \label{sec:toolLD}
 
 \subsection{GeoKnow}
@@ -315,3 +335,4 @@ The last issue deals with the use of multiple geometries for describing a geogra
 %In this article, we have proposed a reference dataset on French administrative units. This dataset is updated annually by IGN France. This raises a first issue on how to deal with data updates and versioning. According to Linked data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and real world evolutions. This issue will be addressed in a future work, as we plan to release a spatio-temporal dataset describing the evolution of French communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
 %Another issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
 
+\subsection{Summary}

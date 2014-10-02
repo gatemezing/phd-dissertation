@@ -16,13 +16,60 @@ In France, the National Geographic Institute (IGN) has started to publish more a
 
 
 \section{Geographic Information}
-\todo{Use some materials from Deliverable spatial data of Datalift} \\
-ADD part of the work of Nathalie thesis \\
-ADD also Ruas thesis \\
+\todo{Use some materials from Deliverable spatial data of Datalift- ADD part of the work of Nathalie thesis-
+ADD also Ruas thesis} \\
+ 
 
 
- \subsection{Specificities}
- \subsection{Formats}
+\subsection{Specificities}
+ 
+\subsection{Data Formats and Serialization}
+ 
+ \paragraph{ESRI Shapefile:}
+ 
+ A shapefile stores nontopological geometry and attribute information for the spatial
+features in a data set. The geometry for a feature is stored as a shape comprising a set of
+vector coordinates \cite{esri98}. Regarding this format, four files are processed: the three mandatory dBASE file (.dbf), index file (.shx) and main file (.shp), plus the metadata file (.prj) that describes the CRS used by the dataset. The schema and the type of the thematic and geometric attribute are extracted from the main and dBase file.
+
+ \paragraph{Geospatial DBMS:}
+ It is a Database that is optimized to store and query geospatial data, such as Oracle Spatial, PostGIS (a spatial extension to PostgreSQL), SpatialLite (a spatial extension to SQLite). 
+ 
+ \paragraph{GML:}
+ OGC standard encoding specification for geodata in XML that enables the storage, transport, processing and transformation of geographic information. GML serves as a modeling language for geographic systems as well as an open interchange format for geographic transactions on the Internet. As with most XML based grammars, there are two parts to the grammar: the schema that describes the document and the instance document that contains the actual data. A GML document is described using a GML Schema. GML is also an ISO standard (ISO 19136:2007) 
+ 
+ \paragraph{Well-Known-Text (WKT):}
+ Well-known text (WKT) is a text markup language for representing vector geometry objects on a map, spatial reference systems of spatial objects and transformations between spatial reference systems\footnote{\url{http://en.wikipedia.org/wiki/Well-known_text}}. The formats were originally defined by the Open Geospatial Consortium (OGC) and described in the specifications for geographic information -simple feature access- \cite{opengis2011}. 
+ 
+ \paragraph{GeoJSON:}
+ 
+GeoJSON is a format for encoding a variety of geographic data structures \cite{geojson}. A GeoJSON object may represent a geometry, a feature, or a collection of features. It also supports the following geometry types: Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon, and GeometryCollection. Features in GeoJSON contain a geometry object and additional properties, and a feature collection represents a list of features. GeoJSON is the data format of choice for developers which is widely implemented and supported by many tool chains.
+The default (and strongly recommended) Coordinate Reference System is WGS84, but alternative systems can be specified. The recommended nomenclature for CRS systems is to use OGC (Open Geospatial Consortium) URNs, for example urn:ogc:def:crs:OGC::CRS84 (for WGS84). EPSG identifiers, originally from the European Petroleum Survey Group and now maintained by the International Association of Oil and Gas Producers (OGP) can also be used. Alternatively, the parameters for a CRS can be linked to by URL. 
+The example below represents in GeoJSON the location (point) of ``Eurecom'':
+
+\begin{verbatim}
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [43.614151, 7.071414]
+  },
+  "properties": {
+    "name": "EURECOM"
+  }
+}
+\end{verbatim}
+
+ 
+ \paragraph{KML:}
+KML\footnote{\url{http://www.opengeospatial.org/standards/kml}} is a language for the visualization of geographic information in 2D (on a map) or 3D (on a globe), including annotation of maps and images. Hence it can be used to specify layers for use in creating maps in a GIS system.  A Placemark is one of the most commonly used features in Google Earth. It marks a position on the Earth's surface, using a yellow pushpin as the icon. The simplest Placemark includes only a \texttt{<Point>} element, which specifies the location of the Placemark.
+A Placemark object contains the following elements:
+\begin{itemize}
+\item \textit{A name} that is used as the label for the Placemark
+\item \textit{A description} that appears in the ``balloon'' attached to the Placemark
+\item \textit{A Point} that specifies the position of the Placemark on the Earth's surface (longitude, latitude, and optional altitude)
+\end{itemize}
+
+KML can be used to carry GML content, and GML can be ``styled'' to KML for the purposes of presentation. KML instances may be transformed loosely to GML, however roughly 90\% of GML's structures (such as, metadata, coordinate reference systems, horizontal and vertical datums, etc.) cannot be transformed to KML\footnote{\url{http://en.wikipedia.org/wiki/Geography_Markup_Language}}. KML has very limited support for metadata as recommended by ISO 19115. The CRS in use is implicit and unique.
 
 \section{Vocabularies for Geospatial Data}
 \textcolor{red}{Add here the studies of Atemezing:TC12, with update to the current state }
@@ -70,6 +117,16 @@ The geometry of a point of interest is also modeled in different ways. We comple
 \end{itemize}
 
 \subsection{GeoSPARQL Standard and specifications}
+\textcolor{red}{The OGC-Simple Features Access standard defines functions that request or 
+check properties of a geometry (e.g., isSimple, isEmpty, Dimension, GeometryType, SRID), function that test test topological relations (e.g., contains),
+and functions that construct new geometries from existing ones (e.g., buffer). 
+GeoSPARQL took most of the functions that check or return properties of  
+a geometry (all but SRID if I am not mistaken) and defined properties with the 
+same name (e.g., the properties geo:isEmpty, geo:isSimple) so that one would 
+be able to assert whether a geometry is empty etc. This is defined at the
+Geometry Extension component of GeoSPARQL.
+GeoSPARQL has six modules: the Core vocabulary, the Topology Vocabulary extension, the Geometry extension, the Geometry Topology Extension, the Query Rewrite extension, and the RDFS entailment extension}
+
 OGC has adopted the GeoSPARQL standard to support both representing and querying geospatial data on the Semantic Web. The standard document~\cite{ogc2012} contains 30 requirements. It also defines a vocabulary for representing geospatial data in RDF and provides an extension to the SPARQL query language for processing geospatial data. The proposed standard follows a modular design with five components: 
 \begin{itemize}
 \item (i) A \textit{core component} defining top-level RDFS/OWL classes for spatial objects; 
@@ -108,7 +165,7 @@ Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
 
 \subsection{Geospatial Vocabularies and Topological Functions}
 \label{sec:topofunc}
-\todo{update the information in this section}
+\todo{update the information in this section. link geosparql http://www.opengeospatial.org/standards/geosparql}
 
 Based on the GeoSPARQL requirements, we were interested in comparing some geospatial vocabularies\footnote{\url{http://labs.mondeca.com/dataset/lov/vocabularySpace_Space.html}} to see how far they take already into account topological functions and which are the standard they followed among OpenGIS Simple Features (SF), Region Connection Calculus (RCC) and Egenhofer relations. We find that the NeoGeo (Spatial and Geometry) and OS Spatial vocabularies have integrated in their modeling partial or full aspects of topological functions as summarized in Table~\ref{tab:geosparql}.
 
@@ -434,6 +491,7 @@ The GEOFLA\circledR 's application schema is composed of classes representing di
 A Commune has an attribute called \textit{``nature''} whose enumerated values precise whether the commune is the capital of a bigger administrative unit, modeled in the vocabulary by the ObjectProperty \texttt{geofla:statut} with range \texttt{skos:Concept} defined in this specific \texttt{skos:ConceptScheme} \url{http://{BASE}/codes/geofla/typedecommune/liste} pointing to the different types of French administrative unit's capital. 
 
 
+\section{Summary}
 
 
 
