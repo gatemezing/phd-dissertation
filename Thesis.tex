@@ -3,7 +3,11 @@
 
 %\usepackage{graphicx}
 
+
 \usepackage{fancyvrb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
 \bibliographystyle{unsrt}
 \usepackage{url}
 \usepackage{listings}
@@ -17,12 +21,13 @@
 \usepackage{algorithmic}
 
 
+
 \newcommand{\ghis}[1]{\noindent\textcolor{blue}{{\bf \{Ghis}: #1{\bf \}}}}
 
 \include{formatAndDefs}
 \include{myDefinitions}
 \begin{document}
-%\include{TitlePage}
+
 \include{TitlePage2}
 \vspace{3cm}
 %\dominitoc
@@ -95,22 +100,25 @@ the world to be important''. \\
 \input{intro}
 \clearpage
 
-\input{part1}
-\clearpage 
+\part{ Modeling, Interconnecting and Generating Geodata on the Web}
+%\input{part1}
+%\clearpage 
 
 %%In reality chapter 2 in the document
 %% after the introduction %%%%
+
 \input{ch1}
 \clearpage
 
 \input{ch2}
 \clearpage
 
-\input{ch3}
-\clearpage
+%\input{ch3}
+%\clearpage
 
-\input{part2}
-\clearpage
+%\input{part2}
+%\clearpage
+\part{Generating Visualizations for Linked Data}
 
 \input{ch4}
 \clearpage
@@ -118,8 +126,9 @@ the world to be important''. \\
 \input{ch5}
 \clearpage
 
-\input{part3}
-\clearpage
+%\input{part3}
+%\clearpage
+\part{Contribution to Standards}
 
 \input{ch6}
 \clearpage
@@ -131,7 +140,7 @@ the world to be important''. \\
 
 
 \appendix
-\include{Appendix1}
+\include{appendix1}
 %\include{Appendix2}
 %\include{Appendix3}
 
@@ -143,11 +152,11 @@ the world to be important''. \\
 \nocite{*}
 \printnomenclature
 
-\chapter*{}
-\chaptermark{}
+%\chapter*{}
+%\chaptermark{}
 %\section*{}
 %\sectionmark{}
-\vspace{-15ex}
-\appendix
+%\vspace{-15ex}
+%\appendix
 \end{document}
  

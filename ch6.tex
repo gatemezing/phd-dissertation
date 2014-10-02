@@ -149,7 +149,7 @@ Interaction with Contributors & No &  - & No & Yes \\
 
  LOV is a catalog/tool that can fits well within the Neon methodology for building vocabularies and ontologies.  Based on the Neon Methodology's glossary of activities for building ontologies \cite{MC10}, LOV is relevant in four activities:
 		
-\begin{description}
+\begin{description}%[fragile]
 		\item [Ontology Search.] Main LOV's feature is the search of vocabulary terms. These vocabularies are categorized within LOV according to the domain they address. In this way, LOV contributes to ontology search by means of (a) keyword search and (b) domain browsing.
 		\item [Ontology Assessment.] LOV provides a score for each term retrieved by a keyword search. This score can be used during the assessment stage and includes a unique term statistical feature\footnote{\url{http://lov.okfn.org/dataset/lov/stats/}} which provides for each term registered in LOV the following information: (a) ``LOV distribution'' that represents the number of vocabularies in LOV that refer to a particular element; (b) ``LOV popularity'' that shows the number of other vocabulary elements that refers to a particular one; and (c) ``LOD distribution'' that refers to the number of datasets in LOD which use a particular vocabulary; and (d) ``LOD popularity'' that refers to the number of vocabulary element occurrences in the LOD.
 		\item [Ontology Mapping.] As explained in section \ref{voafRelations}, vocabularies rely on each other in seven different ways. In LOV these relationships are explicitly stated using VOAF vocabulary. This data could be useful to find alignments between ontologies, for example one user might be interested in finding equivalent classes for a given class or all the equivalent classes among two ontologies. The following example shows the retrieved data when asking for all the equivalent classes and properties between the vocabularies foaf and dcterms by means of the related VOAF query\footnote{\url{http://goo.gl/sTIGQ6}. Prefixes are omitted for readability purpose. You can find the correct namespace for a prefix in LOV.}: 
@@ -183,20 +183,20 @@ Interaction with Contributors & No &  - & No & Yes \\
 								     ?element rdfs:label ?label2 .
 								     FILTER (?label1 != ?label2 ).
 								     FILTER(REGEX(STR(?label1), "person", "i")).
-							} ORDER BY ?element\end{verbatim}
-						}
+					} ORDER BY ?element\end{verbatim}}
+						 
 								     
 		An excerpt of the query result is shown in figure \ref{fig:translations}. From that result, ``Persona''@es and ``Personne''@fr could be used as translations for the English term ``Person'' in Spanish and French respectively.
 
 
 \begin{figure}
-\centering
+\centering{
   \includegraphics[width=.90\linewidth]{img/translations1.png}
   \caption{Translations example for foaf:Person}
   \label{fig:translations}
+  }
 \end{figure}
 
-	
 \end{description}
 
 		Figure \ref{fig:LOVandNeOn} shows the activities LOV can support within the overall Neon methodologies activity workflow.
@@ -400,7 +400,7 @@ The $227$ vocabularies could all be inserted in the LOV catalog since they fulfi
 \begin{algorithm}[H]
 \caption{finding vocabularies NOT in LOV from prefix.cc algorithm} \label{findvocabInPrefix-algorithm}
 \begin{algorithmic}[1]
-    \STATE Open $notInLOV.json file$ containing the prefix.cc URIs \NOT in LOV
+    \STATE Open $notInLOV.json$ file containing the prefix.cc URIs \NOT in LOV 
     \STATE initialize $item$ as List
     \STATE Initialize $result$ as collection of $item$
     \FOR { each $pccURI \in notInLOV file$}

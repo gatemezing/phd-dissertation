@@ -402,7 +402,7 @@ Web scraping is a technique for extracting data from Web pages. We aim at captur
 		\ENDFOR
 	\STATE COMPUTE occurrences for each $prop \in gkpProperties$
     \ENDFOR
-    \RETURN $gkpProperties$
+    \STATE $gkpProperties$
 \end{algorithmic}
 
 \end{algorithm}
@@ -789,7 +789,7 @@ Also some other minor changes were suggested for the vocabulary:
 \begin{itemize}
 \item Use the word ``Prize'' instead of ``Award'' (i.e. rename in all places)
 \item Normalize the values for juryRate and usersRate attributes (because otherwise they can't be compared to each other)
-\item alternatively reuse the review vocabulary from vocab.org\footnote{\url{http://vocab.org/review/terms.html }}  or schema.org\footnote{http://schema.org/Review}} 
+\item alternatively reuse the review vocabulary from vocab.org\footnote{\url{http://vocab.org/review/terms.html }}  or schema.org\footnote{\url{http://schema.org/Review}} 
 \item Introduce properties \texttt{connectedApp} (for Event) and \texttt{connectedEvent} (for Application), so that applications and events can be linked together.
 \end{itemize}
 
@@ -824,7 +824,7 @@ The different components are also presented in Figure \ref{fig:jsplugin}
 }
 \end{figure}
 
-The API was implemented in Node.js\footnote{\url{http://nodejs.org/}} , which is a platform for running applications written in JavaScript on server side. It is built on Google Chrome’s JavaScript runtime and provides very good performance thanks to it’s asynchronous data manipulation model . Node.js has become very popular recently and there is a huge number of third party extensions and frameworks written for it. Furthermore, since the programming language is JavaScript, many libraries and frameworks written for browsers will also function in Node.js.
+The API was implemented in Node.js\footnote{\url{http://nodejs.org/}} , which is a platform for running applications written in JavaScript on server side. It is built on Google Chrome's JavaScript runtime and provides very good performance thanks to it's asynchronous data manipulation model . Node.js has become very popular recently and there is a huge number of third party extensions and frameworks written for it. Furthermore, since the programming language is JavaScript, many libraries and frameworks written for browsers will also function in Node.js. For more details on how to configure the plugin, the readers are encouraged to read the Appendix \ref{ch:appendixA}.
 
 The data is stored in MongoDB, which is the leading NoSQL database\footnote{\url{http://www.mongodb.com/leading-nosql-database}}. In addition to this Mongoose\footnote{\url{http://mongoosejs.com/index.html}} object data mapper  was used in order to simplify the data manipulation and to give structure to the database. Finally, node-restful  was used to transform the Mongoose schema into a working REST API. Node-restful internally relies on Express , which is the most popular web application framework for Node.js.
 
