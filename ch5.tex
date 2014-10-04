@@ -304,9 +304,8 @@ We have implemented a vocabulary, DVIA\footnote{\url{http://bit.ly/Vb4L8k}} aims
 \end{itemize}
 
 The diagram of the main classes and properties is depicted in Figure \ref{visuGraphModel}. The current version of the vocabulary in Turtle format can be found at \url{http://purl.org/ontology/dvia} .  Listing \ref{snapshot} is a snapshot of the description of the application which won the Semantic Web Challenge\footnote{\url{http://challenge.semanticweb.org/2012/winners.html}} in 2012, the \textit{EventMedia Live} application, described using DVIA vocabulary. It depicts apart from some metadata about the application (dct:title, dct:name, dct:issued, dct:creator and dct:license), the different visualization libraries integrated for building Eventedia Live (e.g.: Google API, Backbone, etc), as well as the operating systems where it is designed for, the different views/facets available in the application (map, charts, graphs, force-directed layout, ect) and the heteregeneous datasets used to implement it. 
-\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Snapshot in Turtle of the description of Event Media Live Application}, label=snapshot, captionpos=b}
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {Snapshot in Turtle of the description of Event Media Live Application}, label=snapshot, captionpos=b}
 \begin{lstlisting}
-
 visuapp:eventMedia01
        a dvia:Application ; 
        dct:title "EventMedia Live"@en;   

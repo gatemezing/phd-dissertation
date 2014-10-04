@@ -715,6 +715,15 @@ In the first use case, the tool retrieves the named graphs present in the reposi
 In the second use case, the module parses a VoID file using a N3 parser for Javascript\footnote{\url{https://github.com/RubenVerborgh/N3.js}}, and then collects the declared vocabularies in the file, querying again LOV\footnote{Since LOV endpoint does not support the JSON format in the results, we have uploaded the data in \url{eventmedia.eurecom.fr/sparql}.} to check their licensing information. 
 %
 When the URIs of the licenses associated to the vocabularies and the dataset are retrieved, the module retrieves the machine-readable description of the licenses in the dataset of licenses~\cite{CabrioESWC2014}. More specifically, such dataset is composed by 37 licenses, comprising all the licenses adopted to certify data in the Linked Data cloud (as all the Creative Commons licenses\footnote{\url{http://creativecommons.org/licenses/}}), software licenses (as Mozilla Public License\footnote{\url{http://www.mozilla.org/MPL/2.0/}} and Microsoft License\footnote{\url{http://referencesource.microsoft.com/referencesourcelicensing.aspx}}), and additional licenses for other material on the Web (as the UK Open Government license, and the New Free Documentation License\footnote{\url{http://www.gnu.org/copyleft/fdl.html}}). The dataset provides the licenses in RDF using the Turtle syntax, however Creative Commons licenses are also available in XML/RDF format on the CC website\footnote{For instance, Creative Commons Attribution 4.0 license is available at \url{http://creativecommons.org/licenses/by/4.0/rdf}}.
+Figure \ref{fig:livetoolUI} shows the user interface for quering a graph and sample results provided by LIVE tool.  
+
+\begin{figure}[ht!b]
+\centering{
+\includegraphics[scale=0.9]{im/LIVETool-UI.png}
+\caption{LIVE tool user interface and sample results}
+\label{fig:livetoolUI}
+}
+\end{figure}
 
 \subsection{Licenses compatibility verification.}
 The logic proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13} 
@@ -763,17 +772,18 @@ We have evaluated the time performances of the LIVE framework in two steps (Tabl
 \scriptsize
 \begin{tabular}{|l|c|c|c|c|}
 \specialrule{1pt}{1pt}{1pt}
- \textbf{Dataset} & \textbf{LicRetrieval(ms)} & \textbf{vocabularies} & \textbf{LicCompatibility(ms)} & \textbf{LIVE(ms)}\\ \hline
-  rkb-explorer-dblp & 4 499 &  1 & 0 & 4499\\ \hline
-  rkb-explorer-southampton & 14 693 & 1 & 0 & 14 693\\ \hline
-  rkb-explorer-eprints & 3 220 & 1 & 0 & 3 220\\ \hline
-  rkb-explorer-acm & 3 007 & 1 &  0 & 3 007\\ \hline
-  rkb-explorer-wiki & 14 598 & 1 & 0& 14 598\\ \hline
-  rkb-explorer-rae2001 & 3 343 & 1 &  0 & 3 343 \\ \hline
-  rkb-explorer-citeseer & 2 760 & 1 & 0 & 2 760\\ \hline
-  rkb-explorer-newcastle & 3 354 & 1 & 0 & 3 354\\ \hline
-  rkb-explorer-kisti & 4 094 & 5 & 6 & 4 100\\ \hline
-  270a.info & 13 202 & 48 & 8 & 13 210 \\ \hline
+ \textbf{Dataset} & \textbf{LicRe-} & \textbf{\#vocabu-} & \textbf{LicCompa-} & \textbf{LIVE(ms)}\\ 
+ & \textbf{trieval(ms)} & \textbf{laries} & \textbf{tibility(ms)} & \\ \hline
+  rkb-explorer-dblp & 4,499 &  1 & 0 & 4,499\\ \hline
+  rkb-explorer-southampton & 14,693 & 1 & 0 & 14,693\\ \hline
+  rkb-explorer-eprints & 3,220 & 1 & 0 & 3,220\\ \hline
+  rkb-explorer-acm & 3,007 & 1 &  0 & 3,007\\ \hline
+  rkb-explorer-wiki & 14,598 & 1 & 0& 14,598\\ \hline
+  rkb-explorer-rae2001 & 3,343 & 1 &  0 & 3,343 \\ \hline
+  rkb-explorer-citeseer & 2,760 & 1 & 0 & 2,760\\ \hline
+  rkb-explorer-newcastle & 3,354 & 1 & 0 & 3,354\\ \hline
+  rkb-explorer-kisti & 4,094 & 5 & 6 & 4,100\\ \hline
+  270a.info & 13,202 & 48 & 8 & 13,210 \\ \hline
  
 \end{tabular}\normalsize
 \caption{Evaluation of the LIVE framework.}
