@@ -16,18 +16,40 @@ In France, the National Geographic Institute (IGN) has started to publish more a
 
 
 \section{Geographic Information}
-\todo{Use some materials from Deliverable spatial data of Datalift- ADD part of the work of Nathalie thesis-
-ADD also Ruas thesis} \\
- 
+%\todo{Use some materials from Deliverable spatial data of Datalift- ADD part of the work of Nathalie thesis-
+%ADD also Ruas thesis} \\
+
+Geographical phenomena require two descriptors to represent the real world; \textit{what is represent,} and \textit{where it is.} as reported by authors in \cite{burrough98}. For the former, concepts such as ``town'', ``school'', ``river'', are used to recognize the phenomena and described in terms of well-established ``objects'' or `entities''. At the same time, the type of concepts used to describe a phenomena vary from one scale of resolution to another, depending on the perception of the human observation of the world. The space reference of the phenomena may be defined in terms of geometrically exact or a relative location. The former uses local or world coordinate systems -local or internationally accepted projections that uses geometrical coordinates of latitude and longitude - defined using a standard system of spheroids, projections, and coordinates \cite{burrough98}. Two approaches are generally used to represent geographical primitives in GIS: vector and raster approaches. In the vector data model, the space is represented by a geometry that describes the location and implicitly the shape, and information attributes such as the name, nature, length, or surface. In general, the geometry of a geographic object/entity can be described using three primitives:
+\begin{itemize}
+\item \textbf{Point} represented in terms of XY coordinates. For example. 
+\item \textbf{Line} represented by a sets of XY coordinate pairs that define a connected path through space. 
+\item \textbf{polygon} represented in terms of the XY coordinates of its boundary, or in terms of the set of XY coordinates that are enclosed by such as boundary. 
+\end{itemize}    
+
+Figure \ref{fig:vectormodel} shows for different representations of an address in the BD ADRESS\circledR \hspace{1pt} database, such as points, buildings, path, additional address location, etc.
+
+\begin{figure}[ht!]
+\centering{
+\includegraphics[scale=0.60]{img/vectorRepresentation.png}
+\label{fig:vectormodel}
+\caption{Vector representations of entities in  BD ADRESSE\circledR \hspace{1pt} produced by IGN-France.}
+}
+\end{figure}
 
 
-\subsection{Specificities}
+\subsection{Specificity}
+ Depending on the level of the spatial resolution, a phenomenon reveals more or less details, according to the intended use. So, increasing the level of resolution might reveals internal structure. For example, in the case of a town: sub-districts, suburbs, streets, houses, lamp-posts, traffic signs; which can be important for purpose and not for others. The level of details also influence the representation of a given entity, and thus provides different views of the same entity in a GIS. A town could be represented by a point at a continental level of resolution but as a polygon entity at a regional level. A road at national level is adequately represented by a line; at a street level it becomes an area of paving.
  
+Moreover, geographical data are stored in different GIS according to two different resolution: the metric resolution and ``decametric'' resolution \cite{anamaria08}. Thus, making differences in volume of the data, the scale used to gather and view them, and most importantly their importance. Geodata providers explicitly provides details on the scales and the purpose of their datasets. Let's take the case of BDCARTO\circledR \hspace{1pt}, BDTOPO\circledR \hspace{1pt} and BD ADRESSE\circledR \hspace{1pt} of IGN-France (French mapping agency). BD CARTO represents the elements using a decametric precision, and contains many themes: roads, administrative units, etc. It helps to manage data from 1 : 50 000 to 1 : 200 000 resolution.  BD TOPO is used for producing maps at 1: 25 000 scale, and represents the modelization in 3D of the territory and the amenities with addresses. BD ADRESSE is used for a precised location using the postal code in 1: 25 000 scale. 
+
+The aforementioned constraints on abstraction, representation at different scales and requirements of geographical data create some issues both for users and producers. This motivates the need for different relations between GIS datasets. The Web is a good medium to represent a real world phenomena with a unique Uniform Resource Identifier (URI) and associated semantic for referencing, interlinking and tracking the evolution over time. 
+ 
+
 \subsection{Data Formats and Serialization}
  
  \paragraph{ESRI Shapefile:}
  
- A shapefile stores nontopological geometry and attribute information for the spatial
+ A shapefile stores non topological geometry and attribute information for the spatial
 features in a data set. The geometry for a feature is stored as a shape comprising a set of
 vector coordinates \cite{esri98}. Regarding this format, four files are processed: the three mandatory dBASE file (.dbf), index file (.shx) and main file (.shp), plus the metadata file (.prj) that describes the CRS used by the dataset. The schema and the type of the thematic and geometric attribute are extracted from the main and dBase file.
 
@@ -72,9 +94,10 @@ A Placemark object contains the following elements:
 KML can be used to carry GML content, and GML can be ``styled'' to KML for the purposes of presentation. KML instances may be transformed loosely to GML, however roughly 90\% of GML's structures (such as, metadata, coordinate reference systems, horizontal and vertical datums, etc.) cannot be transformed to KML\footnote{\url{http://en.wikipedia.org/wiki/Geography_Markup_Language}}. KML has very limited support for metadata as recommended by ISO 19115. The CRS in use is implicit and unique.
 
 \section{Vocabularies for Geospatial Data}
-\textcolor{red}{Add here the studies of Atemezing:TC12, with update to the current state }
+\label{sec:vocgeoreview}
 
-The recent publication of statistics concerning the actual usage of vocabularies on the LOD cloud\footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
+The publication \cite{demter-2012-ekaw} of statistics concerning the actual usage of vocabularies on the LOD cloud \footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
+\todo{add in the table more ontologies such as locn} \\
 \begin{table*}[!htbp]
 \centering{
 \begin{tabular}{|l|c|r|c| }
@@ -93,7 +116,7 @@ UK administrative-geography &   3 &  229 689 & OS dataset \\
 \end{table*}
 
 \section{Current Modeling Approach}
-\todo{introduce with some few words}
+In this section, we review the different approaches used to model geographical data on the Web, with their advantages and limitations.
 
 \subsection{Vocabularies for Features}
 Modeling of features can be grouped into four categories depending on the structure of the data, the intended purpose of the data modeling, and the (re)-use of other resources.
@@ -122,7 +145,7 @@ check properties of a geometry (e.g., isSimple, isEmpty, Dimension, GeometryType
 and functions that construct new geometries from existing ones (e.g., buffer). 
 GeoSPARQL took most of the functions that check or return properties of  
 a geometry (all but SRID if I am not mistaken) and defined properties with the 
-same name (e.g., the properties geo:isEmpty, geo:isSimple) so that one would 
+same name (e.g., the properties \texttt{geo:isEmpty}, \texttt{geo:isSimple}) so that one would 
 be able to assert whether a geometry is empty etc. This is defined at the
 Geometry Extension component of GeoSPARQL.
 GeoSPARQL has six modules: the Core vocabulary, the Topology Vocabulary extension, the Geometry extension, the Geometry Topology Extension, the Query Rewrite extension, and the RDFS entailment extension}
@@ -486,11 +509,11 @@ In the GEOFLA\circledR ~vocabulary, 5 classes have been defined: commune, canton
 All the classes are defined as subclasses of  \texttt{topo:EntiteTopographique} which defines the representation of a real world entity associated to a location relative to the Earth, consistently with ISO TC 211 and OGC standards. 
 The GEOFLA\circledR 's application schema is composed of classes representing different types of french administrative units, namely communes, cantons, arrondissements and departments. In \texttt{geofla} vocabulary, we add a class region  from the instances of the class department via two attributes  that precise to what region each instance of department belongs.  Their properties are defined based on the attributes of their related classes in GEOFLA\circledR ~database.
 
-\textcolor{red}{Regarding use cases consuming  real-world databases developed using the vocabularies aforementioned, two different applications have been developed. namely \textit{PerfectSchool}\footnote{\url{semantics.eurecom.fr/datalift/PerfectSchool/}}  and \textit{Equipment}\footnote{\url{http://semantics.eurecom.fr/datalift/Equipment/}}. The former is a mobile application intended to provide useful information on schools in France, while the latter is a facet view by categories of facilities in France, specifically in the city of Toulouse. }
 A Commune has an attribute called \textit{``nature''} whose enumerated values precise whether the commune is the capital of a bigger administrative unit, modeled in the vocabulary by the ObjectProperty \texttt{geofla:statut} with range \texttt{skos:Concept} defined in this specific \texttt{skos:ConceptScheme} \url{http://{BASE}/codes/geofla/typedecommune/liste} pointing to the different types of French administrative unit's capital. 
 
 
 \section{Summary}
-
+\label{sec:summarych1}
+\todo{We have presented in this chapter this..that and also that in short}
 
 
