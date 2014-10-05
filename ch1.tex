@@ -1,21 +1,28 @@
 \chapter{Geospatial Data on the Web}
 \label{ch:ch1}
 
-\begin{itemize}
-\item Traditional GIS data
-\item soA on vocabularies
-\item Contributions
-\item conclusion
-\end{itemize}
+\begin{flushright}
+\textit{``If you're a geospatial developer, AJAX is not a domestic cleaning product. \\
+If you're a web dev, a polygon is not a dead parrot''}.\\
+Steve Peters \\
+(UK Government's Department \\for Communities and Local Government) 
 
+\end{flushright}
+
+%Content: raditional GIS data, soA on vocabularies, Contributions and conclusion \\
+ 
 \section{Introduction}
-\todo{REUSE: this section below}
+%\todo{REUSE: this section below}
 The increasing number of initiatives for sharing geographic information on the web of data has significantly contribute to the interconnection of many data sets exposed as RDF based on the Linked Data principles. Many domains are represented in the web of data (media, events, academic publications, libraries, cultural heritage, life science, government data, etc.) while DBpedia is the most used dataset for interconnection. For many datasets published, geospatial information is required for rendering data on a map. In the current state of the art, different approaches and vocabularies are used to represent the ``features'' and their geometric shape although the POINT is the most common representation making use of the latitude/longitude properties defined in the W3C Geo vocabulary. Other geometries from the OpenGIS standard (POLYGON, LINESTRING, etc.) are more rarely exploited (e.g. LinkedGeoData, GeoLinkedData) while fine-grained geometry representations are often required.
 
-In France, the National Geographic Institute (IGN) has started to publish more and more data in RDF, as illustrated by the recent experimental LOD service \url{http://data.ign.fr}. IGN maintains large databases composed of descriptions of addresses, buildings, topographic information, occupied zones, etc. A few years ago, IGN has developed a core ontology named GeOnto for describing all types of buildings located in the French territory. Integrating these databases will enable answering more complex queries than current GIS systems can handle, such as: ``\emph{show all buildings used as tribunal courts in the 7th Arrondissement of Paris}''. Another use-case is the possibility to reason over parts of a structure: ``\emph{show the points where the river Seine touches a boundary of a district in Paris that contain an activity zone}''.
+In France, the National Geographic Institute (IGN) has started to publish more and more data in RDF, as illustrated by the recent experimental LOD service \url{http://data.ign.fr}. IGN maintains large databases composed of different types of geographic entities, buildings, topographic information, occupied zones, etc. By reusing existing taxonomies and publishing them on the web would ease the integration, retrieval and maintenance of French geospatial objects. Moreover, adding semantics to the current data on the web will not only resolve ambiguities between datasets, but also will enable answering more complex queries than current GIS systems can handle, such as: ``\emph{show all buildings used as tribunal courts in the 7th Arrondissement of Paris}''. Another use-case is the possibility to reason over parts of a structure: ``\emph{show the points where the river Seine touches a boundary of a district in Paris that contain an activity zone}''.
+
+In this Chapter, we first describe the notion of geographic information, with its specificity and diversity of formats (Section \ref{sec:geointro}). Then, we survey the models used on the web to model existing geodata, by pointing some limitations (Section \ref{sec:vocgeoreview} and Section \ref{sec:currentmodel}. We then move to distinguish two levels of georeferencing data (direct and indirect), and the importance of CRSs in the interpretation of geodata (Section \ref{sec:georef}). The contributions start with a REST service for converting geodata in Section \ref{sec:rest-service}, followed by vocabularies developed both for handling geometries and features on the Web (Section \ref{sec:topovocab} and Section \ref{sec:geovocab}). The chapter closes with a take-away message
+
 
 
 \section{Geographic Information}
+\label{sec:geointro}
 %\todo{Use some materials from Deliverable spatial data of Datalift- ADD part of the work of Nathalie thesis-
 %ADD also Ruas thesis} \\
 
@@ -40,12 +47,13 @@ Figure \ref{fig:vectormodel} shows for different representations of an address i
 \subsection{Specificity}
  Depending on the level of the spatial resolution, a phenomenon reveals more or less details, according to the intended use. So, increasing the level of resolution might reveals internal structure. For example, in the case of a town: sub-districts, suburbs, streets, houses, lamp-posts, traffic signs; which can be important for purpose and not for others. The level of details also influence the representation of a given entity, and thus provides different views of the same entity in a GIS. A town could be represented by a point at a continental level of resolution but as a polygon entity at a regional level. A road at national level is adequately represented by a line; at a street level it becomes an area of paving.
  
-Moreover, geographical data are stored in different GIS according to two different resolution: the metric resolution and ``decametric'' resolution \cite{anamaria08}. Thus, making differences in volume of the data, the scale used to gather and view them, and most importantly their importance. Geodata providers explicitly provides details on the scales and the purpose of their datasets. Let's take the case of BDCARTO\circledR \hspace{1pt}, BDTOPO\circledR \hspace{1pt} and BD ADRESSE\circledR \hspace{1pt} of IGN-France (French mapping agency). BD CARTO represents the elements using a decametric precision, and contains many themes: roads, administrative units, etc. It helps to manage data from 1 : 50 000 to 1 : 200 000 resolution.  BD TOPO is used for producing maps at 1: 25 000 scale, and represents the modelization in 3D of the territory and the amenities with addresses. BD ADRESSE is used for a precised location using the postal code in 1: 25 000 scale. 
+Moreover, geographical data are stored in different GIS according to two different resolution: the metric resolution and ``decametric'' resolution \cite{anamaria08}. Thus, making differences in volume of the data, the scale used to gather and view them, and most importantly their importance. Geodata providers explicitly provides details on the scales and the purpose of their datasets. Let's take the case of BDCARTO\circledR \hspace{1pt}, BDTOPO\circledR \hspace{1pt} and BD ADRESSE\circledR \hspace{1pt} of IGN-France (French mapping agency). BD CARTO\circledR \hspace{1pt} represents the elements using a decametric precision, and contains many themes: roads, administrative units, etc. It helps to manage data from 1 : 50 000 to 1 : 200 000 resolution.  BD TOPO is used for producing maps at 1: 25 000 scale, and represents the modelization in 3D of the territory and the amenities with addresses. BD ADRESSE is used for a precised location using the postal code in 1: 25 000 scale. 
 
-The aforementioned constraints on abstraction, representation at different scales and requirements of geographical data create some issues both for users and producers. This motivates the need for different relations between GIS datasets. The Web is a good medium to represent a real world phenomena with a unique Uniform Resource Identifier (URI) and associated semantic for referencing, interlinking and tracking the evolution over time. 
+The aforementioned constraints on abstraction, representation at different scales and requirements of geographical data create some issues both for users and producers. Those issues motivate the need for different relations between GIS datasets. The Web is a good medium to represent a real world phenomena with a unique Uniform Resource Identifier (URI) and associated semantic for referencing, interlinking and tracking the evolution over time. 
  
 
 \subsection{Data Formats and Serialization}
+Diverse formats are used to store and exchange geodata in traditional GIS. Some of them are proprietary or closed formats, other are standards defined by OGC. We list below some of the most used formats:
  
  \paragraph{ESRI Shapefile:}
  
@@ -93,7 +101,7 @@ A Placemark object contains the following elements:
 
 KML can be used to carry GML content, and GML can be ``styled'' to KML for the purposes of presentation. KML instances may be transformed loosely to GML, however roughly 90\% of GML's structures (such as, metadata, coordinate reference systems, horizontal and vertical datums, etc.) cannot be transformed to KML\footnote{\url{http://en.wikipedia.org/wiki/Geography_Markup_Language}}. KML has very limited support for metadata as recommended by ISO 19115. The CRS in use is implicit and unique.
 
-\section{Vocabularies for Geospatial Data}
+\section{Status of Vocabularies Usage for Geospatial Data}
 \label{sec:vocgeoreview}
 
 The publication \cite{demter-2012-ekaw} of statistics concerning the actual usage of vocabularies on the LOD cloud \footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
@@ -116,6 +124,7 @@ UK administrative-geography &   3 &  229 689 & OS dataset \\
 \end{table*}
 
 \section{Current Modeling Approach}
+\label{sec:currentmodel}
 In this section, we review the different approaches used to model geographical data on the Web, with their advantages and limitations.
 
 \subsection{Vocabularies for Features}
@@ -294,7 +303,6 @@ From the figures Fig.\ref{fig:convertToLambert93}, Fig.\ref{fig:convertTowgs84ut
 There is no need for evaluation of conversion between Lambert 93 to UTM, since it is needed an intermediate step of convert to WGS 84. The conversion from Lambert 93 to WGS 84 works well, as well as from WGS 84 to WGS UTM. 
 
 
-
 \subsection{API Access and Parameters}
 \label{sec:access}
 
@@ -408,8 +416,44 @@ This requires reference geographic data on named places and therefore vocabulari
 
 \subsubsection{A vocabulary for geometries} \label{sec:geomvocab}
 
+On the current usage of georeferencing resources on the Web of data, it is assumed that the coordinates should be in WGS84, and hence the definition of the point. However, publishers might have data in different CRSs according to the location. Thus, our proposal is to define a more generic class for a POINT  with the benefit of choosing the CRS of the underlying data, as depicted in the Listing 2.3. 
+The naming convention used for the \texttt{geom} vocabulary follows the terms used by the Simple Features vocabulary. The French translation of terms is based on the glossary of multilingual terminology of ISO/TC 211 available at \url{http://www.isotc211.org/Terminology.htm}.
 
-\todo{On the current usage of georeferencing resources on the Web of data, it is assumed that the coordinates should be in WGS84, and hence the definition of the point. However, publishers might have data in different CRSs according to the location. Thus, our proposal is to define a more generic class for a POINT  with the benefit of choosing the CRS of the underlying data, as depicted in the Listing 1.1.}
+\begin{deflda}:
+A resource of type \texttt{geom:Geometry} should be associated to exactly one resource of type \texttt{ignf:CRS} via the property \texttt{geom:crs}.
+\end{deflda}
+
+\begin{deflda}:
+\textbf{A POINT} is a subclass of a \textbf{GEOMETRY}.
+\end{deflda}
+
+Regarding alignments with some existing vocabularies, the class \texttt{geom:Geometry} is a subclass of both \texttt{sf:Geometry} and \texttt{ngeo:Geometry}. The class contains in addition the property \texttt{geom:crs}. Moreover, it is possible to obtain equivalences between data modeled with \emph{ngeo} vocabulary and \emph{geom} vocabulary. The following SPARQL query make it possible:
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {SPAQRL Query for creating sameAs links between data modeled with \emph{ngeo} and \emph{geom} vocabularies }, label=sameAsquery, captionpos=b}
+\begin{lstlisting}
+
+CONSTRUCT {
+   [] a geom:Point;
+    	owl:sameAs  ngeo:Point.
+ 
+} WHERE {
+ [] a geom:Geometry;
+	geom:Point;
+	geom:systCoord
+<http://data.ign.fr/id/ignf/crs/WGS84G>.
+}
+
+\end{lstlisting}
+
+
+\begin{deflda}:
+An instance of the class \texttt{geom:Point} is associated with exactly one instance of \texttt{ignf:CRS} via the property \texttt{geom:crs}. An instance of a \texttt{geom:Point} has exactly one coordinate X and exactly one coordinate Y. The coordinates are \texttt{xsd:double} and referred to the following properties:
+\begin{itemize}
+ \item \texttt{geom:coordX} refers to, in an ellipsoidal CRS, the longitude of a point and within a projected CRS, the value of false easting of a point.
+ \item \texttt{geom:coordY} refers to, in an ellipsoidal CRS, the latitude of a point and within a projected CRS, the value of false northing of a point.
+\end{itemize}
+\end{deflda}
+
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Definition in Turtle of the axiom defining a POINT. }, label=point, captionpos=b}
 \begin{lstlisting}
@@ -431,6 +475,11 @@ geom:Point a owl:Class;
      rdfs:subClassOf sf:Point.
 \end{lstlisting}
 
+\begin{deflda}
+(PointsList): A \texttt{geom:PointsList} is a subclass of rdf:List. An instance of \texttt{geom:PointsList} is composed of only instances of type \texttt{geom:Point}.
+
+\end{deflda}
+
 \subsubsection{Extending GeoSPARQL vocabulary}
 In order to fulfill these recommendations, we have developed a new vocabulary that re-uses and extends the existing vocabularies for representing geometries, namely:
 \begin{itemize}
@@ -447,7 +496,7 @@ We have also defined a property \texttt{geom:geometry} with an empty domain. Thu
 \begin{figure}[!htbp]
 \vspace{-13pt}
   \begin{center}
-  \includegraphics[width=0.8\textwidth]{img/vocabs-ign.pdf}
+  \includegraphics[width=0.9\textwidth]{img/vocabs-ign.pdf}
   \vspace{-15pt}
   \caption{High level classes of ignf, geom and topo vocabularies; relationships between them and mappings with external vocabularies.}
   \vspace{-10pt}
@@ -455,16 +504,14 @@ We have also defined a property \texttt{geom:geometry} with an empty domain. Thu
   \end{center}
 \end{figure}
 
-\textcolor{red}{
+
 \subsection{Publishing structured geometries from geographic data}
-The vocabulary for geometry reused by a geodata converter that takes traditional GIS data as input and outputs RDF data with geometries defined both with a \texttt{gsp:wktLiteral} and with a structured representation compliant with our vocabulary. Geometries are automatically associated with the chosen CRS. This converter is implemented as a plugin of the Datalift platform \todo{reference section} and can be reused easily for geographic data publishing purpose.
-}
+The vocabulary for geometry reused by a geodata converter that takes traditional GIS data as input and outputs RDF data with geometries defined both with a \texttt{gsp:wktLiteral} and with a structured representation compliant with our vocabulary. Geometries are automatically associated with the chosen CRS. This converter is implemented as a plugin of the Datalift platform (cf. Section \ref{sec:geomRDF}) and can be reused easily for geographic data publishing purpose.
+
 
 \subsection{CRS requirements for the  French territory} \label{sec:reqs}
 
 As explained in Section \ref{sec:context}, making explicit the CRS used in a given dataset is a very important issue when dealing with direct location data. This is especially important in the field of geographical information where different CRSs are commonly used due to technical or legal requirements. For INSPIRE Directive, CRS are considered as reference data used for linking thematic data \cite{inspire2009}, and must be described according to ISO 19111 standard. To be consistent with Linked Data principles, CRS should be identified by URIs, like in OGC proposal. Moreover, as Linked Data users are not always familiar with CRS identifiers commonly used within the geographic information community, URI used to identify CRS should use more intuitive names. Finally, consistently with our goal of contributing to a better georeferencing of data on the French territory, we need an access to the descriptions of all French CRSs, including some deprecated but still used CRSs like ``Lambert 1''.
-
-
 
 \begin{table}[!htp]
 \centering{
@@ -501,13 +548,13 @@ References to equivalent definitions provided by the EPSG registry are explicitl
 As no existing registry fulfilled all our requirements, we have developed a vocabulary\footnote{\url{http://data.ign.fr/def/ignf}}, inspired from the ISO 19111 schema for CRSs description. Then we have converted IGNF CRSs registry into RDF, and published this dataset on the Web with the Datalift platform\footnote{A service to lookup CRS in RDF can be found at \url{http://www.eurecom.fr/~atemezin/ignf-lookup/}}. Therefore, the description of the ``NTF Lambert 2 \'{e}tendu'' projected CRS can be retrieved at this URL \url{http://data.ign.fr/id/ignf/crs/NTFLAMB2E}.
 
 \section{Vocabularies for Geographic Feature Types}
-\label{sec:vocgeofeature}
+\label{sec:geovocab}
 
 Indirect georeferencing of resources on the Web requires reference geographic data on named places and therefore vocabularies for describing feature types and their properties. Therefore, we have chosen to publish a reference dataset on administrative units called GEOFLA\circledR, which is already available in GIS format under an Open Data license. We have also made tests of data conversion and interlinking with another largest dataset on French names places. We have produced and published two vocabularies to describe these datasets, to make sure that all concepts and properties needed would be available.
-In the GEOFLA\circledR ~vocabulary, 5 classes have been defined: commune, canton, arrondissement, department and region. In the BD TOPO\circledR ~vocabulary\footnote{\url{http://data.ign.fr/def/topo}} $35$ main classes have been defined. They represent the main types of geographic features represented in the BD TOPO\circledR ~database. In both vocabularies, properties have been defined based on the attributes of their related classes in the databases. The geographic feature types defined as values of attributes ``nature'' are modeled as instances of \texttt{skos:Concept}. SKOS is intensively used to easily group concepts into different schemes (using \texttt{skos:hasTopConcept}) and provide semantic relationships (e.g: \texttt{skos:broader}, \texttt{skos:narrowMatch}) among them. We also provide alignments with Geonames vocabulary, where \texttt{topo:Place} is subclass of \texttt{gn:S} and \texttt{owl:sameAs} linked concepts.\footnote{\url{https://github.com/gatemezing/ign-iswc2014/blob/master/vocabularies/mappingsGeonames.ttl}} 
+In the GEOFLA\circledR ~vocabulary, 5 classes have been defined: commune, canton, arrondissement, department and region. In the BD TOPO\circledR ~vocabulary\footnote{\url{http://data.ign.fr/def/topo}} \emph{}$35$ main classes have been defined. They represent the main types of geographic features represented in the BD TOPO\circledR ~database. In both vocabularies, properties have been defined based on the attributes of their related classes in the databases. The geographic feature types defined as values of attributes ``nature'' are modeled as instances of \texttt{skos:Concept}. SKOS is intensively used to easily group concepts into different schemes (using \texttt{skos:hasTopConcept}) and provide semantic relationships (e.g: \texttt{skos:broader}, \texttt{skos:narrowMatch}) among them. We also provide alignments with Geonames vocabulary, where \texttt{topo:Place} is subclass of \texttt{gn:S} and \texttt{owl:sameAs} linked concepts.\footnote{\url{https://github.com/gatemezing/ign-iswc2014/blob/master/vocabularies/mappingsGeonames.ttl}} 
 
 All the classes are defined as subclasses of  \texttt{topo:EntiteTopographique} which defines the representation of a real world entity associated to a location relative to the Earth, consistently with ISO TC 211 and OGC standards. 
-The GEOFLA\circledR 's application schema is composed of classes representing different types of french administrative units, namely communes, cantons, arrondissements and departments. In \texttt{geofla} vocabulary, we add a class region  from the instances of the class department via two attributes  that precise to what region each instance of department belongs.  Their properties are defined based on the attributes of their related classes in GEOFLA\circledR ~database.
+The GEOFLA\circledR 's application schema is composed of classes representing different types of french administrative units, namely communes, cantons, arrondissements and departments. In \texttt{geofla} vocabulary, we add a class \texttt{Region}  from the instances of the class department via two attributes  that precise to what region each instance of department belongs.  Their properties are defined based on the attributes of their related classes in GEOFLA\circledR ~database.
 
 A Commune has an attribute called \textit{``nature''} whose enumerated values precise whether the commune is the capital of a bigger administrative unit, modeled in the vocabulary by the ObjectProperty \texttt{geofla:statut} with range \texttt{skos:Concept} defined in this specific \texttt{skos:ConceptScheme} \url{http://{BASE}/codes/geofla/typedecommune/liste} pointing to the different types of French administrative unit's capital. 
 

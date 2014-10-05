@@ -2,13 +2,20 @@
 \chapter{Publishing and Querying Geodata }
 \label{ch:ch2}
 
-\begin{itemize}
-\item steps for publishing geodata--existing tools
-\item soA on triple stores 
-\item interconnections and 5-stars datasets
-\item Datalift for geo data
-\item contrib for french publications
-\end{itemize}
+\begin{flushright}
+\textit{``If you're a geospatial developer, AJAX is not a domestic cleaning product. \\
+If you're a web dev, a polygon is not a dead parrot''}.\\
+Steve Peters \\
+(UK Government's Department \\for Communities and Local Government) 
+
+\end{flushright}
+Content: 
+ steps for publishing geodata--existing tools -
+ soA on triple stores- 
+ interconnections and 5-stars datasets -
+ Datalift for geo data -
+ contrib for french publications.
+
 
 \section{Existing Tools for Converting Geospatial Data}
 \label{sec:toolgeo}
@@ -22,7 +29,8 @@
 \subsection{GeoLift}
 
 
-\subsection{Geometry2RDF}
+\section{GeomRDF: Datalift tool for Converting Geodata}
+\label{sec:geomRDF}
 
 Reuse material from - code source: https://github.com/fhamdi/GeomRDF
  - papier GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-et-al.-GeomRDF.pdf
@@ -126,7 +134,7 @@ Linked Geospatial Data for Greece - http://www.linkedopendata.gr/ - Linked geosp
 \subsection{Discussion}
 These samples from DBpedia, Geonames and LinkedGeoData give an overview of the different views of the same reality, in this case the district of the 7$^{th}$ Arrondissement in Paris. Regarding the ``symbolic representation'', two datasets opted for ``Feature'' (DBpedia and Geonames) while LGD classifies it as a ``Suburb'' or ``Place''. They all represent the shape of the district as a POINT which is not very efficient if we consider a query such as \emph{show all monuments located within the 7th arrondissement of international importance}. To address this type of query and more complicated ones, there is a need for more advanced modeling as we describe in the next section.
 
-\section{Benchmarking Triple Stores}
+\section{Benchmarking (Geo) Triple Stores}
 \label{sec:benchmarking}
 
 \begin{itemize}
@@ -170,33 +178,53 @@ LIMES implements novel time-efficient approaches for link discovery in metric sp
 
 \subsection{Datalift Platform}
 \label{sec:datalift}
-Datalift is an open source platform [ref-datalift] helping to lift raw data sources or legacy data to semantic interlinked data sources.
+Datalift is an open source platform \cite{scharffe_2012} helping to lift raw data sources or legacy data to semantic interlinked data sources.
 The ambition of DataLift is to act as a catalyst for the emergence of the Web of Data by providing a complete path from raw data to fully interlinked, identified, and qualified linked datasets. The Datalift platform supports the following stages in lifting the data:
 \begin{enumerate}
 \item Selection of ontologies for publishing data;
 \item Conversion of data to the appropriate format (e.g., from CSV to RDF);
 \item Interlinking of data with other data sources;
 \item Publication of linked data ;
-\item Access control and license management
+\item Access control and license management.
 \end{enumerate}
 
+Figure \ref{fig:liftprocess} gives an overview of the different steps in lifting raw source data into RDF using different modules of Datalift. 
+
+\begin{figure}[!htp]
+\centering{
+\includegraphics[scale=0.7]{img/liftProcessDatalift.pdf}
+\caption{Lifting process of raw data source into RDF using Datalift Platform}
+\label{fig:liftprocess}
+}
+\end{figure}
 
 
 \subsubsection{Functionalities of the Datalift platform}
 
-The architecture of Datalift is modular. Several levels of abstraction allow decoupling between the different stages from raw data to semantic data. The dataset selection allows us to identify the data to be published and migrate them to a first RDF version. The ontologies selection step asks the user to input a set of vocabularies', terms that will be used to describe the lifted data. Once the terms are selected, they can be mapped to the raw RDF and then converted to properly formatted RDF. The data is then published on the DataLift SPARQL endpoint. Finally, the process aims at providing links from the newly published data to other datasets already published as Linked Data on the Web. Figure \ref{fig:liftprocess} below shows the workflow of converting raw data into ``structured'' RDF data.
+The architecture of Datalift is modular. Several levels of abstraction allow decoupling between the different stages from raw data to semantic data. The dataset selection allows us to identify the data to be published and migrate them to a first RDF version. The ontologies selection step asks the user to input a set of vocabularies', terms that will be used to describe the lifted data. Once the terms are selected, they can be mapped to the raw RDF and then converted to properly formatted RDF. The data is then published on the DataLift SPARQL endpoint. Finally, the process aims at providing links from the newly published data to other datasets already published as Linked Data on the Web. Figure \ref{fig:liftprocess} below shows the workflow of converting raw data into ``structured'' RDF data. Figure \ref{fig:dataliftarch} depicts the architecture of Datalift.
+
+\begin{figure}[ht!b]
+\centering{
+\includegraphics[scale=0.6]{img/datalift-architecture.pdf}
+\label{fig:dataliftarch}
+\caption{Architecture of Datalift platform.}
+}
+\end{figure}
 
 
 \begin{enumerate}
 
-\item{Dataset Selection}
+\item{\textbf{Dataset Selection}}
 The first step of the data lifting process is to identify and access the datasets to be processed. A dataset is either a file or the result of a query to retrieve data from a datastore. The kinds of files currently considered are CSV, RDF, XML, GML and Shape files. Queries are SQL queries sent to an RDBMS or SPARQL queries on a triple store.
 \item{Ontologies Selection:}
-The publisher of a dataset should be able to select the vocabularies that are the most suitable to describe the data, and the least possible terms should be created specifically for a dataset publication task. The Linked Open Vocabularies[1] (LOV) developed in Datalift provides easy access methods to this ecosystem of vocabularies, and in particular by making explicit the ways they link to each other and providing metrics on how they are used in the linked data cloud. LOV is integrated as module in the DataLift platform to assist the ontology selection.
-\item{Data Conversion:}
+The publisher of a dataset should be able to select the vocabularies that are the most suitable to describe the data, and the least possible terms should be created specifically for a dataset publication task. The Linked Open Vocabularies \cite{lov11} (LOV) developed in Datalift provides easy access methods to this ecosystem of vocabularies, and in particular by making explicit the ways they link to each other and providing metrics on how they are used in the linked data cloud. LOV is integrated as module in the DataLift platform to assist the ontology selection.
+
+\item{\textbf{Data Conversion:}}
 Once URIs are created and a set of vocabulary terms able to represent the data is selected, it is time to convert the source dataset into a more precise RDF representation. Many tools exist to convert various structured data sources to RDF. The major source of structured data on the Web comes from spreadsheets, relational databases and XML files. We propose a two steps approach. First, a conversion from the source format to raw RDF is performed. Second, a conversion of the raw RDF into ``well-formed'' RDF using selected vocabularies is performed using SPARQL Construct queries. Most tools provide spreadsheet conversion to CSV, and CSV to RDF is straightforward, each line becoming a resource, and columns becoming RDF properties. The W3C RDB2RDF WG\footnote{\url{http://www.w3.org/2001/sw/rdb2rdf/}} proposes the Direct Mapping to automatically generate RDF from the tables but without using any vocabulary, and R2RML\footnote{\url{http://www.w3.org/TR/r2rml/}}  to assign vocabulary terms to the database schema. In the case of XML, a generic XSLT transformation is performed to produce RDF from a wide range of XML documents. The DataLift platform provides a graphical interface to help mapping the data to selected vocabulary terms.
-\item{\textbf{Data Protection:}}
+
+\item {\textbf{Data Protection:}}
 This module is linked to Apache Shiro for obtaining the information, i.e., username and password, about the user who is accessing the platform. The module\footnote{\url{http://wimmics.inria.fr/projects/shi3ld/}} checks which data is targeted by the user's query and then verifies whether the user can access the requested data. This verification leads to three kinds of possible answers, depending on the access privileges of the user: some of the requested data is returned, all the requested data is returned, or no data is returned. This means that the user's query is filtered in such a way that she is allowed to access only the data she is granted access to. The access policies are expressed using RDF and SPARQL 1.1[ref-sparql11] Semantic Web languages thus provide a completely standard way of expressing and enforcing access control rules.
+
 \item{\textbf{Data Interlinking:}}
 The interlinking step provides means to link datasets published through the Datalift platform with other datasets available on the Web of Data. Technically, the module helps to find equivalence links in the form of ``owl:sameAs'' relations. An analysis of the vocabulary terms used by the published data set and a potential data set to be interlinked is performed. When the vocabulary terms are different, the module checks if alignments between the terms used by the two data sets are available.Here the alignment server provided with the Alignment API\footnote{\url{http://alignapi.gforge.inria.fr/}} is used for that purpose. The correspondences are translated into SPARQL graph patterns and transformation functions are combined into a SILK script.
 \item{\textbf{Data Publication:}}
@@ -204,16 +232,10 @@ This module aims at publishing the data obtained from the previous steps to a tr
 \end{enumerate}
 
 
-\begin{figure}[!htp]
-\centering{
-\includegraphics[scale=0.9]{img/liftProcessDatalift.pdf}
-\caption{Lifting process of raw data source into RDF using Datalift Platform}
-\label{fig:liftprocess}
-}
-\end{figure}
+
 
 \paragraph{Installation:}
-Please find the documentation for installing Datalift at \url{http://datalift.org/wiki/index.php/Platform_installation_(english)}. The latest version of the platform is available at http://datalift.org/en/node/24, which is still a work in progress until the mature and stable version is released by the end of March. 
+All the documentation for installing Datalift is available at \url{http://datalift.org/wiki/index.php/Platform_installation_(english)}. The latest version of the platform is announced at \url{http://datalift.org/en/node/24}, which is still a work in progress until the mature and stable version is launched and deployed.
 
 \paragraph{Usage:}
 The data lifting has several distinct steps. DataLift makes it possible to replay each step in producing different results for each step. To facilitate access to all the different treatments and their results, they are grouped as one project. The project gathers together the various sources used and the results of all treatments done.
