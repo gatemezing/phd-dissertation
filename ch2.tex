@@ -1,5 +1,5 @@
 
-\chapter{Publishing and Querying Geodata }
+\chapter{Publishing and Querying Geodata}
 \label{ch:ch2}
 
 \begin{flushright}
@@ -19,22 +19,49 @@ Content:
 
 \section{Existing Tools for Converting Geospatial Data}
 \label{sec:toolgeo}
+To address the need for converting geodata into a graph model such as RDF, there are some tools that have been proposed to generate RDF data from legacy geospatial datasets. The differences among the tools are based on four main criteria :
+\begin{itemize}
+\item \textbf{Input format:} The different types of formats accepted as input of the tool;
+\item \textbf{Vocabulary:} The vocabulary used to handle the geometry aspect of the spatial data during the RDF conversion step;
+\item \textbf{CRS converter:} The presence or not of a CRS converter between different CRSs in the final output of the tool ;
+\item \textbf{Output:} The type of serialization in RDF, and more importantly the choice between structured geometry, OGC compliant (WKT, GML literals) or both for the geometry part of the features.
+\end{itemize}
 
+All of the tools used the GDAL (Geospatial Data Abstraction Library)
 
+\subsection{Geometry2RDF} \label{sec:geo2rdf}
+Geometry2RDF \cite{deLeon2010} is a java based tool\footnote{\url{https://github.com/boricles/geometry2rdf}} that generates RDF triples from geometrical information, which can be available in GML or WKT. The tool takes as input any ESRI shapefiles, spatial DBMS (Oracle,  PostgreSQL, MySQL, etc), transforms into GML (using GeoTools\footnote{\url{http://www.geotools.org}}) and then generates RDF (using Jena\footnote{\url{https://jena.apache.org/}}) consistent with the NeoGeo vocabulary. The default CRS used for the geometry is WGS84. The architecture is flexible to run as a standalone platform or as a library. 
 
 \subsection{TripleGeo}
+TripleGeo \cite{triplegeo2014} is an ETL (Extract- Transform-Load) tool derived from Geometry2RDF (Cf. Section \ref{sec:geo2rdf}) to transform a variety of geospatial databases and shapefiles (including KML and INSPIRE compliant files) into RDF triples. Triples can be exported according to the GeoSPAQL standard, the WGS84 vocabulary and the Virtuoso RDF vocabulary\footnote{\url{http://docs.openlinksw.com/virtuoso/rdfsparqlgeospat.html}}. In addition TripleGeo allows on-the-fly reprojection between CRSs, e.g., transform geometries from GreekGrid87 (a local CRS) into WGS84 (used for GPS locations). The code is available at \url{https://github.com/GeoKnow/TripleGeo}.
 
 \subsection{shp2GeoSPARQL}
+shp2GeoSPARQL \cite{saavedra14} is also an extension of Geometry2DF which transforms Shapefiles into RDF in the cadastral domain using ISO 19152 \cite{iso2012} (Land Administration Domain Model) and GeoSPARQL. The geometries obtained by shp2GeoSPARQL are consistent with the GeoSPARQL geometry vocabulary.
 
-\subsection{GeoLift}
+\subsection{Limitations of existing tools}
+\label{sec:limitations}
+
+Currently, the tools achieving the transformations of geospatial data into RDF still suffer from some limitations. On one hand, they are all compatible with GeoSPARQL standard, with in turns has a handful endpoints that implements all the requirements. Moreover, geometries are literals (e.g., wktLiteral, gmlLiteral) with embedded CRS. On the other hand, tools based on NeoGeo vocabulary outputs structured geometries that can be easily handled by existing Triple Stores and SPARQL queries. However, NeoGeo only allows geometry in WGS84 CRS. The ideal scenario could be a tool that provides output consistent with both GeoSPARQL and structured geometries handling multiple CRSs. 
 
 
 \section{GeomRDF: Datalift tool for Converting Geodata}
 \label{sec:geomRDF}
+GeomRDF \cite{hamdi14} is a tool developed within the Datalift project that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components: 
 
-Reuse material from - code source: https://github.com/fhamdi/GeomRDF
- - papier GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-et-al.-GeomRDF.pdf
- - slide GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-GeomRDF.pdf
+\begin{itemize}
+\item input parser:
+\item feature parsers: 
+\item  RDF builder.
+
+GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}.
+
+\todo{ADD SAMPLES OF GEOMETRY OUTPUT FOR MULTIPOLYGON}
+
+
+    
+%Reuse material from - code source: 
+ %- papier GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-et-al.-GeomRDF.pdf
+% - slide GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-GeomRDF.pdf
 
 
 \section{Geodata Providers and Access}
@@ -148,19 +175,45 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 \todo{read again the paper}
 Strabon - http://www.strabon.di.uoa.gr - Strabon is a semantic spatio-temporal RDF store. You can use it to store linked geospatial data that changes over time and pose queries using two popular extensions of SPARQL. Strabon is a full implementation of \texttt{stSPARQL} and the GeoSPARQL Core, Geometry extension and Geometry topology extension components. It also offers spatial and temporal selections, spatial and temporal joins, a rich set of spatial functions similar to those offered by geospatial relational database systems and support for multiple Coordinate Reference Systems.
 
-\begin{table}[!htbp]
- \begin{tabularx}{\textwidth}{|X|X|X|X|X|l|}
- \hline
- \textbf{Triple store} & WKT-compliance & GML-compliance & Geometry supported  & Geospatial Functions & GeoVocab \\ \hline
- Virtuoso & Yes & Yes & Point & 13 functions & W3C Geo + Typed Literal  \\ \hline
- Allegro-Graph & \-- & -- & Point & 3 functions & ``strip'' mapping data \\ \hline
- OWLIM-SE & -- & -- & Point & 4 functions & W3C Geo\\ \hline
- Open Sahara & \ Yes & Yes & Point, Line, Polygons & 23 functions  & Typed Literal \\ \hline
- Parliament & \ Yes & Yes & Point, Line, Polygons & 23 functions  &  GeoSPARQL vocabulary\\ \hline
- \end{tabularx}
-\caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.}
-\label{tab:triplestore}
-\end{table}
+\begin{table}[ht!]
+    \caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.} \label{tab:triplestore}
+    \small
+    \center
+    %\begin{tabularx}{\textwidth}{@{}ccX@{}}
+     \begin{tabular}{@{}  l  l  l @{}}
+    \toprule
+    \textbf{Triplestore} 		& \textbf{WKT-Compliance } &  \textbf{GML-Compliance } & \textbf{Geometry supported} & \textbf{Geospatial Functions} &  \textbf{Geovocabulary }\\
+    \toprule
+    \texttt{Virtuoso} 	& Yes & Yes & Point & 13 functions & W3C Geo + Typed Literal\\
+    \midrule
+    \texttt{Allegro-Graph} & \-- & -- & Point & 3 functions & ``strip'' mapping data \\
+    \midrule
+    \texttt{OWLIM-SE} & -- & -- & Point & 4 functions & W3C Geo\\ 
+    \midrule
+    \texttt{Open Sahara} & \ Yes & Yes & Point, Line, Polygons & 23 functions  & Typed Literal \\
+    \midrule
+    \texttt{Parliament} & \ Yes & Yes & Point, Line, Polygons & 23 functions  &  GeoSPARQL vocabulary\\
+    \midrule
+    \texttt{Strabon} & \ TBD & TBD & TBD & XX functions  &  GeoSPARQL vocabulary\\
+    \bottomrule
+  
+     \end{tabular}
+   % \end{tabularx}
+    \end{table}
+    
+%\begin{table}[!htbp]
+ %\begin{tabularx}{\textwidth}{|X|X|X|X|X|l|}
+ %\hline
+ %\textbf{Triple store} & WKT-compliance & GML-compliance & Geometry supported  & Geospatial Functions & GeoVocab \\ \hline
+% Virtuoso & Yes & Yes & Point & 13 functions & W3C Geo + Typed Literal  %\\ \hline
+% Allegro-Graph & \-- & -- & Point & 3 functions & ``strip'' mapping data \\ \hline
+% OWLIM-SE & -- & -- & Point & 4 functions & W3C Geo\\ \hline
+%Open Sahara & \ Yes & Yes & Point, Line, Polygons & 23 functions  & Typed Literal \\ \hline
+% Parliament & \ Yes & Yes & Point, Line, Polygons & 23 functions  &  GeoSPARQL vocabulary\\ \hline
+% \end{tabularx}
+%\caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.}
+%\label{tab:triplestore}
+%\end{table}
 
 \subsection{Benchmarks}
 Geographica - http://geographica.di.uoa.gr - A benchmark which uses both real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores.
