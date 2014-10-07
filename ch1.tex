@@ -2,12 +2,13 @@
 \label{ch:ch1}
 
 \begin{flushright}
-\textit{``If you're a geospatial developer, AJAX is not a domestic cleaning product. \\
-If you're a web dev, a polygon is not a dead parrot''}.\\
-Steve Peters \\
-(UK Government's Department \\for Communities and Local Government) 
-
+\textit{``The Semantic Geospatial Web will be a \\ significant advancement in the 
+ meaningful use of spatial information.}\cite{egenhofer12}\\
+ Max J. Egenhofer 
+ 
 \end{flushright}
+
+
 
 %Content: raditional GIS data, soA on vocabularies, Contributions and conclusion \\
  
@@ -17,7 +18,7 @@ The increasing number of initiatives for sharing geographic information on the W
 
 In France, the National Geographic Institute (IGN) has started to publish more and more data in RDF, as illustrated by the recent experimental LOD service \url{http://data.ign.fr}. IGN maintains large databases composed of different types of geographic entities, buildings, topographic information, occupied zones, etc. By reusing existing taxonomies and publishing them on the Web would ease the integration, retrieval and maintenance of French geospatial objects. Moreover, adding semantics to the current data on the Web will not only resolve ambiguities between datasets, but also will enable answering more complex queries than current GIS systems can handle, such as: ``\emph{show all buildings used as tribunal courts in the 7th Arrondissement of Paris}''. Another use-case is the possibility to reason over parts of a structure: ``\emph{show the points where the river Seine touches a boundary of a district in Paris that contain an activity zone}''.
 
-In this Chapter, we first describe the notion of geographic information, with its specificity and diversity of formats (Section \ref{sec:geointro}). Then, we survey the models used on the Web to model existing geodata, by pointing some limitations (Section \ref{sec:vocgeoreview} and Section \ref{sec:currentmodel}. We then move to distinguish two levels of georeferencing data (direct and indirect), and the importance of CRSs in the interpretation of geodata (Section \ref{sec:georef}). The contributions start with a REST service for converting geodata in Section \ref{sec:rest-service}, followed by vocabularies developed both for handling geometries and features on the Web (Section \ref{sec:topovocab} and Section \ref{sec:geovocab}). The chapter closes with a take-away message
+In this chapter, we first describe the notion of geographic information, with its specificity and diversity of formats (Section \ref{sec:geointro}). Then, we survey the models used on the Web to model existing geodata, by pointing some limitations (Section \ref{sec:vocgeoreview} and Section \ref{sec:currentmodel}. We then move to distinguish two levels of georeferencing data (direct and indirect), and the importance of CRSs in the interpretation of geodata (Section \ref{sec:georef}). The contributions start with a REST service for converting geodata in Section \ref{sec:rest-service}, followed by vocabularies developed both for handling geometries and features on the Web (Section \ref{sec:topovocab} and Section \ref{sec:geovocab}). The chapter closes with a take-away message.
 
 
 
@@ -603,7 +604,7 @@ A Commune has an attribute called \textit{``nature''} whose enumerated values pr
 \section{Summary}
 \label{sec:summarych1}
 %\todo{We have presented in this chapter this..that and also that in short}
-We have presented in this Chapter the different vocabularies used to model geospatial data on the Web, based on direct and indirect georeferencing. After identifying one limitation on the lack of an explicit CRS reference on the data, e then proposed a REST service for converting between different CRSs. Then, we developed three vocabularies (geom, ingf, topo) extending existing ones and integrating two additional advantages: an explicit use of CRS identified by URIs for geometry, and the ability to describe structured geometries in RDF. 
-In the next Chapter, we will go through the conversion and the publication of geospatial data on the Web.
+We have presented in this chapter the different vocabularies used to model geospatial data on the Web, based on direct and indirect georeferencing. After identifying one limitation on the lack of an explicit CRS reference on the data, e then proposed a REST service for converting between different CRSs. Then, we developed three vocabularies (geom, ingf, topo) extending existing ones and integrating two additional advantages: an explicit use of CRS identified by URIs for geometry, and the ability to describe structured geometries in RDF. 
+In the next chapter, we will go through the conversion and the publication of geospatial data on the Web.
 
 

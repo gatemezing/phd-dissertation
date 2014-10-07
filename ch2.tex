@@ -4,7 +4,7 @@
 
 \begin{flushright}
 \textit{``If you're a geospatial developer, AJAX is not a domestic cleaning product. \\
-If you're a web dev, a polygon is not a dead parrot''}.\\
+If you're a web dev, a polygon is not a dead parrot''}\footnote{\url{http://www.w3.org/2014/03/lgd/report}}.\\
 Steve Peters \\
 (UK Government's Department \\for Communities and Local Government) 
 
@@ -46,19 +46,72 @@ Currently, the tools achieving the transformations of geospatial data into RDF s
 
 \section{GeomRDF: Datalift tool for Converting Geodata}
 \label{sec:geomRDF}
-GeomRDF \cite{hamdi14} is a tool developed within the Datalift project that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components: 
+GeomRDF \cite{hamdi14} is a tool developed within the Datalift project that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components (Cf. Figure \ref{fig:geom2rdfarchitecture}: 
 
 \begin{itemize}
-\item input parser:
-\item feature parsers: 
-\item  RDF builder.
+\item \textbf{input parsers:} This component extracts from the different input format all the features and their descriptions. 
+\item \textbf{feature parsers:} This component extracts for all the features their properties depending on their type, either thematic (attributes and properties of a geographic entity) or geometric (the geometry associated to the entity). For example, in the case of a Multipolygon, the parser stores first all the Polygons composing the original Multipolygon. Then, it stores the exterior and the eventual LinearRings for each Polygon, as well as the points included in the LinearRings. Finally the coordinates of each point are also stored. At this stage, GeoRDF provides a \textit{``CRS reprojection''} functionality, which consists of transforming on-the-fly between different CRSs, before the storage of the geometries.
 
-GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}.
-
-\todo{ADD SAMPLES OF GEOMETRY OUTPUT FOR MULTIPOLYGON}
+\item  \textbf{RDF Builder:} This module is in charge of generating RDF triples according to the \texttt{geom} vocabulary for geometry, \textbf{geofla} and \textbf{topo} for different topographic entities.  
 
 
-    
+\end{itemize}
+
+GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}. Listing \ref{lst:nicegeomrdf} presents a snippet in TURTLE of GeomRDF for geometry of the city of Nice (France). It also contains the 
+
+ \begin{lstlisting}[label=lst:nicegeomrdf, float=tp, numbers=left, numberstyle=\tiny, caption = Sample of structured geometry of the city of Nice]
+@prefix geom:<http://data.ign.fr/def/geometrie#> .
+@prefix rgeofla:<http://data.ign.fr/id/geofla/commune/> .
+@orefix gsp: <http://www.opengis.net/ont/geosparql#> .
+
+rgeofla:Multipolygon_11130 a geom:MultiPolygon ;
+geom:crs <http://data.ign.fr/id/ignf/crs/WGS84GDD> ;
+geom:polygonMember _:polygon_11130_1 ;
+geom:polygonMember _:polygon_11130_2 .
+
+_:polygon_11130_1 a geom:Polygon ;
+geom:crs <http://data.ign.fr/id/ignf/crs/WGS84GDD> ;
+geom:exterior  _:linearRing_11130_1 .
+
+_:polygon_11130_2 a geom:Polygon ;
+geom:crs <http://data.ign.fr/id/ignf/crs/WGS84GDD> ;
+geom:exterior  _:linearRing_11130_2 .
+
+
+_:linearRing_11130_1 a geom:LinearRing ;
+geom:crs <http://data.ign.fr/id/ignf/crs/WGS84GDD> ;
+geom:points  _:points_11130_1 ;
+geom:firstAndLast _:point_11130_10 .
+
+
+_:linearRing_11130_2 a geom:LinearRing ;
+geom:crs <http://data.ign.fr/id/ignf/crs/WGS84GDD> ;
+geom:points  _:points_11130_2 ;
+geom:firstAndLast _:point_11130_2 .
+
+
+_:points_11130_1 a geom:PointsList; geom:firstAndLast _:point_11130_10 ;
+rdf:rest _:point_11130_11 .
+_:point_11130_11  a geom:PointsList; rdf:first _:point_11130_12 ;
+rdf:rest _:point_11130_13 .
+.....
+_:point_11130_129  a geom:PointsList; rdf:first _:point_11130_130 ;
+rdf:rest _:point_11130_1 .
+
+
+_:point_11130_10 a geom:Point ;
+geom:crs <http://data.ign.fr/id/ignf/crs/WGS84GDD> ;
+geom:coordX "7.308745254207776"^^xsd:double ;
+geom:coordY "43.69237084089203"^^xsd:double .
+
+rgeofla:06088  a geofla:Commune ;
+rdfs:label "NICE"@fr ;
+geom:geometry rgeofla:Multipolygon_11130 ;
+gsp:asWKT "<http://data.ign.fr/id/ignf/crs/WGS84GDD> MULTIPOLYGON (((7.308745254207776 43.69237084089203, 7.306051040744396 43.68445728916297, ....., 7.308745254207776 43.69237084089203)))"^^gsp:wktLiteral .
+
+\end{lstlisting}
+
+   
 %Reuse material from - code source: 
  %- papier GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-et-al.-GeomRDF.pdf
 % - slide GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-GeomRDF.pdf
@@ -67,24 +120,25 @@ GeomRDF is implemented as a module of the RDF publication platform Datalift. Mor
 \section{Geodata Providers and Access}
 So far, the Web of data has taken advantage of geocoding technologies for publishing large amounts of data. For example, Geonames provides more than 10 millions records (e.g. $5,240,032$ resources of the form \url{http://sws.geonames.org/10000/}) while LinkedGeoData has more than $60,356,364$ triples. All the above mentioned data are diverse in their structure, the access point (SPARQL endpoint, web service or API), the entities they represent and the vocabularies used for describing them. Table~\ref{tab:srce-data} summarizes for different providers the number of geodata available (resources, triples) and how the data can be accessed.
 
+
 \begin{table}[!htbp]
 \centering{
-\begin{tabular}{|ll|r|r|}
-\hline
-\multicolumn{2}{|c}{\textbf{Provider}} & \multicolumn{1}{|c}{\textbf{\#Geodata}} & \multicolumn{1}{|c|}{\textbf{Data access}}\\
-\hline
-\multicolumn{2}{|l|}{DBpedia} & 727 232 triples & SPARQL endpoint\\
-\multicolumn{2}{|l|}{Geonames} & 5 240 032 (feature). &  API \\
-\multicolumn{2}{|l|}{LinkedGeoData} & 60 356 364 triples & SPARQL endpoint, Snorql\\
-\multicolumn{2}{|l|}{Foursquare} & n/a & API\\
-\multicolumn{2}{|l|}{Freebase} & 8,5MB  & RDF Freebase Service\\
-\multicolumn{2}{|l|}{Ordnance Survey(Cities)} & 6 295 triples  & Talis API \\
-\multicolumn{2}{|l|}{GeoLinkedData.es} & 101 018 triples  & SPARQL endpoint \\
-\multicolumn{2}{|l|}{Google Places} & n/a  & Google API \\
-\multicolumn{2}{|l|}{GADM project data} & 682 605 triples & Web Service \\
-\multicolumn{2}{|l|}{NUTS project data} & 316 238 triples & Web Service \\
-\multicolumn{2}{|l|}{IGN experimental} & 629 716 triples & SPARQL endpoint \\
-\hline
+\begin{tabular}{lllc}
+ \specialrule{1pt}{1pt}{1pt}
+ \textbf{Provider}	 	& {\textbf{\#Geodata}}  & \textbf{Data access}		 \\ \specialrule{1pt}{1pt}{1pt}
+DBpedia & 727,232 triples & SPARQL endpoint\\
+Geonames & 5 240,032 (feature). &  API \\
+LinkedGeoData & 60,356,364 triples & SPARQL endpoint, Snorql\\
+Foursquare & N/A & API\\
+Freebase & 8,5MB  & RDF Freebase Service\\
+Ordnance Survey(Cities) & 6,295 triples  & Talis API \\
+GeoLinkedData.es & 101 018 triples  & SPARQL endpoint \\
+Google Places & N/A  & Google API \\
+GADM   & 682 605 triples & Web Service \\
+NUTS  & 316 238 triples & Web Service \\
+IGN experimental & 629,716 triples & SPARQL endpoint \\
+LOD Greek & 634 KTriples & SPARQL endpoint \\
+ \specialrule{1pt}{1pt}{1pt}
 \end{tabular}
 \caption{Geodata by provider and their different access type}
 \label{tab:srce-data}
@@ -153,16 +207,25 @@ In LinkedGeoData, the district is a \texttt{lgdo:Suburb rdfs:subClassOf ldgo:Pla
 \end{verbatim}
 }
 
-\subsection{Linked Geospatial Data for Greece}
-\todo{add a representation of data here}\\
-
-Linked Geospatial Data for Greece - http://www.linkedopendata.gr/ - Linked geospatial data about the Greek Administrative Geography, CORINE Land Use/Land Cover for Greece and the Coastline of Greece.
+\textcolor{red}{\subsection{Linked Geospatial Data for Greece}
+ Linked geospatial data about the Greek\footnote{\url{ http://www.linkedopendata.gr/}} Administrative Geography (GAG), CORINE Land Use/Land Cover (CLC) for Greece and the Coastline of Greece is another effort to bring spatial data on the Web. Both datasets with information about Greece have been published as linked data in the context of the European project TELEIOS\footnote{\url{http://earthobservation}} containing more than 45K triples of Polygons. Datasets are modeled using stRDF and stSPARQL and store using Strabon.  }
 
 \subsection{Discussion}
 These samples from DBpedia, Geonames and LinkedGeoData give an overview of the different views of the same reality, in this case the district of the 7$^{th}$ Arrondissement in Paris. Regarding the ``symbolic representation'', two datasets opted for ``Feature'' (DBpedia and Geonames) while LGD classifies it as a ``Suburb'' or ``Place''. They all represent the shape of the district as a POINT which is not very efficient if we consider a query such as \emph{show all monuments located within the 7th arrondissement of international importance}. To address this type of query and more complicated ones, there is a need for more advanced modeling as we describe in the next section.
 
-\section{Benchmarking (Geo) Triple Stores}
-\label{sec:benchmarking}
+\section{Survey on Triple Stores}
+\label{sec:surveytps}
+A triple store is a that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqkles [ref] and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions. 
+ 
+
+An overview on requirements for triple stores maintained by Lars at \url{http://www.garshol.priv.no/blog/231.html}
+
+\subsection{Generic Triple Stores}
+\label{sec:genrictps}
+
+
+
+\subsection{How to choose a Triple Store }
 
 \begin{itemize}
 \item \textbf{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}\footnote{\url{http://www.opensahara.com}}, \texttt{Parliament }\footnote{\url{http://geosparql.bbn.com}},  \texttt{Virtuoso}\footnote{\url{http://www.openlinksw.com}} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata.
@@ -171,9 +234,15 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 
 \todo{update the table with strabon and changes in virtuoso 7.} \\
 
-\subsection{Strabon}
+\subsection{Geospatial Triple Stores}
+\label{sec:geotps}
+
+\subsubsection{Strabon}
 \todo{read again the paper}
-Strabon - http://www.strabon.di.uoa.gr - Strabon is a semantic spatio-temporal RDF store. You can use it to store linked geospatial data that changes over time and pose queries using two popular extensions of SPARQL. Strabon is a full implementation of \texttt{stSPARQL} and the GeoSPARQL Core, Geometry extension and Geometry topology extension components. It also offers spatial and temporal selections, spatial and temporal joins, a rich set of spatial functions similar to those offered by geospatial relational database systems and support for multiple Coordinate Reference Systems.
+Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame [cite], allowing it to manage both thematic and spatial data expressed in \textt{stRDF}. PostGIS is used as the relational backend of Strabon. 
+stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data. 
+The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components. 
+
 
 \begin{table}[ht!]
     \caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.} \label{tab:triplestore}
@@ -215,7 +284,7 @@ Strabon - http://www.strabon.di.uoa.gr - Strabon is a semantic spatio-temporal R
 %\label{tab:triplestore}
 %\end{table}
 
-\subsection{Benchmarks}
+\subsection{Benchmarks for Geospatial RDF Stores}
 Geographica - http://geographica.di.uoa.gr - A benchmark which uses both real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores.
 
 \section{Tools for managing Linked (Geo)Data Publishing Workflow}
