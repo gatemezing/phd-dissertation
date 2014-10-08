@@ -1,11 +1,15 @@
 \chapter{Survey on Visualizations for RDF}
 \label{ch:ch4}
 
-\begin{itemize}
-\item Tools for visualizations: facete, soA, etc.
-\item Survey on visualizations applications
-\item Explore limitations
-\item Find answers
+\begin{flushright}
+\textit{``A Semantic Web application is one whose schema is expected to change.''} \\ (David Karger, MIT)\footnote{A statement during his keynote at ESWC 2013 conference}
+
+\end{flushright}
+Content: 
+ Tools for visualizations: facete, soA, etc.
+ Survey on visualizations applications
+ Explore limitations
+ Find answers
 \end{itemize}
 
 \section{Tools for visualizing RDF Data}
@@ -136,30 +140,43 @@ We first review the numerous applications that have been developed on top of dat
 \end{itemize}
  Table \ref{tab:describeApps} provides the information extracted from \texttt{openspending in Greece} using the aforementioned template. 
 
-\begin{table}[!htbp]
-\centering
-\begin{tabularx}{\textwidth}{ |X|X|}
-\hline
-\textbf{Features} & \textbf{Value} \\
-\hline
-\hline
-\texttt{Name} & Where My Money Goes in Greece  \\ \hline
-\texttt{Access Url }&	\url{http://publicspending.medialab.ntua.gr/}  \\ \hline
-\texttt{Scope/Domain} &	Public spending, Government  \\ \hline
-\texttt{Description} & The application helps visualizing the most characteristic facts of the Greek public spending, interconnected to foreign expenditure and other data. \\ \hline
-\texttt{Supported Platform} &	Web \\ \hline
-	& http://{BASE}/en/{NAME-CHART}.php.\\
-\texttt{URL Policy}                   &  e.g:  http://{BASE}/en/toppayersday.php \\ \hline
-\texttt{Data Source}	& http://opendata.diavgeia.gov.fr; Greek Tax data (TAXIS) \\ \hline
-\texttt{Type of views} & Bubble tree, column and bar charts \\ \hline
-\texttt{Visualization tools} &  HighchartsJS,  Bubble TreeJS JqueryJS ; RaphaelJS \\ \hline
-\texttt{License} & Open \\ \hline
-\texttt{Business Value} & Not Commercial (Free) \\ \hline
 
+\begin{table}[ht!bp]
+    \caption{Gathering reusable information from openspending in Greece Application} \label{tab:describeApps}
+    \small
+    \center
+    \begin{tabularx}{\textwidth}{@{}lX@{}}
+     %\begin{tabular}{@{}llX@{}}
+    \toprule
+    \textbf{Features} & \textbf{Value}\\
+    \toprule
+    \texttt{Access Url }&	\url{http://publicspending.medialab.ntua.gr/}\\
+    \midrule
+    \texttt{Scope/Domain} &	Public spending, Government \\
+    \midrule
+    \texttt{Description} & The application helps visualizing the most characteristic facts of the Greek public spending, interconnected to foreign expenditure and other data. \\
+    \midrule
+    \texttt{Supported Platform} &	Web \\ 
+    \midrule
+    \texttt{URL Policy}   &  http://{BASE}/en/{NAME-CHART}.php e.g., \url{http://{BASE}/en/toppayersday.php} \\
+    \midrule
+    \texttt{Data Source}	& \url{http://opendata.diavgeia.gov.fr}; Greek Tax data (TAXIS) \\ 
+    \midrule
+\texttt{Type of views} & Bubble tree, column and bar charts \\ 
+    \midrule
+   \texttt{Visualization tools} &  HighchartsJS,  Bubble TreeJS JqueryJS ; RaphaelJS \\ 
+   \midrule
+  \texttt{License} & Open \\ 
+    \midrule
+\texttt{Business Value} & Not Commercial (Free) \\ 
+    \bottomrule
+  
+    % \end{tabular}
+    \end{tabularx}
+    \end{table}
+   
+ \section{Evaluating Visualizations}
+ See Roberto Garcia work and proposal in Datalift technical report.
 
-\end{tabularx}
-\caption{Getting reusable information from openspending in Greece Application}
-\label{tab:describeApps}
-\end{table}
-
-
+  \section{Summary}
+  

@@ -38,15 +38,18 @@ TripleGeo \cite{triplegeo2014} is an ETL (Extract- Transform-Load) tool derived 
 \subsection{shp2GeoSPARQL}
 shp2GeoSPARQL \cite{saavedra14} is also an extension of Geometry2DF which transforms Shapefiles into RDF in the cadastral domain using ISO 19152 \cite{iso2012} (Land Administration Domain Model) and GeoSPARQL. The geometries obtained by shp2GeoSPARQL are consistent with the GeoSPARQL geometry vocabulary.
 
+
+
 \subsection{Limitations of existing tools}
 \label{sec:limitations}
 
 Currently, the tools achieving the transformations of geospatial data into RDF still suffer from some limitations. On one hand, they are all compatible with GeoSPARQL standard, with in turns has a handful endpoints that implements all the requirements. Moreover, geometries are literals (e.g., wktLiteral, gmlLiteral) with embedded CRS. On the other hand, tools based on NeoGeo vocabulary outputs structured geometries that can be easily handled by existing Triple Stores and SPARQL queries. However, NeoGeo only allows geometry in WGS84 CRS. The ideal scenario could be a tool that provides output consistent with both GeoSPARQL and structured geometries handling multiple CRSs. 
 
 
+
 \section{GeomRDF: Datalift tool for Converting Geodata}
 \label{sec:geomRDF}
-GeomRDF \cite{hamdi14} is a tool developed within the Datalift project that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components (Cf. Figure \ref{fig:geom2rdfarchitecture}: 
+GeomRDF \cite{hamdi14} is a tool developed within the Datalift project that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components (Cf. Figure [to add]): 
 
 \begin{itemize}
 \item \textbf{input parsers:} This component extracts from the different input format all the features and their descriptions. 
@@ -111,11 +114,6 @@ gsp:asWKT "<http://data.ign.fr/id/ignf/crs/WGS84GDD> MULTIPOLYGON (((7.308745254
 
 \end{lstlisting}
 
-   
-%Reuse material from - code source: 
- %- papier GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-et-al.-GeomRDF.pdf
-% - slide GeoLD: http://geold.geoknow.eu/wp-content/uploads/2014/05/Hamdi-GeomRDF.pdf
-
 
 \section{Geodata Providers and Access}
 So far, the Web of data has taken advantage of geocoding technologies for publishing large amounts of data. For example, Geonames provides more than 10 millions records (e.g. $5,240,032$ resources of the form \url{http://sws.geonames.org/10000/}) while LinkedGeoData has more than $60,356,364$ triples. All the above mentioned data are diverse in their structure, the access point (SPARQL endpoint, web service or API), the entities they represent and the vocabularies used for describing them. Table~\ref{tab:srce-data} summarizes for different providers the number of geodata available (resources, triples) and how the data can be accessed.
@@ -153,7 +151,7 @@ LOD Greek & 634 KTriples & SPARQL endpoint \\
 The 7$^{th}$ arrondissement of Paris is one of the 20 arrondissements (administrative districts) of the capital city of France. It includes some of Paris's major tourist attractions such as the Eiffel Tower, some world famous museums (e.g: \textit{mus\'{e}e d'Orsay}) and contains a number of French national institutions, including numerous government ministries\footnote{\url{http://en.wikipedia.org/wiki/7th_arrondissement_of_Paris}}. We use it throughout this paper to highlight the diversity of representations one can use for this geographical entity. We assume that this district should be modeled as a POLYGON composed of a number of POINTs needed to ``interpolate'' its effective boundaries. We assume the use of the WGS84\footnote{\url{http://en.wikipedia.org/wiki/World_Geodetic_System}} geodetic system.
 
 \subsection{DBpedia Modeling}
-We provide below an excerpt of the DBpedia description for this resource.
+We provide below an excerpt of the DBpedia description for the same resource:
 {\scriptsize
 \begin{verbatim}
   dbpedia:7th_arrondissement_of_Paris a gml:_Feature ;
@@ -171,7 +169,7 @@ We provide below an excerpt of the DBpedia description for this resource.
 First, we observe that the type \texttt{gml:\_Feature} and the property \texttt{grs:point} are not resolvable since there are no OWL ontologies that provide a description of them. Second, the property \texttt{geo:geometry} used by DBpedia is not defined in the WGS84 vocabulary. For the geometry, the 7th arrondissement is a simple POINT defined by a latitude and a longitude.
 
 \subsection{Geonames Modeling}
-In Geonames, the 7th arrondissement is considered as a 3$^{rd}$ order administrative division, represented by a POINT for the geometry model. The RDF description of this resource gives other information such as the alternate name in French, the country code and the number of inhabitants.
+In Geonames, the 7$^{th}$ arrondissement is considered as a 3$^{rd}$ order administrative division, represented by a POINT for the geometry model. The RDF description of this resource gives other information such as the alternate name in French, the country code and the number of inhabitants.
 {\scriptsize
 \begin{verbatim}
   gnr:6618613 a gn:Feature ;
@@ -207,38 +205,68 @@ In LinkedGeoData, the district is a \texttt{lgdo:Suburb rdfs:subClassOf ldgo:Pla
 \end{verbatim}
 }
 
-\textcolor{red}{\subsection{Linked Geospatial Data for Greece}
- Linked geospatial data about the Greek\footnote{\url{ http://www.linkedopendata.gr/}} Administrative Geography (GAG), CORINE Land Use/Land Cover (CLC) for Greece and the Coastline of Greece is another effort to bring spatial data on the Web. Both datasets with information about Greece have been published as linked data in the context of the European project TELEIOS\footnote{\url{http://earthobservation}} containing more than 45K triples of Polygons. Datasets are modeled using stRDF and stSPARQL and store using Strabon.  }
-
 \subsection{Discussion}
 These samples from DBpedia, Geonames and LinkedGeoData give an overview of the different views of the same reality, in this case the district of the 7$^{th}$ Arrondissement in Paris. Regarding the ``symbolic representation'', two datasets opted for ``Feature'' (DBpedia and Geonames) while LGD classifies it as a ``Suburb'' or ``Place''. They all represent the shape of the district as a POINT which is not very efficient if we consider a query such as \emph{show all monuments located within the 7th arrondissement of international importance}. To address this type of query and more complicated ones, there is a need for more advanced modeling as we describe in the next section.
 
 \section{Survey on Triple Stores}
 \label{sec:surveytps}
-A triple store is a that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqkles [ref] and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions. 
- 
+\todo{specify here that we don't give details of all the triplestores} \\
 
-An overview on requirements for triple stores maintained by Lars at \url{http://www.garshol.priv.no/blog/231.html}
+A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqkles [ref] and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions. 
+
 
 \subsection{Generic Triple Stores}
 \label{sec:genrictps}
 
+\subsubsection{Virtuoso}
+Virtuoso is a triple store developed by OpenLink\footnote{\url{http://virtuoso.openlinksw.com/}} and releases both in Open source and commercial versions. It implements part of SPARQL1.1 and store billion of triples. The geospatial extension implements subset of SQL MM functions. A geometry stores in Virtuoso uses a special RDF typed literal h<ttp://www.openlinksw.com/schemas/virtrdf#virtrdf:Geometry>. Such a literal is automatically indexed in an R tree index. Only geometry in WGS84 can be manipulated. 
 
 
-\subsection{How to choose a Triple Store }
+\subsubsection{•}
 
-\begin{itemize}
-\item \textbf{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}\footnote{\url{http://www.opensahara.com}}, \texttt{Parliament }\footnote{\url{http://geosparql.bbn.com}},  \texttt{Virtuoso}\footnote{\url{http://www.openlinksw.com}} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata.
-\item The choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
-\end{itemize}
-
-\todo{update the table with strabon and changes in virtuoso 7.} \\
+\begin{table}[ht!b]
+    \caption{Survey of some generic popular triple stores.} \label{tab:generictriples}
+    \small
+    \center
+    \begin{tabularx}{\textwidth}{@{}lccc@{}}
+     %\begin{tabular}{@{}  l  l  l @{}}
+    \toprule
+    \textbf{Triplestore} 		& \textbf{SPARQL1.0 } &  \textbf{SPARQL1.1 } & \textbf{SPARQL Update} & \textbf{Reasoning} &  \textbf{10 billion statement } & \textbf{Clustering} & \textbf{Open source}\\
+    \toprule
+    \texttt{Virtuoso} & Yes & Partial & Non-std & Rules & Yes & Yes & Yes/No\\
+    \midrule
+    \texttt{OWLIM} & Yes & Yes & Yes & Rules & Yes & Yes & No\\
+    \midrule
+    \texttt{AllegroGraph} & Yes & Partial & Yes & Rules & Yes & Yes & No\\
+    \midrule
+    \texttt{4Store} & Yes & Partial & Yes & Add-on & Maybe & Yes & Yes\\
+    \midrule
+    \texttt{Sesame} & Yes & Partial & Yes & Little & No & No & Yes\\
+    \midrule
+    
+    \texttt{Fuseki} & Yes & Yes & Yes & Rules & No & No & Yes\\
+   
+    \bottomrule
+  
+    % \end{tabular}
+    \end{tabularx}
+    \end{table}
+    
+    
 
 \subsection{Geospatial Triple Stores}
 \label{sec:geotps}
+We discuss in this section two triple stores built for indexing and querying geospatial data, Parliament and Strabon. We acknowledge that there might be some other solutions (e.g., Oracle DBMS version 111g, release 2). More details can be found in \cite{koubarakis12, battle12, garbis13}. In \cite{garbis13}, the authors present a benchmark of Geospatial RDF stores in the context of the TELIOS project\footnote{http://geographica.di.uoa.gr}, which uses real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores. 
+
+\subsubsection{Parliament}
+\
+The RDF store Parliament\footnote{\url{http://parliament.semwebcentral.org}} developed by BBN Technologies fully implements most of the functionality of GeoSPARQL \cite{battle12}. 
+Parliament has been extended to provide the first implementation of GeoSPARQL, therefore geometries are represented using the WKT and GML serializations.
+Therefore, topological functions belonging in the OGC Simple Feature Access, Egenhofer and RCC8 families are exposed by Parliament.
+Topological properties and non-topological functions are also available.In addition, multiple coordinate reference systems may be used. Parliament is implemented in C++, and Java Native Interface is used to couple with Jena, and includes a rule engine, serving as a means of inference. It registers the presence of a spatial object in an R-Tree.
 
 \subsubsection{Strabon}
-\todo{read again the paper}
+%\todo{read again the paper}
 Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame [cite], allowing it to manage both thematic and spatial data expressed in \textt{stRDF}. PostGIS is used as the relational backend of Strabon. 
 stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data. 
 The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components. 
@@ -253,17 +281,17 @@ The datatypes strdf:WKT and strdf:GML are introduced to represent geometries ser
     \toprule
     \textbf{Triplestore} 		& \textbf{WKT-Compliance } &  \textbf{GML-Compliance } & \textbf{Geometry supported} & \textbf{Geospatial Functions} &  \textbf{Geovocabulary }\\
     \toprule
-    \texttt{Virtuoso} 	& Yes & Yes & Point & 13 functions & W3C Geo + Typed Literal\\
+    \texttt{Virtuoso} 	& Yes & Yes & Point & SQL/MM (subset) & W3C Geo + Typed Literal\\
     \midrule
-    \texttt{Allegro-Graph} & \-- & -- & Point & 3 functions & ``strip'' mapping data \\
+    \texttt{AllegroGraph} & \-- & -- & Point & Buffer, Bounding Box, Distance & ``strip'' mapping data \\
     \midrule
-    \texttt{OWLIM-SE} & -- & -- & Point & 4 functions & W3C Geo\\ 
+    \texttt{OWLIM-SE} & N/A & N/A & Point & Distance, Buffer, Nearby, Within & W3C Geo\\ 
     \midrule
-    \texttt{Open Sahara} & \ Yes & Yes & Point, Line, Polygons & 23 functions  & Typed Literal \\
+    \texttt{Open Sahara} & \ Yes & Yes & Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8   & Typed Literal \\
     \midrule
-    \texttt{Parliament} & \ Yes & Yes & Point, Line, Polygons & 23 functions  &  GeoSPARQL vocabulary\\
+    \texttt{Parliament} & \ Yes & Yes & Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8   &  GeoSPARQL vocabulary\\
     \midrule
-    \texttt{Strabon} & \ TBD & TBD & TBD & XX functions  &  GeoSPARQL vocabulary\\
+    \texttt{Strabon} & \ Yes & Yes & Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8   &  stRDF\\
     \bottomrule
   
      \end{tabular}
@@ -284,8 +312,21 @@ The datatypes strdf:WKT and strdf:GML are introduced to represent geometries ser
 %\label{tab:triplestore}
 %\end{table}
 
-\subsection{Benchmarks for Geospatial RDF Stores}
-Geographica - http://geographica.di.uoa.gr - A benchmark which uses both real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores.
+\subsection{How to choose a Triple Store }
+%\todo{update the table with strabon and changes in virtuoso 7.} \\
+
+\begin{itemize}
+
+\item \textbf{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}\footnote{\url{http://www.opensahara.com}}, \texttt{Parliament }\footnote{\url{http://geosparql.bbn.com}},  \texttt{Virtuoso}\footnote{\url{http://www.openlinksw.com}} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata.
+\item The choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
+\end{itemize}
+
+
+
+
+%\subsection{Benchmarks for Geospatial RDF Stores}
+
+
 
 \section{Tools for managing Linked (Geo)Data Publishing Workflow}
 \label{sec:toolLD}

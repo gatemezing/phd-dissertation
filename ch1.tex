@@ -165,8 +165,7 @@ and functions that construct new geometries from existing ones (e.g., buffer).
 \item (v) a \textit{query rewrite component} defining rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions.
 \end{itemize}
 
- Each of the components described above has associated requirements. Concerning the vocabulary requirements, Table~\ref{tab:reqgeosparql} summarizes the seventeen requirements presented in the GeoSPARQL draft document.
-\begin{table}
+\begin{table}[ht!b]
 \centering{
 \begin{tabularx}{\textwidth}{|X|X|l|}%{l|l|l}
 \hline
@@ -190,6 +189,16 @@ Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
 \label{tab:reqgeosparql}
 }
 \end{table}
+
+ Each of the components described above has associated requirements. Concerning the vocabulary requirements, Table~\ref{tab:reqgeosparql} summarizes the seventeen requirements presented in the GeoSPARQL draft document. GeoSPARQL requires the implementation of functions extensions for Geo-spatial (33) , and provides also corresponding relationships between topological functions. The functions are listed below:
+ \begin{itemize}
+ \item 8 for RCC: equals(EQ), disconnected(DC), externally connected(EC), partially overlapping(PO), tangential proper part inverse(TPPi), tangential proper part (TPP), non-tangential proper part inverse(NTPPi), non-tangential proper part(NTPP)
+\item 8 for Simple Features : equals, disjoint, intersects, touches, within, contains, overlaps and cross.
+\item 8 for Egenhofer relations: egenhofer relations: equals, disjoint, meet, overlpa, covers, coveredBy, inside and contains
+\item 9 for functions that generate new geometries (Non Topological functions) 
+ \end{itemize}
+
+
 
 
 \subsection{Geospatial Vocabularies and Topological Functions}
