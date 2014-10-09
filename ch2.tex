@@ -218,7 +218,6 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 
 \section{Survey on Triple Stores}
 \label{sec:surveytps}
-\todo{specify here that we don't give details of all the triplestores} \\
 
 A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqkles [ref] and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions. 
 
@@ -347,16 +346,9 @@ Regarding specific geospatial triple stores (or extensions of geospatial in RDF 
 
 
 
-\section{Tools for managing Linked (Geo)Data Publishing Workflow}
+\section{Datalift: A tool for Managing Linked (Geo)Data Publishing Workflow}
 \label{sec:toolLD}
-In this section, we discuss existing tools that manage the workflow of publishing geodata on the Web. To the best of our knowledge, \textsc{GeoKnow} and \textsc{Geoknow Stack} are currently two tools providing such functionality to publishers. 
-
-\subsection{GeoKnow Stack}
-\label{sec:geoknow}
-
-\subsubsection{LIMES}
-\todo{rewrite this section and add references of Axel Papers}
-LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces. It is easily configurable via a web interface. It can also be downloaded as standalone tool for carrying out link discovery locally. LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. The algorithms implemented  include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID. \textcolor{red}{[cite ORCHID]}. 
+In this section, we present the Datalift platform, as a tool to help for lifting raw data to RDF. existing tools that manage the workflow of publishing geodata on the Web. To the best of our knowledge, a related framework providing similar functionalities is the \textsc{Geoknow Stack} that we discuss in section \ref{sec:geoknow}. 
 
 \subsection{Datalift Platform}
 \label{sec:datalift}
@@ -425,11 +417,82 @@ Each module has its own way to be used within the lifting process in DataLift. F
 }
 
 
-\subsection{Comparison between Geoknow and Datalift}
+
+\subsection{Related Work: GeoKnow Stack}
+\label{sec:geoknow}
+
+The \textsc{Geoknow Stack} is a workbench developed within the Geoknow project\footnote{\url{http://geoknow.eu/}}, aiming at bringing geospatial knowledge integration to the Linked Data, with reasoning on Billion-triples and providing data provenance, and adaptive authoring, exploration and curation of geospatial data. GeoKnow Stack consists of eight tools integrated in 6 modules for Extraction, storage and querying, authoring, linking, enrichment and exploration. Figure \ref{fig:geoknow} shows the architecture. 
+
+\begin{figure*}[htb!p]
+\vspace{-6cm}
+\centering{
+\includegraphics[scale=0.7]{img/geoknow-architecture.pdf}
+\label{fig:geoknow}
+\vspace{-7cm}
+\caption{Architecture of the Geoknow Stack.}
+
+}
+\end{figure*}
+
+Below a brief description of the main modules:
+\begin{itemize}
+\item \textbf{Extraction and Loading:} The module is in charge of loading/importing RDF datasets, extract and convert legacy datasets using extractors/mappers such as TripleGeo (Cf.Section \ref{sec:toolgeo}) and Sparqlify\footnote{\url{http://sparqlify.org/}}. Sparqlify is a SPARQL-SQL rewriter that enables one to define RDF views on relational databases and query them with SPARQL. Currently in alpha state, it powers the Linked-Data Interface of the LinkedGeoData Server – i.e. it provides access to billions of virtual triples from the OpenStreetMap database.
+\item \textbf{Storage and Querying:} The module is powered by Virtuoso 7.0 triple store for querying the datasets.
+\item \textbf{Authoring module} integrated the OntoWiki tool \cite{ontowiki14} that facilitates the visual presentation of a knowledge base as an information map, with different views on instance data. It enables intuitive authoring of semantic content, with an inline WYSIWYG editing mode for editing RDF content. 
+
+\item \textbf{Linking and Fusion:} To achieve this module, LIMES is the tool integrated in the workbench. LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces \cite{ngau11}. It is easily configurable via a web interface or can also be downloaded as standalone tool for carrying out link discovery locally. LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude \cite{song13}. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. The algorithms implemented  include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID \cite{ngon13}. 
+
+\item \textbf{Enrichment:} During the enrichment step, the tool \textsc{GeoLift} \cite{geolift14} to enrich geographic content using three techniques: linking, dereferencing and Natural Language Processing (NLP). The code is available at \url{https://github.com/AKSW/GeoLift/}.
+
+\item \textbf{Exploration:} The workflow proposes two tools for this module: \textsc{Mappify} and \textsc{Facet}. The former is a tool for exploring (geographical) Linked Data datasets on the Web, while the latter allows  to explore the specific slice of data named ``facet''  of a Linked Data endpoint in a graphical way, by defining set of constraints on properties of the database. Once the facet is define, the information in the facet can be clicked-through in a tabular interface and visualized on a map. Facete is available at \url{http://144.76.166.111/facete/}.
+\end{itemize} 
+
+
+
+\subsection{Comparison between Geoknow Stack and Datalift}
 \label{sec:geoknow-datalift}
+As described above, Geoknow Stack share similar goals and functionalities with Datalift. However, while the latter is cross-domain and generic, the former is more target for geospatial data. Moreover, Datalift implement connectors for many triple stores, while Geoknow Stack is powered by Virtuoso. Datalift is available in different platforms (Linux, Windows and Mac OS), while the current version of Geoknow can be installed only in Linux. Table \ref{tab:geoknow-datalift} gives more dimensions of both frameworks. 
 
-
-\todo{add here the comparison}
+\begin{table}[ht!bp]
+    \caption{Comparison of Datalift with GeoKnow Stack} \label{tab:geoknow-datalift}
+    \small
+    \center
+    \begin{tabularx}{\textwidth}{@{}llX@{}}
+     %\begin{tabular}{@{}llX@{}}
+    \toprule
+    \textbf{Features} 		& \textbf{Geoknow Stack } &  \textbf{Datalift} \\
+    \toprule
+    \texttt{Scope} 	& Geospatial data & Cross-domain/Generic\\
+    \midrule
+    \texttt{Triple Store} & Virtuoso 7 & Sesame, Virtuoso 6, AllegroGraph\\
+    \midrule
+    \texttt{Shape2RDF} &  Few models for geometry & More generic approach\\ 
+    \midrule
+    \texttt{Interlinking Tool} & LIMES & SILK \\
+    \midrule
+    \texttt{Publication} & Publish directly in a graph & Export dump data in CSV, Turtle, NTriples\\
+    \midrule
+    \texttt{Access Control} & N/A & Security Access Module\\
+    \midrule
+    \texttt{Installation} & Expert level & One-click\\
+    \midrule
+    \texttt{Platform} & Linux & Multi-platform\\
+    \midrule
+    \texttt{Deployment Environment} & N/A & IGN, INSEE\\
+    \midrule
+    \texttt{Provenance} & Partially (user) & Tracking PROV for each project\\
+    \midrule
+    \texttt{Visualization} & Facete, Mappify  & Sgvizler, RDFViz\\
+    \midrule
+    \texttt{Access Control} & N/A & Security Access Module\\
+    \midrule
+    \texttt{Authoring} & Wiki integrated & N/A\\
+    \bottomrule
+  
+    % \end{tabular}
+    \end{tabularx}
+    \end{table}
+    
 
 \section{Publishing French Administrative Units (GeoFla)} \label{sec:geofla}
 As a dataset dedicated to administrative units, GEOFLA\circledR is very likely to be reused by other datasets, either by reusing directly its URIs for georeferencing needs, or by reusing its description of administrative units - labels, properties and geometries - for interlinking purposes. 
@@ -441,8 +504,7 @@ Geofla  is delivered as a set of 4 shapefiles  that describe the boundaries and 
 \subsection{URI design policy} \label{sec:urigeofla}
 
 One of the requirements to publish data is to have unique ids and stable URIs\footnote{\url{http://www.w3.org/TR/ld-bp/}} . Since our legacy databases have unique IDs to refer to the objects, we had to make sure they were unique at Web level. Thus, the base scheme for vocabularies URIs is: \url{http://data.ign.fr/def/}. Besides, the base schema for identifying a real world resource uses \url{http://{BASE}/id/}. For example, IGN main buildings  are located in the commune with the URI \url{rgeofla:commune/94067}, corresponding to Saint-Mand\'{e}, and \url{rgeofla:departement/94} corresponds to the department ``Val de Marne'' to which the commune belongs.
-
-%We had to make choices based on the set of best practices related to URI design\footnote{\url{http://www.w3.org/TR/ld-bp/#HTTP-URIS}} which should guarantee stable and human readable identifiers.
+We had to make choices based on the set of best practices related to URI design\footnote{\url{http://www.w3.org/TR/ld-bp/#HTTP-URIS}} which should guarantee stable and human readable identifiers.
 
 
 \subsection{Interlinking with existing GeoData} \label{sec:mapping}
@@ -460,7 +522,7 @@ The above results show good precision of the matching algorithm (score above 0.9
 
 \begin{table}[!htbp]
 \centering{
-\scriptsize
+\small
 \begin{tabular}{lccl}
 \specialrule{1pt}{1pt}{1pt}
  \textbf{Datasets}	 & Precision & Recall & F1-score \\   \specialrule{1pt}{1pt}{1pt}
@@ -491,7 +553,7 @@ The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of
 
 \begin{table}[!htbp]
 \centering{
-\scriptsize
+\small
 \begin{tabular}{lr}
 \specialrule{1pt}{1pt}{1pt}
  \textbf{LGD Class}	& 	\textbf{\#links matched}	  \\ \specialrule{1pt}{1pt}{1pt}
@@ -513,6 +575,17 @@ The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of
 
 \section{Publishing Addresses of OSM-France in RDF}
 \label{sec:bano2rdf}
+OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project contains already 15 millions of indirect georeferencing locations. The geometries are POINT. One of the requirement is to provide a RDF-ize version of the data, enriching the dataset with external/existing relevant ones. The goal of \textsc{Bano2RDF} with three basic requirements:
+\begin{description}
+\item [Requirement \#1 -Model:] Model the existing data according to an existing vocabulary covering the dataset.
+\item[Requirement \#2 -Provenance:] Add relevance metadata on the published dataset (spatial coverage, licensing, authorship, etc.)
+\item[Requirement \#3 Stable URIs]: Define a policy to have stable URIs for identifying uniquely each address.
+\item[Requirement \#4 -Access to data:] Provide primarily a frequent dump of the dataset in RDF.
+
+\todo{find URI for 450, route des chappes, biot in bano2rdf as sample}
+%http://id.osmfr.org/bano/01001A008W-1 {codeinsee + code +numrue}
+
+\end{description}
 
 Explain briefly the requirements and work on publishing bano2RDF: vocabularies, 4 stars..
 \todo{discuss here if it could be wise to use Linked Data Fragments..maybe as future work?} .
