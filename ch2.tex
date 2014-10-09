@@ -44,12 +44,18 @@ shp2GeoSPARQL \cite{saavedra14} is also an extension of Geometry2DF which transf
 \label{sec:limitations}
 
 Currently, the tools achieving the transformations of geospatial data into RDF still suffer from some limitations. On one hand, they are all compatible with GeoSPARQL standard, with in turns has a handful endpoints that implements all the requirements. Moreover, geometries are literals (e.g., wktLiteral, gmlLiteral) with embedded CRS. On the other hand, tools based on NeoGeo vocabulary outputs structured geometries that can be easily handled by existing Triple Stores and SPARQL queries. However, NeoGeo only allows geometry in WGS84 CRS. The ideal scenario could be a tool that provides output consistent with both GeoSPARQL and structured geometries handling multiple CRSs. 
+Figure \ref{fig:shape2rdf-generic} shows the generic architecture for tools to convert ESRI ShapeFiles into different flavor of RDF. Tools differ mainly in the presence or not of the CRS reprojection, the vocabularies used for the RDF output, and the compatibility with GML and WKT representations.   
 
+\begin{figure}[ht!b]
+\includegraphics[scale=0.7]{img/shape2rdf-generic.pdf}
+\label{fig:shape2rdf-generic}
+\caption{Generic architecture of tools for converting raw geospatial data into RDF.}
+\end{figure}
 
 
 \section{GeomRDF: Datalift tool for Converting Geodata}
 \label{sec:geomRDF}
-GeomRDF \cite{hamdi14} is a tool developed within the Datalift project that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components (Cf. Figure [to add]): 
+GeomRDF \cite{hamdi14} is a tool developed within the Datalift platform that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components: 
 
 \begin{itemize}
 \item \textbf{input parsers:} This component extracts from the different input format all the features and their descriptions. 
@@ -60,7 +66,9 @@ GeomRDF \cite{hamdi14} is a tool developed within the Datalift project that tran
 
 \end{itemize}
 
-GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}. Listing \ref{lst:nicegeomrdf} presents a snippet in TURTLE of GeomRDF for geometry of the city of Nice (France). It also contains the 
+GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}. Listing \ref{lst:nicegeomrdf} presents a snippet in TURTLE of GeomRDF for geometry of the city of Nice (France). It also contains the structured modeling of a MultiPolygon as a set of Polygon, containing Points in an LinearRing. 
+
+
 
  \begin{lstlisting}[label=lst:nicegeomrdf, float=tp, numbers=left, numberstyle=\tiny, caption = Sample of structured geometry of the city of Nice]
 @prefix geom:<http://data.ign.fr/def/geometrie#> .
@@ -152,7 +160,7 @@ The 7$^{th}$ arrondissement of Paris is one of the 20 arrondissements (administr
 
 \subsection{DBpedia Modeling}
 We provide below an excerpt of the DBpedia description for the same resource:
-{\scriptsize
+{\small
 \begin{verbatim}
   dbpedia:7th_arrondissement_of_Paris a gml:_Feature ;
     a <http://dbpedia.org/class/yago/1900SummerOlympicVenuEs>
@@ -170,7 +178,7 @@ First, we observe that the type \texttt{gml:\_Feature} and the property \texttt{
 
 \subsection{Geonames Modeling}
 In Geonames, the 7$^{th}$ arrondissement is considered as a 3$^{rd}$ order administrative division, represented by a POINT for the geometry model. The RDF description of this resource gives other information such as the alternate name in French, the country code and the number of inhabitants.
-{\scriptsize
+{\small
 \begin{verbatim}
   gnr:6618613 a gn:Feature ;
     gn:name "Paris 07";
@@ -191,8 +199,8 @@ In Geonames, the 7$^{th}$ arrondissement is considered as a 3$^{rd}$ order admin
 }
 
 \subsection{LinkedGeoData Modeling}
-In LinkedGeoData, the district is a \texttt{lgdo:Suburb rdfs:subClassOf ldgo:Place}. Its geometry is still modeled as a POINT and not as a complex geometry of type POLYGON as we could have expected for this type of spatial object.
-{\scriptsize
+In LinkedGeoData dataset, the district is a \texttt{lgdo:Suburb} which is  subClass of \texttt{ldgo:Place}. Its geometry is still modeled as a POINT and not as a complex geometry of type POLYGON as we could have expected for this type of spatial object.
+{\small
 \begin{verbatim}
   lgd:node248177663 a lgdo:Suburb ;
     rdfs:label "7th Arrondissement"@en , "7e Arrondissement" ;
@@ -218,11 +226,63 @@ A triple store is a back-end that has some form of persistent storage of RDF dat
 \subsection{Generic Triple Stores}
 \label{sec:genrictps}
 
+We briefly describes some well-known triple stores that has proven to have passed the ``10 Billion Statements'', that is they are able to load and handle more than 10 billion of triples. 
 \subsubsection{Virtuoso}
-Virtuoso is a triple store developed by OpenLink\footnote{\url{http://virtuoso.openlinksw.com/}} and releases both in Open source and commercial versions. It implements part of SPARQL1.1 and store billion of triples. The geospatial extension implements subset of SQL MM functions. A geometry stores in Virtuoso uses a special RDF typed literal h<ttp://www.openlinksw.com/schemas/virtrdf#virtrdf:Geometry>. Such a literal is automatically indexed in an R tree index. Only geometry in WGS84 can be manipulated. 
+Virtuoso is a triple store developed by OpenLink\footnote{\url{http://virtuoso.openlinksw.com/}} and releases both in Open source and commercial versions. It implements part of SPARQL1.1 and store billion of triples. The geospatial extension implements subset of SQL MM functions. A geometry stores in Virtuoso uses a special RDF typed literal \texttt{virtrdf:Geometry}\footnote{\url{http://www.openlinksw.com/schemas/virtrdf\#}}. Such a literal is automatically indexed in an R tree index. Only geometry in WGS84 can be manipulated. Virtuoso is used as back-end for one of the most used dataset in the LOD cloud, \textsc{DBPEDIA}\footnote{http://dbpedia.org/sparql}  
 
 
-\subsubsection{•}
+\subsubsection{OWLIM}
+OWLIM is a semantic repository developed by Ontotext\footnote{\url{http://www.ontotext.com/owlim}}, which provides support and querying of 
+two-dimensional point geometries modeled with the W3C Geo vocabulary. It implements spatial predicates represented as property funcions. The available four operations are: Buffer, Distance, Nearby and Point-in-polygon. OWLIM is implemented as a storage and inference layer for Sesamne, with custom spatial index. 
+
+\subsubsection{AllegroGraph}
+AllegroGraph\footnote{\url{http://franz.com/agraph/allegrograph/}} is another RDF store developed and maintained by Franz Inc. which stores geospatial data types as native data structures. Support is provided both for Cartesian coordinate systems and for spherical coordinate systems. Every datum in an AllegroGraph store is a UPI, and for geospatial data, the added UPI type is \texttt{:geospatial} with type code \texttt{+geospatial+}. Geometries are assigned to geometric objects through the use of property\\ \texttt{<http://franz.com/ns/allegrograph/3.0/geospatial/pos>}, and for querying a GEO operator is introduced to express geospatial query patterns in SPARQL. AllegroGraph provides some operations on geodata, such as Bounding Box, Distance and Buffer. 
+
+
+    
+
+\subsection{Geospatial Triple Stores}
+\label{sec:geotps}
+We discuss in this section two triple stores built for indexing and querying geospatial data, Parliament and Strabon. We acknowledge that there might be some other solutions (e.g., Oracle DBMS version 111g, release 2). More details can be found in \cite{koubarakis12, battle12, garbis13}. In \cite{garbis13}, the authors present a benchmark of Geospatial RDF stores in the context of the TELIOS project\footnote{http://geographica.di.uoa.gr}, which uses real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores. 
+
+\subsubsection{Parliament}
+\
+The RDF store Parliament\footnote{\url{http://parliament.semwebcentral.org}} developed by BBN Technologies fully implements most of the functionality of GeoSPARQL \cite{battle12}. 
+Parliament has been extended to provide the first implementation of GeoSPARQL, therefore geometries are represented using the WKT and GML serializations.
+Therefore, topological functions belonging in the OGC Simple Feature Access, Egenhofer and RCC8 families are exposed by Parliament.
+Topological properties and non-topological functions are also available.In addition, multiple coordinate reference systems may be used. Parliament is implemented in C++, and Java Native Interface is used to couple with Jena, and includes a rule engine, serving as a means of inference. It registers the presence of a spatial object in an R-Tree.
+
+\subsubsection{Strabon}
+%\todo{read again the paper}
+Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame [cite], allowing it to manage both thematic and spatial data expressed in \texttt{stRDF}. PostGIS is used as the relational backend of Strabon. 
+stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data. 
+The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components. 
+
+
+
+    
+%\begin{table}[!htbp]
+ %\begin{tabularx}{\textwidth}{|X|X|X|X|X|l|}
+ %\hline
+ %\textbf{Triple store} & WKT-compliance & GML-compliance & Geometry supported  & Geospatial Functions & GeoVocab \\ \hline
+% Virtuoso & Yes & Yes & Point & 13 functions & W3C Geo + Typed Literal  %\\ \hline
+% Allegro-Graph & \-- & -- & Point & 3 functions & ``strip'' mapping data \\ \hline
+% OWLIM-SE & -- & -- & Point & 4 functions & W3C Geo\\ \hline
+%Open Sahara & \ Yes & Yes & Point, Line, Polygons & 23 functions  & Typed Literal \\ \hline
+% Parliament & \ Yes & Yes & Point, Line, Polygons & 23 functions  &  GeoSPARQL vocabulary\\ \hline
+% \end{tabularx}
+%\caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.}
+%\label{tab:triplestore}
+%\end{table}
+
+\subsection{How to choose a Triple Store }
+%\todo{update the table with strabon and changes in virtuoso 7.} \\
+There are many criteria that can be used to assess triple stores based on the requirements dataset publishers. Most importantly are the compatibility with the set of standards for RDF and SPARQL (e.g., SPAQRL1.0, SPARQL1.1). Table \ref{tab:generictriples} provides an overview comparing ``generic'' triple stores. Currently, none of the triple stores listed supports security mechanisms built natively. 
+
+Regarding specific geospatial triple stores (or extensions of geospatial in RDF stores), more specific requirements are needed to index and provide native functions/operations over geometries. In Table \ref{tab:triplestore}, triple stores are compared based on (i) the types of geometries supported, (ii) the coverage of spatial functions, (iii) the compliance with GeoSPARQL standard, (iv) the extensions to existing vocabularies and SPARQL to manage geodata.     
+
+\paragraph{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}, \texttt{Parliament } and  \texttt{Virtuoso} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata. Moreover, the choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
+
 
 \begin{table}[ht!b]
     \caption{Survey of some generic popular triple stores.} \label{tab:generictriples}
@@ -252,27 +312,8 @@ Virtuoso is a triple store developed by OpenLink\footnote{\url{http://virtuoso.o
     \end{tabularx}
     \end{table}
     
-    
 
-\subsection{Geospatial Triple Stores}
-\label{sec:geotps}
-We discuss in this section two triple stores built for indexing and querying geospatial data, Parliament and Strabon. We acknowledge that there might be some other solutions (e.g., Oracle DBMS version 111g, release 2). More details can be found in \cite{koubarakis12, battle12, garbis13}. In \cite{garbis13}, the authors present a benchmark of Geospatial RDF stores in the context of the TELIOS project\footnote{http://geographica.di.uoa.gr}, which uses real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores. 
-
-\subsubsection{Parliament}
-\
-The RDF store Parliament\footnote{\url{http://parliament.semwebcentral.org}} developed by BBN Technologies fully implements most of the functionality of GeoSPARQL \cite{battle12}. 
-Parliament has been extended to provide the first implementation of GeoSPARQL, therefore geometries are represented using the WKT and GML serializations.
-Therefore, topological functions belonging in the OGC Simple Feature Access, Egenhofer and RCC8 families are exposed by Parliament.
-Topological properties and non-topological functions are also available.In addition, multiple coordinate reference systems may be used. Parliament is implemented in C++, and Java Native Interface is used to couple with Jena, and includes a rule engine, serving as a means of inference. It registers the presence of a spatial object in an R-Tree.
-
-\subsubsection{Strabon}
-%\todo{read again the paper}
-Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame [cite], allowing it to manage both thematic and spatial data expressed in \textt{stRDF}. PostGIS is used as the relational backend of Strabon. 
-stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data. 
-The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components. 
-
-
-\begin{table}[ht!]
+ \begin{table}[ht!bp]
     \caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.} \label{tab:triplestore}
     \small
     \center
@@ -297,29 +338,7 @@ The datatypes strdf:WKT and strdf:GML are introduced to represent geometries ser
      \end{tabular}
    % \end{tabularx}
     \end{table}
-    
-%\begin{table}[!htbp]
- %\begin{tabularx}{\textwidth}{|X|X|X|X|X|l|}
- %\hline
- %\textbf{Triple store} & WKT-compliance & GML-compliance & Geometry supported  & Geospatial Functions & GeoVocab \\ \hline
-% Virtuoso & Yes & Yes & Point & 13 functions & W3C Geo + Typed Literal  %\\ \hline
-% Allegro-Graph & \-- & -- & Point & 3 functions & ``strip'' mapping data \\ \hline
-% OWLIM-SE & -- & -- & Point & 4 functions & W3C Geo\\ \hline
-%Open Sahara & \ Yes & Yes & Point, Line, Polygons & 23 functions  & Typed Literal \\ \hline
-% Parliament & \ Yes & Yes & Point, Line, Polygons & 23 functions  &  GeoSPARQL vocabulary\\ \hline
-% \end{tabularx}
-%\caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.}
-%\label{tab:triplestore}
-%\end{table}
 
-\subsection{How to choose a Triple Store }
-%\todo{update the table with strabon and changes in virtuoso 7.} \\
-
-\begin{itemize}
-
-\item \textbf{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}\footnote{\url{http://www.opensahara.com}}, \texttt{Parliament }\footnote{\url{http://geosparql.bbn.com}},  \texttt{Virtuoso}\footnote{\url{http://www.openlinksw.com}} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata.
-\item The choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
-\end{itemize}
 
 
 
@@ -330,14 +349,14 @@ The datatypes strdf:WKT and strdf:GML are introduced to represent geometries ser
 
 \section{Tools for managing Linked (Geo)Data Publishing Workflow}
 \label{sec:toolLD}
+In this section, we discuss existing tools that manage the workflow of publishing geodata on the Web. To the best of our knowledge, \textsc{GeoKnow} and \textsc{Geoknow Stack} are currently two tools providing such functionality to publishers. 
 
 \subsection{GeoKnow Stack}
 \label{sec:geoknow}
 
 \subsubsection{LIMES}
 \todo{rewrite this section and add references of Axel Papers}
-LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{At http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces. It is easily configurable via a web interface. It can also be downloaded as standalone tool for carrying out link discovery locally.
-LIMES implements novel time-efficient approaches for link discovery in metric spaces. Its approaches different approximation techniques to compute estimates of the similarity between instances. These estimates are then used to filter out a large amount of those instance pairs that do not suffice the mapping conditions. By these means, LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. Moreover, LIMES implements supervised and unsupervised machine-learning algorithms for finding accurate link specifications. The algorithms implemented here include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID.
+LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces. It is easily configurable via a web interface. It can also be downloaded as standalone tool for carrying out link discovery locally. LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. The algorithms implemented  include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID. \textcolor{red}{[cite ORCHID]}. 
 
 \subsection{Datalift Platform}
 \label{sec:datalift}
@@ -401,12 +420,14 @@ This module aims at publishing the data obtained from the previous steps to a tr
 All the documentation for installing Datalift is available at \url{http://datalift.org/wiki/index.php/Platform_installation_(english)}. The latest version of the platform is announced at \url{http://datalift.org/en/node/24}, which is still a work in progress until the mature and stable version is launched and deployed.
 
 \paragraph{Usage:}
-The data lifting has several distinct steps. DataLift makes it possible to replay each step in producing different results for each step. To facilitate access to all the different treatments and their results, they are grouped as one project. The project gathers together the various sources used and the results of all treatments done.
+The data lifting workflow has several distinct steps. DataLift makes it possible to replay each step in producing different results for each step. To facilitate access to all the different treatments and their results, they are grouped as one project. The project gathers together the various sources used and the results of all treatments done.
 Each module has its own way to be used within the lifting process in DataLift. For more details, the readers are encouraged to read this resource at \url{http://datalift.org/wiki/index.php/How_to_use_the_Datalift_platform_to_publish_a_dataset_on_the_Web#The_lifting_project. 
 }
 
 
-\subsection{Comparison Geoknow vs Datalift}
+\subsection{Comparison between Geoknow and Datalift}
+\label{sec:geoknow-datalift}
+
 
 \todo{add here the comparison}
 
@@ -538,3 +559,4 @@ The last issue deals with the use of multiple geometries for describing a geogra
 %Another issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
 
 \subsection{Summary}
+\label{sec:ch2-summary}
