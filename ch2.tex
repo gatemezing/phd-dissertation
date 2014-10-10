@@ -9,13 +9,11 @@ Steve Peters \\
 (UK Government's Department \\for Communities and Local Government) 
 
 \end{flushright}
-Content: 
- steps for publishing geodata--existing tools -
- soA on triple stores- 
- interconnections and 5-stars datasets -
- Datalift for geo data -
- contrib for french publications.
 
+\section{Introduction}
+\label{sec:intro-ch2}
+
+PUT INTRO HERE
 
 \section{Existing Tools for Converting Geospatial Data}
 \label{sec:toolgeo}
@@ -577,10 +575,10 @@ The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of
 \label{sec:bano2rdf}
 OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project contains already 15 millions of indirect georeferencing locations. The geometries are POINT. One of the requirement is to provide a RDF-ize version of the data, enriching the dataset with external/existing relevant ones. The goal of \textsc{Bano2RDF} with three basic requirements:
 \begin{description}
-\item [Requirement \#1 -Model:] Model the existing data according to an existing vocabulary covering the dataset.
-\item[Requirement \#2 -Provenance:] Add relevance metadata on the published dataset (spatial coverage, licensing, authorship, etc.)
-\item[Requirement \#3 Stable URIs]: Define a policy to have stable URIs for identifying uniquely each address.
-\item[Requirement \#4 -Access to data:] Provide primarily a frequent dump of the dataset in RDF.
+\item [\ding{117}~Requirement 1 (Req1)-Model:] Model the existing data according to an existing vocabulary covering the dataset.
+\item[\ding{117}~Requirement 2 (Req2)-Provenance:] Add relevance metadata on the published dataset (spatial coverage, licensing, authorship, etc.)
+\item[\ding{117}~Requirement 3 (Req3)-Stable URIs]: Define a policy to have stable URIs for identifying uniquely each address.
+\item[\ding{117}~Requirement 4 (Req4)-Access to data:] Provide primarily a frequent dump of the dataset in RDF.
 
 \todo{find URI for 450, route des chappes, biot in bano2rdf as sample}
 %http://id.osmfr.org/bano/01001A008W-1 {codeinsee + code +numrue}
@@ -608,28 +606,99 @@ Explain briefly the requirements and work on publishing bano2RDF: vocabularies, 
   }
 \end{figure}
 
+
 \section{Spatial Queries}
 \label{sec:geoqueries}
 
-\subsection{Case of Virtuoso}
+We illustrate in this section some queries making use of geospatial data and geometries functions implemented in endpoints. In the different queries, we use the following POINTs in WGS84: Eurecom is located at (7.0463, 43.6266) and Eiffel Tower at  (2.2942 48.8628).
 
-\subsection{Case of Parliament}
+\subsection{UC: Querying LinkedGeodata}
+\label{sec:linkedgeodata}
+
+The query below finds public buildings 10 km around Eurecom with their corresponding distance from LinkedGeodata endpoint. In this query, we use the functions of \texttt{st\_distance}, \texttt{st\_intersects} and \texttt{st\_point}. Time used to answer this query is \textbf{341 ms}, monitored by using the time command on \texttt{CURL -g <query>}. The result is listed in Table \ref{tab:lgd-query}
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {Query on LinkedGeodata endpoint to find all public buildings 10 km around Eurecom building in SophiaTech.}, label=snapshot, captionpos=b}
+\begin{lstlisting}
+
+Prefix lgd:<http://linkedgeodata.org/> 
+Prefix lgdo:<http://linkedgeodata.org/ontology/>
+
+SELECT ?s ?name  (bif:st_distance(bif:st_point(?long, ?lat), bif:st_point(7.0463, 43.6266)) as ?distance)
+WHERE
+ {
+      ?s a lgdo:PublicBuilding ; rdfs:label ?name .
+      ?s geo:lat ?lat ; geo:long ?long .
+    filter (bif:st_intersects(bif:st_point(?long, ?lat), bif:st_point(7.0463, 43.6266), 10 ))
+ }order by asc(?distance)
+\end{lstlisting}
+\begin{table}[!htbp]
+\centering{
+\small
+\begin{tabular}{cl}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{s}	& 	  \textbf{distance} \\ \specialrule{1pt}{1pt}{1pt}
+\url{http://linkedgeodata.org/triplify/node1645286605} 	   & 1.43949  \\
+\url{http://linkedgeodata.org/triplify/node1274078114} &	 4.12131 \\
+\url{http://linkedgeodata.org/triplify/node1082377863	} &  5.06445 \\
+\url{http://linkedgeodata.org/triplify/node1082377868	} & 	5.14575 \\
+\url{http://linkedgeodata.org/triplify/node960122458}	 &  5.54149 \\
+\url{http://linkedgeodata.org/triplify/node471974902}	 & 	7.07093 \\
+\url{http://linkedgeodata.org/triplify/node2209129663} & 7.59737
+
+		\\ \specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Results of the public buildings 10 km around EURECOM from LinkedGeoData endpoint}
+\label{tab:lgd-query}
+}
+\end{table}
+
+
+
+\subsection{UC: Querying FactForge (OWLIM)}
+\label{sec:factforge}
+
+The query below find in FactForge\footnote{http://factforge.net/sparql} the french departments within the Bounding Box of Eurecom and Eiffel Tower. We use the function \texttt{omgeo:within}. The results\footnote{\url{http://goo.gl/dLc45p}}} consist of 36 departments and the query takes \textbf{1.369 s} to be completed.  
+\begin{verbatim}
+PREFIX omgeo: <http://www.ontotext.com/owlim/geo#>
+PREFIX geo-ont: <http://www.geonames.org/ontology#>
+SELECT DISTINCT ?link ?m
+WHERE {
+ ?link geo-ont:name ?m.
+  ?link geo-ont:featureCode geo-ont:A.ADM2 .
+  ?link geo-ont:parentCountry dbpedia:France .
+  ?link geo-pos:lat ?lat2 .
+  ?link geo-pos:long ?long2 .
+ ?link omgeo:within( 43.6266 2.2942 48.8628 7.0463 ) }.
+
+\end{verbatim}
+
+%\todo{make a table to compare the results and comment them}
 
 \subsection{Case of Structured geometries}
-Here adapt the use case of French Geofla, and compare with the previous.
+\label{sec:ignsparql}
+%Here adapt the use case of French Geofla, and compare with the previous.
+ We query data.ign.fr that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. The use of SPARQL XPATH is not yet implemented in Virtuoso endpoints. 
+ 
+ 
+ \begin{verbatim}
+ SELECT DISTINCT ?name  WHERE {
+?dep a geofla:Departement .
+?dep rdfs:label ?name .
+?dep geom:geometry/geom:centroid ?ct .
+?ct geom:coordX ?long ; geom:coordY ?lat.
+?dep geom:geometry/geom:polygonMember/geom:exterior/geom:points ?pl .
+?pl rdf:type geom:PointsList .
+?pl (rdf:rest*/rdf:first)|geom:firstAndLast ?pm .
+?pm rdf:type geom:Point .
+?pm geom:coordX ?x .
+?pm geom:coordY ?y .
+FILTER ((?x > 2.2942 && ?x < 7.0463) &&(?y > 43.6266 && ?y < 48.8628)) .
+} 
+ \end{verbatim}
  
 
-\section{Opportunities and Challenges}\label{sec:challenges}
-
- The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is particularly acknowledged by the INSPIRE Directive. For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold. On the one hand, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards. On the other hand, the use of semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. 
-Moreover, there are different types of license policies to access data at IGN (e.g.: research purpose, commercial use, access on demand, etc.), with some of them not necessary ``open'' or free to access: (e.g. BD TOPO\circledR). Although there is a clear understanding of the benefits of publishing and interconnecting data on the web, ongoing investigations on how to combine licenses on datasets are under consideration at IGN. Two solutions are under investigation: (i) different license policies attached to datasets and (ii) the use of a security access mechanism on top of the datasets granting access based on a predetermined configuration on named graphs and resources. 
-According to Linked data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and real world evolutions. This issue will be addressed in a future work, as we plan to release a spatio-temporal dataset describing the evolution of communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
-The last issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
 
 
-%The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is particularly acknowledged by the INSPIRE Directive. This is also true for any georeferenced thematic data, and especially in the context of the Web of data where location properties can be used with benefits for data linking purposes. Particularly, good quality reference geodatasets can be used as the spatial frame for anchoring and combining many thematic data. For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold. On the one hand, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards. On the other hand, the use of semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. However, it may also has the drawback of publishing geographic data twice: following LD principles and according to SDI  standards. This raises the issue of proposing a mediation approach between data access solutions used by SDI and Linked Data.
-%In this article, we have proposed a reference dataset on French administrative units. This dataset is updated annually by IGN France. This raises a first issue on how to deal with data updates and versioning. According to Linked data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and real world evolutions. This issue will be addressed in a future work, as we plan to release a spatio-temporal dataset describing the evolution of French communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
-%Another issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
 
 \subsection{Summary}
 \label{sec:ch2-summary}
