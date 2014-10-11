@@ -12,8 +12,7 @@ Steve Peters \\
 
 \section{Introduction}
 \label{sec:intro-ch2}
-
-PUT INTRO HERE
+Geospatial data need tools for converting native formats into RDF. Those tools are based on OGC libraries for extracting features, and vocabularies provided to build the RDF. Once the dataset obtained, it has to be stored in an efficient way, interconnected to other datasets, and then consumed using SPARQL queries. Moreover, all those steps might be integrated in frameworks that ease the overall process of publishing geodata. In this chapter, we discuss the aforementioned topics, each time surveying the state-of-art and highlighting our contributions. 
 
 \section{Existing Tools for Converting Geospatial Data}
 \label{sec:toolgeo}
@@ -25,7 +24,7 @@ To address the need for converting geodata into a graph model such as RDF, there
 \item \textbf{Output:} The type of serialization in RDF, and more importantly the choice between structured geometry, OGC compliant (WKT, GML literals) or both for the geometry part of the features.
 \end{itemize}
 
-All of the tools used the GDAL (Geospatial Data Abstraction Library)
+Almost all the tools use the OGC libraries for parsing and extracting features from shape formats, such as GDAL (Geospatial Data Abstraction Library) and GeoTools.
 
 \subsection{Geometry2RDF} \label{sec:geo2rdf}
 Geometry2RDF \cite{deLeon2010} is a java based tool\footnote{\url{https://github.com/boricles/geometry2rdf}} that generates RDF triples from geometrical information, which can be available in GML or WKT. The tool takes as input any ESRI shapefiles, spatial DBMS (Oracle,  PostgreSQL, MySQL, etc), transforms into GML (using GeoTools\footnote{\url{http://www.geotools.org}}) and then generates RDF (using Jena\footnote{\url{https://jena.apache.org/}}) consistent with the NeoGeo vocabulary. The default CRS used for the geometry is WGS84. The architecture is flexible to run as a standalone platform or as a library. 
@@ -152,7 +151,7 @@ LOD Greek & 634 KTriples & SPARQL endpoint \\
 
 
 \section{Scenario: 7$^{th}$ Arrondissement of Paris}                      \label{sec:scenario}
-\todo{Update the scenario with the current version of DBpedia 2014, DBpedia-FR}
+%\todo{Update the scenario with the current version of DBpedia 2014, DBpedia-FR}
 
 The 7$^{th}$ arrondissement of Paris is one of the 20 arrondissements (administrative districts) of the capital city of France. It includes some of Paris's major tourist attractions such as the Eiffel Tower, some world famous museums (e.g: \textit{mus\'{e}e d'Orsay}) and contains a number of French national institutions, including numerous government ministries\footnote{\url{http://en.wikipedia.org/wiki/7th_arrondissement_of_Paris}}. We use it throughout this paper to highlight the diversity of representations one can use for this geographical entity. We assume that this district should be modeled as a POLYGON composed of a number of POINTs needed to ``interpolate'' its effective boundaries. We assume the use of the WGS84\footnote{\url{http://en.wikipedia.org/wiki/World_Geodetic_System}} geodetic system.
 
@@ -217,7 +216,7 @@ These samples from DBpedia, Geonames and LinkedGeoData give an overview of the d
 \section{Survey on Triple Stores}
 \label{sec:surveytps}
 
-A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqkles [ref] and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions. 
+A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqles \cite{sparqles13} and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions. 
 
 
 \subsection{Generic Triple Stores}
@@ -338,8 +337,6 @@ Regarding specific geospatial triple stores (or extensions of geospatial in RDF 
 
 
 
-
-
 %\subsection{Benchmarks for Geospatial RDF Stores}
 
 
@@ -373,7 +370,7 @@ Figure \ref{fig:liftprocess} gives an overview of the different steps in lifting
 
 \subsubsection{Functionalities of the Datalift platform}
 
-The architecture of Datalift is modular. Several levels of abstraction allow decoupling between the different stages from raw data to semantic data. The dataset selection allows us to identify the data to be published and migrate them to a first RDF version. The ontologies selection step asks the user to input a set of vocabularies', terms that will be used to describe the lifted data. Once the terms are selected, they can be mapped to the raw RDF and then converted to properly formatted RDF. The data is then published on the DataLift SPARQL endpoint. Finally, the process aims at providing links from the newly published data to other datasets already published as Linked Data on the Web. Figure \ref{fig:liftprocess} below shows the workflow of converting raw data into ``structured'' RDF data. Figure \ref{fig:dataliftarch} depicts the architecture of Datalift.
+The architecture of Datalift is modular. Several levels of abstraction allow decoupling between the different stages from raw data to semantic data. The dataset selection allows us to identify the data to be published and migrate them to a first RDF version. The ontologies selection step asks the user to input a set of vocabularies', terms that will be used to describe the lifted data. Once the terms are selected, they can be mapped to the raw RDF and then converted to properly formatted RDF. The data is then published on the DataLift SPARQL endpoint. Finally, the process aims at providing links from the newly published data to other datasets already published as Linked Data on the Web. Figure \ref{fig:liftprocess} corresponds to a visual depiction of the workflow to convert raw data into ``structured'' RDF data. Figure \ref{fig:dataliftarch} depicts the architecture of Datalift, consisting of different modules for:
 
 \begin{figure}[ht!b]
 \centering{
@@ -388,22 +385,22 @@ The architecture of Datalift is modular. Several levels of abstraction allow dec
 
 \item{\textbf{Dataset Selection}}
 The first step of the data lifting process is to identify and access the datasets to be processed. A dataset is either a file or the result of a query to retrieve data from a datastore. The kinds of files currently considered are CSV, RDF, XML, GML and Shape files. Queries are SQL queries sent to an RDBMS or SPARQL queries on a triple store.
-\item{Ontologies Selection:}
+
+\item {\textbf{Ontologies Selection:}}
 The publisher of a dataset should be able to select the vocabularies that are the most suitable to describe the data, and the least possible terms should be created specifically for a dataset publication task. The Linked Open Vocabularies \cite{lov11} (LOV) developed in Datalift provides easy access methods to this ecosystem of vocabularies, and in particular by making explicit the ways they link to each other and providing metrics on how they are used in the linked data cloud. LOV is integrated as module in the DataLift platform to assist the ontology selection.
 
 \item{\textbf{Data Conversion:}}
-Once URIs are created and a set of vocabulary terms able to represent the data is selected, it is time to convert the source dataset into a more precise RDF representation. Many tools exist to convert various structured data sources to RDF. The major source of structured data on the Web comes from spreadsheets, relational databases and XML files. We propose a two steps approach. First, a conversion from the source format to raw RDF is performed. Second, a conversion of the raw RDF into ``well-formed'' RDF using selected vocabularies is performed using SPARQL Construct queries. Most tools provide spreadsheet conversion to CSV, and CSV to RDF is straightforward, each line becoming a resource, and columns becoming RDF properties. The W3C RDB2RDF WG\footnote{\url{http://www.w3.org/2001/sw/rdb2rdf/}} proposes the Direct Mapping to automatically generate RDF from the tables but without using any vocabulary, and R2RML\footnote{\url{http://www.w3.org/TR/r2rml/}}  to assign vocabulary terms to the database schema. In the case of XML, a generic XSLT transformation is performed to produce RDF from a wide range of XML documents. The DataLift platform provides a graphical interface to help mapping the data to selected vocabulary terms.
+Once URIs are created and a set of vocabulary terms able to represent the data is selected, it is time to convert the source dataset into a more precise RDF representation. Many tools exist to convert various structured data sources to RDF. The major source of structured data on the Web comes from spreadsheets, relational databases and XML files. Two steps are provided. First, a conversion from the source format to raw RDF is performed. Second, a conversion of the raw RDF into ``well-formed'' RDF using selected vocabularies is performed using SPARQL Construct queries. Most tools provide spreadsheet conversion to CSV, and CSV to RDF is straightforward, each line becoming a resource, and columns becoming RDF properties. The W3C RDB2RDF WG\footnote{\url{http://www.w3.org/2001/sw/rdb2rdf/}} proposes the Direct Mapping to automatically generate RDF from the tables but without using any vocabulary, and R2RML\footnote{\url{http://www.w3.org/TR/r2rml/}}  to assign vocabulary terms to the database schema. In the case of XML, a generic XSLT transformation is performed to produce RDF from a wide range of XML documents. The DataLift platform provides a graphical interface to help mapping the data to selected vocabulary terms.
 
 \item {\textbf{Data Protection:}}
 This module is linked to Apache Shiro for obtaining the information, i.e., username and password, about the user who is accessing the platform. The module\footnote{\url{http://wimmics.inria.fr/projects/shi3ld/}} checks which data is targeted by the user's query and then verifies whether the user can access the requested data. This verification leads to three kinds of possible answers, depending on the access privileges of the user: some of the requested data is returned, all the requested data is returned, or no data is returned. This means that the user's query is filtered in such a way that she is allowed to access only the data she is granted access to. The access policies are expressed using RDF and SPARQL 1.1[ref-sparql11] Semantic Web languages thus provide a completely standard way of expressing and enforcing access control rules.
 
 \item{\textbf{Data Interlinking:}}
 The interlinking step provides means to link datasets published through the Datalift platform with other datasets available on the Web of Data. Technically, the module helps to find equivalence links in the form of ``owl:sameAs'' relations. An analysis of the vocabulary terms used by the published data set and a potential data set to be interlinked is performed. When the vocabulary terms are different, the module checks if alignments between the terms used by the two data sets are available.Here the alignment server provided with the Alignment API\footnote{\url{http://alignapi.gforge.inria.fr/}} is used for that purpose. The correspondences are translated into SPARQL graph patterns and transformation functions are combined into a SILK script.
+
 \item{\textbf{Data Publication:}}
 This module aims at publishing the data obtained from the previous steps to a triple store, either public or private. The providers can restrict which graphs can be accessible, they could decide whether to provide just a ``Linked Data'' or a ``Linked Open Data''. Datalift comes by default with Sesame , but provides API for connecting to Allegrograph, OWLIM, and Virtuoso triple stores as well.
 \end{enumerate}
-
-
 
 
 \paragraph{Installation:}
@@ -507,7 +504,7 @@ We had to make choices based on the set of best practices related to URI design\
 
 \subsection{Interlinking with existing GeoData} \label{sec:mapping}
 We interlinked our datasets with NUTS, DBpedia FR\footnote{\url{http://fr.dbpedia.org/}} and GADM datasets. SILK \cite{jentzsch2010silk} is used to interlink the departments in our dataset with departments in DBpedia FR, using labels and INSEE Code. We obtained $93$ matches (all correct) while three are missing for the departments 07, 09 and 75\footnote{\url{https://github.com/gatemezing/ign-iswc2014/tree/master/interlinking/matched}}. The 
-LIMES tool\footnote{\url{https://github.com/AKSW/LIMES.}} is then used to perform the rest of the interlinking tasks \cite{NGON13} with the trigrams function based on the labels with restriction to France.
+LIMES tool\footnote{\url{https://github.com/AKSW/LIMES.}} is then used to perform the rest of the interlinking tasks \cite{ngon13} with the trigrams function based on the labels with restriction to France.
 
 \begin{itemize}
  \item Geofla-RDF with DBpedia FR: \textbf{23 252} links obtained. This results show the missing of nearly 13 435 communes not correctly typed in DBpedia FR as \texttt{Spatial Feature} or \texttt{Place}, or not having a French Wikipedia entry.
@@ -573,38 +570,82 @@ The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of
 
 \section{Publishing Addresses of OSM-France in RDF}
 \label{sec:bano2rdf}
-OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project contains already 15 millions of indirect georeferencing locations. The geometries are POINT. One of the requirement is to provide a RDF-ize version of the data, enriching the dataset with external/existing relevant ones. The goal of \textsc{Bano2RDF} with three basic requirements:
+OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project contains already 15 millions of indirect georeferencing locations. The geometries are POINTs and use WGS84 CRS. One of the requirement is to provide a RDF-ize version of the data, enriching the dataset with external/existing relevant ones. The goal of \textsc{Bano2RDF} with three basic requirements:
 \begin{description}
-\item [\ding{117}~Requirement 1 (Req1)-Model:] Model the existing data according to an existing vocabulary covering the dataset.
-\item[\ding{117}~Requirement 2 (Req2)-Provenance:] Add relevance metadata on the published dataset (spatial coverage, licensing, authorship, etc.)
-\item[\ding{117}~Requirement 3 (Req3)-Stable URIs]: Define a policy to have stable URIs for identifying uniquely each address.
-\item[\ding{117}~Requirement 4 (Req4)-Access to data:] Provide primarily a frequent dump of the dataset in RDF.
+\item [\ding{117}~Requirement 1 (Req1)-Model:] Model the existing data according to an existing vocabulary, generic enough to cover the scope of the existing dataset. 
+\item[\ding{117}~Requirement 2 (Req2)-Provenance:] Add relevance metadata on the published dataset  such as provenance, spatial coverage, licensing, authorship, etc.
+\item[\ding{117}~Requirement 3 (Req3)-Stable URIs]: Define a policy to provide and ensure stable URIs for identifying uniquely each address entity on the Web.
+\item[\ding{117}~Requirement 4 (Req4)-Interconnection:] Find relevant dataset already published on the Web to which interconnect for better discoverability.
 
-\todo{find URI for 450, route des chappes, biot in bano2rdf as sample}
-%http://id.osmfr.org/bano/01001A008W-1 {codeinsee + code +numrue}
+\item[\ding{117}~Requirement 5 (Req5)-Access to data:] Provide primarily a frequent dump of the dataset in RDF.
+
+\item[\ding{117}~Requirement 6 (Req6)-GeoSPARQL interoperability:] Provide different representations of geometries of locations that are interoperable with GeoSPARQL standard.
 
 \end{description}
 
-Explain briefly the requirements and work on publishing bano2RDF: vocabularies, 4 stars..
-\todo{discuss here if it could be wise to use Linked Data Fragments..maybe as future work?} .
+%\todo{find URI for 450, route des chappes, biot in bano2rdf as sample}
+%http://id.osmfr.org/bano/01001A008W-1 {codeinsee + code +numrue}
+
+Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} is used in an \textit{ad-hoc} script\footnote{\url{https://github.com/osm-fr/bano/blob/master/out/csv2ttl.py}} to convert CSV data into RDF. URIs used to identify objects are of the form: \url{http://id.osmfr.org/bano/INSEE-CODE+FANTOIR-CODE+Street-Number}. For example, the location corresponding to EURECOM in SophiaTech (\textit{450, route des chappes, biot, 06410 Biot, FRANCE}}) is identified by the URI \\
+\texttt{<http://id.osmfr.org/bano/060180238L-450>}. Moreover, the property \\ \texttt{locn:location} links to French Statistic dataset\footnote{\url{http://id.insee.fr}} for communes in France. Metadata are inserted at the beginning of the dataset in RDF corresponding to a department, using vocabularies to model license, spatial coverage of the data (i.e., \texttt{dcat}, \texttt{dcterms}, \texttt{foaf}). The extract below represents the metadata for the department of ``ALPES-MARITIMES'' which the commune of Biot belongs:
+
+\begin{verbatim}
+<http://www.openstreetmap.fr/bano/data/> a dcat:Catalog ;
+		dcterms:title "Donnees des adresses du projet BANO en RDF"@fr ;
+		dcterms:description "Le projet BANO en RDF de Base d'Adresses Nationale 
+		Ouverte par OpenStreetMap France."@fr ;
+		foaf:homepage <http://openstreetmap.fr/bano> ;
+		dcterms:language "fr" ;
+		dcterms:license <http://www.opendatacommons.org/licenses/odbl/> ;
+		dcterms:publisher <http://www.openstreetmap.fr/> ; 
+		dcterms:issued "2014-05-14"^^xsd:date ; # data issued
+		dcterms:modified "2014-08-21"^^xsd:date ; #last modification
+		dcterms:spatial <http://id.insee.fr/geo/departement/06>,
+		 <http://id.insee.fr/geo/pays/france> .
+		
+\end{verbatim}   
+
+Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mostly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples. 
 
 
-
-\section{Status of French Datasets in RDF}
+\section{Status of French LOD cloud (FrLOD) }
 \label{sec:frenchCloud}
+%\todo{Summarize here our contributions to the French LOD Cloud. Give some statistics and explain the figure}\\
 
-\todo{Summarize here our contributions to the French LOD Cloud. Give some statistics and explain the figure}\\
+We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{void} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}.  
 
-\begin{figure}[h!t]
-%\vspace{-2.5cm}
+\begin{figure}[h!tb]
   \centering{
-    %\leavevmode
+ 
       \includegraphics[width=\linewidth]{img/frenchCloud.png}
   
-    \caption{French LOD Cloud based on the different datasets published in 4-5 stars. }
-    \label{visuGraphModel}
+    \caption{French LOD cloud diagram based on the different datasets published in 4-5 stars. }
+    \label{fig:frenchLOD}
   }
 \end{figure}
+
+\begin{table}[!htbp]
+\centering{
+\small
+\begin{tabular}{lll}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Dataset}	& 	  \textbf{NbTriples} & \textbf{Domain}\\ \specialrule{1pt}{1pt}{1pt}
+French Admin Unit 	   & 173,639,128  & Geography \\
+Schools in France 	   & 1,454,564  & Statistics \\
+Eurecom LD 	   & 34,651  & Education \\
+CRS dataset    & 23, 377  & Government \\
+Toulouse Amenities & 963, 618 & Government\\
+Bano Project & 163, 723, 230  & Geography \\
+French Post Offices & 371, 381 & Government \\
+French District Evolution & 150, 356 & Geography \\
+
+
+		\\ \specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Overview of the content of our contribution to the French LOD Cloud }
+\label{tab:frLOD}
+}
+\end{table}
 
 
 \section{Spatial Queries}
@@ -619,7 +660,6 @@ The query below finds public buildings 10 km around Eurecom with their correspon
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {Query on LinkedGeodata endpoint to find all public buildings 10 km around Eurecom building in SophiaTech.}, label=snapshot, captionpos=b}
 \begin{lstlisting}
-
 Prefix lgd:<http://linkedgeodata.org/> 
 Prefix lgdo:<http://linkedgeodata.org/ontology/>
 
@@ -629,8 +669,9 @@ WHERE
       ?s a lgdo:PublicBuilding ; rdfs:label ?name .
       ?s geo:lat ?lat ; geo:long ?long .
     filter (bif:st_intersects(bif:st_point(?long, ?lat), bif:st_point(7.0463, 43.6266), 10 ))
- }order by asc(?distance)
+ }ORDER BY ASC (?distance)
 \end{lstlisting}
+
 \begin{table}[!htbp]
 \centering{
 \small
@@ -677,7 +718,7 @@ WHERE {
 \subsection{Case of Structured geometries}
 \label{sec:ignsparql}
 %Here adapt the use case of French Geofla, and compare with the previous.
- We query data.ign.fr that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. The use of SPARQL XPATH is not yet implemented in Virtuoso endpoints. 
+ We query data.ign.fr that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results consisting of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. Not all the SPARQL1.1 property paths \footnote{\url{http://www.w3.org/TR/sparql11-query/#propertypaths}} are fully implemented in Virtuoso endpoints. 
  
  
  \begin{verbatim}
@@ -698,7 +739,6 @@ FILTER ((?x > 2.2942 && ?x < 7.0463) &&(?y > 43.6266 && ?y < 48.8628)) .
  
 
 
-
-
 \subsection{Summary}
 \label{sec:ch2-summary}
+In this chapter, we have surveyed tools for extracting and converting geospatial data in RDF. Then, we describe GeomRDF, a tool developed within the Datalift project which goes beyond the state-of-art by providing structured geometries and conform to GeoSPARQL. Moreover, we have described the limitation of existing data models by discussing some recommendations to publishers of geodata on storage aspects. Similarly, an extensive description of Datalift tool used to publish data on the Web has been provided, with special focus of our contribution to build the French LOD cloud with datasets in 4-5 stars according to Linked Data principles. We have finished by showing real use-cases of SPARQL queries on top of those generated geospatial datasets. 
