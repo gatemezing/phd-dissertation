@@ -1,10 +1,12 @@
-\chapter{Survey on Visualizations for RDF}
+\chapter{Survey on Visualization Tools and Applications}
 \label{ch:ch4}
 
 \begin{flushright}
-\textit{``A Semantic Web application is one whose schema is expected to change.''} \\ (David Karger, MIT)\footnote{A statement during his keynote at ESWC 2013 conference}
-
+\textit{``I think we have consensus, RDF is something \\
+you don't show your end users.''\footnote{\url{https://twitter.com/philarcher1/status/507856407127814145}}}  \\
+Phil Archer (W3C Data Activity Lead)
 \end{flushright}
+
 
 \textcolor{red}{Content: 
  Tools for visualizations: facete, soA, etc.
@@ -12,6 +14,40 @@
  Explore limitations
  Find answers
 \end{itemize}}
+
+\section{Introduction}
+\label{sec:intro-ch4}
+
+
+According to \cite{marti2009} the main goal of information visualization is to translate abstract information into a visual form that provides new insight about that information, in a clearly and precise form. Data classification, either quantitative or categorical, is useful for the purpose of visualization, and can make differences between tools. Hierarchical faceted metadata is used to build a set of category hierarchies where each dimension is relevant to the collection for navigation. The resulting interface is known as faceted navigation, or guided navigation \cite{hearst02}. 
+
+
+\section{Libraries for Visualizing Data}
+\label{sec:libraries}
+
+We have surveyed a number of visualization tools - fifteen to be precise- used to build applications over data in general (raw or structured) based on the following features:
+\begin{itemize}
+\item \textit{Data Formats} for the format of data taken as input by the tool;
+\item \textit{Data Access}, for the way to access the data from the tool, such as web service, sparql endpoint, etc.
+\item \textit{Language code}, the programming language used to develop the tool;
+\item \textit{Type of Views}, the different views potentially accessible when using the tool;
+\item \textit{Imported Libraries}, the external libraries available within the tool,
+\item \textit{License} for the Intellectual Properties rights of the tool,
+\item \textit{SemWeb Compliant}, whether the tool can be easily transposed or compliant with structured data; and 
+\item \textit{Creator}, organizations or persons who developed the tool.
+
+\end{itemize}
+\todo{ADD Visual Box in the survey of Table \ref{tab:visuTools} }
+
+
+\subsection{Visual Tools Operating Over RDF data}
+
+ 
+
+The Linked Data API (Talis, Linked Data API, 2010), provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) Generation of documents (information resources) for the publishing of Linked Data; (ii) Provision of sophisticated querying and data extraction features, without the need for end-users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
+ELDA
+
+Elda (Epimorphics) is a java implementation of the LDA by Epimorphics. Elda comes with some pre-built samples and documentation, which allows us to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI or through query parameters.
 
 \section{Tools for visualizing RDF Data}
 \label{sec:related}
@@ -29,8 +65,11 @@ While these tools are often extensible and support specific domain datasets, the
  \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more target at geodata. A tabular view enables to visualize slices of data and a map view can be activated when there is geo data. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) according to a systematic analysis of what are the high level categories present in a dataset.
 \end{itemize}
 
-Regarding wizard-based tools for visualizing data, similar approaches are available for tools consuming datasets in CSV/TSV. ManyEyes\footnote{\url{http://www-958.ibm.com/software/data/cognos/manyeyes/}} is an IBM online tool that suggest charts according to the columns of a given CSV file. Similarly, Google Charts\footnote{\url{https://developers.google.com/chart/}} help to achieve the same goals for creating embeddable charts by using DSP language in the framework. Datawrapper\footnote{\url{http://datawrapper.de/}} is an open source tool to enable the creation of basic charts originally target at journalists inspired by ManyEyes and Google Charts. All the visualizations are based on the type of the columns/fields of the data. In Linked Data, vocabularies are used for modeling datasets in RDF, thus making it difficult to reuse directly those tools. The benefit of our approach is that it constructs specific SPARQL queries to detect the presence or not of predefined specific types of information, yielding to information type-specific visualisations to enable end users to quickly start to explore dataset in a generic manner. 
+
+Regarding wizard-based tools for visualizing data, similar approaches are available for tools consuming datasets in CSV/TSV. ManyEyes\footnote{\url{http://www-958.ibm.com/software/data/cognos/manyeyes/}} is an IBM online tool that suggest charts according to the columns of a given CSV file. Similarly, Google Charts\footnote{\url{https://developers.google.com/chart/}} help to achieve the same goals for creating embeddable charts by using DSP language in the framework. Datawrapper\footnote{\url{http://datawrapper.de/}} is an open source tool to enable the creation of basic charts originally target at journalists inspired by ManyEyes and Google Charts. All the visualizations are based on the type of the columns/fields of the data. In Linked Data, vocabularies are used for modeling datasets in RDF, thus making it difficult to reuse directly those tools. The benefit of our approach is that it constructs specific SPARQL queries to detect the presence or not of predefined specific types of information, yielding to information type-specific visualizations to enable end users to quickly start to explore dataset in a generic manner. 
 %similarly in the generation of charts, by using directly existing libraries consuming RDF datasets and standard 
+
+
 
 \section{Visualization Applications Over Linked Data}
 \label{sec:visAppsLD}
@@ -48,7 +87,7 @@ The Open Data Service at the University of Southampton\footnote{\url{http://data
 
 Another approach at Rensseler Institute\footnote{\url{http://data-gov.tw.rpi.edu}} is to put at the bottom of the static page of the demo/application showcasing the benefits of Open Data for data.gov. is to put information, containing also a link to the SPAQRL query used for generating the application. As this information is human-readable and can help, the main drawback is the lack of a machine-readable version, using semantics. DVIA can leverage the issue aggregating many such descriptions in other Open Data initiatives as well. 
 
-Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analyses in detail the current approaches used to browse and visualize Linked Data, by identifying requirements for users classify into two groups: tech-savvy and lay-users. As the authors extensively surveyed more generic Linked Data browsers, with text-based presentation and visualization options, they provide some recommendations according to the size of the data such as fine-grained analysis among others. However, they do not target their study on tools that can easily help building visual SW-based applications. However, our approach is to study the tools used to build innovative applications for detecting the components that could be reusable across different domain y/o scope. 
+Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analyses in detail the current approaches used to browse and visualize Linked Data, by identifying requirements for users classify into two groups: tech-savvy and lay-users. As the authors extensively surveyed more generic Linked Data browsers, with text-based presentation and visualization options, they provide some recommendations according to the size of the data such as fine-grained analysis among others. However, they do not target their study on tools that can easily help building visual Semantic Web-based applications. However, our approach is to study the tools used to build innovative applications for detecting the components that could be reusable across different domain y/o scope. 
 
 \section{Linked Data Applications} \label{sec:apps}
 According to \cite{card99}, \texttt{Visualization} is \textit{ ``the use of computer-supported, interactive visual representations to amplify cognition''}. So the unique object of visualization is developing insights from collected data. That justify why each time a new dataset is released, users always expected some showcases to play with the underlying datasets. It is true that many public open initiatives uses incentives actions like \textit{challenges}, \textit{datahackday} or \textit{contest}, etc. to find innovative applications that actually exhibit the benefits of datasets published. Visualizations play crucial role as they can easily find errors in a large collection; detect patterns in a dataset or help navigate through the dataset. 
@@ -64,19 +103,8 @@ Jeni Tennison\footnote{\url{http://www.theodi.org/people/jeni}} defines  in her 
 Because most mashups are data-specific applications, it is important and necessary to  know what information the dataset contains. This could be achieve by giving the meaning of some properties or classes of the vocabularies used to create the dataset. Hence, what the data publisher needs to do very often is to make sure that the data they publish is documented. However, what is seeing in practice, is to consider using an intuitive visualization self-descriptive to both show the added-value of the data and its documentation.
 
 \subsection{Libraries } \label{sec:frame}
-We have surveyed a number of visualization tools - fifteen to be precise- used to build applications over data in general (raw or structured) based on the following features:
-\begin{itemize}
-\item \textit{Data Formats} for the format of data taken as input by the tool;
-\item \textit{Data Access}, for the way to access the data from the tool, such as web service, sparql endpoint, etc.
-\item \textit{Language code}, the programming language used to develop the tool;
-\item \textit{Type of Views}, the different views potentially accessible when using the tool;
-\item \textit{Imported Libraries}, the external libraries available within the tool,
-\item \textit{License} for the Intellectual Properties rights of the tool,
-\item \textit{SemWeb Compliant}, whether the tool can be easily transposed or compliant with structured data; and 
-\item \textit{Creator}, organizations or persons who developed the tool.
 
-\end{itemize}
-\todo{ADD Visual Box in the survey of Table \ref{tab:visuTools} }
+
 
 The outcome of this state-of-the-art can then be used to assess in the choice of a given visualization tool, according to some criteria, such as (i) usability, (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. For more details on this survey, the readers are encouraged to read \cite{deliverable2012b}.\footnote{Note: The survey does not contain Visual Box as it was not released at the time of writing the survey}. Table \ref{tab:visuTools} gives an overview of the selected tools studied.
 
@@ -118,7 +146,7 @@ Data Publica & DSPL & API& JavaScript& Map,graph, histogram, table & Google char
 GeoAPI & GML, KML, GPX & API& JavaScript& Map views & OpenLayers, Prototype.js& Free for non commercial use & Yes & IGN (France) \\
 \hline
 \end{tabularx}
-\caption{Survey of some tools used for making mashups on the Web.}
+\caption{Survey of some tools used for creating visualizations on the Web.}
 \label{tab:visuTools}
 \end{table}
 \end{landscape}
