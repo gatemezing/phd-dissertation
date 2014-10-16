@@ -20,11 +20,6 @@ Phil Archer (W3C Data Activity Lead)
 
 
 According to \cite{marti2009} the main goal of information visualization is to translate abstract information into a visual form that provides new insight about that information, in a clearly and precise form. Data classification, either quantitative or categorical, is useful for the purpose of visualization, and can make differences between tools. Hierarchical faceted metadata is used to build a set of category hierarchies where each dimension is relevant to the collection for navigation. The resulting interface is known as faceted navigation, or guided navigation \cite{hearst02}. 
-
-
-\section{Libraries for Visualizing Data}
-\label{sec:libraries}
-
 We have surveyed a number of visualization tools - fifteen to be precise- used to build applications over data in general (raw or structured) based on the following features:
 \begin{itemize}
 \item \textit{Data Formats} for the format of data taken as input by the tool;
@@ -39,15 +34,42 @@ We have surveyed a number of visualization tools - fifteen to be precise- used t
 \end{itemize}
 \todo{ADD Visual Box in the survey of Table \ref{tab:visuTools} }
 
+\section{Tools for visualizing Structured Data}
+\label{sec:strucdataviz}
+In this section, we describe also visualization tools that natively do not take as input RDF data for two reasons: 
+\begin{itemize}
+\item those tools are relatively ``popular'' for analyzing data exposed by the government and agencies  (most of them in XLS, CSV) as they quickly make it easy to the users  to build chart  maps and compare with other datasets. One widely application is in the data journalism  where facts are analyzed by those tools without waiting for the semantic publication of the data 
+\item Also these tools have many options for visualizing data and are not totally adapted in the Semantic Web community.
 
-\subsection{Visual Tools Operating Over RDF data}
+\end{itemize}
 
- 
+\subsection{Choosel}
+\label{sec:choosel}
 
-The Linked Data API (Talis, Linked Data API, 2010), provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) Generation of documents (information resources) for the publishing of Linked Data; (ii) Provision of sophisticated querying and data extraction features, without the need for end-users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
-ELDA
+\texttt{Choosel} \cite{lars2010} is built on top of GWT  and the Google App Engine  (the backend can be modified to run on any servlet container). The client-side framework facilitates the interaction with visualization components, which can be wrappers around third party components and toolkits such as the Simile Timeline, Protovis and FlexViz. Choosel can integrate components developed using different technologies such as Flash and JavaScript. It is possible to implement visualization components that are compatible with the Choosel visualization component API. These visualization components can then be used to take advantage of Choosel features such as management of view synchronization, management of selections, and support for hovering and details on demand.
 
-Elda (Epimorphics) is a java implementation of the LDA by Epimorphics. Elda comes with some pre-built samples and documentation, which allows us to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI or through query parameters.
+\subsection{Many Eyes}
+\label{sec:manyEyes}
+\texttt{Many Eyes} \cite{ibm2010} is a website that provides means to visualize data such as numbers, text and geographic information. It provides a range of visualizations including unusual ones such as ``treemaps''  and ``phrase trees''. All the charts made in Many Eyes are interactive, so it is possible to change what data is shown and how it is displayed. Many Eyes is also an online community where users can create groups (such as ``Ebola Crisis'' or ``Kobane War'') to organize, share and discuss data visualizations. Users can also comment on visualizations made by others, which is a good way to improve their work. The authors claim that it is useful because it users can build quick and easily visualizations from their own data, with the possibility to share them. is quick and easy to make and share great looking and fun to use visualizations from your own data. Data input formats are XLS, Plain text and HTML. The output formats are PNG or embeddable. However, using Many Eyes make public your data and the visualizations created with it. The license is proprietary of IBM. 
+
+\subsection{D3.js}
+\label{sec:d3js}
+
+\texttt{D3.js} \cite{d3js} is a JavaScript library for manipulating documents based on data. D3 uses HTML, SVG and CSS. D3 combines powerful visualization components, plugins\footnote{\url{https://github.com/d3/d3-plugins}}  and a data-driven approach to Document Object Model (DOM) manipulation. D3 solves problems of efficient manipulation of documents based on data. Thus, avoids proprietary representation and affords flexibility, exposing the full capabilities of web standards such as CSS3, HTML5 and SVG. D3 supports large datasets and dynamic behaviors for interaction and animation.
+  
+D3 intention is to replace gradually Protovis\footnote{\url{http://mbostock.github.com/protovis/}}, which is another tool to build customs visualizations in the browser, created by the same authors and which is no longer under active development. Although D3 is built on many of the concepts in Protovis, it improves support for animation and interaction. The difference between D3 and Protovis  is in the type of visualizations they enable and the method of implementation. While Protovis excels at concise, declarative representations of static scenes, D3 focuses on efficient transformations: scene changes. This makes animation, interaction, complex and dynamic visualizations much easier to implement in D3. Also, by adopting the browser's native representation (HTML \& SVG), D3 better integrates with other web technologies, such as CSS3 and other developer tools .
+
+\subsection{Google Visualization API}
+
+The Google Visualization API\footnote{\url{https://developers.google.com/chart/interactive/docs/reference}} establishes two conventions to expose data and visualize it on the web: (1) a common interface to expose data on the web and (2) a common interface to provide data to visualizations \cite{rpi2012}.
+Because the Google Visualization API provides a platform that can be used to create, share and reuse visualizations written by the developer community at large, it provides means to create reports and dashboards as well as possibility to analyze and display data through the wealth of available visualization applications. Many kinds of visualizations are available. Google Visualization accepts data in two different ways: a direct construction as well as  a JSON literal object, instantiated via the object \texttt{google.visualization.DataTable}. In the latter, the structure of this JSON format is the convention that Google API data sources are expected to return. So, a \texttt{google.visualization.DataTable} can be created using the results of an AJAX response.
+It is possible to retrieve and visualize RDF data. As long as the URL retrieved returns Google Visualization JSON, you can create a DataTable and give it to the visual construct to \texttt{draw()}.  The results of a SPARQL query can be converted to the Google Visualization JSON using an XSL like the one used at RPI for data.gov]. A sample performing these steps is presented in the Tetherless World Constellation, named \texttt{SparqlProxy}\footnote{\url{http://data-gov.tw.rpi.edu/ws/sparqlproxy.php }} . It performs these steps for a client with a single HTTP request. By providing the URL of a sparql endpoint to be queried (using service\_uri), a query (using query or query-uri), and a specification for return format as Google Visualization JSON (using output=gvds). 
+
+
+
+\paragraph{}
+All the visualizations are based on the type of the columns/fields of the data. While this is normal for tabular data, it is not the case for data exploiting semantics. In Linked Data, vocabularies are used for modeling datasets in RDF, thus making it difficult to reuse directly those tools. There is a need to build more generic tools that exploits the semantics and reuse the visual tools aforementioned. 
+
 
 \section{Tools for visualizing RDF Data}
 \label{sec:related}
@@ -66,10 +88,47 @@ While these tools are often extensible and support specific domain datasets, the
 \end{itemize}
 
 
-Regarding wizard-based tools for visualizing data, similar approaches are available for tools consuming datasets in CSV/TSV. ManyEyes\footnote{\url{http://www-958.ibm.com/software/data/cognos/manyeyes/}} is an IBM online tool that suggest charts according to the columns of a given CSV file. Similarly, Google Charts\footnote{\url{https://developers.google.com/chart/}} help to achieve the same goals for creating embeddable charts by using DSP language in the framework. Datawrapper\footnote{\url{http://datawrapper.de/}} is an open source tool to enable the creation of basic charts originally target at journalists inspired by ManyEyes and Google Charts. All the visualizations are based on the type of the columns/fields of the data. In Linked Data, vocabularies are used for modeling datasets in RDF, thus making it difficult to reuse directly those tools. The benefit of our approach is that it constructs specific SPARQL queries to detect the presence or not of predefined specific types of information, yielding to information type-specific visualizations to enable end users to quickly start to explore dataset in a generic manner. 
-%similarly in the generation of charts, by using directly existing libraries consuming RDF datasets and standard 
+\subsection{Linked Data API}
+The Linked Data API (LDA) [cite], provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) Generation of documents (information resources) for the publishing of Linked Data; (ii) Provision of sophisticated querying and data extraction features, without the need for end-users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
+ELDA
 
+Elda \footnote{\url{http://www.epimorphics.com/web/tools/elda.html}} is a java implementation of the LDA by Epimorphics. Elda comes with some pre-built samples and documentation, which allows us to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI or through query parameters.
 
+\subsection{Sgvizler}
+\texttt{Sgvizler} \cite{Martin2012} is a javascript which renders the result of SPARQL SELECT queries into charts or html elements. The name and tool relies queries against SPARQL endpoints using visualizations based on Google Visualization API, SPARQLer , Snorql\footnote{\url{http://dbpedia.org/snorql/}} and Spark\footnote{\url{http://code.google.com/p/rdf-spark }}. All the major chart types offered by the Google Visualization API are supported by Sgvizler. The user inputs a SPARQL query which is sent to a designated SPARQL endpoint. The endpoint must return the results back in SPARQL Query Results XML Format or SPARQL Query Results in JSON format. Sgvizler parses the results into the JSON format that Google prefers and displays the chart using the Google Visualization API or a custom-made visualization or formatting function. Sgvizler needs, in addition to the Google Visualization API, the javascript framework jQuery  to work. One of the drawback of Sgvizler that it is up to the user to test the query and embed it into the HTML page.
+ 
+\subsection{Facete}
+Facete \cite{facete:2014} is an exploration tool for (geographical) Linked Data datasets on the Web. Also called ``Semmap'', the application allows the user to explore the specific slice of data named \textit{'facet'}  of a Linked Data endpoint in a graphical way, available at \url{http://144.76.166.111/facete/}. The facet is created by defining a set of constraints on properties in the database. Once the facet is defined, the information in the facet can be clicked-through in a tabular interface and visualized on a map. The user can choose a SPARQL endpoint and graph for listing the content and visualize the dataset. The application is divided in three main views:
+\begin{enumerate}
+\item Selection: A tree-based structure of the dataset. It shows all items' properties and sub-properties. 
+\item  Data: shows a tabular representation of the data in the facet. All properties that have been marked with an arrow symbol in the facet tree are shown as columns. The columns contain the property values for every item according to the selected filter criteria.
+\item Geographical: A map view showing a representation of the elements in the facet with geo-coordinates available.
+\end{enumerate}
+
+%\todo{insert image of the landing page of facete?}
+
+\subsection{VisualBox}
+
+Visualbox\footnote{\url{http://alangrafu.github.io/visualbox/}} is another tool that aims at facilitating the creation of visualizations by providing an editor for SPARQL queries and different 
+visual tools to visualize the data. Visualbox is derived from LODSPeaKr \cite{graves13} mainly based on the Model- View - Component (MVC) paradigm. A visualization is created in a Component consisting of one or more SPARQL queries (models), and usually one (but sometimes more) templates (Views).
+Visualbox is target to users that have at least some basic knowledge of SPARQL and an understanding of RDF, and runs the query on the server side. Visualbox uses Haanga\footnote{http://haanga.net}, a template engine that provides a syntax for creating templates by defining markers in a document (usually a HTML page) of the form {{variable}} that later will be compiled and replaced by values taken from a data source. One of the drawback of Visualbox is the impossibility to extend with custom visualization nor enable third party filters.
+Currently, it implements visualization filters for D3.js (5), Google Maps, Google Charts(6) and TimeKnots library (TimeLine with events)
+
+\subsection{Payola}
+Payola \cite{payola13} is a web framework for analyzing and visualizing Linked Data, and enables users to build instances of Linked Data visualization Model (LDVM) pipelines \cite{brunetti13}. LDVM is an adaptation of the Data State Reference Model (DSRM) proposed by Chi \cite{chi2000} applied to visualizing RDF and Linked Data. It extends DSRM with three additional concepts that are reusable software components:
+\begin{itemize}
+\item \textbf{Analyzers}: They take as input compatible datasets, and perform adapted SPARQL queries: hierarchical dataset, geocoordinates dataset, etc.  
+\item \textbf{Visualization transformers}: They can be any software component that transform data between different formats or perfom aggregations for better visualization. They are generally SPARQL CONTRUCT queries, with the input signatures corresponding to the FROM clauses and their output data samples corresponding to the CONSTRUCT clauses.
+\item \textbf{Visualizers}: They consume RDF data and produce a visualization a user can interact with. They are visual tools libraries consuming data in RDF/JSON\footnote{\url{https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html}}
+\end{itemize}
+Basically a user builds different instances of LDVM based on the datasets used in the analyzers and transformers. Figure \ref{fig:ldvm-lod} depicts a sample of a LDVM pipeline applied to two different datasets publised as LOD.
+
+\begin{figure}
+\center
+\includegraphics[scale=0.8]{img/ldvm-lod.png}
+\label{fig:ldvm-lod}
+\caption{Sample application of analyzers and visualizers in a LDVM pipeline.}
+\end{figure}
 
 \section{Visualization Applications Over Linked Data}
 \label{sec:visAppsLD}
