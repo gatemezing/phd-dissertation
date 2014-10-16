@@ -34,6 +34,8 @@ We have surveyed a number of visualization tools - fifteen to be precise- used t
 \end{itemize}
 \todo{ADD Visual Box in the survey of Table \ref{tab:visuTools} }
 
+\textcolor{red}{In this chapter, we do X , Y and Z }
+
 \section{Tools for visualizing Structured Data}
 \label{sec:strucdataviz}
 In this section, we describe also visualization tools that natively do not take as input RDF data for two reasons: 
@@ -72,20 +74,9 @@ All the visualizations are based on the type of the columns/fields of the data. 
 
 
 \section{Tools for visualizing RDF Data}
-\label{sec:related}
+\label{sec:vizrdf}
 %\ghis{add comparison among different SoA work - add Tabulator ref}\\
-
-There are currently many projects aiming at visualizing (RDF) Linked Data. A survey by Dadzie and Rowe \cite{Dadzie:2011} concluded with the fact that many visualization tools are not easy to use by lay users. In~\cite{Klimek2014}, there is a recent review of some visualizations tools that can be summarized as follows:
-\begin{itemize}
- \item \textit{Vocabulary based visualization tools:} these tools are built for specific vocabularies and that help in visualizing data modelled according to those vocabularies, such as CubeViz \cite{cubeviz:2012}, FOAF explorer\footnote{\url{http://foaf-visualizer.gnu.org.ua/}} and Map4rdf \cite{leon2012}. They aim at visualizing data modelled respectively with \texttt{dq,foaf} and \texttt{geo+scovo}.
- \item \textit{Mashup tools:} they are used to create mashup visualizations with different widgets and some data analysis, such as DERI Pipes \cite{danh2009}. Mashup tools can be integrated into the LD wizard to combine different visual views.  
- \item \textit{Generic RDF visualization tools:} they typically support data browsing and entity rendering. They can also be used to build applications. In this category, we can mention Graphity\footnote{\url{https://github.com/Graphity/graphity-browser}}, lodlive\footnote{\url{http://en.lodlive.it/}} and Balloon Synopsis\footnote{\url{https://github.com/schlegel/balloon-synopsis}}.
-\end{itemize}
-While these tools are often extensible and support specific domain datasets, they suffer from the following drawbacks:
-\begin{itemize}
- \item \textit{They are not easy to set up and use by lay users}. Sometimes, users just need to have a visual summary of a dataset in order to start exploring the data. Our approach to this challenge is to provide such a lightweight javascript-based tool that supports a quick exploration task.
- \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more target at geodata. A tabular view enables to visualize slices of data and a map view can be activated when there is geo data. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) according to a systematic analysis of what are the high level categories present in a dataset.
-\end{itemize}
+Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analyses in detail the current approaches used to browse and visualize Linked Data, by identifying requirements for users classify into two groups: tech-savvy and lay-users. As the authors extensively surveyed more generic Linked Data browsers, with text-based presentation and visualization options, they provide some recommendations according to the size of the data such as fine-grained analysis among others. However, they do not target their study on tools that can easily help building visual Semantic Web-based applications. However, our approach is to study the tools used to build innovative applications for detecting the components that could be reusable across different domain y/o scope. 
 
 
 \subsection{Linked Data API}
@@ -130,45 +121,24 @@ Basically a user builds different instances of LDVM based on the datasets used i
 \caption{Sample application of analyzers and visualizers in a LDVM pipeline.}
 \end{figure}
 
-\section{Visualization Applications Over Linked Data}
-\label{sec:visAppsLD}
 
-As many initiatives on Linked Open Data is growing, tools and technologies are getting more and more mature to help pro-consumers to leverage the lifting process of the data. At the same times, standardization bodies such as W3C are helping in providing best practices to publish Open Government Data by using appropriate vocabularies, taking care of stability in the URIs policies, and making links to other datasets. It is the case for example of the Government Linked Data Working Group\footnote{\url{http://www.w3.org/2011/gld/}} which is developing standards to help governments publishing their data using Semantic Web technologies. Having a look at different proposals of the Life Cycle of Government LD, one of the last stage is ``Publication'' where the data is released according to the 4-5 stars principles\footnote{\url{http://5stardata.info/}}, with a given access to a SPARQL endpoint. However, for a better understanding of the data, one of the next step is usually to building visualizations through intuitive charts, graphs , etc. that will benefit to citizens, data journalists and other public authorities to improve the quality of their decisions. At the moment, one way of doing is to look around previous initiatives to see what type of application is already there, and make something similar according to a given dataset. Another approach is by organizing \textit{contests} where the challenges are to mash up unexpected datasets with clear and beautiful visualizations. Such approach is harder as developers also try figure out which tool and library is used for different applications. What if we describe applications according to the facets/views, datasets, visual tools etc.? 
-%In this paper, we propose a small vocabulary aiming at describing applications developed on top of LOD for more interoperability and components reusability. 
-%This paper is organized as follow: Section \ref{sec:apps} defines the types of applications on LOD, followed by a framework for assessing tools for building such applications (cf. Section \ref{sec:frame}). Section \ref{sec:reusable} deals with the facts which are common to many visual applications, and Section \ref{sec:dvia} presents the vocabulary for describing the semantics of mashups. We make some references to similar works in Section \ref{sec:rworks} and provide some outlook in Section 
-
-\section{Catalog of Applications on the Web} \label{sec:rworks}
-% Mention the efforts of UNiv Southampton for describing the apps developed cfr http://data.southampton.ac.uk/dumps/apps/2012-12-18/apps.ttl
-% Mention the efforts at RPI for some of the apps developed for data.gov.
-\textcolor{red}{re-read paper approaches to visualising Linked Data: A survey (Aba-Sah and M. Rowe)} \\
-
-The Open Data Service at the University of Southampton\footnote{\url{http://data.southampton.ac.uk/apps.htm}} has a register of all the applications developped using their datasets. A catalog of the Applications using the data is available at \url{http://id.southampton.ac.uk/dataset/apps}. Each application is described by giving the name, the type of the application, date of creation, the creator and the datasets used. There is also a flag to specify if the application is ``official'' or not. This initiative seems to be isolated and by having a common layer of vocabulary for the applications, we could add more informations as it is intended in DVIA vocabulary. 
-
-Another approach at Rensseler Institute\footnote{\url{http://data-gov.tw.rpi.edu}} is to put at the bottom of the static page of the demo/application showcasing the benefits of Open Data for data.gov. is to put information, containing also a link to the SPAQRL query used for generating the application. As this information is human-readable and can help, the main drawback is the lack of a machine-readable version, using semantics. DVIA can leverage the issue aggregating many such descriptions in other Open Data initiatives as well. 
-
-Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analyses in detail the current approaches used to browse and visualize Linked Data, by identifying requirements for users classify into two groups: tech-savvy and lay-users. As the authors extensively surveyed more generic Linked Data browsers, with text-based presentation and visualization options, they provide some recommendations according to the size of the data such as fine-grained analysis among others. However, they do not target their study on tools that can easily help building visual Semantic Web-based applications. However, our approach is to study the tools used to build innovative applications for detecting the components that could be reusable across different domain y/o scope. 
-
-\section{Linked Data Applications} \label{sec:apps}
-According to \cite{card99}, \texttt{Visualization} is \textit{ ``the use of computer-supported, interactive visual representations to amplify cognition''}. So the unique object of visualization is developing insights from collected data. That justify why each time a new dataset is released, users always expected some showcases to play with the underlying datasets. It is true that many public open initiatives uses incentives actions like \textit{challenges}, \textit{datahackday} or \textit{contest}, etc. to find innovative applications that actually exhibit the benefits of datasets published. Visualizations play crucial role as they can easily find errors in a large collection; detect patterns in a dataset or help navigate through the dataset. 
-
-\subsection{Typology of Applications}
-Jeni Tennison\footnote{\url{http://www.theodi.org/people/jeni}} defines  in her blog\footnote{\url{http://www.jenitennison.com/blog/node/126}} three categories of applications using online data:
+\section{Discussion}
+There are currently many projects aiming at visualizing (RDF) Linked Data. A survey by Dadzie and Rowe \cite{Dadzie:2011} concluded with the fact that many visualization tools are not easy to use by lay users. In~\cite{Klimek2014}, there is a recent review of some visualizations tools that can be summarized as follows:
 \begin{itemize}
-\item (i) \textit{data-specific applications}, which are constructed around particular data sets that are known to the developer of the application; hence the visualizations obtained are of data-specific applications. Examples are the famous applications of ``Where does my money go''  in Greece\footnote{\url{http://publicspending.medialab.ntua.gr/en/index.php}} or UK\footnote{\url{http://wheredoesmymoneygo.org/}}. Those applications are also called ``mashups". 
-\item (ii) \textit{vocabulary-specific applications}, which are constructed around particular vocabularies, wherever the data might be found that uses them. Examples here are FaceBookâ Social Graph API , IsaViz\footnote{\url{http://www.w3.org/2001/11/IsaViz}}, among others
-\item (iii) \textit{generic applications}, which are constructed to navigate through any RDF that they find; e.g.Tabulator\cite{tabulator06}, OpenLink Data Explorer\footnote{\url{http://ode.openlinksw.com/}}
-
+ \item \textit{Vocabulary based visualization tools:} these tools are built for specific vocabularies and that help in visualizing data modelled according to those vocabularies, such as CubeViz \cite{cubeviz:2012}, FOAF explorer\footnote{\url{http://foaf-visualizer.gnu.org.ua/}} and Map4rdf \cite{leon2012}. They aim at visualizing data modelled respectively with \texttt{dq,foaf} and \texttt{geo+scovo}.
+ \item \textit{Mashup tools:} they are used to create mashup visualizations with different widgets and some data analysis, such as DERI Pipes \cite{danh2009}. Mashup tools can be integrated into the LD wizard to combine different visual views.  
+ \item \textit{Generic RDF visualization tools:} they typically support data browsing and entity rendering. They can also be used to build applications. In this category, we can mention Graphity\footnote{\url{https://github.com/Graphity/graphity-browser}}, lodlive\footnote{\url{http://en.lodlive.it/}} and Balloon Synopsis\footnote{\url{https://github.com/schlegel/balloon-synopsis}}.
 \end{itemize}
-Because most mashups are data-specific applications, it is important and necessary to  know what information the dataset contains. This could be achieve by giving the meaning of some properties or classes of the vocabularies used to create the dataset. Hence, what the data publisher needs to do very often is to make sure that the data they publish is documented. However, what is seeing in practice, is to consider using an intuitive visualization self-descriptive to both show the added-value of the data and its documentation.
+While these tools are often extensible and support specific domain datasets, they suffer from the following drawbacks:
+\begin{itemize}
+ \item \textit{They are not easy to set up and use by lay users}. Sometimes, users just need to have a visual summary of a dataset in order to start exploring the data. Our approach to this challenge is to provide such a lightweight javascript-based tool that supports a quick exploration task.
+ \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more target at geodata. A tabular view enables to visualize slices of data and a map view can be activated when there is geo data. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) according to a systematic analysis of what are the high level categories present in a dataset.
+\end{itemize}
 
-\subsection{Libraries } \label{sec:frame}
-
-
-
-The outcome of this state-of-the-art can then be used to assess in the choice of a given visualization tool, according to some criteria, such as (i) usability, (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. For more details on this survey, the readers are encouraged to read \cite{deliverable2012b}.\footnote{Note: The survey does not contain Visual Box as it was not released at the time of writing the survey}. Table \ref{tab:visuTools} gives an overview of the selected tools studied.
+The outcome of this state-of-the-art can then be used to assess different visual tools in the process of creating web-based visualizations. Some criteria can be used for assessing visual tools, such as (i) usability , (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. For more details on this survey, the readers are encouraged to read \cite{deliverable2012b}.\footnote{Note: The survey does not contain Visual Box as it was not released at the time of writing the survey}. Table \ref{tab:visuTools} gives an overview of the selected tools studied.
 
 \begin{landscape}
-\begin{table}[ht]
+\begin{table}[htb]
 \centering
 \begin{tabularx}{\linewidth}{ |X|X|X|X|X|X|X|X|X|}
 \hline
@@ -210,6 +180,48 @@ GeoAPI & GML, KML, GPX & API& JavaScript& Map views & OpenLayers, Prototype.js& 
 \end{table}
 \end{landscape}
 
+%\section{Visualization Applications Over Linked Data}
+%\label{sec:visAppsLD}
+
+\section{Describing Applications on the Web}
+ \label{sec:descApps}
+As many initiatives on Linked Open Data is growing, tools and technologies are getting more and more mature to help pro-consumers to leverage the lifting process of the data. At the same times, standardization bodies such as W3C are helping in providing best practices to publish Open Government Data by using appropriate vocabularies, taking care of stability in the URIs policies, and making links to other datasets. It is the case for instance of the Government Linked Data Working Group\footnote{\url{http://www.w3.org/2011/gld/}} which has released some best practices and vocabularies to help governments publishing their data using Semantic Web technologies. Having a look at different proposals of the Life Cycle of Government LD, one of the last stage is ``Publication'' where the data is released according to the 4-5 stars principles\footnote{\url{http://5stardata.info/}}, with a given access to a SPARQL endpoint. However, for a better understanding of the data, one of the next step is usually to generate visualizations through intuitive (charts, graphs, etc.) that will benefit to citizens, data journalists and other public authorities to improve the quality of their decisions. Currently, one way of creating new applications is to look around previous initiatives to see what type of application exists already and make something similar according to a given dataset and domain. Another approach is by organizing \textit{contests} where the challenges are to mash up unexpected datasets with clear and beautiful visualizations. Such approach is harder as developers also try figure out which tool and library is used for different applications. What if we describe applications according to the facets/views, datasets, visual tools used to build them? How are the types of information that can help create a vocabulary for annotating web-based visualizations online ? 
+
+\subsection{Catalogs of Applications}
+
+% Mention the efforts of UNiv Southampton for describing the apps developed cfr http://data.southampton.ac.uk/dumps/apps/2012-12-18/apps.ttl
+% Mention the efforts at RPI for some of the apps developed for data.gov.
+%\textcolor{red}{re-read paper approaches to visualising Linked Data: A survey (Aba-Sah and M. Rowe)} \\
+\subsubsection{Open Data Service}
+The Open Data Service at the University of Southampton\footnote{\url{http://data.southampton.ac.uk/apps.htm}} has a register of all the applications developed using their datasets. A catalog of the Applications using the data is available at \url{http://id.southampton.ac.uk/dataset/apps}. Each application is described by giving three main categories of information:
+\begin{itemize}
+\item The available distributions corresponding to the different formats HTML, RDF/XML and RDF/TURTLE ;
+\item Dataset information
+\item 
+\end{itemize} 
+
+the name, the type of the application, date of creation, the creator and the datasets used. There is also a flag to specify if the application is ``official'' or not. This initiative seems to be isolated. Thus, there is a real need to have a common layer of semantics for describing such applications. This would benefits the interoperability and more discovery of applications on the Web.
+
+
+Another approach at Rensseler Institute\footnote{\url{http://data-gov.tw.rpi.edu}} is to put at the bottom of the static page of the demo/application showcasing the benefits of Open Data for data.gov. is to put information, containing also a link to the SPARQL query used for generating the application. As this information is human-readable and can help, the main drawback is the lack of a machine-readable version, using semantics. A vocabulary can leverage the issue by annotating such applications to help discovering and aggregating other similar applications in other Open Data initiatives. 
+
+ 
+
+\section{Linked Data Applications} 
+\label{sec:apps}
+According to \cite{card99}, \texttt{Visualization} is \textit{ ``the use of computer-supported, interactive visual representations to amplify cognition''}. So the unique object of visualization is developing insights from collected data. That justify why each time a new dataset is released, users always expected some showcases to play with the underlying datasets. It is true that many public open initiatives uses incentives actions like \textit{challenges}, \textit{datahack-day} or \textit{contest}, etc. to find innovative applications that actually exhibit the benefits of datasets published. Visualizations play crucial role as they can easily find errors in a large collection; detect patterns in a dataset or help navigate through the dataset. 
+
+\subsection{Typology of Applications}
+Jeni Tennison\footnote{\url{http://www.theodi.org/people/jeni}} defines  in her blog\footnote{\url{http://www.jenitennison.com/blog/node/126}} three categories of applications using online data:
+\begin{itemize}
+\item (i) \textit{data-specific applications}, which are constructed around particular data sets that are known to the developer of the application; hence the visualizations obtained are of data-specific applications. Examples are the famous applications of \textit{``Where does my money go''}  in Greece\footnote{\url{http://publicspending.medialab.ntua.gr/en/index.php}} or UK\footnote{\url{http://wheredoesmymoneygo.org/}}. Those applications are also called ``mashups". 
+\item (ii) \textit{vocabulary-specific applications}, which are constructed around particular vocabularies, wherever the data might be found that uses them. Examples here are FaceBookâ Social Graph API , IsaViz\footnote{\url{http://www.w3.org/2001/11/IsaViz}}, among others
+\item (iii) \textit{generic applications}, which are constructed to navigate through any RDF that they find; e.g.Tabulator\cite{tabulator06}, OpenLink Data Explorer\footnote{\url{http://ode.openlinksw.com/}}
+
+\end{itemize}
+Because most mashups are data-specific applications, it is important and necessary to  know what information the dataset contains. This could be achieve by giving the meaning of some properties or classes of the vocabularies used to create the dataset. Hence, what the data publisher needs to do very often is to make sure that the data they publish is documented. However, what is seeing in practice, is to consider using an intuitive visualization self-descriptive to both show the added-value of the data and its documentation.
+
+
 \subsection{On Reusable Applications} \label{sec:reusable}
 %\todo{ summary of the application survey D6.1: diversity, scope, and countries} 
 %\todo{show with the sample of openspending.fr} \\
@@ -228,8 +240,9 @@ We first review the numerous applications that have been developed on top of dat
 \end{itemize}
  Table \ref{tab:describeApps} provides the information extracted from \texttt{openspending in Greece} using the aforementioned template. 
 
+\todo{add a sample of such application surveyed}
 
-\begin{table}[ht!bp]
+\begin{table}[ht!b]
     \caption{Gathering reusable information from openspending in Greece Application} \label{tab:describeApps}
     \small
     \center
@@ -263,7 +276,7 @@ We first review the numerous applications that have been developed on top of dat
     \end{tabularx}
     \end{table}
    
- \section{Evaluating Visualizations}
+% \section{Evaluating Visualizations}
  See Roberto Garcia work and proposal in Datalift technical report.
 
   \section{Summary}
