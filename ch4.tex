@@ -81,9 +81,8 @@ Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analy
 
 \subsection{Linked Data API}
 The Linked Data API (LDA) [cite], provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) Generation of documents (information resources) for the publishing of Linked Data; (ii) Provision of sophisticated querying and data extraction features, without the need for end-users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
-ELDA
 
-Elda \footnote{\url{http://www.epimorphics.com/web/tools/elda.html}} is a java implementation of the LDA by Epimorphics. Elda comes with some pre-built samples and documentation, which allows us to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI or through query parameters.
+\textsc{Elda}\footnote{\url{http://www.epimorphics.com/web/tools/elda.html}} is a java implementation of the LDA by Epimorphics. Elda comes with some pre-built samples and documentation, which allows us to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI or through query parameters.
 
 \subsection{Sgvizler}
 \texttt{Sgvizler} \cite{Martin2012} is a javascript which renders the result of SPARQL SELECT queries into charts or html elements. The name and tool relies queries against SPARQL endpoints using visualizations based on Google Visualization API, SPARQLer , Snorql\footnote{\url{http://dbpedia.org/snorql/}} and Spark\footnote{\url{http://code.google.com/p/rdf-spark }}. All the major chart types offered by the Google Visualization API are supported by Sgvizler. The user inputs a SPARQL query which is sent to a designated SPARQL endpoint. The endpoint must return the results back in SPARQL Query Results XML Format or SPARQL Query Results in JSON format. Sgvizler parses the results into the JSON format that Google prefers and displays the chart using the Google Visualization API or a custom-made visualization or formatting function. Sgvizler needs, in addition to the Google Visualization API, the javascript framework jQuery  to work. One of the drawback of Sgvizler that it is up to the user to test the query and embed it into the HTML page.
@@ -103,7 +102,7 @@ Facete \cite{facete:2014} is an exploration tool for (geographical) Linked Data 
 Visualbox\footnote{\url{http://alangrafu.github.io/visualbox/}} is another tool that aims at facilitating the creation of visualizations by providing an editor for SPARQL queries and different 
 visual tools to visualize the data. Visualbox is derived from LODSPeaKr \cite{graves13} mainly based on the Model- View - Component (MVC) paradigm. A visualization is created in a Component consisting of one or more SPARQL queries (models), and usually one (but sometimes more) templates (Views).
 Visualbox is target to users that have at least some basic knowledge of SPARQL and an understanding of RDF, and runs the query on the server side. Visualbox uses Haanga\footnote{http://haanga.net}, a template engine that provides a syntax for creating templates by defining markers in a document (usually a HTML page) of the form {{variable}} that later will be compiled and replaced by values taken from a data source. One of the drawback of Visualbox is the impossibility to extend with custom visualization nor enable third party filters.
-Currently, it implements visualization filters for D3.js (5), Google Maps, Google Charts(6) and TimeKnots library (TimeLine with events)
+Currently, it implements visualization filters for D3.js (5), Google Maps, Google Charts(6) and TimeKnots library (TimeLine with events)\footnote{\url{https://github.com/alangrafu/timeknots}}.
 
 \subsection{Payola}
 Payola \cite{payola13} is a web framework for analyzing and visualizing Linked Data, and enables users to build instances of Linked Data visualization Model (LDVM) pipelines \cite{brunetti13}. LDVM is an adaptation of the Data State Reference Model (DSRM) proposed by Chi \cite{chi2000} applied to visualizing RDF and Linked Data. It extends DSRM with three additional concepts that are reusable software components:
@@ -185,27 +184,33 @@ GeoAPI & GML, KML, GPX & API& JavaScript& Map views & OpenLayers, Prototype.js& 
 
 \section{Describing Applications on the Web}
  \label{sec:descApps}
+ 
+ \subsection{Motivation}
 As many initiatives on Linked Open Data is growing, tools and technologies are getting more and more mature to help pro-consumers to leverage the lifting process of the data. At the same times, standardization bodies such as W3C are helping in providing best practices to publish Open Government Data by using appropriate vocabularies, taking care of stability in the URIs policies, and making links to other datasets. It is the case for instance of the Government Linked Data Working Group\footnote{\url{http://www.w3.org/2011/gld/}} which has released some best practices and vocabularies to help governments publishing their data using Semantic Web technologies. Having a look at different proposals of the Life Cycle of Government LD, one of the last stage is ``Publication'' where the data is released according to the 4-5 stars principles\footnote{\url{http://5stardata.info/}}, with a given access to a SPARQL endpoint. However, for a better understanding of the data, one of the next step is usually to generate visualizations through intuitive (charts, graphs, etc.) that will benefit to citizens, data journalists and other public authorities to improve the quality of their decisions. Currently, one way of creating new applications is to look around previous initiatives to see what type of application exists already and make something similar according to a given dataset and domain. Another approach is by organizing \textit{contests} where the challenges are to mash up unexpected datasets with clear and beautiful visualizations. Such approach is harder as developers also try figure out which tool and library is used for different applications. What if we describe applications according to the facets/views, datasets, visual tools used to build them? How are the types of information that can help create a vocabulary for annotating web-based visualizations online ? 
 
 \subsection{Catalogs of Applications}
+We provide below two use case of the current description of applications developed by datasets published on the Web. We expose also the limitation of the approach as they don't fully make use of semantics for more discovery of visual tools, datasets used to developed such applications.
 
-% Mention the efforts of UNiv Southampton for describing the apps developed cfr http://data.southampton.ac.uk/dumps/apps/2012-12-18/apps.ttl
-% Mention the efforts at RPI for some of the apps developed for data.gov.
-%\textcolor{red}{re-read paper approaches to visualising Linked Data: A survey (Aba-Sah and M. Rowe)} \\
 \subsubsection{Open Data Service}
-The Open Data Service at the University of Southampton\footnote{\url{http://data.southampton.ac.uk/apps.htm}} has a register of all the applications developed using their datasets. A catalog of the Applications using the data is available at \url{http://id.southampton.ac.uk/dataset/apps}. Each application is described by giving three main categories of information:
+The Open Data Service at the University of Southampton\footnote{\url{http://data.southampton.ac.uk/apps.html}} has a register of all the applications developed using their datasets. A catalog of the Applications using the data is available at \url{http://id.southampton.ac.uk/dataset/apps}. Each application is described by giving three main categories of information:
 \begin{itemize}
 \item The available distributions corresponding to the different formats HTML, RDF/XML and RDF/TURTLE ;
-\item Dataset information
-\item 
+\item Dataset information, which defines the type, the number of triples, license information, the publisher and the publication date.
+\item The provenance, such as files used to generate the dataset for building the application, as well as the script itself.
 \end{itemize} 
 
-the name, the type of the application, date of creation, the creator and the datasets used. There is also a flag to specify if the application is ``official'' or not. This initiative seems to be isolated. Thus, there is a real need to have a common layer of semantics for describing such applications. This would benefits the interoperability and more discovery of applications on the Web.
+Currently, some vocabularies are used to model the catalog, such as \texttt{DCAT} vocabulary \cite{dcat} and proprietary vocabularies. Each application is then described the type (Web, mobile Web, android, etc. ), the authors, the date of creation and the datasets used to build the application. Figure \ref{fig:app-amenity} depicts the HTML view of a Web application
+for a searchable map for finding buildings within the University sites. This initiative seems to be isolated. Thus, there is a real need to have a common layer of semantics for describing such applications. This would benefits the interoperability and more discovery of applications on the Web.
+\begin{figure}
+\includegraphics[scale=.7]{img/soton-map-amenities.pdf}
+\label{fig:app-amenity}
+\vspace{-10pt}
+\caption{Description of a Web application of an application at the Open Data Service}
+\end{figure}
 
+\subsubsection{RPI Applications}
+Another approach from the researchers at the Rensselaer Polytech Institute\footnote{\url{http://data-gov.tw.rpi.edu}} is to put at the bottom of the static page of a demo/application showcasing the benefits of Open Data for \texttt{data.gov}\footnote{\url{https://www.data.gov/}}} some basic metadata (description, URL to dataset, author), and also a link to the SPARQL query used for generating the application. As this information is human-readable and can help, the main drawback is the lack of a machine-readable version, using semantics to discover and connect different demos and datasets with authors. A more vocabulary can leverage the issue by annotating such applications to help discovering and aggregating other similar applications in other Open Data initiatives.  
 
-Another approach at Rensseler Institute\footnote{\url{http://data-gov.tw.rpi.edu}} is to put at the bottom of the static page of the demo/application showcasing the benefits of Open Data for data.gov. is to put information, containing also a link to the SPARQL query used for generating the application. As this information is human-readable and can help, the main drawback is the lack of a machine-readable version, using semantics. A vocabulary can leverage the issue by annotating such applications to help discovering and aggregating other similar applications in other Open Data initiatives. 
-
- 
 
 \section{Linked Data Applications} 
 \label{sec:apps}
@@ -214,33 +219,32 @@ According to \cite{card99}, \texttt{Visualization} is \textit{ ``the use of comp
 \subsection{Typology of Applications}
 Jeni Tennison\footnote{\url{http://www.theodi.org/people/jeni}} defines  in her blog\footnote{\url{http://www.jenitennison.com/blog/node/126}} three categories of applications using online data:
 \begin{itemize}
-\item (i) \textit{data-specific applications}, which are constructed around particular data sets that are known to the developer of the application; hence the visualizations obtained are of data-specific applications. Examples are the famous applications of \textit{``Where does my money go''}  in Greece\footnote{\url{http://publicspending.medialab.ntua.gr/en/index.php}} or UK\footnote{\url{http://wheredoesmymoneygo.org/}}. Those applications are also called ``mashups". 
-\item (ii) \textit{vocabulary-specific applications}, which are constructed around particular vocabularies, wherever the data might be found that uses them. Examples here are FaceBookâ Social Graph API , IsaViz\footnote{\url{http://www.w3.org/2001/11/IsaViz}}, among others
+\item (i) \textit{data-specific applications}, which are constructed around particular data sets that are known to the developer of the application; hence the visualizations obtained are of data-specific applications. Examples are the famous applications of \textit{``Where does my money go''}  in Greece\footnote{\url{http://publicspending.medialab.ntua.gr/en/index.php}} or UK\footnote{\url{http://wheredoesmymoneygo.org/}}. Those applications are also called \textit{``mashups''}. 
+\item (ii) \textit{vocabulary-specific applications}, which are constructed around particular vocabularies, wherever the data might be found that uses them. Examples here are FaceBook Social Graph API\footnote{\url{https://developers.facebook.com/docs/plugins/}} , IsaViz\footnote{\url{http://www.w3.org/2001/11/IsaViz}}, among others
 \item (iii) \textit{generic applications}, which are constructed to navigate through any RDF that they find; e.g.Tabulator\cite{tabulator06}, OpenLink Data Explorer\footnote{\url{http://ode.openlinksw.com/}}
 
 \end{itemize}
-Because most mashups are data-specific applications, it is important and necessary to  know what information the dataset contains. This could be achieve by giving the meaning of some properties or classes of the vocabularies used to create the dataset. Hence, what the data publisher needs to do very often is to make sure that the data they publish is documented. However, what is seeing in practice, is to consider using an intuitive visualization self-descriptive to both show the added-value of the data and its documentation.
+Because most mash-sups are data-specific applications, it is important and necessary to  know what information the dataset contains. This could be achieve by giving the meaning of some properties or classes of the vocabularies used to create the dataset. Hence, what the data publisher needs to do very often is to make sure that the data they publish is documented. However, what is seeing in practice, is to consider using an intuitive visualization self-descriptive to both show the added-value of the data and its documentation.
 
 
 \subsection{On Reusable Applications} \label{sec:reusable}
 %\todo{ summary of the application survey D6.1: diversity, scope, and countries} 
-%\todo{show with the sample of openspending.fr} \\
-%\todo{ The choice of the features used}
-We first review the numerous applications that have been developed on top of datasets  opened by governments (UK, USA, France) and public local authorities. We made a random survey of thirteen (13) applications \cite{deliverable2012a} in various domains such as of security, health, finance, transportation, housing, city, foreign aid and education. The main template used was to find out:
+
+We first review the numerous applications that have been developed on top of datasets  opened by governments (UK, USA, France) and public local authorities. We made a random survey of thirteen (13) innovative applications \cite{deliverable2012a} in various domains such as of security, health, finance, transportation, housing, city, foreign aid and education. Table \ref{tab:apps-survey} provides a summary of the surveyed applications; with names, types, countries and brief description. 
+The main template used was to find out:
 \begin{itemize}
-\item the name of the application:
-\item the scope or target domain of the application;
+\item the name of the application;
+\item the scope or the target domain of the application;
 \item a small and concise description;
 \item the platform on which the application can be deployed and view;
 \item the policy used for creating the URL of the application;
 \item the legacy data used to build the application, and a mention of the process of the lifting process of the raw data to RDF if available;
 \item the different views available of the application;
 \item comments or relevant drawback to mention;
-\item the license of the application
+\item and the license of the application.
 \end{itemize}
  Table \ref{tab:describeApps} provides the information extracted from \texttt{openspending in Greece} using the aforementioned template. 
 
-\todo{add a sample of such application surveyed}
 
 \begin{table}[ht!b]
     \caption{Gathering reusable information from openspending in Greece Application} \label{tab:describeApps}
@@ -277,7 +281,60 @@ We first review the numerous applications that have been developed on top of dat
     \end{table}
    
 % \section{Evaluating Visualizations}
- See Roberto Garcia work and proposal in Datalift technical report.
+% See Roberto Garcia work and proposal in Datalift technical report.
 
+
+\begin{table}[ht!b]
+    \caption{Some innovatives applications buit over Open Government Datasets} \label{tab:apps-survey}
+    \small
+    \center
+   \begin{tabularx}{\textwidth}{@{}llllX@{}}
+    % \begin{tabular}{@{}llX@{}}
+    \toprule
+    \textbf{Application} & \textbf{Domain} & \textbf{Type} &  \textbf{Country}  \\
+    \toprule
+    \texttt{UK Crime} &	Crimes & Web & UK  \\
+    \midrule
+\texttt{UK Pharmacy} & Health, Pharmacy  & Mobile/Android  & UK \\ 
+	\midrule
+	\texttt{Numberhood} & Local area dynamics  & iPhone/iPad & UK \\
+	
+	\midrule
+	\texttt{BuSit London} & Public Transportation  & Web and mobile  & UK \\
+	
+	\midrule
+	\texttt{UK School Finder} & Education  & Web  & UK \\
+	
+	\midrule
+	\texttt{Where-can-I-Live} & House, transportations & Web  & UK \\
+	\midrule
+	
+	\texttt{Opendatacommunities} & Local Government & Web  & UK \\
+	\midrule
+	
+	\texttt{FlyOnTime } & Flights/airlines & Web  & USA \\
+	\midrule
+	
+	\texttt{White House Visitor Search} & White House & Web  & USA \\
+	\midrule
+	
+	\texttt{US-USAID/UK-DFID} & Foreign Aid & Web  & USA \\
+	\midrule
+	
+	\texttt{Fourmisante} & Medicine/health-care & Web  & France \\
+	\midrule
+	
+	\texttt{MaVilleVueDuCiel} & Local Government  & Web & France \\
+	\midrule
+	
+	\texttt{Home?n?Go } & Housing & Web & France \\
+	\midrule
+	
+    \bottomrule
+  
+    %\end{tabular}
+    \end{tabularx}
+    \end{table}
+    
   \section{Summary}
   

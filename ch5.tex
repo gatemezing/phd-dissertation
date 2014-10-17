@@ -13,6 +13,10 @@ Linked data offers some great advantages for publishing government data. The app
 
 However, the RDF model, its various serializations and the SPARQL query language are foreign to the majority of developers. Those developers understandably want to be able to use the tool chains that they are familiar with to access government data. Publishing data purely as RDF, and providing access purely through SPARQL queries raises an unacceptable barrier onto the use of that data. 
 
+\textcolor{red}{Steps for creating a visualization over RDF from scratch: 
+-------
+To create a web-based visualization from scratch, the user should need to know how to do several tasks. First, the user should know how to write a program to send the query to a SPARQL endpoint, obtain the results and process them properly. Second, the user should need advanced knowledge in a programming language such as JavaScript or Flash, along with other languages such as Cascade-style sheet (CSS), Scalable Vector Graphics (SVG)[48] and other web technologies. In many cases this is not enough, and knowledge related to libraries such as the ones mentioned in Section 2.2 would be necessary as well. Third, all these tasks need to be done separately, since no integrated environment is used. Thus, the main advantage of Visualbox is that it reduces the knowledge necessary to create a visualization and diminish the complexity of the project by helping performing these tasks in one integrated environment.}
+
 
 \section{Wizard for Visualizations}
 
@@ -291,9 +295,11 @@ The system can be used in any tool consuming Linked Data in which the complexity
 
 \todo{Review Fig.6.2 b) } \\
 
-\subsection{Conclusion}
-\label{sec:conclusion-wizard}
-In this section we have presented  an approach for creating visualizations on top of Linked Data. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with common Linked Data vocabularies. We then present a description of the main components of LDVizWiz: a Linked Data Visualization Wizard. We describe a lightweight implementation in javascript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow for publishing and linking data on the web, like Datalift\footnote{\url{http://www.datalift.org}} or the GeoKnow stack\footnote{\url{ http://generator.geoknow.eu/ }}. 
+\todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}
+
+\subsection{Discussion}
+\label{sec:discuss}
+
 
 \section{A vocabulary for Describing VIsualization Applications} \label{sec:dvia}
 
@@ -933,3 +939,6 @@ The RDF information about events and applications is populated only if event org
 
 \section{Summary}
 \label{sec:summarych5}
+\todo{extend to reflect all the content of the chapter}
+
+In this chapter we have presented  an approach for creating visualizations on top of Linked Data based on Semantic Web technologies. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with commonly used and domain vocabularies. We then present a description of the main components of a Linked Data Visualization Wizard. We describe a lightweight implementation in javascript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow for publishing and linking data on the web, such as Datalift\ref{SECTION-DATALIFT} or the GeoKnow Stack\ref{SECTION-GEOKNOW}. 
