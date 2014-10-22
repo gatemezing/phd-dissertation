@@ -18,7 +18,6 @@ Phil Archer (W3C Data Activity Lead)
 \section{Introduction}
 \label{sec:intro-ch4}
 
-
 According to \cite{marti2009} the main goal of information visualization is to translate abstract information into a visual form that provides new insight about that information, in a clearly and precise form. Data classification, either quantitative or categorical, is useful for the purpose of visualization, and can make differences between tools. Hierarchical faceted metadata is used to build a set of category hierarchies where each dimension is relevant to the collection for navigation. The resulting interface is known as faceted navigation, or guided navigation \cite{hearst02}. 
 We have surveyed a number of visualization tools - fifteen to be precise- used to build applications over data in general (raw or structured) based on the following features:
 \begin{itemize}
@@ -101,7 +100,7 @@ Facete \cite{facete:2014} is an exploration tool for (geographical) Linked Data 
 
 Visualbox\footnote{\url{http://alangrafu.github.io/visualbox/}} is another tool that aims at facilitating the creation of visualizations by providing an editor for SPARQL queries and different 
 visual tools to visualize the data. Visualbox is derived from LODSPeaKr \cite{graves13} mainly based on the Model- View - Component (MVC) paradigm. A visualization is created in a Component consisting of one or more SPARQL queries (models), and usually one (but sometimes more) templates (Views).
-Visualbox is target to users that have at least some basic knowledge of SPARQL and an understanding of RDF, and runs the query on the server side. Visualbox uses Haanga\footnote{http://haanga.net}, a template engine that provides a syntax for creating templates by defining markers in a document (usually a HTML page) of the form {{variable}} that later will be compiled and replaced by values taken from a data source. One of the drawback of Visualbox is the impossibility to extend with custom visualization nor enable third party filters.
+Visualbox is target to users that have at least some basic knowledge of SPARQL and an understanding of RDF, and runs the query on the server side. Visualbox uses Haanga\footnote{\url{http://haanga.net}}, a template engine that provides a syntax for creating templates by defining markers in a document (usually a HTML page) of the form {{variable}} that later will be compiled and replaced by values taken from a data source. One of the drawback of Visualbox is the impossibility to extend with custom visualization nor enable third party filters.
 Currently, it implements visualization filters for D3.js (5), Google Maps, Google Charts(6) and TimeKnots library (TimeLine with events)\footnote{\url{https://github.com/alangrafu/timeknots}}.
 
 \subsection{Payola}
@@ -134,50 +133,56 @@ While these tools are often extensible and support specific domain datasets, the
  \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more target at geodata. A tabular view enables to visualize slices of data and a map view can be activated when there is geo data. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) according to a systematic analysis of what are the high level categories present in a dataset.
 \end{itemize}
 
-The outcome of this state-of-the-art can then be used to assess different visual tools in the process of creating web-based visualizations. Some criteria can be used for assessing visual tools, such as (i) usability , (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. For more details on this survey, the readers are encouraged to read \cite{deliverable2012b}.\footnote{Note: The survey does not contain Visual Box as it was not released at the time of writing the survey}. Table \ref{tab:visuTools} gives an overview of the selected tools studied.
+The outcome of this state-of-the-art can then be used to assess different visual tools in the process of creating web-based visualizations. Some criteria can be used for assessing visual tools, such as (i) usability , (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. In \cite{deliverable2012b}, the readers can find more details on this survey. Table \ref{tab:visuTools} gives an overview of the selected tools studied.
 
 \begin{landscape}
-\begin{table}[htb]
-\centering
-\begin{tabularx}{\linewidth}{ |X|X|X|X|X|X|X|X|X|}
-\hline
-\textbf{Tools} & \textbf{Data Formats}& \textbf{Data Access} & \textbf{Language Code} & \textbf{Type of Views} & \textbf{Imported Libraries} & \textbf{License} & \textbf{SemWeb Compliant} & \textbf{Creator} \\
-\hline
-Choosel & xls, csv & API & GWT & Text, Map, Bar chart & Time (Simile), Protovis, charts, Flexvis & Open & No & Lars Grammel\\
-\hline
-Fresnel & RDF & --& RDF& Propertie,  Labels & Welkin, IsaViz, Haystack, CSS &  Open & Yes & Emmanuel Pietriga et al. \\
-\hline
-Spark & RDF-JSON & SPARQL& PHP& Date chart, Pie chart, simple table &  -- &  Open & Yes & AIFB-KIT \\
-\hline
-LDA & RDF & SPARQL& Java, PHP& -- &  -- &  Open & Yes & Talis, Epimorphis \\
-\hline
-Semantic Web Import & RDF & SPARQL CONSTRUCT& Netbeans& Graph Node Views &  -- &  CECILL-B & Yes & Wimmics (INRIA) \\
-\hline
-Many Eyes & xls, plain text and HTML & API& Java, Flash& charts, trees, graphs, maps & --&  IBM & No & IBM research \\
-\hline
-D3.js & CSV, SVG, GeoJson & API& JavaScript& charts, trees, graphs, maps & Jquery, sizzle, colorbrewer& Open & Possible & Mike Bostock \\
-\hline
-Facet Spatial Semantic Browsing Widgets & RDF- JSON & SPARQL& JavaScript& Map,Facet view & Jquery, dynatree&  Open & Yes & AKSW \\
-\hline
-Sgvizler & RDF- JSON & SPARQL SELECT& JavaScript& Map, Line chart, timeline, sparkline & Google visualization API&  Open & Yes & Martin G. Skjaeland \\
-\hline
-Visual Box & RDF & SPARQL SELECT& PHP, Django template& Map, charts, timeline, graphs & Google charts, TimeKnots, d3.js&  Open & Yes & Alvaro Graves (RPI) \\
-\hline
-Map4rdf & RDF- JSON & SPARQL & Java, GWT& Facet, Map & OSM Layers, Google Maps&  Open & Yes & OEG (UPM) \\
-\hline
-Exhibit & JSON Exhibit & Data dump& JavaScript& Map,Tile, Thumbnail, Tabular and Timeline & ---&  Open & Yes & MIT \\
-\hline
-Google Visualization API & JSON, CSV & API& JavaScript& Many charts, controls and dashboard & AJAX API&  Open & Possible & Google \\
-\hline
-Data Publica & DSPL & API& JavaScript& Map,graph, histogram, table & Google charts, highchart.js& Proprietary & No & Data Publica \\
-\hline
-GeoAPI & GML, KML, GPX & API& JavaScript& Map views & OpenLayers, Prototype.js& Free for non commercial use & Yes & IGN (France) \\
-\hline
-\end{tabularx}
-\caption{Survey of some tools used for creating visualizations on the Web.}
-\label{tab:visuTools}
-\end{table}
-\end{landscape}
+\begin{table}[ht!b]
+    \centering{
+    \caption{Survey of some tools used for creating visualizations on the Web.}
+     \label{tab:visuTools}
+    \small
+    \center
+    %\begin{tabularx}{\textwidth}{@{}lcccccccc@{}}
+     \begin{tabular}{@{}lccc@{}}
+    \toprule
+    \textbf{Tools} & \textbf{Data Formats}& \textbf{Data Access} & \textbf{Language} & \textbf{ Views} & \textbf{Libraries} & \textbf{License} & \textbf{SemWeb App} \\
+    \toprule
+    \texttt{Choosel} & XLS, CSV & API & GWT & Text/Map/Bar chart & Time (Simile)/Protovis/Flexvis & Open & No \\
+    \midrule
+    \texttt{Fresnel} & RDF & --& RDF & Property/Labels & Welkin/IsaViz/Haystack/CSS &  Open & Yes  \\
+    \midrule
+    \texttt{Spark} & RDF-JSON & SPARQL & PHP & Charts/Tabular &  -- &  Open & Yes \\
+    \midrule
+    \texttt{LDA} & RDF & SPARQL & Java/PHP & -- &  -- &  Open & Yes \\
+    \midrule
+    \texttt{SemWeb Import} & RDF & SPARQL& Netbeans & Graph Node &  -- &  CECILL-B & Yes  \\
+    \midrule
+    \texttt{Many Eyes} & XLS/Text/HTML & API& Java/Flash & charts/ trees/graphs/maps & -- &  IBM & No  \\
+    \midrule
+    \texttt{D3.js} & CSV/SVG, GeoJson & API & JavaScript& charts/ trees/graphs/maps & Jquery/sizzle/colorbrewer & Open & Maybe  \\
+    \midrule
+    \texttt{Facet}  & RDF-JSON & SPARQL & JavaScript& Map,Facet view & Jquery/ dynatree &  Open & Yes \\
+    \midrule
+    Sgvizler & RDF-JSON & SPARQL & JavaScript & Map/Line chart, timeline/sparkline & Google visualization API &  Open & Yes  \\
+    \midrule
+    \texttt{Visual Box} & RDF & SPARQL & PHP/Django & Map/charts/ timeline/graphs & Google charts/TimeKnots/D3.js &  Open & Yes  \\
+    \midrule
+    \texttt{Map4rdf} & RDF-JSON & SPARQL & Java/GWT & Facet/Map & OSM Layers, Google Maps &  Open & Yes  \\
+    \midrule
+    \texttt{Exhibit} & JSON Exhibit & Data dump & JavaScript& Map/Tile/Thumbnail/Tabular/Timeline & ---&  Open & Yes \\
+     \midrule
+\texttt{Google Visualization API} & JSON/CSV & API & JavaScript & Charts/ Charts/Maps/Dashboard & AJAX API &  Open & Possible \\
+     
+    
+    \bottomrule
+     }
+     \end{tabular}
+   % \end{tabularx}
+    \end{table}
+    
+   \end{landscape}
+    
+
 
 %\section{Visualization Applications Over Linked Data}
 %\label{sec:visAppsLD}
