@@ -607,6 +607,37 @@ Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} i
 
 Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mostly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples. 
 
+Regarding the interconnection with more existing geodata, first results of mappings using LIMES for amenities in three big cities of France (Paris, Lyon and Marseille) (cf. Table \ref{tab:bano-gld}) shows the low presence of the addresses for French territory. All the results of the mappings are available at \url{https://github.com/gatemezing/bano2rdf-matching}. 
+
+\begin{table}[ht!b]
+        
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \cline{1-7}
+           \multirow{2}{*}{LGData Amenities}  & \multicolumn{2}{|p{2cm}|}{Bano-750xx (248,052)} & \multicolumn{2}{|p{2cm}|}{Bano-130xx (401,404)} & \multicolumn{2}{|p{2cm}|}{Bano-690xx (89,061)}\\
+            \cline{2-7}
+             & \#matched & \% & \#matched & \% & \#matched & \% \\
+            \hline
+            \multicolumn{1}{|p{2cm}|}{Building (22,283)} & 05& 0.022 & 12 & 0.053 & 0 & 0  \\ 
+            \hline
+            \multicolumn{1}{|p{2cm}|}{Parking (250,516)} & 735 & 0.293 & 625 & 0.24 & 210 & 0.083  \\
+            \hline
+            \multicolumn{1}{|p{2cm}|}{Shop (778,680)} & 21,171 & 2.71 & 8,556 & 1.098 & 3,049 & 0.391  \\
+            \hline
+            \multicolumn{1}{|p{2cm}|}{School (318,287)} & 883 & 0.277 & 411 & 0.129 & 197 & 0.061  \\
+            \hline
+            \multicolumn{1}{|p{2cm}|}{PlaceOfWorship (357,445)} & 272 & * & 193 & * & 31 & *  \\
+            \hline
+            \multicolumn{1}{|p{2cm}|}{Restaurant (260,675)} & 13,567 & * & 2,654 & * & 1,882 & *  \\
+            \hline
+            \multicolumn{1}{|p{2cm}|}{PublicBuilding (26,735)} & 97 & * & 64 & * & 21 & *  \\
+            \hline
+            \multicolumn{1}{|p{2cm}|}{PostOffice (87,731)} & 971 & * & 555 & * & 173 & *  \\
+            \hline
+        \end{tabular}
+        
+        \caption{Initial mappings of Bano2RDF with LGD amenities resources respectively in Paris, Marseille and Lyon. The links are obtained using LIMES tool with a threshold of .97 using the \texttt{Hausdorff} distance.}
+        \label{tab:bano-gld}
+    \end{table}
 
 \section{Status of French LOD cloud (FrLOD) }
 \label{sec:frenchCloud}
