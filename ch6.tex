@@ -454,7 +454,8 @@ From the list of URIs that were not LOV-able vocabularies, we wanted to do more 
 }
 \end{table}
 
-\subsection{Conclusion}    \label{sec:conclusion}
+\subsection{Future perspectives}   
+\label{sec:conclusion}
 In this Section, we have analyzed numerous vocabularies referenced in LOV and in prefix.cc and we have presented a way to manage the prefixes of those vocabularies. We have shown that in the process of mapping namespaces with prefixes, some conflicts have to be resolved, often by contacting the editors themselves. One future work is to develop a new strategy for the LOV-Bot API to take into account vocabularies published in other formats such as n3 and turtle. This would require to first test the validity of those formats and to adapt the way namespaces are obtained in order to not check only the presence of the \texttt{vann:preferredNamespace} property but to rely on similarity algorithm in order to guess the closest namespace given a URI vocabulary and some statistics of the number of classes and properties.
 
 The work can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far: \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services; \emph{ii)} bridging the LOV back-office and the prefix-cc database using both services API in order to publish a list of common recommended prefixes. The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
@@ -679,7 +680,7 @@ The LODStats ranking is focused on covering the number of datasets reused in the
 Closer to our work, Schaible \emph{et al.} reported on an empirical study involving 75 linked data experts and practitioners assessing reuse strategies based on various ranking decisions~\cite{Schaible:ESWC14}. The goal is to find objective criteria for choosing which vocabularies to reuse and how many can be combined. LODStats and LOV are used to obtain the number of datasets using a specific vocabulary while \textit{vocab.cc} is used for getting the number of occurrence of a vocabulary term. We propose a different metric to rank existing vocabularies that can be furthermore added as a new feature in such a study. One drawback in the model is to use the same weight for two vocabularies with different number of datasets reused. This could be address in the future by using a ``function based'' weighting for datasets reused (e.g. inverse logarithm) for computing the PIC score.
 
 \subsection{Summary}
-We have presented in this Section a different perspective of ranking vocabularies using the principles of Information Content. By applying this concept to Linked Open Vocabularies, we tried to use features that we consider ``relevant'' to be taken into account when comparing vocabularies (e.g: datasets reused, external vocabularies). We compare with other rankings that are mostly based on the ``popularity'' of vocabularies. This work can path the way for assessing vocabularies with applications in a more systemic approach for recommending classes/properties in ontology management, or in visualization applications to propose the most \textit{``oh yeah?''} suitable property to be visualized for RDF entities when there is large a large number of properties.
+We have presented in this section a different perspective of ranking vocabularies using the principles of Information Content. By applying this concept to Linked Open Vocabularies, we tried to use features that we consider ``relevant'' to be taken into account when comparing vocabularies (e.g: datasets reused, external vocabularies). We compare with other rankings that are mostly based on the ``popularity'' of vocabularies. This work can path the way for assessing vocabularies with applications in a more systemic approach for recommending classes/properties in ontology management, or in visualization applications to propose the most \textit{``oh yeah?''} suitable property to be visualized for RDF entities when there is large a large number of properties.
 
 
 \section{Datalift module for selecting vocabularies}
@@ -694,15 +695,55 @@ Note: Not sure to add this section. Propose the suggestion of patterns in the BP
 a.	it can be used by automated systems to look up additional data (linked data);
 b.	a triple store may store only one copy of the URI, whereas if a string is used, a copy of that string is always stored for each and every person in the database. Thus, in large data sets, the saving on memory capacity and the improvement in transmission efficiency can be substantial. }
 
-\section{Licenses compatibility checker}
+\section{Licenses Compatibility Checker}
 \label{sec:checker}
 
 \subsection{Background}
 The license of a dataset in the Web of Data can be specified within the data, or outside of it, for example in a separate document linking the data. In line with the Web of Data philosophy~\cite{LinkedData2011}, licenses for such datasets should be specified in RDF, for instance through the Dublin Core vocabulary\footnote{\url{http://purl.org/dc/terms/license}}. Despite such guidelines, still a lot of effort is needed to enhance the association of licenses to data on the Web, and to process licensed material in an automated way. The scenario becomes even more complex when another essential component in the Web of Data is taken into account: the vocabularies. Our goal is to support the data provider in assigning a license to her data, and verifying its compatibility with the licenses associated to the adopted vocabularies.      
+
+
 %
 We answer this question by proposing an online framework called LIVE\footnote{The online tool is available at \url{http://www.eurecom.fr/~atemezin/licenseChecker/}} (LIcenses VErification) that exploits the formal approach to licenses composition proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13} to verify the compatibility of a set of heterogeneous licenses. LIVE, after retrieving the licenses associated to the vocabularies used in the dataset under analysis, supports data providers in verifying whether the license assigned to the dataset is compatible with those of the vocabularies, and returns a warning when this is not the case. 
 
-\subsection{The LIVE framework}
+\subsection{Statistics about licensed vocabularies}
+\label{sec:stats-license}
+
+The first step to be addressed consists in analyzing how many vocabularies are licensed, and what is the distribution of such licenses. To achieve this goal, we started our analysis on the Linked Open Vocabularies repository. The LOV initiative stands as an observatory for the re-usable linked vocabularies ecosystem. The initiative goes beyond collecting and highlighting vocabulary metadata, and it now plays a major social role in promoting good practice and improving overall ecosystem quality of publishing vocabularies\footnote{For more details about LOV, see \url{http://ercim-news.ercim.eu/en96/special/linked-open-vocabularies}}. We crawled the LOV repository together with the LODstats one searching for licensed vocabularies. The results we obtained are as follows:
+\begin{description}
+\item[Licensed vocabularies]: we have considered in total 419 vocabularies. The licensed vocabularies are 64 out of 419, eating about 16\% of the the total number of considered vocabularies. The properties used to specify the licenses in the vocabularies are \url{http://creativecommons.org/ns#license} from the Creative Commons vocabulary~\footnote{\url{http://creativecommons.org/ns}} and \url{http://purl.org/dc/terms/license} from the Dublin Core vocabulary\footnote{\url{http://dublincore.org/documents/dcmi-terms/}}. Even if the number of licensed vocabularies available on LOV and LODstats is rather low, analyzing the edits of the licensing information it is possible to note an increasing interest in providing further metadata about the data published on the Web of Data, and it holds also for vocabularies\footnote{In this work, we consider vocabularies as data. Other interpretation of the role of vocabularies are discussed in the conclusions.}. Another interesting result shows that 4 out of 13 vocabularies retrieved searching for the ``top 20 most used entities in the LOD cloud\footnote{\url{http://lod-cloud.net/}}'' has an explicit license associated. These vocabularies are Good Relations\footnote{\url{http://purl.org/goodrelations/v1#}}, DBpedia, GeoNames\footnote{\url{http://www.geonames.org/ontology#}}, and FRBR\footnote{\url{http://vocab.org/frbr/core.html#}}.   
+\item[Licenses distribution]: the distribution of the licenses in the licensed vocabularies we retrieved is visualized in Figure~\ref{fig:LOVstats}. The most adopted license is Creative Commons Attribution (CC-BY) (30 out of 64 licensed vocabularies), and Creative Commons licenses in general represent the 85\% of the licenses used for vocabularies licensing, confirming the trend shown for licensed datasets~\cite{DBLP:conf/semweb/Rodriguez-DoncelGM13,DBLP:conf/semweb/GovernatoriRVG13}. Another popular license is ODC Public Domain Dedication and License (PDDL)\footnote{\url{http://opendatacommons.org/licenses/pddl/1.0/}} followed by the W3C Software Notice and License\footnote{\url{http://bit.ly/W3C-license}}.  
+\end{description}
+
+\begin{figure}
+\centering
+\includegraphics[width=9.5cm]{img/LOV-stats.pdf}
+\caption{Licenses distribution in the LOV licensed vocabularies.}
+\label{fig:LOVstats}
+\end{figure}
+
+We are aware that the obtained results are referred to the data available on LOV and LODstats, and that such repositories of vocabularies are not exhaustive. However, they provide us a reliable picture of what is the ongoing trend in licensing vocabularies\footnote{We refer the reader interested into statistics about the distribution of licenses on the Web of Data to~\cite{DBLP:conf/semweb/Rodriguez-DoncelGM13,DBLP:conf/semweb/GovernatoriRVG13}.}. This is particularly true in the case of LOV that furthermore supports a number of good practices for the publication of a vocabulary, among which the addition of the license associated to the vocabulary is highly encouraged.
+
+\subsection{Related work about licenses in the Web of Data}
+
+In the Web scenario, a number of works address the problem of representing and/or reasoning over licensing information.
+Iannella~\footnote{\url{http://odrl.net/1.1/ODRL-11.pdf}} presents the Open Digital Rights Language (ODRL) for expressing rights information over content, and Gangadharan et al.~\cite{ODRLS} further extend ODRL developing the ODRL-S language to implement the clauses of service licensing. 
+%
+Gangadharan et al.~\cite{DBLP:conf/icsoc/GangadharanWDI07} address the issue of service license composition and compatibility analysis basing on ODRL-S. They specify a matchmaking algorithm which verifies whether two service licenses are compatible. In case of a positive answer, the services can be composed and the framework determines the license of the composite service. 
+%
+Nadah et al.~\cite{DBLP:conf/icail/NadahRB07} propose to assist licensors' work by providing them a generic way to instantiate licenses, independent from specific formats, and then they translate the license expressed in generic terms into more specific terms compliant with the specific standards used by distribution systems, i.e., ODRL and MPEG Rights Data Dictionaries. 
+%
+Truong et al.~\cite{DBLP:conf/apscc/TruongGCDP11} address the issue of analyzing data contracts, based on ODRL-S again. Contract analysis leads to the definition of a contract composition where first the comparable contractual terms from the different data contracts are retrieved, and second an evaluation of the new contractual terms for the data mash-up is addressed.
+%
+Krotzsch and Speiser~\cite{DBLP:conf/semweb/KrotzschS11} present a semantic framework for evaluating ShareAlike recursive statements. In particular, they develop a general policy modelling language, then instantiated with OWL DL and Datalog, for supporting self-referential policies as expressed by CC.
+%
+Gordon~\cite{DBLP:conf/icail/Gordon11} presents a legal prototype for analyzing open source licenses compatibility using the Carneades argumentation system. 
+%
+Finally, Rodiguez-Doncel et al.~\cite{victorPatterns2013a,victorPatterns2013b} discuss licenses patterns for Linked Data. In particular, they first analyze and discuss six rights expression languages, abstracting their commonalities and outlining their underlying pattern. Second, they propose the License Linked Data Resources pattern which provides a solution to describe existing licenses and rights expressions both for open and not open scenarios. 
+All these works either propose new ways to model licenses information or new formal frameworks to deal with rights. In this paper, we do not address none of these issues, and we adopt the formal framework proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13}. Also Pucella and Weissman~\cite{DBLP:conf/csfw/PucellaW02} propose a logic to check whether the user's actions follow the licenses' specifications. However, as they do not deal with compatibility, do not provide a deontic account of licenses' conclusions, and their logic is not able to handle conflicting licenses, we choose and adapt the deontic logic of~\cite{DBLP:conf/semweb/GovernatoriRVG13}, which better suits our needs.
+
+Up to our knowledge, the issue of licensed vocabularies has never been addressed. More precisely, no available framework exists dealing with such licenses and verifying in an automated way their potential compatibility with the license associated to datasets. The goal of supporting users in dealing with licensing information has been recently addressed by Cabrio et al.~\cite{CabrioESWC2014} with a different goal, i.e., supporting data publishers in creating RDF licenses representations from natural language texts. 
+
+\subsection{The LIVE Framework}
 The LIVE framework is a Javascript application, combining HTML and Bootstrap. Hence, installation has no prerequisite. Since the tool is written in Javascript, the best way to monitor the execution time is with the \texttt{performance.now()} function. We use the $10$ LOD datasets with the highest number of links towards other LOD datasets available at \url{http://lod-cloud.net/state/#links}. For each of the URLs in Datahub, we retrieve the VoID\footnote{\url{http://www.w3.org/TR/void/}} file in Turtle format, and we use the \textit{voidChecker} function\footnote{\url{http://www.eurecom.fr/~atemezin/licenseChecker/voidChecker.html}} of the LIVE tool to retrieve the associated license, if any.  
 The goal of the LIVE framework is to support data producers to assign a license to the data ensuring the consistency of such license with respect to the licenses assigned to the vocabularies she exploits in the dataset. 
 The input of the LIVE framework (Figure~\ref{fig:framework}) consists in the dataset (URI or VOiD) whose license has to be verified. The framework is composed by two modules. The first module takes care of retrieving the vocabularies used in the dataset, and for each vocabulary, retrieves the associate license\footnote{Note that the LIVE framework relies on the dataset of machine-readable licenses (RDF, Turtle syntax) presented in~\cite{CabrioESWC2014}.} (if any) querying the LOV repository. 
@@ -717,7 +758,7 @@ The second module takes as input the set of licenses (i.e., the licenses of the 
 \end{figure}
 
 
-\subsection{licensing information from vocabularies and datasets.}
+\subsection{Licensing information from vocabularies and datasets.}
 Two use-cases are taken into account: a SPARQL endpoint, or a VoID file in Turtle syntax. 
 In the first use case, the tool retrieves the named graphs present in the repository, and then the user is asked to select the URI of the graph that needs to be checked. Having that information, a SPARQL query is triggered, looking for entities declared as \texttt{owl:Ontology}, \texttt{voaf:Vocabulary} or object  of the \texttt{void:vocabulary} property. The final step is to look up the LOV catalogue to check whether they declare any license. There are two options for checking the license: \textit{(i)} a \textit{``strict checking'' } where the \texttt{FILTER} clause contains exactly the namespace of the submitted vocabulary, or \textit{(ii)} a \textit{``domain checking''}, where only the domain of the vocabulary is used in the \texttt{FILTER} clause. This latter option is recommended in case only one vocabulary has to be checked for the license. 
 %
@@ -728,7 +769,7 @@ Figure \ref{fig:livetoolUI} shows the user interface for quering a graph and sam
 
 \begin{figure}[ht!b]
 \centering{
-\includegraphics[scale=0.9]{im/LIVETool-UI.png}
+\includegraphics[scale=0.4]{img/LIVETool-UI.png}
 \caption{LIVE tool user interface and sample results}
 \label{fig:livetoolUI}
 }
@@ -759,13 +800,7 @@ the selected licenses (represented using RDF) will be translated into the DFL fo
 % then in order to verify the compatibility of different licensing terms, 
 % the translated defeasible theories will first be composed into a single defeasible theory~\cite{DBLP:conf/semweb/GovernatoriRVG13} .
 That is,
-each RDF-triple will be translated into a defeasible rule based on the subsumption relation between the \textit{subject} and \textit{object} of a RDF-triples.
-In our case,
-we can use the subject and object of the RDF-triples as the antecedent and head of a defeasible rule, respectively.
-Besides, 
-the translator also supports direct import from the Web and processing of RDF data into SPINdle theories.
-%
-%the \textit{RDF-Defeasible Theory Translator} will translate the RDF-licenses into the DFL formalism supported by \spindle.
+each RDF-triple will be translated into a defeasible rule based on the subsumption relation between the \textit{subject} and \textit{object} of a RDF-triples. In our case, we can use the subject and object of the RDF-triples as the antecedent and head of a defeasible rule, respectively. Besides, the translator also supports direct import from the Web and processing of RDF data into SPINdle theories. The \textit{RDF-Defeasible Theory Translator} will translate the RDF-licenses into the DFL formalism supported by SPINdle.
 
 The translated defeasible theories will then be composed into a single defeasible theory based on the logic proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13},
 using the \textit{Theories Composer}.

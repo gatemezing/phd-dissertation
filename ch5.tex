@@ -19,17 +19,18 @@ To create a web-based visualization from scratch, the user should need to know h
 
 
 \section{Wizard for Visualizations}
+\label{sec:wizviz}
 
 %\ghis{find a good justifying example} \\
-
+\subsection{Background}
 With the growing adoption of the Linked Data principles, there is a real need to support data consumers in quickly getting visualizations that enable to explore a dataset. In order to involve more general Web users into the Semantic Web and Linked Data world, there is a need to build tools that reuse existing visualization libraries showing the key information about RDF datasets. Many datasets are published using SPARQL Endpoints and are not ``visually'' accessible. Thus, understanding the underlying graphs and consuming them require lay users to have some knowledge in writing queries. 
 
 The object of visualization is to develop insights from collected data. Moreover, according to Information Theory, vision is the sense that has the largest bandwidth (100 Mbits/s), which makes it the best suited channel to convey information to the brain \cite{Ware:2014}. Based on the Visual Information Seeking Mantra: \textit{``overview first, zoom and filter, then details on demand''} \cite{Shneiderman99}, we advocate for more visual interactive representations of RDF graphs using SPARQL Endpoints.   At the same time,  we use the term ``Linked Data Visualization'', to refer to a \textit{combination of charts, graphics, and other visual elements built on top of 4-5 stars datasets accessible via a SPARQL endpoint}. 
 Despite the presence of more and more datasets published as Linked Data, there is still a need to help end users to discover what (unknown) datasets describe by hiding the complexity of SPARQL queries from such users. Moreover, the task of identifying the key categories of datasets can help in selecting and matching the most suitable visualization types.
 
-In this Section, we propose a first step towards making available a semi-automatic way for the production of possible visualization of linked data sets of high-level categories grouping objects that are worth viewing and we associate them with some very well known vocabularies. Then, we describe the implementation of a Linked Data Visualization Wizard and its main components. This wizard can be used to easily visualize slices of datasets based on generic types detected.
+In this section, we propose a first step towards making available a semi-automatic way for the production of possible visualization of linked data sets of high-level categories grouping objects that are worth viewing and we associate them with some very well known vocabularies. Then, we describe the implementation of a Linked Data Visualization Wizard and its main components. This wizard can be used to easily visualize slices of datasets based on generic types detected.
 
-The remainder  of this paper is structured as follows. We first provide some related work that further motivates this study (Section~\ref{sec:related}). In Section~\ref{sec:vizTypes}, we propose some important categories that are worth visualizing and we present a set of mapping views associated with vocabularies (Section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). 
+The remainder  of this paper is structured as follows. We first propose  in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). 
 
 \subsection{Dataset Analysis}
 \label{sec:vizTypes}
@@ -227,13 +228,13 @@ From the $444$ endpoints used on the detection category module, $278$ endpoints 
 \begin{tabular}{lccc}
 \specialrule{1pt}{1pt}{1pt}
  \textbf{Category}	& \textbf{number} 	& \textbf{Percentage} 		 \\ \specialrule{1pt}{1pt}{1pt}
-GEO DATA    & 97	    & 21.84\%	 		 \\ 
-EVENT DATA	& 16		& 3.60\%				 \\ 
-TIME DATA 	& 27		& 6.08\%		\\ 
-SKOS DATA	& 2		& 0.45\%			\\ 
-ORG DATA    & 48		& 10.81\%			\\ 
-PERSON DATA & 59   	& 13.28\%  \\		
-STAT DATA   & 29    &  6.6\% 
+\texttt{GEO DATA}    & 97	    & 21.84\%	 		 \\ 
+\texttt{EVENT DATA}	& 16		& 3.60\%				 \\ 
+\texttt{TIME DATA} 	& 27		& 6.08\%		\\ 
+\texttt{SKOS DATA}	& 2		& 0.45\%			\\ 
+\texttt{ORG DATA}   & 48		& 10.81\%			\\ 
+\texttt{PERSON DATA} & 59   	& 13.28\%  \\		
+\texttt{STAT DATA}   & 29    &  6.6\% 
 		\\ \specialrule{1pt}{1pt}{1pt}
 
 \end{tabular}
@@ -264,42 +265,30 @@ pt.dbepdia.org & 1 & 1 & 1 & 1 & 0 & 0
 }
 \end{table}
 
-Table \ref{tab:catendpoints} summarizes some findings for $8$ DBpedia chapters endpoints where it's easy to note the absence of SKOS data, and less presence of data modeled using \texttt{time} vocabulary. The Table also shows the differences in the standard vocabularies used to convert the wikipedia data into RDF across different chapters. 
+Table \ref{tab:catendpoints} summarizes some findings for $8$ DBpedia chapters endpoints where it's easy to note the absence of SKOS data, and less presence of data modeled using \texttt{time} vocabulary. The Table also shows the differences in the standard vocabularies used to convert the Wikipedia data into RDF across different chapters. 
 
 
 \subsection{Implementation}
-\todo{add a page explaining how to use the tool and alert message} \\
-\todo{Evaluation with real word users (e.g: usability evaluation) and datasets online and offline} \\
+%\todo{add a page explaining how to use the tool and alert message} \\
+%\todo{Evaluation with real word users (e.g: usability evaluation) and datasets online and offline} \\
 
 A first prototype, implemented with javascript and the Bootstrap framework\footnote{\url{http://getbootstrap.com/}}, is available at \url{http://semantics.eurecom.fr/datalift/rdfViz/apps/}, as a proof of concept. We aim at providing a lightweight tool for lay users to quickly understand what the data is about and so that they get first visualizations based on categories detected in the datasets. We also reuse \textit{sgvizler}~\cite{Martin2012} for generating charts according to the categories retrieved by the wizard. In the current implementation, the user can enter any SPARQL endpoint, and with a ``click'', the user can receive the list of categories detected together with sample resources. In the second step, the wizard retrieves the properties from the objects and subjects part of \texttt{owl:sameAs} links. The last step shows different tabs with the summary of the previous steps, the visualizations available for each categories, and a report both in human and machine readable formats. Figure~\ref{fig:visuSample} depicts a sample visualization generated by the wizard for geo data and statistics data.
 
 The system can be used in any tool consuming Linked Data in which the complexity of SPARQL analysis and visualizations of RDF datasets is hidden to the lay users, with the benefits of showing that information encoded in triples is not only "beautiful", but also useful in the sense of traditional wizard-based tools.
 
-\begin{figure*}[!htbp]
-\begin{center}
-\subfigure[Overview of the first step report on categories detected:(1) categories detected,(2) vocabularies used. ]{
-\includegraphics[width=0.4 \textwidth]{img/checkerCategory.png}
-}
-\subfigure[Overview of the report on categories detected. ]{
-\includegraphics[width=0.4 \textwidth]{img/categories.png}
-}
-\subfigure[Two views generated by the LD wizard, for geodata and stats data]{
-\includegraphics[ width=0.4 \textwidth]{img/samplevisu.png}
-}
 
-
-\caption{Categories detected and visualization generated by the Linked Data visualization wizard in the case of EventMedia endpoint service.}
+\begin{figure}[ht!b]
+\includegraphics[scale=.6]{img/result-wizviz.pdf}
 \label{fig:visuSample}
-\end{center}
-\end{figure*}
+\caption{Categories detected and visualization generated by the Linked Data visualization wizard in the case of EventMedia endpoint service. }
+\end{figure}
 
-\todo{Review Fig.6.2 b) } \\
 
-\todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}
+
 
 \subsection{Discussion}
 \label{sec:discuss}
-
+\todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}
 
 \section{A vocabulary for Describing VIsualization Applications} \label{sec:dvia}
 
@@ -367,19 +356,13 @@ The full version of this sample description is available at \url{http://www.eure
 
 
 
-\subsection*{Summary} \label{sec:conclusion}
-% deploy the vocab and setting up a hub for mashups
-% find patterns for applications
-% develop a recommender for creating applications according to some criteria
-\todo{Rewrite properly this section}
-\textcolor{red}{We have presented in this paper an approach that could help reusing tools and libraries in the domain of applications built on top of datasets in Linked Open Data. We first presented our motivation as to demonstrate to the end users or decision makers, there is always a need to develop a showcase, hence sometimes looking for analogous or similar applications in the area to ease the process of creation the mashup. We proceeded by surveying some applications to extract relevant common facts worth reusable, from which we proposed a small vocabulary (DVIA)  to semantically describe visual applications. }
 
-\textcolor{red}{We need to validate the DVIA by scrapping and reconciling data from all innovative applications websites and exposed them in RDF, starting with some of those we studied and others applications submitted at the Semantic Web Challenge the past three years. We strongly believe that having such a a hub  describing the tools, datasets, etc.  used to build  applications consuming 4-5 stars datasets will contribute to interoperable Applications leading to a Linked Open Visualizations (LOVIZ) on the LOD cloud.}
 
-\section{Map visualization of Geodata Endpoints}
+\section{GeoRDFviz: Map visualization of Geodata Endpoints}
 \label{sec:geordfviz}
 
-With the growing interest of publishing geolocation data according to linked data principles, many endpoints are provided without any visual interface to help navigating on top of the data. This lead to make it difficult for lay users to grab the essence of the data without learning some SPARQL queries. On the other hand, visual depiction of a location in a map makes it easier to identifier a resource. In this work, we present a lightweight tool that help understanding the geodata resources behind any endpoint in a more attractive way to non-experts users. GeoRDFviz is built using generic queries and three visual actions: (i) zooming, (ii) filtering and (iii) describing of resources with geometry.
+With the growing interest of publishing geolocation data according to linked data principles, many endpoints are provided without any visual interface to help navigating on top of the data. This lead to make it difficult for lay users to grab the essence of the data without learning some SPARQL queries. On the other hand, visual depiction of a location in a map makes it easier to identifier a resource. \texttt{GeoRDFviz} is a lightweight tool that help understanding the geodata resources  in any endpoint in a more attractive way for non-experts users. GeoRDFviz is built using generic queries in SPARQL and three visual actions: (i) zooming, (ii) filtering and (iii) describing of resources with geometry. GeoRDFviz prototype at \url{http://semantics.eurecom.fr/datalift/GeoRDFviz/}.
+The user first select the endpoint to visualize. GeoRDFviz picks up randomly a resource contained in the endpoint and direct the user to that position in a map. From this point, the user can zoom-in to find list of resources around that area of the map, and progressively can reach a more specific resource. By clicking on the resource, a pop-up menu shows more connections of the resource modeled as \texttt{SKOS} concepts. The application is a client application implemented using Backbone.js library\footnote{\url{http://backbonejs.org/}}.
 
 \begin{figure*}[!htbp]
 \begin{center}
@@ -390,27 +373,25 @@ With the growing interest of publishing geolocation data according to linked dat
 \end{figure*}
 
 
-\subsection{GeoRDFviz System Overview}
-\label{sec:system}
-\todo{DEscribe here the system}
-GeoRDFviz prototype at \url{http://semantics.eurecom.fr/datalift/GeoRDFviz/}
-
-\paragraph{Technology Stack}
-
-\paragraph{Features}
-
-
-
-
 \section{Important Properties for an Entity}
 \label{sec:propEntities}
 In many knowledge bases, entities are described with numerous properties. However, not all properties have the same importance. Some properties are considered as keys for performing instance matching tasks while other properties are generally chosen for quickly providing a summary of the key facts attached to an entity. Our motivation is to provide a method enabling to select what properties should be used when depicting the summary of an entity, for example in a multimedia question answering system such as QakisMedia\footnote{\url{http://qakis.org/}} or in a second screen application providing more information about a particular TV program\footnote{\url{http://www.linkedtv.eu/demos/linkednews/}}. Our approach consists in: (i) reverse engineering the Google Knowledge Panel by extracting the properties that Google considers as sufficiently important to show (Section~\ref{sec:knowledge-graph}), and (ii) analyzing users' preferences by conducting a user survey and comparing the results (Section~\ref{sec:evaluation}). We finally show how we can explicitly represent this knowledge of preferred properties to attach to an entity using the Fresnel vocabulary~\cite{pietriga2006}. \\
-\todo{TODO: ADD reference here?} \\
-\todo{ADD figure of GKP search + result of crawling in JSON or implementation code}
+
+%\todo{ADD figure of GKP search + result of crawling in JSON or implementation code}
+%\begin{figure}
+%\centering{
+%\includegraphics[scale=.9]{img/gkpGreece.png}
+%\label{fig:gkpGreece}
+%\caption{Google's Knowledge Panel for Greece}
+%}
+%\end{figure}
 
 \subsection{Reverse Engineering the Google KG Panel}
 \label{sec:knowledge-graph}
 Web scraping is a technique for extracting data from Web pages. We aim at capturing the properties depicted in the Google Knowledge Panel (GKP) that are injected in search result pages~\cite{Bergman2012}. We have developed a Node.js application that queries all DBpedia concepts that have at least one instance which is \texttt{owl:sameAs} with a Freebase resource in order to increase the probability that the search engine result page (SERP) for this resource will contain a GKP. We assume in our experiments that the properties displayed for an entity are type and context dependent (country, time, query) which can affect the results. Moreover, we filter out generic concepts by excluding those who are direct subclasses of \texttt{owl:Thing} since they will trigger ambiguous queries. We obtained a list of $352$ concepts\footnote{See also the SPARQL query at \url{http://goo.gl/EYuGm1}}.
+
+
+
 
 \begin{algorithm}[h]
 \scriptsize
@@ -743,6 +724,7 @@ For the interconnection process, we didn't use the current module. Instead of th
 \item LinkedGeoData\footnote{\url{http://linkedgeodata.org/sparql}}, as the underlying data used comes from the community project Open Street Map (OSM). Here, we got  a total of $601$ matching links in the category of \texttt{lgdo:BuildingSchool}\footnote{\url{http://linkedgeodata.org/ontology/BuildingSchool}}. 
 \end{enumerate}
 
+
 \subsection{User Interface}
 The target device for the application is Mobile phone, using principally two frameworks: Jquery mobile\footnote{http://jquerymobile.com/} and  backbone javascript\footnote{\url{http://backbonejs.org/}}. 
 The application provides geolocation, search by city/district, graph charts for stats, table views of relevant results aggregated or group by some other aspects. 
@@ -755,10 +737,9 @@ The application provides geolocation, search by city/district, graph charts for 
 
 \end{enumerate}
 
-The Figure ~\ref{fig:searchingSchool} shows the three different views on a running example.
+Figure ~\ref{fig:searchingSchool} shows the three different views on a running example when using the application in a Mobile Phone.
 
-
-\begin{figure*}[!htbp]
+\begin{figure*}[ht!bp]
 \begin{center}
 \subfigure[Search options]{
 \includegraphics[height=62mm,width=42mm]{img/searching.png}
@@ -776,6 +757,8 @@ The Figure ~\ref{fig:searchingSchool} shows the three different views on a runni
 \label{fig:searchingSchool}
 \end{center}
 \end{figure*}
+
+
 
 
 
@@ -941,4 +924,13 @@ The RDF information about events and applications is populated only if event org
 \label{sec:summarych5}
 \todo{extend to reflect all the content of the chapter}
 
-In this chapter we have presented  an approach for creating visualizations on top of Linked Data based on Semantic Web technologies. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with commonly used and domain vocabularies. We then present a description of the main components of a Linked Data Visualization Wizard. We describe a lightweight implementation in javascript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow for publishing and linking data on the web, such as Datalift\ref{SECTION-DATALIFT} or the GeoKnow Stack\ref{SECTION-GEOKNOW}. 
+In this chapter we have presented  an approach for creating visualizations on top of Linked Data based on Semantic Web technologies. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with commonly used and domain vocabularies. We then present a description of the main components of a Linked Data Visualization Wizard. We describe a lightweight implementation in JavaScript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow/framework for publishing and linking data on the Web, such as Datalift or the GeoKnow Stack. 
+
+
+% deploy the vocab and setting up a hub for mashups
+% find patterns for applications
+% develop a recommender for creating applications according to some criteria
+
+%\textcolor{red}{We have presented in this paper an approach that could help reusing tools and libraries in the domain of applications built on top of datasets in Linked Open Data. We first presented our motivation as to demonstrate to the end users or decision makers, there is always a need to develop a showcase, hence sometimes looking for analogous or similar applications in the area to ease the process of creation the mashup. We proceeded by surveying some applications to extract relevant common facts worth reusable, from which we proposed a small vocabulary (DVIA)  to semantically describe visual applications. }
+
+%\textcolor{red}{We need to validate the DVIA by scrapping and reconciling data from all innovative applications websites and exposed them in RDF, starting with some of those we studied and others applications submitted at the Semantic Web Challenge the past three years. We strongly believe that having such a a hub  describing the tools, datasets, etc.  used to build  applications consuming 4-5 stars datasets will contribute to interoperable Applications leading to a Linked Open Visualizations (LOVIZ) on the LOD cloud.}
