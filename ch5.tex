@@ -8,14 +8,13 @@
 
 \section{Introduction}
 \label{sec:introch5}
+The object of visualization is to develop insights from collected data. Moreover, according to Information Theory, vision is the sense that has the largest bandwidth (100 Mbits/s), which makes it the best suited channel to convey information to the brain \cite{Ware:2014}. Based on the Visual Information Seeking Mantra: \textit{``overview first, zoom and filter, then details on demand''} \cite{Shneiderman99}, we advocate for more visual interactive representations of RDF graphs using SPARQL Endpoints.   At the same time,  we use the term ``Linked Data Visualization'', to refer to a \textit{combination of charts, graphics, and other visual elements built on top of 4-5 stars datasets accessible via a SPARQL endpoint}. 
+Linked Data offers some great advantages for publishing government data. The approach makes it easy to publish information in a way that allows it to be combined with other sets of data. The benefits also arise from the semantics associated to things, common identifiers for things, from the inherent extensibility of the RDF data model, and from the publication of data in a standard format. Linked Data is a great way of publishing information for diverse and distributed organizations, such as government \cite{tennison10}.
 
-Linked data offers some great advantages for publishing government data. The approach makes it easy to publish information in a way that allows it to be combined with other sets of data. The benefits also arise from the semantics associated to things, common identifiers for things, from the inherent extensibility of the RDF data model, and from the publication of data in a standard format. Linked data is a great way of publishing information for diverse and distributed organizations, such as government \cite{tennison10}.  
+Despite the presence of more and more datasets published as Linked Data, there is still a need to help end users to discover what (unknown) datasets describe by hiding the complexity of SPARQL queries from such users. The RDF model, its various serializations and the SPARQL query language are foreign to the majority of developers who understandably want to be able to use the tool chains that they are familiar with to access government data. Sometimes, publishing data purely as RDF, and providing access purely through SPARQL queries raises an unacceptable barrier onto the use of that data. Moreover, the task of identifying the key categories of datasets can help in selecting and matching the most suitable visualization types.
 
-However, the RDF model, its various serializations and the SPARQL query language are foreign to the majority of developers. Those developers understandably want to be able to use the tool chains that they are familiar with to access government data. Publishing data purely as RDF, and providing access purely through SPARQL queries raises an unacceptable barrier onto the use of that data. 
-
-\textcolor{red}{Steps for creating a visualization over RDF from scratch: 
--------
-To create a web-based visualization from scratch, the user should need to know how to do several tasks. First, the user should know how to write a program to send the query to a SPARQL endpoint, obtain the results and process them properly. Second, the user should need advanced knowledge in a programming language such as JavaScript or Flash, along with other languages such as Cascade-style sheet (CSS), Scalable Vector Graphics (SVG)[48] and other web technologies. In many cases this is not enough, and knowledge related to libraries such as the ones mentioned in Section 2.2 would be necessary as well. Third, all these tasks need to be done separately, since no integrated environment is used. Thus, the main advantage of Visualbox is that it reduces the knowledge necessary to create a visualization and diminish the complexity of the project by helping performing these tasks in one integrated environment.}
+In this chapter, we discuss our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). 
+ 
 
 
 \section{Wizard for Visualizations}
@@ -25,16 +24,12 @@ To create a web-based visualization from scratch, the user should need to know h
 \subsection{Background}
 With the growing adoption of the Linked Data principles, there is a real need to support data consumers in quickly getting visualizations that enable to explore a dataset. In order to involve more general Web users into the Semantic Web and Linked Data world, there is a need to build tools that reuse existing visualization libraries showing the key information about RDF datasets. Many datasets are published using SPARQL Endpoints and are not ``visually'' accessible. Thus, understanding the underlying graphs and consuming them require lay users to have some knowledge in writing queries. 
 
-The object of visualization is to develop insights from collected data. Moreover, according to Information Theory, vision is the sense that has the largest bandwidth (100 Mbits/s), which makes it the best suited channel to convey information to the brain \cite{Ware:2014}. Based on the Visual Information Seeking Mantra: \textit{``overview first, zoom and filter, then details on demand''} \cite{Shneiderman99}, we advocate for more visual interactive representations of RDF graphs using SPARQL Endpoints.   At the same time,  we use the term ``Linked Data Visualization'', to refer to a \textit{combination of charts, graphics, and other visual elements built on top of 4-5 stars datasets accessible via a SPARQL endpoint}. 
-Despite the presence of more and more datasets published as Linked Data, there is still a need to help end users to discover what (unknown) datasets describe by hiding the complexity of SPARQL queries from such users. Moreover, the task of identifying the key categories of datasets can help in selecting and matching the most suitable visualization types.
-
 In this section, we propose a first step towards making available a semi-automatic way for the production of possible visualization of linked data sets of high-level categories grouping objects that are worth viewing and we associate them with some very well known vocabularies. Then, we describe the implementation of a Linked Data Visualization Wizard and its main components. This wizard can be used to easily visualize slices of datasets based on generic types detected.
 
-The remainder  of this paper is structured as follows. We first propose  in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). 
 
 \subsection{Dataset Analysis}
 \label{sec:vizTypes}
-When developing an application, there are some ``important'' classes/categories, objects or datatypes that can be detected first to help to guide in the progress of creating a set of visualizations tied with those categories. We distinguish seven categories while acknowledging that this is not necessary an exhaustive list:
+When developing an application, there are some \textit{``important''} classes/categories, objects or datatypes that can be detected first to help to guide in the progress of creating a set of visualizations tied with those categories. We distinguish seven categories while acknowledging that this is not necessary an exhaustive list:
 \begin{itemize}
  \item{\S~[\textbf{Geographic information}]}: This category is for data modeled using \texttt{geo:SpatialThing}, \texttt{dbpedia-owl:Place}, \texttt{schema:Place} or \texttt{gml:\_Feature} classes.
  \item{\S~[\textbf{Temporal information}]}: This category also includes dataset containing date, time (e.g: \texttt{xsd:dateTime}) and period or interval of time, using the OWL Time ontology.
@@ -221,7 +216,7 @@ In this section, we describe the experiments and report the evaluation on detect
 We have evaluated our approach on the list of $444$ endpoints referenced at \url{http://sparqles.okfn.org/} monitoring the availability, performance, interoperability and discoverability of SPARQL Endpoints registered in Datahub \cite{buil2013} . We have implemented a script in python to speed up the process and obtain the results. Every ASK query for the different category is implemented in a separate function requesting a JSON response.
  
 
-\subsection{Evaluation}
+\subsection{Evaluation of the Category Detection}
 From the $444$ endpoints used on the detection category module, $278$ endpoints (62.61\%) were able to give satisfactory (yes/no on one of the seven categories) results based on the queries. However, almost 37.38\% of the endpoints were either down at the time of our experiments or the response header was in XML instead of JSON (as set up in the script). This result shows that our proposal with the current implementation (not covering all the vocabularies in LOV) make use of most popular vocabularies reused in the Linked Data. 
 \begin{table}[!htbp]
 \centering{
@@ -283,11 +278,22 @@ The system can be used in any tool consuming Linked Data in which the complexity
 \caption{Categories detected and visualization generated by the Linked Data visualization wizard in the case of EventMedia endpoint service. }
 \end{figure}
 
+\section{GeoRDFviz: Map visualization of Geodata Endpoints}
+\label{sec:geordfviz}
 
+With the growing interest of publishing geolocation data according to linked data principles, many endpoints are provided without any visual interface to help navigating on top of the data. This lead to make it difficult for lay users to grab the essence of the data without learning some SPARQL queries. On the other hand, visual depiction of a location in a map makes it easier to identifier a resource. \texttt{GeoRDFviz} is a lightweight tool that help understanding the geodata resources  in any endpoint in a more attractive way for non-experts users. GeoRDFviz is built using generic queries in SPARQL and three visual actions: (i) zooming, (ii) filtering and (iii) describing of resources with geometry. GeoRDFviz prototype at \url{http://semantics.eurecom.fr/datalift/GeoRDFviz/}.
+The user first select the endpoint to visualize. GeoRDFviz picks up randomly a resource contained in the endpoint and direct the user to that position in a map. From this point, the user can zoom-in to find list of resources around that area of the map, and progressively can reach a more specific resource. By clicking on the resource, a pop-up menu shows more connections of the resource modeled as \texttt{SKOS} concepts. The application is a client application implemented using Backbone.js library\footnote{\url{http://backbonejs.org/}}.
 
+\begin{figure*}[!htbp]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{img/geoRDFvizpic_1200x.png}
+\caption{Screenshot of the user interface. The circles with numbers highlight the different elements : (1) list of endpoints, (2) number of resources available in the map area, (3) A zoom to a given element and (4) description of the selected resource.}
+\label{fig:geoviz-ui}
+\end{center}
+\end{figure*}
 
-\subsection{Discussion}
-\label{sec:discuss}
+\subsection{Evaluation with Existing Approaches}
+\label{sec:eval}
 \todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}
 
 \section{A vocabulary for Describing VIsualization Applications} \label{sec:dvia}
@@ -358,19 +364,7 @@ The full version of this sample description is available at \url{http://www.eure
 
 
 
-\section{GeoRDFviz: Map visualization of Geodata Endpoints}
-\label{sec:geordfviz}
 
-With the growing interest of publishing geolocation data according to linked data principles, many endpoints are provided without any visual interface to help navigating on top of the data. This lead to make it difficult for lay users to grab the essence of the data without learning some SPARQL queries. On the other hand, visual depiction of a location in a map makes it easier to identifier a resource. \texttt{GeoRDFviz} is a lightweight tool that help understanding the geodata resources  in any endpoint in a more attractive way for non-experts users. GeoRDFviz is built using generic queries in SPARQL and three visual actions: (i) zooming, (ii) filtering and (iii) describing of resources with geometry. GeoRDFviz prototype at \url{http://semantics.eurecom.fr/datalift/GeoRDFviz/}.
-The user first select the endpoint to visualize. GeoRDFviz picks up randomly a resource contained in the endpoint and direct the user to that position in a map. From this point, the user can zoom-in to find list of resources around that area of the map, and progressively can reach a more specific resource. By clicking on the resource, a pop-up menu shows more connections of the resource modeled as \texttt{SKOS} concepts. The application is a client application implemented using Backbone.js library\footnote{\url{http://backbonejs.org/}}.
-
-\begin{figure*}[!htbp]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{img/geoRDFvizpic_1200x.png}
-\caption{Screenshot of the user interface. The circles with numbers highlight the different elements : (1) list of endpoints, (2) number of resources available in the map area, (3) A zoom to a given element and (4) description of the selected resource.}
-\label{fig:geoviz-ui}
-\end{center}
-\end{figure*}
 
 
 \section{Important Properties for an Entity}
@@ -760,12 +754,10 @@ Figure ~\ref{fig:searchingSchool} shows the three different views on a running e
 
 
 
-
-
 \section{Improving the discovery of applications contests in Open Data Events}
 \label{sec:contests}
 
-\todo{add Alexis work + add appendix of content scrapping and JS apps installation }
+%\todo{add Alexis work + add appendix of content scrapping and JS apps installation }
 
 \subsection{Background}
 \label{sec:backcontest}
