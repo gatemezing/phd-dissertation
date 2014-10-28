@@ -207,9 +207,9 @@ The NeOn Methodology is a scenario-based methodology that supports the collabora
 
 		Figure \ref{fig:LOVandNeOn} shows the activities LOV can support within the overall Neon methodologies activity workflow.
 		
-\begin{figure}
+\begin{figure}[h!tp]
 \centering
-  \includegraphics[width=.95\linewidth]{img/neonScenarios.png}
+  \includegraphics[width=.80\linewidth]{img/neonScenarios.png}
   \caption{Meeting points between LOV and the NeOn methodology, derived from \cite{MC10}.}
   \label{fig:LOVandNeOn}
 \end{figure}
@@ -458,7 +458,7 @@ From the list of URIs that were not LOV-able vocabularies, we wanted to do more 
 \label{sec:conclusion}
 In this Section, we have analyzed numerous vocabularies referenced in LOV and in prefix.cc and we have presented a way to manage the prefixes of those vocabularies. We have shown that in the process of mapping namespaces with prefixes, some conflicts have to be resolved, often by contacting the editors themselves. One future work is to develop a new strategy for the LOV-Bot API to take into account vocabularies published in other formats such as n3 and turtle. This would require to first test the validity of those formats and to adapt the way namespaces are obtained in order to not check only the presence of the \texttt{vann:preferredNamespace} property but to rely on similarity algorithm in order to guess the closest namespace given a URI vocabulary and some statistics of the number of classes and properties.
 
-The work can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far: \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services; \emph{ii)} bridging the LOV back-office and the prefix-cc database using both services API in order to publish a list of common recommended prefixes. The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
+The work can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far: \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services; \emph{ii)} bridging the LOV back-office and the \texttt{prefix.cc} database using both services API in order to publish a list of common recommended prefixes. The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
  
 This (apparently) simple issue of prefixes and namespaces is providing a good illustration of why some kind of governance is needed in the distributed ecosystem of vocabularies and linked data, pointing to both technical and social aspects, and proposing concrete examples of conflict resolution. There is no, and certainly there should never be any, central attribution authority for prefixes, and the needed regulation has to be made a posteriori, including good practices of cooperation and negotiation between vocabulary publishers. Development and harmonization of services such as LOV and prefix.cc is then to be considered as part of the current and more general effort already started by the DCMI\footnote{Long-term Preservation and Governance of RDF Vocabularies: \url{http://dcevents.dublincore.org/IntConf/index/pages/view/vocPres}} and W3C\footnote{W3C Vocabulary Services: \url{http://www.w3.org/2013/04/vocabs/}} for a sustainable governance of vocabularies.
 
@@ -513,11 +513,8 @@ For computing the PIC value, we use the following formula:
 where $w_{f}$ is the weight related to vocabulary $f$.
 
 We consider very important that a vocabulary is being reused by other vocabularies and implemented within real world datasets. For example, the \texttt{foaf} ontology is weighted $6$ because it reuses vocabularies (1), it has been used in some datasets (2) and it is being reused by other vocabularies (3). The \texttt{dul}\footnote{\url{http://www.ontologydesignpatterns.org/ont/dul/DUL.owl}} vocabulary is weighted $3$ because it doesn't reuse any vocabulary but it is instead used by several other vocabularies.
-\vspace{-0.2cm}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%   Experiments on Vocabularies  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \subsection{Experiments on Vocabularies}
 \label{sec:experiments}
@@ -685,7 +682,31 @@ We have presented in this section a different perspective of ranking vocabularie
 
 \section{Datalift module for selecting vocabularies}
 \label{sec:data2rdf}
-Here, describe the module for choosing vocabularies of Datalift platform, Data2RDF. 
+Datalift platform comes with a module to map data objects and properties to ontology classes and predicates available in the LOV catalogue. Data2Ontology takes an input a ``raw RDF'', that is a dataset that has been converted directly from legacy format to triples. The goal is to help to publishers reusing existing ontologies for converting their dataset for easy discovery and interlinking. It consists of three main components assisting the publisher in selecting properties suitable for the dataset to be published. \begin{description}
+\item[\odot~ \textbf{LOV component:}] This component is in charge to connect with the LOV catalogue to retrieve up-to-date ontologies using the LOV search API\footnote{\url{http://lov.okfn.org/dataset/lov/apidoc/#lov2search}}. 
+\item[\odot~ \textbf{Matching Workflow:}] Data2Ontology offers to map the data to LOV by automatically proposing a list of best matches. The suggestions are based on the algorithm that:
+   \begin{enumerate}
+   \item maximizes linguistic proximity between data properties and ontology predicates,
+   \item maximizes the estimated quality of the target ontology using LOV evaluation criteria, and
+   \item minimizes the number of candidates target ontologies to increase the overall semantic of the transformed dataset.
+   \end{enumerate}
+   
+ \item[\odot~ \textbf{SPARQL Generator:}] This module receives as input the desired mappings and creates the SPARQL CONSTRUCT query needed to implement the mapping. The query can further be modified before the execution to generate a new dataset in the lifting process with Datalift.
+   
+\end{description}
+Figure \ref{fig:matchingprocess} illustrates the process of matching the properties with ontologies. Depending on the data properties and object properties used to map the elements of the datasets, Data2Ontology can also automatically infer the class model. However, the user can still distribute the predicate matches among several interconnected classes, as well as to add new predicates and values. Once the properties are matched with the desired predicates and their classes, the resulting model can be viewed as a graph.  
+ 
+ \begin{figure}
+ \centering{
+ \includegraphics[scale=.4]{img/data2ontologyMatch.png}
+ \caption{Matching data properties with ontology predicates in Data2Ontology module}
+ \label{fig:matchingprocess}
+ 
+ }
+ 
+ \end{figure}
+
+ 
 
 \section{URI Patterns}
 \label{sec:uris}
