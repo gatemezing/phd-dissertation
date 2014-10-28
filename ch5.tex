@@ -13,7 +13,7 @@ Linked Data offers some great advantages for publishing government data. The app
 
 Despite the presence of more and more datasets published as Linked Data, there is still a need to help end users to discover what (unknown) datasets describe by hiding the complexity of SPARQL queries from such users. The RDF model, its various serializations and the SPARQL query language are foreign to the majority of developers who understandably want to be able to use the tool chains that they are familiar with to access government data. Sometimes, publishing data purely as RDF, and providing access purely through SPARQL queries raises an unacceptable barrier onto the use of that data. Moreover, the task of identifying the key categories of datasets can help in selecting and matching the most suitable visualization types.
 
-In this chapter, we discuss our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). 
+In this chapter, we present our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). Besides, we reverse engineer the GKP (Section \ref{sec:propEntities}) to look for the most important properties of an Entity. Then, we present two domain applications in events (Section \ref{sec:confomaton}) and statistics (Section \ref{sec:perfectSchool} ). Finally, we discuss how to improve the discovery of applications developed in Open data events (Section \ref{sec:contests}) by proposing a vocabulary and a plugin to easily annotate their web pages  and later generate RDF data.  
  
 
 
@@ -240,7 +240,7 @@ From the $444$ endpoints used on the detection category module, $278$ endpoints 
 
 This also implies a good coverage of the method that uses standard queries and yet can be extended. The full result of the detection module on the queried services is available at \url{http://cf.datawrapper.de/3FuiV/2/}, where for each column, the value $0$ stands for \textit{no presence} and $1$ for the \textit{presence} of the categories. As provided in Table~\ref{tab:experiments}, 21.84\% of geo data was detected, 13.288\% of person data, 10.81\% of org data and 3.6\% of SKOS data.
  
-\begin{table}[!htbp]
+\begin{table}[ht!]
 \centering{
 \begin{tabular}{lcccccc}
 \specialrule{1pt}{1pt}{1pt}
@@ -292,9 +292,9 @@ The user first select the endpoint to visualize. GeoRDFviz picks up randomly a r
 \end{center}
 \end{figure*}
 
-\subsection{Evaluation with Existing Approaches}
-\label{sec:eval}
-\todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}
+%\subsection{Comparison with Existing Approaches}
+%\label{sec:eval}
+%\todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}
 
 \section{A vocabulary for Describing VIsualization Applications} \label{sec:dvia}
 
@@ -362,11 +362,6 @@ The full version of this sample description is available at \url{http://www.eure
 
 
 
-
-
-
-
-
 \section{Important Properties for an Entity}
 \label{sec:propEntities}
 In many knowledge bases, entities are described with numerous properties. However, not all properties have the same importance. Some properties are considered as keys for performing instance matching tasks while other properties are generally chosen for quickly providing a summary of the key facts attached to an entity. Our motivation is to provide a method enabling to select what properties should be used when depicting the summary of an entity, for example in a multimedia question answering system such as QakisMedia\footnote{\url{http://qakis.org/}} or in a second screen application providing more information about a particular TV program\footnote{\url{http://www.linkedtv.eu/demos/linkednews/}}. Our approach consists in: (i) reverse engineering the Google Knowledge Panel by extracting the properties that Google considers as sufficiently important to show (Section~\ref{sec:knowledge-graph}), and (ii) analyzing users' preferences by conducting a user survey and comparing the results (Section~\ref{sec:evaluation}). We finally show how we can explicitly represent this knowledge of preferred properties to attach to an entity using the Fresnel vocabulary~\cite{pietriga2006}. \\
@@ -384,6 +379,19 @@ In many knowledge bases, entities are described with numerous properties. Howeve
 \label{sec:knowledge-graph}
 Web scraping is a technique for extracting data from Web pages. We aim at capturing the properties depicted in the Google Knowledge Panel (GKP) that are injected in search result pages~\cite{Bergman2012}. We have developed a Node.js application that queries all DBpedia concepts that have at least one instance which is \texttt{owl:sameAs} with a Freebase resource in order to increase the probability that the search engine result page (SERP) for this resource will contain a GKP. We assume in our experiments that the properties displayed for an entity are type and context dependent (country, time, query) which can affect the results. Moreover, we filter out generic concepts by excluding those who are direct subclasses of \texttt{owl:Thing} since they will trigger ambiguous queries. We obtained a list of $352$ concepts\footnote{See also the SPARQL query at \url{http://goo.gl/EYuGm1}}.
 
+\begin{figure*}[ht!bp]
+\begin{center}
+\subfigure[Google's Knowledge Panel for Greece]{
+\includegraphics[height=62mm,width=45mm]{img/gkpGreece.png}
+}
+\subfigure[Results of the crawling for the class City]{
+\includegraphics[height=62mm,width=45mm]{img/gkpCrawlingResult.png}
+}
+
+\caption{Google Knowledge Graph Reverse Engineering Process.}
+\label{fig:gkpReverse}
+\end{center}
+\end{figure*}
 
 
 
@@ -417,6 +425,8 @@ Web scraping is a technique for extracting data from Web pages. We aim at captur
 
 
 For each of these concepts, we retrieve $n$ instances (in our experiment, $n$ was equal to 100 random instances). For each of these instances, we issue a search query to Google containing the instance label. Google does not serve the GKP for all user agents and we had to mimic a browser behavior by setting the $User-Agent$ to a particular browser. We use CSS selectors to check the existence of and to extract data from a GKP. An example of a query selector is $.\_om$ (all elements with class name $\_om$) which returns the property DOM element(s) for the concept described in the GKP. From our experiments, we found out that we do not always get a GKP in a SERP. If this happens, we try to disambiguate the instance by issuing a new query with the concept type attached. However, if no GKP was found again, we capture that for manual inspection later on. Listing~\ref{algoscrapping} gives the high level algorithm for extracting the GKP. The full implementation can be found at \url{https://github.com/ahmadassaf/KBE}. We finally observe that this experiment is only valid for the English Google.com search results since GKP varies according to top level names.
+
+Figure \ref{fig:gkpReverse} shows the GKP for Greece, and the results of crawling and mapping for the class \texttt{City}. In this particular case, each of the properties of the GKP are directly mapped with the corresponding property in DBpedia and the frequency. Hence, a City is likely to be described in the GKP with at least the following properties: label, description, type, and population. 
 
 
 \subsection{Evaluation}
@@ -468,7 +478,9 @@ Fresnel\footnote{\url{http://www.w3.org/2005/04/fresnel-info/}} is a presentatio
 
 In this Section, we aim at creating a rich environment to enable users to navigate events as well as their various representative media such as photos, slides and tweets. A typical usage is to gather data about a scientific conference and investigate the added value of collecting scientific related media. A non trivial task in such application is to connect structured data with extremely noisy content, especially in the case of a major conference.
 
- We consider a scientific conference, the International Semantic Web Conference (ISWC 2011), which took place in Bonn, Germany last November. Broadly speaking, considering all co-authors, people who have participated in the reviewing process, people who have physically attended the conference or tried to follow it on social networks, we estimate that it has attracted more than 1,500 participants. The conference organizers publish a lot of structured data regarding the conference including the list of accepted papers, their authors and institutions, the detailed program composed of sub-events with the exact timetable and the location (rooms) of the talks. This data is modeled using the SWC ontology\footnote{\url{http://data.semanticweb.org/ns/swc/ontology}}, which is designed to describe academic events, and uses classes and properties from other ontologies such as FOAF (for people) and SWRC (BibTeX elements for the papers). The main conference of type \texttt{swc:ConferenceEvent} is related to a set of sub-events, namely (\texttt{WorkshopEvent}, \texttt{TutorialEvent}, \texttt{SessionEvent}, \texttt{TalkEvent}) via the property \texttt{swc:isSuperEventOf}. Table~\ref{tab:dataset-stats} shows some statistics about the data provided by the Dog Food server regarding the ISWC 2011 conference. We first notice that the data is incomplete. The conference has hosted 16 workshops in total, but the 75 papers are only associated to 8 of them while the 8 others did not have any papers according to the corpus. Furthermore, we find 133 papers that are not connected to any of the events via the predicate \texttt{swc:hasRelatedDocument}. Finally, some useful information is also missing such as the keynote speakers and the \emph{Semantic Web Death Match} (panel) event. This lack of knowledge is also a motivation for our work: can we collect and analyse social network activities in order to complete the factual description of this event?
+\subsection{Background}
+
+ We consider a scientific conference, the International Semantic Web Conference (ISWC 2011), which took place in Bonn, Germany in November 2011. Broadly speaking, considering all co-authors, people who have participated in the reviewing process, people who physically attended the conference or tried to follow it on social networks, we estimate that it attracted more than 1,500 participants. The conference organizers publish a lot of structured data regarding the conference including the list of accepted papers, their authors and institutions, the detailed program composed of sub-events with the exact timetable and the location (rooms) of the talks. This data is modeled using the \texttt{SWC} ontology\footnote{\url{http://data.semanticweb.org/ns/swc/ontology}}, which is designed to describe academic events, and uses classes and properties from other ontologies such as \texttt{FOAF} (for people) and \texttt{SWRC} (BibTeX elements for the papers). The main conference of type \texttt{swc:ConferenceEvent} is related to a set of sub-events, namely (\texttt{WorkshopEvent}, \texttt{TutorialEvent}, \texttt{SessionEvent}, \texttt{TalkEvent}) via the property \texttt{swc:isSuperEventOf}. Table~\ref{tab:dataset-stats} shows some statistics about the data provided by the Dog Food server regarding the ISWC 2011 conference. We first notice that the data is incomplete. The conference has hosted 16 workshops in total, but the 75 papers are only associated to 8 of them while the 8 others did not have any papers according to the corpus. Furthermore, we find 133 papers that are not connected to any of the events via the predicate \texttt{swc:hasRelatedDocument}. Finally, some useful information is also missing such as the keynote speakers and the \emph{Semantic Web Death Match} (panel) event. This lack of knowledge is also a motivation for our work: can we collect and analyse social network activities in order to complete the factual description of this event?
 
 \begin{table}[htbp]
 \footnotesize{
@@ -528,7 +540,7 @@ The name \emph{Confomaton} is a word play on the French term \emph{Photomaton} (
 
 %%%  3.1 Media Collector  %%%
 \subsection{Media Collector}                                                \label{sec:media-collector}
-In the context of \emph{Confomaton}, we have developed so-called \emph{media collectors} with the purpose of searching various social networks and media platforms for event-related media items such as photos, videos, and slides. We currently support 4 social networks (Google+, MySpace, Facebook, and Twitter) and 7 media platforms (Instagram, YouTube, Flickr, MobyPicture, img.ly, yfrog and Twitpic). Our approach being agnostic of media providers, we offer a common alignment schema for all of them:
+In the context of \emph{Confomaton}, we have developed the so-called \emph{media collector} with the purpose of searching various social networks and media platforms for event-related media items such as photos, videos, and slides. We currently support 4 social networks (Google+, MySpace, Facebook, and Twitter) and 7 media platforms (Instagram, YouTube, Flickr, MobyPicture, img.ly, yfrog and Twitpic). Our approach being agnostic of media providers, we offer a common alignment schema for all of them:
 \begin{itemize}
   \item	\textbf{Media URI}, the deep link to the media item, e.g. \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}
   \item \textbf{Type}, the type of the media item, e.g.  ``photo''
@@ -556,10 +568,10 @@ In the context of \emph{Confomaton}, we have developed so-called \emph{media col
  }
 \end{lstlisting}
 
-In order to retrieve data from media providers, we use the particular media provider's search Application Programming Interfaces (API) where they are available, and fall back to Web scraping the media provider's website if not. In some cases, we initially use the search API, but then have to fall back to Web scraping in order to get more details on the results, such as the \textbf{Media URI}, which is not exposed by all APIs. From all media providers, Twitter plays a special role, as it can serve as a host for other media providers. For example, it is very common for tweets to contain links to media items hosted on external media providers such as Twitpic. Other media providers treat media items as first class objects, i.e. have dedicated object keys in their API results for media items, which is not in all cases true for Twitter. We handle this by searching for a list of URIs of known media providers in combination with the actual search term. To illustrate this, when searching for media items for the search term ``ISWC 2012'' on Twitter, we would actually search for ``iswc 2012 AND (twitpic.com OR flic.kr)'' in the background, whereas on all other media providers, the search term ``iswc 2012'' is sufficient. The media collector can be tested at \url{http://webmasterapp.net/social/}.
+In order to retrieve data from media providers, we use the particular media provider's search Application Programming Interfaces (API) where they are available, and fall back to Web scraping the media provider's website if not. In some cases, we initially use the search API, but then have to fall back to Web scraping in order to get more details on the results, such as the \textbf{Media URI}, which is not exposed by all APIs. From all media providers, Twitter plays a special role, as it can serve as a host for other media providers. For example, it is very common for tweets to contain links to media items hosted on external media providers such as \textsc{Twitpic}. Other media providers treat media items as first class objects, i.e. have dedicated object keys in their API results for media items, which is not in all cases true for Twitter. We handle this by searching for a list of URIs of known media providers in combination with the actual search term. To illustrate this, when searching for media items for the search term ``ISWC 2012'' on Twitter, we would actually search for ``iswc 2012 AND (twitpic.com OR flic.kr)'' in the background, whereas on all other media providers, the search term ``iswc 2012'' is sufficient. The media collector can be tested at \url{http://webmasterapp.net/social/}.
 
-\subsection{Data Modeling}
-We have developed an Event Collector, which takes as input the Dog Food corpus described using the SWC ontology and converts all events into the LODE ontology\footnote{\url{http://linkedevents.org/ontology/}}, a minimal model that encapsulates the most useful properties for describing events. We use the Room ontology\footnote{\url{http://vocab.deri.ie/rooms}} for describing the various rooms contained in the conference centre. An explicit relationship between an event and its representative media (photo, slide, micropost, etc.) is realised through the \texttt{lode:illustrate} property. For describing those media, we re-use two popular vocabularies: the W3C Ontology for Media Resources\footnote{\url{http://www.w3.org/TR/mediaont-10/}} for photos and videos, and SIOC\footnote{\url{http://rdfs.org/sioc/spec/}} for tweets, status, posts and slides. The example below shows how a tweet is represented in \emph{Confomaton}.
+\subsection{Data Modeling of Confomaton}
+The Event Collector takes as input the Dog Food corpus described using the SWC ontology and converts all events into the LODE ontology\footnote{\url{http://linkedevents.org/ontology/}}, a minimal model that encapsulates the most useful properties for describing events. We use the \texttt{Room} ontology\footnote{\url{http://vocab.deri.ie/rooms}} for describing the various rooms contained in the conference centre. An explicit relationship between an event and its representative media (photo, slide, micropost, etc.) is realised through the \texttt{lode:illustrate} property. For describing those media, we re-use two popular vocabularies: the W3C Ontology for Media Resources\footnote{\url{http://www.w3.org/TR/mediaont-10/}} for photos and videos, and SIOC\footnote{\url{http://rdfs.org/sioc/spec/}} for tweets, status, posts and slides. The example below shows how a tweet is represented in \emph{Confomaton}.
 {\footnotesize 	
 \begin{verbatim}
 <http://data.linkedevents.org/tweet/af557cef-5d5b-49c6-a4c3-bc9c41ce1555>
@@ -607,11 +619,11 @@ spec:eventViewer a api:Viewer ;
 The system is available at \url{http://semantics.eurecom.fr/confomaton/iswc2011}. On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the centre, the default view is a map centred on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, this data being provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims at showing all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
 
 
-\section{Application consuming Statistics datasets: PerfectSchool}
+\section{Application consuming Statistics datasets}
 \label{sec:perfectSchool}
 
 \subsection{Scope of the Application}
-The \texttt{Perfect School} application is intended to provide useful information on schools in France using semantic technologies, with RDF-ized data enriched with other datasets in the wild. The application and the vocabulary have successfully passed the integrity checker\footnote{\url{http://www.w3.org/2011/gld/wiki/Data_Cube_Implementations}}  of an implementation for the candidate recommendation of Data Cube \url{http://www.w3.org/TR/vocab-data-cube/ } vocabulary at W3C.
+The \texttt{Perfect School} application is intended to provide useful information on schools in France using semantic technologies, with RDF-ized data enriched with other datasets in the wild. The application and the vocabulary have successfully passed the integrity checker\footnote{\url{http://www.w3.org/2011/gld/wiki/Data_Cube_Implementations}}  of an implementation for the candidate recommendation of Data Cube vocabulary \cite{dcube}, a recommendation from the W3C.
 
 \subsection{Legacy Datasets}
 In order to build the application, we had to look at some relevant datasets in data.gouv.fr. The ones selected for building the application are the following:
@@ -641,11 +653,11 @@ In order to build the application, we had to look at some relevant datasets in d
 \subsection{Ontology Modeling}
 We have reused some external ontologies for more interoperability:
 \begin{itemize}
-\item \texttt{aiiso}\footnote{http://vocab.org/aiiso/schema} for the type of school and codes of school.
-\item \texttt{geofla}\footnote{http://data.ign.fr/def/geofla\#} since the schools are considered as a topographic entities,
-\item \texttt{geom}\footnote{http://data.ign.fr/def/geometrie\#} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf#} . 
+\item \texttt{aiiso}\footnote{\url{http://vocab.org/aiiso/schema}} for the type of school and codes of school.
+\item \texttt{geofla}\footnote{\url{http://data.ign.fr/def/geofla#}} since the schools are considered as a topographic entities,
+\item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf#} . 
 \item \texttt{skos:Concept} for describing the 30 types of nature of schools. 
-\item \texttt{qb:DimensionProperty}\footnote{http://www.w3.org/TR/vocab-data-cube/} and \texttt{qb:MeasureProperty} for modeling the dimensions and different indicators available for a given school. 
+\item \texttt{qb:DimensionProperty} and \texttt{qb:MeasureProperty} \cite{dcube} for modeling the dimensions and different indicators available for a given school. 
 \end{itemize}
 The resulting vocabulary is available at \url{http://purl.org/ontology/dvia/ecole}. 
 
@@ -775,7 +787,7 @@ In order to present the event and application information in structured format, 
 
 \begin{figure}[!htbp]
 
-\includegraphics[]{img/rdfTriplesBeforeChanges.pdf}
+\includegraphics[scale=.8]{img/rdfTriplesBeforeChanges.pdf}
 \caption{The RDF triples before changes. Here we state that the application SBA Gems has won an award in the event Apps for Entrepreneurs. }
 \label{fig:modelA}
 \end{figure}
@@ -784,7 +796,7 @@ In \ref{fig:modelA}, the model is complex, because it requires us to specify an 
 
 \begin{figure}[!htbp]
 \centering{
-\includegraphics[]{img/rdfTriplesAfterChanges.pdf}
+\includegraphics[scale=.8]{img/rdfTriplesAfterChanges.pdf}
 \caption{The RDF triples after changes.}
 \label{fig:modelB}
 }
@@ -810,35 +822,35 @@ The inspiration for the JavaScript based solution came from services like \url{h
 The most striking difference between the CMS based plugin and the JavaScript plugin is the user base, since the JavaScript solution works on any web page while the CMS plugin obviously only can be installed on a dedicated websites. Also the technical approach differs significantly, because in the CMS based approach the server will do all the work for producing the HTML and RDFa markup for the events, while in the JavaScript approach it is the client browser that is responsible for this task.
 
 
-\paragraph{Technical description}
-The JavaScript plugin consists of three distinct parts that are technically independent of each other, but they can still be deployed on the same server if needed:
+\subsubsection{Technical description}
+The JavaScript plugin consists of three distinct parts (Cf. Figure \ref{fig:jsplugin}) that are technically independent of each other, but they can still be deployed on the same server if needed:
 
-\begin{enumerate}
-\item RESTful  API for creating, editing and removing events and applications from the database.
+\begin{description}
+\item [RESTful  API] for creating, editing and removing events and applications from the database.
 Both interfaces listed below (2 and 3) communicates and manipulates the data using the RESTful API
-\item Admin interface for event organizers
+\item [Admin interface] for event organizers. 
 Event organizers manage their events and applications through this interface, which is provided as a ``software as a service'' (SaaS\footnote{\url{http://en.wikipedia.org/wiki/Software_as_a_service}}).
-\item Embeddable script that will display the event and application information both in human readable form and in computer readable form (RDFa format) on the event organizers web page.
+\item [Embeddable script] that will display the event and application information both in human readable form and in computer readable form (RDFa format) on the event organizers web page.
 The script will fetch the event and application information using the RESTful API and then manipulate the document object model (DOM ) after page load and inject the event and application description into the DOM.
-\end{enumerate}
+\end{description}
 
-The different components are also presented in Figure \ref{fig:jsplugin}
+
 
 \begin{figure}[!htbp]
 \centering{
-\includegraphics[]{img/componentsJSplugin.pdf}
+\includegraphics[scale=.8]{img/componentsJSplugin.pdf}
 \caption{Universal JavaScript components}
 \label{fig:jsplugin}
 }
 \end{figure}
 
+\paragraph{RESTful API:}
 The API was implemented in Node.js\footnote{\url{http://nodejs.org/}} , which is a platform for running applications written in JavaScript on server side. It is built on Google Chrome's JavaScript runtime and provides very good performance thanks to it's asynchronous data manipulation model . Node.js has become very popular recently and there is a huge number of third party extensions and frameworks written for it. Furthermore, since the programming language is JavaScript, many libraries and frameworks written for browsers will also function in Node.js. For more details on how to configure the plugin, the readers are encouraged to read the Appendix \ref{ch:appendixA}.
 
 The data is stored in MongoDB, which is the leading NoSQL database\footnote{\url{http://www.mongodb.com/leading-nosql-database}}. In addition to this Mongoose\footnote{\url{http://mongoosejs.com/index.html}} object data mapper  was used in order to simplify the data manipulation and to give structure to the database. Finally, node-restful  was used to transform the Mongoose schema into a working REST API. Node-restful internally relies on Express , which is the most popular web application framework for Node.js.
 
-\paragraph{Admin Interface}
+\paragraph{Admin Interface:}
 The admin interface provides an intuitive and easy-to-use interface for event organizers to manager their events and the related applications. It is provided as software as a service and will be hosted and managed by Apps for Europe. Event organizers will register to the service and after this they have access to all the features of the admin interface. Two screenshots of the service is presented in Figure \ref{fig:adminInterface} .
-
 
 The admin interface is implemented in HTML, CSS and JavaScript. Bootstrap\footnote{\url{http://getbootstrap.com/}}  was used as a CSS framework. It simplifies the development of responsive websites and also provides clean aesthetics for the website. AngularJS\footnote{\url{https://angularjs.org/}}  was used as a JavaScript framework.
 
@@ -886,7 +898,7 @@ The original idea was to automate the triple store data population as far as pos
 \item many links to the event pages were broken, and thus manual work was required in order to relocate the actual page
 \end{itemize}
 
-In order to be as efficient as possible in the data population the semi-automatic approach was used. Here, the key idea was to populate event pages having only a few application entries (less than 10) manually using the JavaScript plugin, and for the rest of the event pages web scraping was used to populate the application entries (the scraping script had to be configured for each event website separately). \textcolor{red}{The script for this is provided in Appendix B.}
+In order to be as efficient as possible in the data population the semi-automatic approach was used. Here, the key idea was to populate event pages having only a few application entries (less than 10) manually using the JavaScript plugin, and for the rest of the event pages web scraping was used to populate the application entries (the scraping script had to be configured for each event website separately). More details of the script can be found in Appendix A.  
 
 The goal was to populate all the past events (112 in total). However, many of the websites for the past events had already disappeared or didn't include enough information for data population. Furthermore, the data population process turned out to take much more time than anticipated, and therefore we managed to populate only 28 events and in total 889 application entries. The average number of application entries per event was 34 and the median 22.
 
@@ -901,7 +913,8 @@ Visualizations and applications could be built on top of the knowledge base, but
 The dataset is available below in different formats as dump for download in RDF/Turtle and MongoDB:
 
 \begin{itemize}
-\item RDF in turtle format: \url{https://www.dropbox.com/s/3075qsblxzau2fk/rdfInTurtleFormat.tar.gz} 
+\item RDF in turtle format: \\
+\url{https://www.dropbox.com/s/3075qsblxzau2fk/rdfInTurtleFormat.tar.gz} 
 \item MongoDB dump: \url{https://www.dropbox.com/s/m2sr4na12v3yk07/apps4europe.tar.gz} 
 \end{itemize}
 
@@ -914,9 +927,10 @@ The RDF information about events and applications is populated only if event org
 
 \section{Summary}
 \label{sec:summarych5}
-\todo{extend to reflect all the content of the chapter}
+%\todo{extend to reflect all the content of the chapter}
 
-In this chapter we have presented  an approach for creating visualizations on top of Linked Data based on Semantic Web technologies. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with commonly used and domain vocabularies. We then present a description of the main components of a Linked Data Visualization Wizard. We describe a lightweight implementation in JavaScript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow/framework for publishing and linking data on the Web, such as Datalift or the GeoKnow Stack. 
+In this chapter we have presented  an approach for creating visualizations on top of Linked Data based on Semantic Web technologies. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with commonly used and domain vocabularies. We then present a description of the main components of a Linked Data Visualization Wizard. We describe a lightweight implementation in JavaScript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow/framework for publishing and linking data on the Web, such as Datalift or the GeoKnow Stack. Besides, we have presented two applications in the domain of statistics and events, consuming different datasets in RDF on real-world scenario. We discussed on how to improve applications developed for contests, by proposing a vocabulary and a tool for populating the model by using a universal plugin. Some past events have been already semi-automatically curated using both the vocabulary and the plugin. 
+
 
 
 % deploy the vocab and setting up a hub for mashups
