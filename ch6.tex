@@ -1,23 +1,96 @@
-\chapter{Best Practices for publishing Government Data}
+\chapter{Best Practices for Publishing Linked Data}
 \label{ch:ch6}
 
-\begin{itemize}
-\item start from Best practices life-cycle
-\item selection/reuse vocabs with LOV by describing LOV
-\item harmonize prefixes
-\item ranking vocabularies for assessing in catalogs
-\end{itemize}
+content: 
+ start from Best practices life-cycle
+selection/reuse vocabs with LOV by describing LOV
+ harmonize prefixes
+ ranking vocabularies for assessing in catalogs
 
-\todo{Find intro life-cycle by Sarven -}
-\todo{Start here with the GLD diagram in the publication life-cycle, with emphasis on Datalift one}
+%\todo{Start here with the GLD diagram in the publication life-cycle, with emphasis on Datalift one}
 
 \section{Introduction}
-What this chapter is about, what we are achieving and introduce the various sections
+%What this chapter is about, what we are achieving and introduce the various sections
 
+In recent years, governments worldwide have mandated publication of open government content to the public Web for the purpose of facilitating open societies and to support governmental accountability and transparency initiatives. In order to realize the goals of open government initiatives, the W3C Government Linked Data Working Group have provided some guidance to aid in the access and re-use of open government data. Based on the ability of Linked Data to provide a simple mechanism for combining data from multiple sources across the Web, it also addresses many objectives of open government transparency initiatives through the use international Web standards for the publication, dissemination and reuse of structured data \cite{bpgld}.
+
+To publish data on the web, stakeholders have to follow different tasks sometimes includes in different life cycle models. As described in \cite{bpgld}, different proposals of life cycles all share common activities, summarized in the need to specify, model and publish data in standard open Web formats. Below are four different life cycles and their specificities:
+
+\begin{itemize}
+\item Hyland et al.\cite{bhyland11} provide a six-step ``cookbook'' to model, create, publish, and announce government linked data. They highlight the role of the World Wide Web Consortium (W3C) which is currently driving specifications and best practices for the publication of governmental data. Hyland et al. lifecycle consists of the following activities: (1) Identify, (2) Model, (3) Name, (4) Describe, (5) Convert, (6) Publish, and (7) Maintain.
+
+\item According to Hausenblas et al.\cite{hausenblas12} existing data management approaches assume control over schema, data and data generation, which is not the case in the Web because it is open, de-centralized environment. Based on their experience in Linked Data publishing and consumption over the past years, they identify involved parties and fundamental phases, which provide for a multitude of so called Linked Data life cycles that consist of the following steps: (1) data awareness, (2) modeling, (3) publishing, (4) discovery, (5) integration, and (6) use cases.
+
+\item Villaz\'{o}n-Terrazas et al. propose in \cite{bvillazon} a first step to formalize their experience gained in the development of government Linked Data, into a preliminary set of methodological guidelines for generating, publishing and exploiting Linked Government Data. Their life cycle consists of the following activities: (1) Specify, (2) Model, (3) Generate, (4) Publish, and (5) Exploit.
+
+\item Datalift vision \cite{scharffe_2012}, the process is divided into 3 principal phases: modeling the data , publishing and exploitation. Figure \ref{fig:datalift-ld} depicts the different steps, closed to the architecture of the platform:
+	\begin{enumerate}
+	\item Modeling the data consists of: (1) supporting the data selection, (2) identifying the relevant vocabulary, (3) defining a schema pattern for the URIs and (4) converting between formats
+	
+	\item Publishing the dataset consists of: (1) interconnecting with external datasets, (2) attaching provenance metadata information, (3) managing access right to the dataset and (4) storing the data in a triple store
+	
+	\item  Exploitation, such as visualizing the dataset, re-publishing and versioning.
+	
+	\end{enumerate}
+
+\end{itemize}
+
+\begin{figure}
+%\begin{wrapfigure}{r}{0.7\textwidth}
+\centering{
+\includegraphics[scale=.6]{img/datalift-ldcycle.png}
+
+\label{fig:datalift-ld}
+\caption{Datalift life cycle for publishing linked data}
+}
+%\end{wrapfigure}
+\end{figure}
+
+Although the process of lifting raw data to interlinked data in Datalift seems to be linear, it can also be cyclic with a maintenance task in the life cycle. Table \ref{tab:lifecycle} summarizes the ten best practices to be taken into account to publish data as Linked Data on the Web.
+
+\begin{table}[ht!b]
+\centering{
+\begin{tabular}{p{2cm}p{3cm}p{7cm}}
+\specialrule{1pt}{1pt}{1pt}
+ \textbf{Step}	& \textbf{Name} & \textbf{Description} 	 \\ \specialrule{1pt}{1pt}{1pt}
+STEP \#1 & \texttt{PREPARE STAKEHOLDERS} 	& Prepare stakeholders by explaining the process of creating and maintaining Linked Open Data	\\	       	 	
+STEP \#2 & \texttt{SELECT A DATASET} & 
+Select a dataset that provides benefit to others for reuse. \\ 
+STEP \#3 & \texttt{MODEL THE DATA} & 
+Modeling Linked Data involves representing data objects and how they are related in an application-independent way\\
+STEP \#4 & \texttt{SPECIFY AN APPROPRIATE LICENSE} & 
+Specify an appropriate open data license with a clear statement about the origin, ownership and terms related to the use of the published data.\\
+STEP \#5 & \texttt{GOOD URIs FOR LINKED DATA} &
+Consider a good URI naming strategy and implementation plan, based on HTTP URIs. Consideration for naming objects, multilingual support, data change over time and persistence strategy are the building blocks for useful Linked Data. \\
+STEP \#6 & \texttt{USE STANDARD VOCABULARIES} & 
+Describe objects with previously defined vocabularies whenever possible. Extend standard vocabularies where necessary, and create vocabularies (only when required) that follow best practices whenever possible.\\
+STEP \#7 & \texttt{CONVERT DATA} &
+Convert data to a Linked Data representation, typically done by script or other automated processes. \\
+STEP \#8 & \texttt{PROVIDE MACHINE ACCESS TO DATA} &
+Provide various ways for search engines and other automated processes to access data using standard Web mechanisms.\\
+STEP \#9 & \texttt{ANNOUNCE NEW DATA SETS} &
+Remember to announce new data sets on an authoritative domain. Importantly, remember that as a Linked Open Data publisher, an implicit social contract is in effect.\\
+STEP \#10 & \texttt{RECOGNIZE THE SOCIAL CONTRACT} & 
+Recognize your responsibility in maintaining data once it is published. Ensure that the dataset(s) remain available where your organization says it will be and is maintained over time.\\
+
+\specialrule{1pt}{1pt}{1pt}
+\end{tabular}
+\caption{Summary of the best practices to publish linked data on the Web adapted from \cite{bpgld}}
+\label{tab:lifecycle}
+}
+\end{table}
+
+In this chapter, we mainly describe our contributions on concrete implementations regarding how to use standard vocabularies (Section \ref{sec:lov-approach}, Section \ref{sec:prefharmoni} and Section \ref{sec:vocabranking}), how to model and convert the data (Section \ref{sec:data2rdf}, Step \#3 \& Step \#7) and practical consideration on how to specify appropriate license on vocabularies and datasets (Section \ref{sec:checker}, cf. Step \#4).  
+
+
+%citing glossary uses \cite{glossairegld}
+%\section{Life cycle for publishing }
 
 \section{Catalog of Vocabularies}
 \label{sec:catalog}
-While we refer the reader to~\cite{AquinJoWS12} for a systematic survey of ontology libraries, we give our own classification of ontology repositories (Table~\ref{tab:catalogs}). In particular, we distinguish six categories of catalogs:
+
+In \cite{glossairegld}, a vocabulary is a collection of ``terms'' with more or less complex semantics used to model a domain. Vocabularies can range from simple such as the widely used RDF Schema, FOAF and Dublin Core Metadata Element Set to complex vocabularies with thousands of terms, such as those used in healthcare to describe symptoms, diseases and treatments. Vocabularies play a very important role in Linked Data, specifically to help with data integration. It's use can also overlaps with Ontology in the context of Linked Data. Regarding catalog of vocabularies, while we refer the reader to~\cite{AquinJoWS12} for a systematic survey of ontology libraries, we give our own classification of ontology repositories (Table~\ref{tab:catalogs}). 
+In particular, we distinguish six categories of catalogs:
 \begin{itemize}
  \item \textit{Catalogs of generic vocabularies/schemas} similar to the LOV catalog, but without any relations among the vocabularies. Example of catalogs falling in this category are vocab.org\footnote{\url{http://vocab.org/}}, ontologi.es\footnote{\url{http://ontologi.es/}}, JoinUp Semantic Assets or the Open Metadata Registry.
  \item \textit{Catalogs of ontologies for a specific domain} such as biomedicine with the BioPortal\footnote{\url{http://bioportal.bioontology.org/}}, geospatial ontologies with SOCoP+OOR\footnote{\url{http://socop.oor.net/}}, Marine Metadata Interoperability and the SWEET ontologies\footnote{\url{http://sweet.jpl.nasa.gov/2.1/}}.
@@ -220,7 +293,7 @@ The NeOn Methodology is a scenario-based methodology that supports the collabora
 
 RDF vocabularies bring their meaning to linked data by defining classes and properties, and their formal semantics. Relying on W3C standards RDFS or OWL, those vocabularies are a fundamental layer in the architecture of the Semantic Web. Without the explicit semantics declared in vocabularies, linked data, even using RDF, would be just linked pieces of information where links have no meaning. Interoperability between data and datasets rely heavily on shared vocabularies, but given the distributed nature of the Web, vocabularies are published by independent parties and there is no centralized coordination of this publication, nor should it be. Various independent services have been developed in order to discover vocabularies and provide information about them, and the community of data publishers and vocabulary managers have all interest in complementarity and coordination between such services. In this section, we focus on a specific aspect of vocabularies: their identification by namespaces and associated prefixes.
 
-In the original XML syntax of RDF, prefixes are simply local shortcuts associated with XML namespaces using \texttt{xmlns} declarations. The usage of prefixes has been further extended to other syntaxes of RDF such as N3 and Turtle. Although a prefix to namespace association is syntactically limited to the local context of the file in which it is declared, common prefixes such as \texttt{rdf:}, \texttt{rdfs:}, \texttt{owl:}, \texttt{skos:}, \texttt{foaf:} and many more have become de facto standards. For example, RDFa has 1.1 has a default profile made of 11 well-used vocabularies based on their general usage on the Semantic Web according to the crawl of Yahoo! and Sindice as of March 2013\footnote{\url{http://www.w3.org/2010/02/rdfa/profile/data/}}. Similarly, the YASGUI SPARQL editor has a list of built-in prefix-namespace associations to ease the construction of SPARQL queries. However, this list of ``standard'' prefixes is open-ended. Interfaces such as SPARQL endpoints (e.g. Virtuoso) use a list of built-in prefixes declaration for more and more namespaces but the choice of entries in this list is all but transparent. Hence, the reason of a given namespace being or not in this list could be interpreted in many ways, a potential source of technical and social conflicts. Therefore, the notion has been slowly spreading, at least implicitly, that common prefixes could and indeed should have a global use, implying some kind of governance and good practices. More and more vocabularies explicitly recommend the prefix that should be used for their namespace, generally using a common if not written good practice to avoid frontal clashes by recommending a prefix not already used. But there is no global policy except implicit rules of fair use to avoid potential conflicts resulting from polysemy (different namespaces using or recommending the same prefix) or synonymy (different prefixes used for the same namespace).
+In the original XML syntax of RDF, prefixes are simply local shortcuts associated with XML namespaces using \texttt{xmlns} declarations. The usage of prefixes has been further extended to other syntaxes of RDF such as N3 and Turtle. Although a prefix to namespace association is syntactically limited to the local context of the file in which it is declared, common prefixes such as \texttt{rdf:}, \texttt{rdfs:}, \texttt{owl:}, \texttt{skos:}, \texttt{foaf:} and many more have become de facto standards. For example, RDFa 1.1 has a default profile made of 11 well-used vocabularies based on their general usage on the Semantic Web according to the crawl of Yahoo! and Sindice as of March 2013\footnote{\url{http://www.w3.org/2010/02/rdfa/profile/data/}}. Similarly, the YASGUI SPARQL editor has a list of built-in prefix-namespace associations to ease the construction of SPARQL queries. However, this list of ``standard'' prefixes is open-ended. Interfaces such as SPARQL endpoints (e.g. Virtuoso) use a list of built-in prefixes declaration for more and more namespaces but the choice of entries in this list is all but transparent. Hence, the reason of a given namespace being or not in this list could be interpreted in many ways, a potential source of technical and social conflicts. Therefore, the notion has been slowly spreading, at least implicitly, that common prefixes could and indeed should have a global use, implying some kind of governance and good practices. More and more vocabularies explicitly recommend the prefix that should be used for their namespace, generally using a common if not written good practice to avoid frontal clashes by recommending a prefix not already used. But there is no global policy except implicit rules of fair use to avoid potential conflicts resulting from polysemy (different namespaces using or recommending the same prefix) or synonymy (different prefixes used for the same namespace).
 
 A vocabulary publisher needs to have access to some services capable of monitoring the existing prefixes usage in order to stick to those rules. Moreover, we focus on two services providing such information on prefixes usage namely prefix.cc\footnote{Service: \url{http://prefix.cc/}; Code: \url{https://github.com/cygri/prefix.cc}} and LOV (Linked Open Vocabularies)~\cite{Datalift:D22}. Both services provide associations between prefixes and namespaces but following a different logic. The prefix.cc service allows anybody to suggest a prefix to namespace association. It supports polysemy and synonymy, and has a very loose control on its crowd-sourced information. What it provides is more a measure of popularity of prefixes and namespaces than a way to put order in them. LOV has a much more strict policy forbidding polysemy and synonymy, enforced by a dedicated back-office database infrastructure, ensuring that each vocabulary in the LOV database is uniquely identified by a prefix, this unique identification allowing the usage of prefixes in various LOV publication URIs. This requirement leads sometimes to a situation where LOV uses prefixes different from the ones recommended by the vocabulary publishers.
 
@@ -454,13 +527,6 @@ From the list of URIs that were not LOV-able vocabularies, we wanted to do more 
 }
 \end{table}
 
-\subsection{Future perspectives}   
-\label{sec:conclusion}
-In this Section, we have analyzed numerous vocabularies referenced in LOV and in prefix.cc and we have presented a way to manage the prefixes of those vocabularies. We have shown that in the process of mapping namespaces with prefixes, some conflicts have to be resolved, often by contacting the editors themselves. One future work is to develop a new strategy for the LOV-Bot API to take into account vocabularies published in other formats such as n3 and turtle. This would require to first test the validity of those formats and to adapt the way namespaces are obtained in order to not check only the presence of the \texttt{vann:preferredNamespace} property but to rely on similarity algorithm in order to guess the closest namespace given a URI vocabulary and some statistics of the number of classes and properties.
-
-The work can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far: \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services; \emph{ii)} bridging the LOV back-office and the \texttt{prefix.cc} database using both services API in order to publish a list of common recommended prefixes. The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
- 
-This (apparently) simple issue of prefixes and namespaces is providing a good illustration of why some kind of governance is needed in the distributed ecosystem of vocabularies and linked data, pointing to both technical and social aspects, and proposing concrete examples of conflict resolution. There is no, and certainly there should never be any, central attribution authority for prefixes, and the needed regulation has to be made a posteriori, including good practices of cooperation and negotiation between vocabulary publishers. Development and harmonization of services such as LOV and prefix.cc is then to be considered as part of the current and more general effort already started by the DCMI\footnote{Long-term Preservation and Governance of RDF Vocabularies: \url{http://dcevents.dublincore.org/IntConf/index/pages/view/vocPres}} and W3C\footnote{W3C Vocabulary Services: \url{http://www.w3.org/2013/04/vocabs/}} for a sustainable governance of vocabularies.
 
 \section{Vocabulary Ranking metrics}
 \label{sec:vocabranking}
@@ -706,15 +772,13 @@ Figure \ref{fig:matchingprocess} illustrates the process of matching the propert
  
  \end{figure}
 
- 
+%\section{URI Patterns}
+%\label{sec:uris}
 
-\section{URI Patterns}
-\label{sec:uris}
-
-Note: Not sure to add this section. Propose the suggestion of patterns in the BP document. 
-\todo{Reuse this: The use of a URIs has added advantages:
-a.	it can be used by automated systems to look up additional data (linked data);
-b.	a triple store may store only one copy of the URI, whereas if a string is used, a copy of that string is always stored for each and every person in the database. Thus, in large data sets, the saving on memory capacity and the improvement in transmission efficiency can be substantial. }
+%Note: Not sure to add this section. Propose the suggestion of patterns in the BP document. 
+%\todo{Reuse this: The use of a URIs has added advantages:
+%a.	it can be used by automated systems to look up additional data (linked data);
+%b.	a triple store may store only one copy of the URI, whereas if a string is used, a copy of that string is always stored for each and every person in the database. Thus, in large data sets, the saving on memory capacity and the improvement in transmission efficiency can be substantial. }
 
 \section{Licenses Compatibility Checker}
 \label{sec:checker}
