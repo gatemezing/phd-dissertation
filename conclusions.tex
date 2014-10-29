@@ -5,7 +5,13 @@
 \label{sec:final}
 Write here summary of all the work in this document w.r.t the three parts.
 
-\section{Opportunities and Challenges}
+
+
+\section{Future Perspectives}
+\label{sec:future}
+
+
+\subsection{Opportunities and Challenges for IGN-France}
 \label{sec:challenges}
 
  The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is particularly acknowledged by the INSPIRE Directive. For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold. On the one hand, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards. On the other hand, the use of semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. 
@@ -14,19 +20,16 @@ According to Linked data principles URIs should remain stable, even if administr
 The last issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
 
 
-%The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is particularly acknowledged by the INSPIRE Directive. This is also true for any georeferenced thematic data, and especially in the context of the Web of data where location properties can be used with benefits for data linking purposes. Particularly, good quality reference geodatasets can be used as the spatial frame for anchoring and combining many thematic data. For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold. On the one hand, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards. On the other hand, the use of semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. However, it may also has the drawback of publishing geographic data twice: following LD principles and according to SDI  standards. This raises the issue of proposing a mediation approach between data access solutions used by SDI and Linked Data.
-%In this article, we have proposed a reference dataset on French administrative units. This dataset is updated annually by IGN France. This raises a first issue on how to deal with data updates and versioning. According to Linked data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and real world evolutions. This issue will be addressed in a future work, as we plan to release a spatio-temporal dataset describing the evolution of French communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
-%Another issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
-
-\section{Future Perspectives}
+\subsection{Generic Visualizations on Linked Data}
+ We plan to use a more exhaustive set of vocabularies in our generic queries for detecting those categories, plugging directly the wizard to the LOV catalogue. Regarding the aggregation properties, it can be extended to take into account other semantic relations (e.g: \texttt{skos:exactMatch}). Additionally, we plan to make an evaluation of the prototype and compare it to related tools such as the ones aiming to build a dataset profile. We also need to quantify when a category is ``important'' within a dataset. For example, is it enough for a dataset to be classified GEODATA with ten triples containing location ? From which number of triples found could be assign the categories and hence the visualizations? These issues can further be investigated to find the best trade-off. 
+ 
+\subsection{Vocabularies and LOV}
 \label{sec:nextSteps}
 Regarding the harmonization of prefixes, the work can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far: \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services; \emph{ii)} bridging the LOV back-office and the prefix-cc database using both services API in order to publish a list of common recommended prefixes. The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
 
-\todo{here is the perspective for ranking voabs} \\
- As future work, we aim to take into account the equivalence axioms (between classes and properties) when computing the Information Content, and more generally, all sort of semantic relationships between terms. Also, we plan to compare our ranking model with other ranking approaches such as graph-based ones (e.g. pagerank). Another future direction work is to investigate the dependency ranking between vocabularies, by focusing on a specific type of ``inlinks'' (i.e. extensions, generalization) and study how they affect the PIC values.
- 
- \todo{plan regarding LD Wizard}
- We plan to use a more exhaustive set of vocabularies in our generic queries for detecting those categories, plugging directly the wizard to the LOV catalogue. Regarding the aggregation properties, it can be extended to take into account other semantic relations (e.g: \texttt{skos:exactMatch}). Additionally, we plan to make an evaluation of the prototype and compare it to related tools such as the ones aiming to build a dataset profile.
+%\todo{here is the perspective for ranking voabs} \\
+ As per ranking vocabularies, we aim to take into account the equivalence axioms (between classes and properties) when computing the Information Content, and more generally, all sort of semantic relationships between terms. Also, we plan to compare our ranking model with other ranking approaches such as graph-based ones (e.g. pagerank). Another future direction work is to investigate the dependency ranking between vocabularies, by focusing on a specific type of ``inlinks'' (i.e. extensions, generalization) and study how they affect the PIC values.
+
  
  \todo{discuss here if it could be wise to use Linked Data Fragments... maybe as future work?}
  

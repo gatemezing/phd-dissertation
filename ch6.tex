@@ -1,12 +1,11 @@
 \chapter{Best Practices for Publishing Linked Data}
 \label{ch:ch6}
 
-content: 
- start from Best practices life-cycle
-selection/reuse vocabs with LOV by describing LOV
- harmonize prefixes
- ranking vocabularies for assessing in catalogs
-
+\begin{flushright}
+\textit{``Cool URIs don't change''} \\
+ Tim Berners-Lee
+ \end{flushright}
+ 
 %\todo{Start here with the GLD diagram in the publication life-cycle, with emphasis on Datalift one}
 
 \section{Introduction}
@@ -927,7 +926,8 @@ First, we evaluate the time performances of the licenses compatibility module: i
 We have introduced the LIVE framework for licenses compatibility. The goal of the framework is to verify the compatibility of the licenses associated to the vocabularies exploited to create a RDF dataset and the license associated to the dataset itself. Several points have to be taken into account as future work. More precisely, in the present paper we consider vocabularies as data but this is not the only possible interpretation. For instance, we may see vocabularies as a kind of compiler, such that, after the creation of the dataset then the external vocabularies are no more used. In this case, what is a suitable way of defining a compatibility verification? We will investigate this issue as well as we will evaluate the usability of the online LIVE tool to subsequently improve the user interface.
 
 
-\section{Conclusion}
-Tell the reader the ``take-away-message'' of this chapter.
+\section{Summary}
+\label{sec:summary-ch6}
+In this chapter, we have presented our contributions on achieving some of the guidelines of the best practices of publishing Linked Data, by presenting the LOV catalogue, the harmonization of LOV with other catalogues, the importance of using semantics to rank vocabularies. Besides, we have presented Data2Ontology, a module aim at helping the reuse of existing vocabularies during the publication of data in Datalift. We finished by presenting \texttt{LIVE}, an online tool to check the compatibility between datasets and vocabularies based on the RDF-defeasible of SPINdle.
 
 
