@@ -3,19 +3,44 @@
 
 \section{Conclusions}
 \label{sec:final}
-Write here summary of all the work in this document w.r.t the three parts.
+%Write here summary of all the work in this document w.r.t the three parts.
 
+This thesis is focused on the challenges of publishing geodata on the Web and a more generic approach to visualize data as Linked Data target to lay-users. The former considers the diversity of different formats used to publish legacy geospatial data, the different projections and CRSs and the representation of complex geometries. The latter approach is different to the state-of-the-art in visualizations where the complexity of SPARQL and RDF is not sufficiently hidden to the users. A deep analysis of the literature has revealed some limitations in the publication of geospatial data and visualization tools, namely:
+\begin{itemize}
+\item The presence on the Web of only 
+\item 
+\item 
+\item 
+\end{itemize}
+
+In this thesis, we have provided different vocabularies that all together support the publication of geodata integrating almost all the CRSs, extending the existing vocabularies. The vocabularies have been used to publish the French Administrative Units, with the data compatible with GeoSPARQL standards. Regarding the visualizations, after reviewing visual tools and existing applications on the Web, we have developed an ontology to better expose the data on the Web for better interoperability. Besides we have proposed a framework to generate automatically visualizations based on categories detected on datasets published as Linked Data, based on predefined categories used in InfoVis and mapped with vocabularies. 
+
+\subsection{Review of the Contributions}
+\todo{get inspiration with Boris thesis}
+This section reviews the main contributions of this thesis and how we solved the open research problems:
+
+\begin{itemize}
+\item The model and implementation of a vocabulary for geometry, topological entities and CRSs.
+\item The implementation of an API for converting data between different CRSs accessible on the Web.
+\item We have contributed in the development of the Datalift platform, an integrated environment to publish raw data on the Web.
+\item The comparison of triple stores for geodata against the geometries handled (literal or structured) to assess which one to use when publishing geospatial data. 
+\item The publication of the French Administrative Units available at \texttt{data.ign.fr} based on the vocabularies developed and implemented. Moreover, we have contributed in the 
+\item We have published the CRSs with unique URIs for better look up and integration in structured geometries on the Web.
+\item The contribution to the \textit{French LOD (FrLOD)} cloud, with more datasets published using the Datalift platform, and covering the French territory.
+\item 
+\end{itemize}
 
 
 \section{Future Perspectives}
 \label{sec:future}
 
+In this thesis, we have tackled some open research problems within the context of publishing and consuming open data on the Web but there are still open issues to resolve or extensions to implement. We would like to mention some of the most important from our perspectives, based on different tasks in the workflow of the publication. 
 
 \subsection{Opportunities and Challenges for IGN-France}
 \label{sec:challenges}
 
  The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is particularly acknowledged by the INSPIRE Directive. For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold. On the one hand, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards. On the other hand, the use of semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. 
-Moreover, there are different types of license policies to access data at IGN (e.g.: research purpose, commercial use, access on demand, etc.), with some of them not necessary ``open'' or free to access: (e.g. BD TOPO\circledR). Although there is a clear understanding of the benefits of publishing and interconnecting data on the web, ongoing investigations on how to combine licenses on datasets are under consideration at IGN. Two solutions are under investigation: (i) different license policies attached to datasets and (ii) the use of a security access mechanism on top of the datasets granting access based on a predetermined configuration on named graphs and resources. 
+Moreover, there are different types of license policies to access data at IGN (e.g., research purpose, commercial use, access on demand, etc.), with some of them not necessary ``open'' or free to access: (e.g., BD TOPO\circledR). Although there is a clear understanding of the benefits of publishing and interconnecting data on the web, ongoing investigations on how to combine licenses on datasets are under consideration at IGN. Two solutions are under investigation: (i) different license policies attached to datasets and (ii) the use of a security access mechanism on top of the datasets granting access based on a predetermined configuration on named graphs and resources. 
 According to Linked data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and real world evolutions. This issue will be addressed in a future work, as we plan to release a spatio-temporal dataset describing the evolution of communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
 The last issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representation choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
 
@@ -28,9 +53,13 @@ The last issue deals with the use of multiple geometries for describing a geogra
 Regarding the harmonization of prefixes, the work can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far: \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services; \emph{ii)} bridging the LOV back-office and the prefix-cc database using both services API in order to publish a list of common recommended prefixes. The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
 
 %\todo{here is the perspective for ranking voabs} \\
- As per ranking vocabularies, we aim to take into account the equivalence axioms (between classes and properties) when computing the Information Content, and more generally, all sort of semantic relationships between terms. Also, we plan to compare our ranking model with other ranking approaches such as graph-based ones (e.g. pagerank). Another future direction work is to investigate the dependency ranking between vocabularies, by focusing on a specific type of ``inlinks'' (i.e. extensions, generalization) and study how they affect the PIC values.
+ As per ranking vocabularies, we aim to take into account the equivalence axioms (between classes and properties) when computing the Information Content, and more generally, all sort of semantic relationships between terms. Also, we plan to compare our ranking model with other ranking approaches such as graph-based ones (e.g., pagerank). Another future direction work is to investigate the dependency ranking between vocabularies, by focusing on a specific type of ``inlinks'' (i.e. extensions, generalization) and study how they affect the PIC values.
 
  
  \todo{discuss here if it could be wise to use Linked Data Fragments... maybe as future work?}
- 
+ \textcolor{red}{
+ 1- Create automatic SPARQL templates, use that templates to automatically identify topics (automatic domain identification) of Linked Datasets ->  evaluation against manually curated domains -base work (ESWC14), ADI workshop/poster/demo \\
+ 2- Create topic categorization/profile for vocabularies/ontologies based on dataset instane level analysis -> evaluation against manually curated LOV (conference)\\
+ 3-  Create topic categorization/profile for datasets .csv or RDF based on dataset instance level analysis - compare against manually curated tags and topics in datahub/dat.gov ... etc. (conference)
+ }
  
