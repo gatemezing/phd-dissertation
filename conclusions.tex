@@ -1,5 +1,9 @@
 \chapter{Conclusions and Future Perspectives}
 \label{ch:conc}
+\begin{flushright}
+\textit{``How do we know that Semantic Web technologies were actually better here, \\as opposed to being what the developers found most familiar?''} \\ (D. Karger)\footnote{\url{http://goo.gl/hQQ3h5}}
+\end{flushright}
+
 
 \section{Conclusions}
 \label{sec:final}
@@ -7,27 +11,35 @@
 
 This thesis is focused on the challenges of publishing geodata on the Web and a more generic approach to visualize data as Linked Data target to lay-users. The former considers the diversity of different formats used to publish legacy geospatial data, the different projections and CRSs and the representation of complex geometries. The latter approach is different to the state-of-the-art in visualizations where the complexity of SPARQL and RDF is not sufficiently hidden to the users. A deep analysis of the literature has revealed some limitations in the publication of geospatial data and visualization tools, namely:
 \begin{itemize}
-\item The presence on the Web of only 
-\item 
-\item 
-\item 
+\item A few presence of complex geometries exposed in structured representation, instead of literals. 
+\item The absence of an explicit reference to CRSs in direct georeference data on the Web.
+\item Absence of visualization tool targeted to lay users to easily grasp the essence of the underlying data published as LOD.  
+\item Many data silos for applications built and published on the Web, lost in many html pages.
+\item Few tools that provide an integrated environment for publishing raw data into Linked Data, from data modeling until the final step of storing the dataset in an endpoint.
+\item The difficulty for publishers to understand and check the compatibility of the licenses between vocabularies and datasets.
+  
 \end{itemize}
 
 In this thesis, we have provided different vocabularies that all together support the publication of geodata integrating almost all the CRSs, extending the existing vocabularies. The vocabularies have been used to publish the French Administrative Units, with the data compatible with GeoSPARQL standards. Regarding the visualizations, after reviewing visual tools and existing applications on the Web, we have developed an ontology to better expose the data on the Web for better interoperability. Besides we have proposed a framework to generate automatically visualizations based on categories detected on datasets published as Linked Data, based on predefined categories used in InfoVis and mapped with vocabularies. 
 
 \subsection{Review of the Contributions}
-\todo{get inspiration with Boris thesis}
-This section reviews the main contributions of this thesis and how we solved the open research problems:
+%\todo{get inspiration with Boris thesis}
+This section reviews the main contributions of this thesis and the solutions to solved some of the open research problems in publishing and consuming data on the Semantic Web:
 
 \begin{itemize}
 \item The model and implementation of a vocabulary for geometry, topological entities and CRSs.
 \item The implementation of an API for converting data between different CRSs accessible on the Web.
 \item We have contributed in the development of the Datalift platform, an integrated environment to publish raw data on the Web.
 \item The comparison of triple stores for geodata against the geometries handled (literal or structured) to assess which one to use when publishing geospatial data. 
-\item The publication of the French Administrative Units available at \texttt{data.ign.fr} based on the vocabularies developed and implemented. Moreover, we have contributed in the 
+\item The publication of the French Administrative Units available at \texttt{data.ign.fr} endpoint, based on the vocabularies developed and implemented. Moreover, we have provided interlinking with relevant existing geospatial datasets.
 \item We have published the CRSs with unique URIs for better look up and integration in structured geometries on the Web.
 \item The contribution to the \textit{French LOD (FrLOD)} cloud, with more datasets published using the Datalift platform, and covering the French territory.
-\item 
+\item We have proposed a generic approach to automatically generate visualizations based on predefined categories.
+\item We have developed two innovative applications consuming events and statistical datasets
+\item We have proposed a vocabulary and a tool that can improve the discovery of applications contests in Open Data events.
+\item Finally, we have proposed an approach to harmonize prefixes used in different catalogues of vocabulary.
+\item We have developed new ranking metrics for vocabularies based on Information Content theories.
+\item Finally, we have built a more efficient tool for checking licenses compatibility between vocabularies and datasets.
 \end{itemize}
 
 
@@ -46,7 +58,7 @@ The last issue deals with the use of multiple geometries for describing a geogra
 
 
 \subsection{Generic Visualizations on Linked Data}
- We plan to use a more exhaustive set of vocabularies in our generic queries for detecting those categories, plugging directly the wizard to the LOV catalogue. Regarding the aggregation properties, it can be extended to take into account other semantic relations (e.g: \texttt{skos:exactMatch}). Additionally, we plan to make an evaluation of the prototype and compare it to related tools such as the ones aiming to build a dataset profile. We also need to quantify when a category is ``important'' within a dataset. For example, is it enough for a dataset to be classified GEODATA with ten triples containing location ? From which number of triples found could be assign the categories and hence the visualizations? These issues can further be investigated to find the best trade-off. 
+We plan to use a more exhaustive set of vocabularies in our generic queries for detecting those categories, plugging directly the wizard to the LOV catalogue. Regarding the aggregation properties, it can be extended to take into account other semantic relations (e.g: \texttt{skos:exactMatch}). Additionally, we plan to make an evaluation of the prototype and compare it to related tools such as the ones aiming to build a dataset profile. We also need to quantify when a category is ``important'' within a dataset. For example, is it enough for a dataset to be classified GEODATA with ten triples containing location ? From which number of triples found could be assign the categories and hence the visualizations? These issues can further be investigated to find the best trade-off.  Another drawback of our work on visualizations is the lack of users' evaluation, with sound experiments to understand users' needs, more focusing on the semantic aspects than the Web. A natural follow-up is to go through this evaluations and re-adapt the applications/visualizations based on the results. 
  
 \subsection{Vocabularies and LOV}
 \label{sec:nextSteps}
@@ -55,11 +67,11 @@ Regarding the harmonization of prefixes, the work can be extended in several dir
 %\todo{here is the perspective for ranking voabs} \\
  As per ranking vocabularies, we aim to take into account the equivalence axioms (between classes and properties) when computing the Information Content, and more generally, all sort of semantic relationships between terms. Also, we plan to compare our ranking model with other ranking approaches such as graph-based ones (e.g., pagerank). Another future direction work is to investigate the dependency ranking between vocabularies, by focusing on a specific type of ``inlinks'' (i.e. extensions, generalization) and study how they affect the PIC values.
 
+
+We have made the assumption in this thesis that the access to data was either by  querying the SPARQL endpoint, or by browsing or by downloading the dumps. Recently, it is emerging a new way of accessing the data on the Web: through the triple pattern fragments. Linked Data Fragments \cite[RUBEN] aims at exploring interfaces to 
+solve queries at the client side with server data. 
+Servers can offer data at low processing cost in a way that enables client-side querying. Thus, moving intelligence from the server to the client. One possible direction of study could be to use this concept for evaluating endpoints consuming only structured geometries versus literal for real live applications. Finally, triple fragments concepts can be apply to detect also patterns for visualization in different endpoints.
  
- \todo{discuss here if it could be wise to use Linked Data Fragments... maybe as future work?}
- \textcolor{red}{
- 1- Create automatic SPARQL templates, use that templates to automatically identify topics (automatic domain identification) of Linked Datasets ->  evaluation against manually curated domains -base work (ESWC14), ADI workshop/poster/demo \\
- 2- Create topic categorization/profile for vocabularies/ontologies based on dataset instane level analysis -> evaluation against manually curated LOV (conference)\\
- 3-  Create topic categorization/profile for datasets .csv or RDF based on dataset instance level analysis - compare against manually curated tags and topics in datahub/dat.gov ... etc. (conference)
- }
+% \todo{discuss here if it could be wise to use Linked Data Fragments... maybe as future work?}
+
  
