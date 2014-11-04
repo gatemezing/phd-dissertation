@@ -229,7 +229,7 @@ Virtuoso is a triple store developed by OpenLink\footnote{\url{http://virtuoso.o
 
 \subsubsection{OWLIM}
 OWLIM is a semantic repository developed by Ontotext\footnote{\url{http://www.ontotext.com/owlim}}, which provides support and querying of 
-two-dimensional point geometries modeled with the W3C Geo vocabulary. It implements spatial predicates represented as property funcions. The available four operations are: Buffer, Distance, Nearby and Point-in-polygon. OWLIM is implemented as a storage and inference layer for Sesamne, with custom spatial index. 
+two-dimensional point geometries modeled with the W3C Geo vocabulary. It implements spatial predicates represented as property funcions. The available four operations are: Buffer, Distance, Nearby and Point-in-polygon. OWLIM is implemented as a storage and inference layer for Sesame, with custom spatial index. 
 
 \subsubsection{AllegroGraph}
 AllegroGraph\footnote{\url{http://franz.com/agraph/allegrograph/}} is another RDF store developed and maintained by Franz Inc. which stores geospatial data types as native data structures. Support is provided both for Cartesian coordinate systems and for spherical coordinate systems. Every datum in an AllegroGraph store is a UPI, and for geospatial data, the added UPI type is \texttt{:geospatial} with type code \texttt{+geospatial+}. Geometries are assigned to geometric objects through the use of property\\ \texttt{<http://franz.com/ns/allegrograph/3.0/geospatial/pos>}, and for querying a GEO operator is introduced to express geospatial query patterns in SPARQL. AllegroGraph provides some operations on geodata, such as Bounding Box, Distance and Buffer. 
@@ -250,7 +250,7 @@ Topological properties and non-topological functions are also available.In addit
 
 \subsubsection{Strabon}
 %\todo{read again the paper}
-Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame [cite], allowing it to manage both thematic and spatial data expressed in \texttt{stRDF}. PostGIS is used as the relational backend of Strabon. 
+Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame\footnote{\url{http://rdf4j.org/}}, allowing it to manage both thematic and spatial data expressed in \texttt{stRDF}. PostGIS is used as the relational backend of Strabon. 
 stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data. 
 The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components. 
 
