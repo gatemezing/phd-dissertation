@@ -37,7 +37,7 @@ This section reviews the main contributions of this thesis and the solutions to 
 \item We have proposed a generic approach to automatically generate visualizations based on predefined categories.
 \item We have developed two innovative applications consuming events and statistical datasets
 \item We have proposed a vocabulary and a tool that can improve the discovery of applications contests in Open Data events.
-\item Finally, we have proposed an approach to harmonize prefixes used in different catalogues of vocabulary.
+\item We have also proposed an approach to harmonize prefixes used in different catalogues of vocabulary.
 \item We have developed new ranking metrics for vocabularies based on Information Content theories.
 \item Finally, we have built a more efficient tool for checking licenses compatibility between vocabularies and datasets.
 \end{itemize}
@@ -68,7 +68,7 @@ Regarding the harmonization of prefixes, the work can be extended in several dir
  As per ranking vocabularies, we aim to take into account the equivalence axioms (between classes and properties) when computing the Information Content, and more generally, all sort of semantic relationships between terms. Also, we plan to compare our ranking model with other ranking approaches such as graph-based ones (e.g., pagerank). Another future direction work is to investigate the dependency ranking between vocabularies, by focusing on a specific type of ``inlinks'' (i.e. extensions, generalization) and study how they affect the PIC values.
 
 
-We have made the assumption in this thesis that the access to data was either by  querying the SPARQL endpoint, or by browsing or by downloading the dumps. Recently, it is emerging a new way of accessing the data on the Web: through the triple pattern fragments. Linked Data Fragments \cite[RUBEN] aims at exploring interfaces to 
+We have made the assumption in this thesis that the access to data was either by  querying the SPARQL endpoint, or by browsing or by downloading the dumps. Recently, it is emerging a new way of accessing the data on the Web: through the triple pattern fragments\footnote{\url{http://linkeddatafragments.org/}}. Linked Data Fragments \cite{verborgh2014ldf} aims at exploring interfaces to 
 solve queries at the client side with server data. 
 Servers can offer data at low processing cost in a way that enables client-side querying. Thus, moving intelligence from the server to the client. One possible direction of study could be to use this concept for evaluating endpoints consuming only structured geometries versus literal for real live applications. Finally, triple fragments concepts can be apply to detect also patterns for visualization in different endpoints.
  
