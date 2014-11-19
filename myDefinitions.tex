@@ -44,6 +44,16 @@
 
 \newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO:#1]}}}
 
+% Language Definitions for Turtle
+\definecolor{olivegreen}{rgb}{0.2,0.8,0.5}
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\lstdefinelanguage{ttl}{
+sensitive=true,
+morecomment=[l][\color{brown}]{@},
+morecomment=[l][\color{red}]{\#},
+morestring=[b][\color{blue}]\",
+}
+
 \newenvironment{ttbox}{
  \begin{center}\vspace{-.5ex}
      \begin{tabular}{@{}|@{\,}c@{\,}|@{}}
