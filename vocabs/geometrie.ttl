@@ -1,0 +1,338 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix sf: <http://www.opengis.net/ont/sf#>.
+@prefix xml: <http://www.w3.org/XML/1998/namespace>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix geom: <http://data.ign.fr/def/geometrie#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix gsp: <http://www.opengis.net/ont/geosparql#>.
+@prefix ngeo: <http://geovocab.org/geometry#>.
+@prefix ignf: <http://data.ign.fr/def/ignf#>.
+
+# ---- Ontology metadata -----
+<http://data.ign.fr/def/geometrie> a owl:Ontology;
+	dcterms:description "Ontology for geometries representing shpaes and location of spatial entities"@en;
+	dcterms:title "Ontologie des primitives géométriques"@fr;
+    cc:license <http://www.data.gouv.fr/Licence-Ouverte-Open-Licence> ;
+	cc:license <http://creativecommons.org/licenses/by/2.0/> ;
+	cc:license <http://opendatacommons.org/licenses/by/> ;
+    dcterms:creator <http://recherche.ign.fr/labos/cogit/cv.php?prenom=Nathalie&nom=Abadie> ;	
+    dcterms:creator <http://www.eurecom.fr/~atemezin/> ;
+    dcterms:contributor <http://www.eurecom.fr/~troncy/> ;
+    dcterms:contributor <http://data.semanticweb.org/person/bernard-vatant> ;
+	dcterms:contributor <http://recherche.ign.fr/labos/cogit/cv.php?prenom=Bénédicte&nom=Bucher> ;
+	dcterms:issued "2013-06-11"^^xsd:date ;
+	dcterms:modified "2014-08-22"^^xsd:date ;
+    dcterms:publisher <http://fr.dbpedia.org/resource/Institut_national_de_l%27information_g%C3%A9ographique_et_foresti%C3%A8re> ;
+	dcterms:rights "Copyright 2014, IGN" ;
+    vann:preferredNamespacePrefix "geom" ;
+    vann:preferredNamespaceUri <http://data.ign.fr/def/geometrie#> ;
+    owl:versionInfo "Version 1.0 - 2014-08-22" .
+
+# ---- Contributors ----
+<http://data.semanticweb.org/person/bernard-vatant> a foaf:Person.
+<http://www.eurecom.fr/~atemezin/> a foaf:Person.
+<http://www.eurecom.fr/~troncy/> a foaf:Person.
+<http://recherche.ign.fr/labos/cogit/cv.php?prenom=Nathalie&nom=Abadie> a foaf:Person.
+<http://recherche.ign.fr/labos/cogit/cv.php?prenom=Bénédicte&nom=Bucher> a foaf:Person.
+
+# ---- Classes definition ----
+
+geom:Geometry a owl:Class;
+	rdfs:label "Géométrie"@fr, "Geometry"@en;
+	owl:equivalentClass [ a owl:Restriction;
+		owl:onClass ignf:CoordinatesSystem;
+		owl:onProperty geom:crs;
+		owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger];
+	rdfs:subClassOf ngeo:Geometry;
+	rdfs:subClassOf sf:Geometry.
+
+geom:Point a owl:Class;
+	rdfs:label "Point"@en, "Point"@fr;
+	rdfs:subClassOf geom:Geometry;
+	rdfs:subClassOf sf:Point;
+	owl:equivalentClass [ a  owl:Class ;
+		owl:intersectionOf (
+			[ a owl:Restriction;
+				owl:onDataRange xsd:double;
+				owl:onProperty geom:coordY;
+				owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ]
+       
+            [ a owl:Restriction;
+				owl:onDataRange xsd:double;
+				owl:onProperty geom:coordX;
+				owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger]
+
+            [ a owl:Restriction;
+				owl:onDataRange xsd:double;
+				owl:onProperty geom:coordZ;
+				owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger]
+
+            [ a owl:Restriction;
+				owl:onDataRange xsd:double;
+				owl:onProperty geom:coordM;
+				owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger]
+        )
+    ].
+
+geom:Curve a owl:Class;
+	rdfs:label "Courbe"@fr, "Curve"@en;
+	rdfs:subClassOf geom:Geometry;
+	rdfs:subClassOf sf:Curve.
+
+geom:Surface a owl:Class;
+	rdfs:label "Surface"@en, "Surface"@fr;
+	rdfs:subClassOf geom:Geometry;
+	rdfs:subClassOf sf:Surface.
+
+geom:Envelope a owl:Class;
+	rdfs:label "Envelope"@en, "Enveloppe"@fr;
+	owl:equivalentClass  [ a  owl:Class ;
+		owl:intersectionOf (
+			[ a owl:Restriction;
+				owl:onClass geom:Point;
+				owl:onProperty geom:upperCorner;
+				owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ]
+				
+            [ a owl:Restriction;
+				owl:onClass geom:Point;
+				owl:onProperty geom:lowerCorner;
+				owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger]
+ 
+		)
+    ] ;
+	rdfs:subClassOf geom:Geometry.
+
+geom:Polygon a owl:Class;
+	rdfs:label "Polygon"@en, "Polygone"@fr;
+	rdfs:subClassOf geom:Surface;
+	owl:equivalentClass [ 
+		a owl:Restriction;
+			owl:someValuesFrom geom:LinearRing;
+			owl:onProperty geom:exterior];
+	rdfs:subClassOf [ a  owl:Class ;
+		owl:intersectionOf (
+			[ a owl:Restriction;
+				owl:onClass geom:LinearRing;
+				owl:onProperty geom:exterior;
+				owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ]
+				
+            [ a owl:Restriction;
+				owl:someValuesFrom geom:LinearRing;
+				owl:onProperty geom:interior;
+			]
+		)
+    ] ;
+	rdfs:subClassOf sf:Polygon.
+
+geom:LineString a owl:Class;
+	rdfs:label "Line string"@en, "Polyligne"@fr;
+	rdfs:subClassOf geom:Curve;
+	owl:equivalentClass [ 
+		a owl:Restriction;
+			owl:someValuesFrom geom:PointsList;
+			owl:onProperty geom:points];
+	rdfs:subClassOf [
+		a owl:Restriction;
+			owl:onClass geom:PointsList;
+			owl:onProperty geom:points;
+			owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger];
+	rdfs:subClassOf sf:LineString.
+
+geom:LinearRing a owl:Class;
+	rdfs:label "Anneau"@fr, "Linear ring"@en;
+	rdfs:subClassOf geom:LineString;
+	owl:equivalentClass	[ 
+		a owl:Restriction;
+			owl:someValuesFrom [ a owl:Class;
+				owl:intersectionOf(
+					geom:PointsList
+						[ a owl:Restriction;
+							owl:onClass geom:Point;
+							owl:onProperty geom:firstAndLast;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger; ])
+			];
+			owl:onProperty geom:points;
+	];
+	rdfs:subClassOf sf:LinearRing.
+
+geom:Line a owl:Class;
+	rdfs:label "Ligne"@fr, "Line"@en;
+	rdfs:subClassOf geom:LineString;
+	owl:equivalentClass[
+		a owl:Restriction;
+			owl:someValuesFrom [ a owl:Class;
+				owl:intersectionOf(
+					geom:PointsList	
+						[ a owl:Restriction;
+							owl:someValuesFrom [ a owl:Class;
+								owl:intersectionOf(
+									geom:PointsList
+										[ a owl:Restriction;
+											owl:onProperty rdf:rest;
+											owl:hasValue rdf:nil; ])];
+							owl:onProperty rdf:rest; ]
+				)];
+			owl:onProperty geom:points; ];
+	rdfs:subClassOf sf:Line.
+
+geom:GeometryCollection a owl:Class;
+	rdfs:label "Collection de géométries"@fr, "Geometry collection"@en;
+	rdfs:subClassOf geom:Geometry;
+	rdfs:subClassOf sf:GeometryCollection.
+ 
+geom:MultiCurve a owl:Class;
+	rdfs:label "Multi curve"@en, "Multicourbe"@fr;
+	rdfs:subClassOf geom:GeometryCollection;
+	rdfs:subClassOf sf:MultiCurve.
+
+geom:MultiPoint a owl:Class;
+	rdfs:label "Multi point"@en, "Multipoint"@fr;
+	owl:equivalentClass [ 
+		a owl:Restriction;
+			owl:someValuesFrom geom:Point;
+			owl:onProperty geom:pointMember];
+	rdfs:subClassOf geom:GeometryCollection;
+	rdfs:subClassOf sf:MultiPoint.
+
+geom:MultiPolygon a owl:Class;
+	rdfs:label "Multi polygon"@en, "Multipolygone"@fr;
+	owl:equivalentClass [ 
+		a owl:Restriction;
+			owl:someValuesFrom geom:Polygon;
+			owl:onProperty geom:polygonMember];
+	rdfs:subClassOf geom:MultiSurface;
+	rdfs:subClassOf sf:MultiPolygon.
+
+geom:MultiLineString a owl:Class;
+	rdfs:label "Multi line string"@en, "Multipolyligne"@fr;
+	owl:equivalentClass [ 
+		a owl:Restriction;
+			owl:someValuesFrom geom:LineString;
+			owl:onProperty geom:lineStringMember];
+	rdfs:subClassOf geom:MultiCurve;
+	rdfs:subClassOf sf:MultiLineString.
+
+geom:MultiSurface a owl:Class;
+	rdfs:label "Multi surface"@en, "Multisurface"@fr;
+	rdfs:subClassOf geom:GeometryCollection;
+	rdfs:subClassOf sf:MultiSurface.
+
+geom:PointsList a owl:Class;
+	rdfs:label "List of points"@en, "Liste de points"@fr;
+	rdfs:subClassOf rdf:List;
+	rdfs:subClassOf [ a owl:Restriction;
+		owl:allValuesFrom geom:Point;
+		owl:onProperty rdf:first].
+		
+# ---- Object Properties definition ----
+
+geom:firstAndLast a owl:ObjectProperty;
+	rdfs:domain geom:PointsList;
+	rdfs:label "first and last"@en, "premier et dernier"@fr;
+	rdfs:subPropertyOf rdf:first;
+	rdfs:range geom:Point.
+
+geom:points a owl:ObjectProperty;
+	rdfs:domain geom:Curve;
+	rdfs:label "points"@en, "points"@fr;
+	rdfs:range geom:PointsList.
+
+geom:crs a owl:ObjectProperty;
+	rdfs:domain geom:Geometry;
+	rdfs:label "coordinate reference system"@en, "système de coordonnées"@fr;
+	rdfs:range ignf:CRS.
+
+geom:boundary a owl:ObjectProperty;
+	rdfs:domain geom:Polygon;
+	rdfs:label "frontière"@fr, "boundary"@en;
+	rdfs:range geom:LinearRing.
+
+geom:interior a owl:ObjectProperty;
+	rdfs:domain geom:Polygon;
+	rdfs:label "intérieur"@fr, "interior"@en;
+	rdfs:range geom:LinearRing;
+	rdfs:subPropertyOf geom:boundary.
+
+geom:exterior a owl:ObjectProperty;
+	rdfs:comment "Relie un polygone à un anneau décrivant le contour extérieur de sa surface."@fr;
+	rdfs:domain geom:Polygon;
+	rdfs:label "extérieur"@fr, "exterior"@en;
+	rdfs:range geom:LinearRing;
+	rdfs:subPropertyOf geom:boundary.
+
+geom:pointMember a owl:ObjectProperty;
+	rdfs:domain geom:MultiPoint;
+	rdfs:label "point membre"@fr, "point member"@en;
+	rdfs:range geom:Point.
+
+geom:lineStringMember a owl:ObjectProperty;
+	rdfs:domain geom:MultiLineString;
+	rdfs:label "polyligne membre"@fr, "line string member"@en;
+	rdfs:range geom:LineString.
+
+geom:polygonMember a owl:ObjectProperty;
+	rdfs:domain geom:MultiPolygon;
+	rdfs:label "polygone membre"@fr, "polygon member"@en;
+	rdfs:range geom:Polygon.
+
+geom:geometry a owl:ObjectProperty;
+	rdfs:label "a pour géométrie"@fr, "has geometry"@en;
+	rdfs:range geom:Geometry.
+
+geom:centroid a owl:ObjectProperty;
+	rdfs:domain geom:Surface;
+	rdfs:label "centroid"@en;
+	rdfs:label "centroïde"@fr;
+	rdfs:range geom:Point.
+
+geom:envelope a owl:ObjectProperty;
+	rdfs:domain geom:Geometry;
+	rdfs:label "envelope"@en;
+	rdfs:label "enveloppe"@fr;
+	rdfs:range geom:Envelope.
+
+geom:upperCorner a owl:ObjectProperty;
+	rdfs:domain geom:Envelope;
+	rdfs:label "upper corner"@en;
+	rdfs:label "coin supérieur"@fr;
+	rdfs:range geom:Point.
+	
+geom:lowerCorner a owl:ObjectProperty;
+	rdfs:domain geom:Envelope;
+	rdfs:label "lower corner"@en;
+	rdfs:label "coin inférieur"@fr;
+	rdfs:range geom:Point.
+	
+# ---- Datatype Properties definition ----
+
+geom:coordX a owl:DatatypeProperty;
+	rdfs:domain geom:Point;
+	rdfs:label "x"@fr;
+	rdfs:label "x"@en;
+	rdfs:range xsd:double.
+
+geom:coordY a owl:DatatypeProperty;
+	rdfs:domain geom:Point;
+	rdfs:label "y"@fr;
+	rdfs:label "y"@en;
+	rdfs:range xsd:double.
+
+geom:coordZ a owl:DatatypeProperty;
+	rdfs:domain geom:Point;
+	rdfs:label "z"@fr;
+	rdfs:label "z"@en;
+	rdfs:range xsd:double.
+
+geom:coordM a owl:DatatypeProperty;
+	rdfs:domain geom:Point;
+	rdfs:label "m"@fr;
+	rdfs:label "m"@en;
+	rdfs:range xsd:double.
+
+# ---- Instances definition ----
