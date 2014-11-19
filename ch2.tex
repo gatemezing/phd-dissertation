@@ -232,7 +232,7 @@ OWLIM is a semantic repository developed by Ontotext\footnote{\url{http://www.on
 two-dimensional point geometries modeled with the W3C Geo vocabulary. It implements spatial predicates represented as property funcions. The available four operations are: Buffer, Distance, Nearby and Point-in-polygon. OWLIM is implemented as a storage and inference layer for Sesame, with custom spatial index. 
 
 \subsubsection{AllegroGraph}
-AllegroGraph\footnote{\url{http://franz.com/agraph/allegrograph/}} is another RDF store developed and maintained by Franz Inc. which stores geospatial data types as native data structures. Support is provided both for Cartesian coordinate systems and for spherical coordinate systems. Every datum in an AllegroGraph store is a UPI, and for geospatial data, the added UPI type is \texttt{:geospatial} with type code \texttt{+geospatial+}. Geometries are assigned to geometric objects through the use of property\\ \texttt{<http://franz.com/ns/allegrograph/3.0/geospatial/pos>}, and for querying a GEO operator is introduced to express geospatial query patterns in SPARQL. AllegroGraph provides some operations on geodata, such as Bounding Box, Distance and Buffer. 
+AllegroGraph\footnote{\url{http://franz.com/agraph/allegrograph/}} is another RDF store developed and maintained by Franz Inc. which stores geospatial data types as native data structures. Support is provided both for Cartesian coordinate systems and for spherical coordinate systems. Every datum in an AllegroGraph store is a UPI, and for geospatial data, the added UPI type is \texttt{:geospatial} with type code \texttt{+geospatial+}. Geometries are assigned to geometric objects through the use of property \url{<http://franz.com/ns/allegrograph/3.0/geospatial/pos>}, and for querying a GEO operator is introduced to express geospatial query patterns in SPARQL. AllegroGraph provides some operations on geodata, such as Bounding Box, Distance and Buffer. 
 
 
     
@@ -273,21 +273,27 @@ The datatypes strdf:WKT and strdf:GML are introduced to represent geometries ser
 
 \subsection{How to choose a Triple Store }
 %\todo{update the table with strabon and changes in virtuoso 7.} \\
-There are many criteria that can be used to assess triple stores based on the requirements dataset publishers. Most importantly are the compatibility with the set of standards for RDF and SPARQL (e.g., SPAQRL1.0, SPARQL1.1). Table \ref{tab:generictriples} provides an overview comparing ``generic'' triple stores. Currently, none of the triple stores listed supports security mechanisms built natively. 
+There are many criteria that can be used to assess triple stores based on the requirements dataset publishers. Most importantly are the compatibility with the set of standards for RDF and SPARQL (e.g., SPARQL1.0, SPARQL1.1). Table \ref{tab:generictriples} provides an overview comparing ``generic'' triple stores. Currently, none of the triple stores listed supports security mechanisms built natively. 
 
-Regarding specific geospatial triple stores (or extensions of geospatial in RDF stores), more specific requirements are needed to index and provide native functions/operations over geometries. In Table \ref{tab:triplestore}, triple stores are compared based on (i) the types of geometries supported, (ii) the coverage of spatial functions, (iii) the compliance with GeoSPARQL standard, (iv) the extensions to existing vocabularies and SPARQL to manage geodata.     
+Regarding specific geospatial triple stores (or extensions of geospatial in RDF stores), more specific requirements are needed to index and provide native functions/operations over geometries. In Table \ref{tab:triplestore}, triple stores are compared based on 
+\begin{itemize}
+\item the types of geometries supported,
+\item the coverage of spatial functions,
+\item the compliance with GeoSPARQL standard,
+\item the extensions to existing vocabularies and SPARQL to manage geodata.
+\end{itemize}       
 
-\paragraph{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}, \texttt{Parliament } and  \texttt{Virtuoso} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata. Moreover, the choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
 
 
-\begin{table}[ht!b]
+\begin{table}[htb!]
     \caption{Survey of some generic popular triple stores.} \label{tab:generictriples}
     \small
     \center
+    \noindent
     \begin{tabularx}{\textwidth}{@{}lccc@{}}
      %\begin{tabular}{@{}  l  l  l @{}}
     \toprule
-    \textbf{Triplestore} 		& \textbf{SPARQL1.0 } &  \textbf{SPARQL1.1 } & \textbf{SPARQL Update} & \textbf{Reasoning} &  \textbf{10 billion statement } & \textbf{Clustering} & \textbf{Open source}\\
+    \textbf{Triplestore} & \textbf{SPARQL1.0 } &  \textbf{SPARQL1.1 } & \textbf{SPARQL Update} & \textbf{Reasoning} &  \textbf{10 billion statement } & \textbf{Clustering} & \textbf{Open source}\\
     \toprule
     \texttt{Virtuoso} & Yes & Partial & Non-std & Rules & Yes & Yes & Yes/No\\
     \midrule
@@ -307,6 +313,8 @@ Regarding specific geospatial triple stores (or extensions of geospatial in RDF 
     % \end{tabular}
     \end{tabularx}
     \end{table}
+    
+    \paragraph{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}, \texttt{Parliament } and  \texttt{Virtuoso} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata. Moreover, the choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
     
 
  \begin{table}[ht!bp]
