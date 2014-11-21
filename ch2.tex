@@ -634,7 +634,75 @@ Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} i
 
 Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mostly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples. 
 
-Regarding the interconnection with more existing geodata, first results of mappings using LIMES for amenities in three big cities of France (Paris, Lyon and Marseille) (cf. Table \ref{tab:bano-gld}) shows the low presence of the addresses for French territory. All the results of the mappings are available at \url{https://github.com/gatemezing/bano2rdf-matching}. Shops and restaurants are the resources with most \texttt{owl:sameAs} links between Bano2RDF and LGD datasets.
+\paragraph{Interconnection with LinkedGeoData:}
+Regarding the interconnection with more existing geodata, first results of mappings with LinkedGeoData amenities using LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of 0.97, i.e, we consider \textit{``very closed''} resources with 30 meters distances. Listing \ref{scriptLIMES} shows the configuration used for finding corresponding buildings of LinkedGeoData in Bano2RDF dataset. 
+
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {LIMES script used to interconnect Bano2RDF dataset located in the region of Marseille with Building in LinkedGeoData.}, label=scriptLIMES, captionpos=b}
+\begin{lstlisting}
+<LIMES>
+	
+	<PREFIX>
+		<NAMESPACE>http://geovocab.org/geometry#</NAMESPACE>
+		<LABEL>geom</LABEL>
+	</PREFIX>
+
+	<PREFIX>
+     <NAMESPACE>http://www.w3.org/ns/locn#</NAMESPACE>
+     <LABEL>locn</LABEL>
+
+    </PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.opengis.net/ont/geosparql#</NAMESPACE>
+		<LABEL>geos</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://linkedgeodata.org/ontology/</NAMESPACE>
+		<LABEL>lgdo</LABEL>
+	</PREFIX>
+	<PREFIX>
+      <NAMESPACE>http://www.geonames.org/ontology#</NAMESPACE>
+      <LABEL>gn</LABEL>
+    </PREFIX>
+	<SOURCE>
+		<ID>bano2RDF</ID>
+		<ENDPOINT>http://eventmedia.eurecom.fr/sparql</ENDPOINT>
+		<VAR>?x</VAR>
+		<PAGESIZE>5000</PAGESIZE>
+		<RESTRICTION>?x a locn:Address</RESTRICTION>
+		<RESTRICTION>?x locn:postalCode ?code</RESTRICTION>
+		<RESTRICTION>FILTER(regex(str(?code), '690'))</RESTRICTION>
+		<PROPERTY>locn:geometry/geos:asWKT RENAME polygon</PROPERTY> 
+		<TYPE>SPARQL</TYPE>
+	</SOURCE>
+	<TARGET>
+		<ID>linkedgeodata</ID>
+		<ENDPOINT>http://linkedgeodata.org/sparql</ENDPOINT>
+		<VAR>?y</VAR>
+		<PAGESIZE>5000</PAGESIZE>
+		<RESTRICTION>?y a lgdo:Building</RESTRICTION>
+		<PROPERTY>geom:geometry/geos:asWKT RENAME polygon</PROPERTY>
+		<TYPE>SPARQL</TYPE>
+	</TARGET>
+	
+	<METRIC>hausdorff(x.polygon, y.polygon)</METRIC>
+	<ACCEPTANCE>
+		<THRESHOLD>0.97</THRESHOLD>
+		<FILE>bano690xx-lgdBuilding_verynear.nt</FILE>
+		<RELATION>lgdo:near</RELATION>
+	</ACCEPTANCE>
+	<REVIEW>
+		<THRESHOLD>0.95</THRESHOLD>
+		<FILE>bano690xx-lgdBuilding_place_near.nt</FILE>
+		<RELATION>lgdo:near</RELATION>
+	</REVIEW>
+
+	<EXECUTION>Simple</EXECUTION>
+	<OUTPUT>TAB</OUTPUT>
+</LIMES>
+	
+\end{lstlisting}
+  
+Table \ref{tab:bano-gld} shows the first results of the mappings. For each type of amenities in LinkedGeoData, it shows the number of matched resources, and the percentage of the result with respect to the distinct individuals of the category. For example, the mapping reveals $735$ parkings located in Paris (postal code starting with 750). Since there are $250,516$ resources of type ``Parking'' in LinkedGeoData, the percentage is 0.293\%, i.e.,(735/250680)*100.  The table also reveals the low presence of the addresses for French territory in LinkedGeoData. All the results of the mappings are available at \url{https://github.com/gatemezing/bano2rdf-matching}. Shops and restaurants are the resources with most \texttt{owl:sameAs} links between Bano2RDF and LGD datasets.
 
 \begin{table}[ht!b]
         
@@ -665,6 +733,7 @@ Regarding the interconnection with more existing geodata, first results of mappi
         \caption{Initial mappings of Bano2RDF with LGD amenities resources respectively in Paris, Marseille and Lyon. The links are obtained using LIMES tool with a threshold of .97 using the \texttt{Hausdorff} distance.}
         \label{tab:bano-gld}
     \end{table}
+
 
 \subsection{Status of French LOD cloud (FrLOD) }
 \label{sec:frenchCloud}
