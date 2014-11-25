@@ -26,7 +26,7 @@ Linked Data applications to discover datasets as well as to ease the integration
 
 \item \textbf{Linking:} By setting RDF links, data providers connect their datasets into a single global data graph which can be navigated by applications and enables the discovery of additional data by following RDF links.
 
-\item \textbf{Dereferencable URIs:} By using HTTP URIs as identifiers for each resource, agents can easily look-up at the resources and "dereference" a URI in order to have access to the full representation identified by that URI. This helps building a network of URIs on the Web and navigating through different graphs. 
+\item \textbf{Dereferencable URIs:} By using HTTP URIs as identifiers for each resource, agents can easily look-up at the resources and ``dereference'' a URI in order to have access to the full representation identified by that URI. This helps building a network of URIs on the Web and navigating through different graphs. 
 
 \item \textbf{Metadata Provision and machine access to data:} Provide various ways for search engines and other automated processes to access data using standard Web mechanisms.
 \end{itemize}
@@ -130,7 +130,7 @@ In this thesis we mainly focus on the first, third, fourth and fifth of the abov
 After the publication of the dataset using LD paradigm, the logical question is: ``What next''? Publishers need to be able to understand their dataset; while developers have to build application out of the datasets. It is clear there is a huge amount of structured data on the Web, with the expectation to have more and more 
 data to be published as LOD. This huge amount of "structured big data" fails to reach the non-expert users 
 so far, due to the complexity of different technologies used to model and query the data. Thus, it is 
-important to create "visual applications" on top of the generated datasets to explore, analyze and showcase 
+important to create ``visual applications'' on top of the generated datasets to explore, analyze and showcase 
 some of the potential of linked data to non-expert users. In this process, some challenging research questions have to be addressed, such as the following:
 
 \begin{itemize}
@@ -147,7 +147,7 @@ some of the potential of linked data to non-expert users. In this process, some 
 \label{sec:contributions}
 In this section, we provide the main contributions organized in three main sections of our thesis: model and publication of geospatial data, visualizations of data and applications on the Web and contribution to standards. 
 
-\subsection{Modeling Geographic Information in LOD}
+\subsection{Modeling, publishing and querying geodata}
 The need for geolocation is crucial for many applications for both human and software agents. More and more data is opened and interlinked using Linked Data principles, and it is worth modeling geographic data efficiently by reusing as much as possible from existing ontologies or vocabularies that describe both the geospatial features and their shapes. In the first part of our work, we survey different modeling approaches used by the Geographic Information System (GIS) and the Linked Open Data (LOD) communities. Our aim is to contribute to the actual efforts in representing geographic objects with attributes such as location, points of interest (POI), and addresses on the web of data. We focus on the French territory and we provide examples of representative vocabularies that can be used for describing geographic objects. We propose some alignments between various vocabularies (DBpedia, GeoNames, Schema.org, LinkedGeoData, Foursquare, etc.) in order to enable interoperability while interconnecting French geodata with other datasets. 
 
 Regarding this aspect of our research, we have achieved the following tasks:
@@ -159,6 +159,10 @@ Regarding this aspect of our research, we have achieved the following tasks:
 existing in OGC\footnote{\url{http://www.opengeospatial.org/}} standards.
  \item  We have designed and implemented vocabularies for describing complex geometries with different coordinate systems, with direct application to the French administrative units.
  
+ \item We have interlinked French Authoritative geodata resources with existing datasets, such as LinkedGeodata, GADM, NUTS and Geonames.
+ 
+ \item We have contributed to the creation of a French LOD Cloud by publishing many datasets as LOD covering the French territory.
+ 
 
 \end{itemize}
 
@@ -168,20 +172,25 @@ existing in OGC\footnote{\url{http://www.opengeospatial.org/}} standards.
 
 \subsection{Visualization Tools in Linked Government Data} \label{visu}
 
-We first review the numerous applications that have been developed on top of datasets that have been opened by governments (UK, USA, France) and local authorities. We have then derived and proposed some use cases (8 UCs) that can be developed to consume data from the different main providers in the French level: INSEE, DILA, IGN, FING, etc. We mention that the most interesting UCs are the ones which show the added value of having interconnected datasets. These UCs,  developed and deployed, can be useful to show the benefits of Linked Data in a variety of domains such as Education, Tourism, Cultural Heritage, Civil administrations, Judicial Court, Medicine, etc. 
+We first review some innovative applications that have been developed on top of datasets that have been opened by governments (UK, USA, France) and local authorities. We have then derived and proposed some use cases (8 UCs) that can be developed to consume data from the different main providers in the French level: INSEE, DILA, IGN, FING, etc. We mention that the most interesting UCs are the ones which show the added value of having interconnected datasets. These UCs,  developed and deployed, can be useful to show the benefits of Linked Data in a variety of domains such as Education, Tourism, Cultural Heritage, Civil administrations, Judicial Court, Medicine, etc. 
 
-Regarding tools used for visualization, we have divided them in two categories, providing for each of them relevant examples: (i)-tools that operate over RDF data, (ii) and tools that operate over other structured format. We then provide some basic criteria for assessing a given visualization tool, with some weight attached to each of the criterion. 
+Regarding tools used for visualization, we have identified and classified them in two categories, providing for each of them relevant examples: (i)-tools that operate over RDF data, (ii) and tools that operate over other structured format. We then provide some basic criteria for assessing a given visualization tool, with some weight attached to each of the criterion. 
 
-
-\subsection{Contributions on visualizations}
-Concerning our contributions on visualizations, we have contributed by:
+Moreover, regarding visualizations on top of datasets, we have contributed in this thesis by:
 \begin{itemize}
-\item Building an application of the French first round elections using data from the \texttt{data.gouv.fr} and other public institutions.
-\item Implementing a generic tool for exploring geodata on a map.
-\item Contributing in the creation of a French LOD Cloud by publishing many datasets as LOD covering the French territory. 
+\item Building an application of the French first round elections in 2012 using data from the \texttt{data.gouv.fr} and other public institutions. The application available at \url{http://www.eurecom.fr/~atemezin/DemoElection/}  built with Exhibit Framework \cite{exhibit2007} aim at showcasing the reconciliation of heterogeneous datasets: political results in CSV, unemployment rate, data of candidates, departments of France and more data from DBpedia. The user can filter by candidate image, unemployment rate and department to see the scores, with more information about the department if needed.
+ 
+\item Implementing a generic tool for exploring geodata on a map, based on the automatic detecting of SPARQL endpoints in the LOD cloud containing geospatial datasets. 
+
 \item Implementing an application consuming geodata and statistics combining multiple datasets in education from \url{http://data.gouv.fr} portal.
+
 \item Building an application for conference events (confomaton) with their associated media reconciled from many social platform (instagram, twitter, etc.).
-\item Building a vocabulary for structuring applications on the Web of data. A plugin for annotating applications developed for contests is implemented to ease the use the generation of structured data using the vocabulary. 
+
+\item Building a vocabulary for structuring applications on the Web of data. The vocabulary can be used for discovering libraries or charts used to build applications. 
+
+\item Implementing a generic plugin for annotating applications developed for contests to be included in any web page, leveraging  the generation of structured content out of webpages using the vocabulary. 
+
+
 \item Implementing a wizard that analyses an RDF dataset and recommend visualization based on predefined categories, using generic SPARQL queries for easing the exploration of datasets published as LOD. 
 
 
