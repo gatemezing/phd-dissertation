@@ -281,7 +281,15 @@ The system can be used in any tool consuming Linked Data in which the complexity
 \section{GeoRDFviz: Map visualization of Geodata Endpoints}
 \label{sec:geordfviz}
 
-With the growing interest of publishing geolocation data according to linked data principles, many endpoints are provided without any visual interface to help navigating on top of the data. This lead to make it difficult for lay users to grab the essence of the data without learning some SPARQL queries. On the other hand, visual depiction of a location in a map makes it easier to identifier a resource. \texttt{GeoRDFviz} is a lightweight tool that help understanding the geodata resources  in any endpoint in a more attractive way for non-experts users. GeoRDFviz is built using generic queries in SPARQL and three visual actions: (i) zooming, (ii) filtering and (iii) describing of resources with geometry. GeoRDFviz prototype at \url{http://semantics.eurecom.fr/datalift/GeoRDFviz/}.
+With the growing interest of publishing geolocation data according to linked data principles, many endpoints are provided without any visual interface to help navigating on top of the data. This lead to make it difficult for lay users to grab the essence of the data without learning some SPARQL queries. On the other hand, visual depiction of a location in a map makes it easier to identifier a resource. \texttt{GeoRDFviz} is a lightweight tool that help understanding the geodata resources in any endpoint with a more attractive way for non-experts users. 
+
+\subsection{Back-End Description}
+
+\todo{describe how the data is retrieved, queries before sent for visualization}
+
+\subsection{Front-End Interface}
+
+GeoRDFviz is built using generic queries in SPARQL and three visual actions: (i) zooming, (ii) filtering and (iii) describing of resources with geometry. GeoRDFviz prototype is available at \url{http://semantics.eurecom.fr/datalift/GeoRDFviz/}.
 The user first select the endpoint to visualize. GeoRDFviz picks up randomly a resource contained in the endpoint and direct the user to that position in a map. From this point, the user can zoom-in to find list of resources around that area of the map, and progressively can reach a more specific resource. By clicking on the resource, a pop-up menu shows more connections of the resource modeled as \texttt{SKOS} concepts. The application is a client application implemented using Backbone.js library\footnote{\url{http://backbonejs.org/}}.
 
 \begin{figure*}[!htbp]
@@ -292,6 +300,7 @@ The user first select the endpoint to visualize. GeoRDFviz picks up randomly a r
 \end{center}
 \end{figure*}
 
+\
 %\subsection{Comparison with Existing Approaches}
 %\label{sec:eval}
 %\todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}

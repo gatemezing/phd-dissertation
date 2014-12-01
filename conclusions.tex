@@ -20,26 +20,31 @@ This thesis is focused on the challenges of publishing geodata on the Web and a 
   
 \end{itemize}
 
-In this thesis, we have provided different vocabularies that all together support the publication of geodata integrating almost all the CRSs, extending the existing vocabularies. The vocabularies have been used to publish the French Administrative Units, with the data compatible with GeoSPARQL standards. Regarding the visualizations, after reviewing visual tools and existing applications on the Web, we have developed an ontology to better expose the data on the Web for better interoperability. Besides we have proposed a framework to generate automatically visualizations based on categories detected on datasets published as Linked Data, based on predefined categories used in InfoVis and mapped with vocabularies. 
+In this thesis, we have provided different vocabularies that all together support the publication of geodata integrating almost all the CRSs, extending the existing vocabularies. The vocabularies have been used to publish the French Administrative Units, with the data compatible with GeoSPARQL standards. Regarding the visualizations, after reviewing visual tools and existing applications on the Web, we have developed an ontology to better expose the data on the Web for better interoperability. We have also proposed a framework for  automatically generating visualizations based on categories detected on datasets published as Linked Data, using predefined high level categories used in Information Visualization taxonomy and mapped with vocabularies. 
 
 \subsection{Review of the Contributions}
 %\todo{get inspiration with Boris thesis}
 This section reviews the main contributions of this thesis and the solutions to solved some of the open research problems in publishing and consuming data on the Semantic Web:
 
 \begin{itemize}
-\item The model and implementation of a vocabulary for geometry, topological entities and CRSs.
-\item The implementation of an API for converting data between different CRSs accessible on the Web.
-\item We have contributed in the development of the Datalift platform, an integrated environment to publish raw data on the Web.
-\item The comparison of triple stores for geodata against the geometries handled (literal or structured) to assess which one to use when publishing geospatial data. 
-\item The publication of the French Administrative Units available at \texttt{data.ign.fr} endpoint, based on the vocabularies developed and implemented. Moreover, we have provided interlinking with relevant existing geospatial datasets.
-\item We have published the CRSs with unique URIs for better look up and integration in structured geometries on the Web.
-\item The contribution to the \textit{French LOD (FrLOD)} cloud, with more datasets published using the Datalift platform, and covering the French territory.
-\item We have proposed a generic approach to automatically generate visualizations based on predefined categories.
-\item We have developed two innovative applications consuming events and statistical datasets
-\item We have proposed a vocabulary and a tool that can improve the discovery of applications contests in Open Data events.
-\item We have also proposed an approach to harmonize prefixes used in different catalogues of vocabulary.
-\item We have developed new ranking metrics for vocabularies based on Information Content theories.
-\item Finally, we have built a more efficient tool for checking licenses compatibility between vocabularies and datasets.
+\item We modelled and implemented of a vocabulary for geometry, topological entities and Coordinate Reference Systems (see Section \ref{sec:geomfeaturevocab}).
+\item We have implemented of an API for converting data between different CRSs accessible on the Web (see Section \ref{sec:rest-service}).
+\item We have published different projections systems used in France with unique URIs to improve look up and integration in structured geometries on the Web (see Section \re{sec:reqs}).
+\item We have contributed in the development of the Datalift platform, an integrated environment to publish raw data on the Web (see Section \ref{sec:toolLD}).
+\item We have provided a comparison of triple stores for geodata against the geometries handled (literal or structured) to assess which one to use when publishing geospatial data (see Section \ref{sec:geotps}). 
+\item We have published French administrative units available as LOD available at \url{http://data.ign.fr} endpoint, based on the vocabularies developed and implemented. Moreover, we have provided interlinking with relevant existing geospatial datasets (see Section \ref{sec:geofla} and \ref{sec:bdtopo} ).
+
+\item We have published in RDF 15 millions of addresses from Open Street Map France using the location address vocabulary (see Section \ref{sec:bano2rdf}).
+\item We have contributed to the \textit{French LOD (FrLOD)} cloud, with more datasets published using the Datalift platform, and covering the French territory (see Section \ref{sec:frenchCloud}).
+\item We surveyed and classified applications built on top of Open government portals, and proposed a vocabulary for semantically annotate and improve the discovery of applications contests in Open Data event (see Section \ref{sec:descApps} and Section \ref{sec:dvia}).
+\item We have proposed a generic approach for automatically generating visualizations based on predefined categories (see Section \ref{sec:ldvizwiz}).
+\item We have implemented and evaluated an approach for determining which properties are suitable to use for an entity, based on the Google Knowledge Panel (see Section \ref{sec:propEntities}).
+\item We have developed two innovative applications consuming events and statistical datasets (see Section \ref{sec:confomaton} and Section \ref{sec:perfectSchool}).
+\item We have proposed a generic plugin tool that can improve the discovery of applications contests in Open Data events (see Section \ref{sec:contests}).
+\item We have also proposed an approach to harmonize prefixes used in different catalogues of vocabulary, with an evaluation based on Linked Open Vocabulary (see Section \ref{sec:prefharmoni}).
+\item We have developed new ranking metrics for vocabularies based on Information Content theories and applied in LOV (see Section \ref{sec:vocabranking}).
+
+\item Finally, we have built a more efficient tool for checking license compatibility between vocabularies and datasets (see Section \ref{sec:checker}).
 \end{itemize}
 
 
