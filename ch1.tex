@@ -102,7 +102,14 @@ A Placemark object contains the following elements:
 
 KML can be used to carry GML content, and GML can be ``styled'' to KML for the purposes of presentation. KML instances may be transformed loosely to GML, however roughly 90\% of GML's structures (such as, metadata, coordinate reference systems, horizontal and vertical datums, etc.) cannot be transformed to KML\footnote{\url{http://en.wikipedia.org/wiki/Geography_Markup_Language}}. KML has very limited support for metadata as recommended by ISO 19115. The CRS in use is implicit and unique.
 
-\section{Status of Vocabularies Usage for Geospatial Data}
+
+
+\section{Current Modeling Approach}
+\label{sec:currentmodel}
+In this section, we review different approaches used to model geographical data on the Web, with their advantages and limitations.
+We first provide the status of vocabularies usage for geospatial data on the Web (Section \ref{sec:vocgeoreview}), followed by a review of vocabularies for features and geometries, and finally the description of the GeoSPARQL specification and implementation.
+ 
+\subsection{Status of Vocabularies Usage for Geospatial Data}
 \label{sec:vocgeoreview}
 
 The publication \cite{demter-2012-ekaw} of statistics concerning the actual usage of vocabularies on the LOD cloud \footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
@@ -123,10 +130,6 @@ UK administrative-geography &   3 &  229 689 & OS dataset \\
 \label{tab:vocabLOD}
 }
 \end{table*}
-
-\section{Current Modeling Approach}
-\label{sec:currentmodel}
-In this section, we review the different approaches used to model geographical data on the Web, with their advantages and limitations.
 
 \subsection{Vocabularies for Features}
 Modeling of features can be grouped into four categories depending on the structure of the data, the intended purpose of the data modeling, and the (re)-use of other resources.
@@ -399,7 +402,7 @@ By dragging the marker, the system will update the input values of the source sy
 \end{figure}
 
 
-\section{Best Practices for Modeling Geospatial vocabularies}
+\section{Lessons Learned from Modeling Geospatial vocabularies}
 \label{sec:bpgeo}
 
 In~\cite{Atemezing:TC12}, we already surveyed numerous vocabularies for representing geographical features and their geometries, either using a literal (e.g. wktLiteral) or a structured representation \`a la NeoGeo. We concluded the survey with some recommendations for geometry descriptions:
@@ -410,20 +413,20 @@ In~\cite{Atemezing:TC12}, we already surveyed numerous vocabularies for represen
 \end{itemize}
 In addition to these recommendations, we also think that the domain of the property used to link a feature to its geometry should be left empty in order to accept links between any type of resource and a geometry. This would be useful for example, to associate a person to the coordinates of their birthplace.
 
-\subsection{Some Recommendations}
+\subsection{Discussions}
 The alignment of existing taxonomies for describing geodata enables interoperability of symbolic descriptions. The need for a better choice of geometric structure, typically the choice between literal versus structured representations depends on three criteria: 
-\begin{itemize}
-\item (i) the coverage of all the complex geometries as they appear in the data;
-\item (ii) a rapid mechanism for connecting ``features'' to their respective ``geometry'';
-\item (iii) the possibility to serialize geodata into traditional formats used in GIS applications (GML, KML, etc.) and
-\item (iv) the choice of triple stores supporting as many as possible functions to perform quantitative reasoning on geodata.
-\end{itemize}
+\begin{enumerate}
+\item  the coverage of all the complex geometries as they appear in the data;
+\item  a rapid mechanism for connecting ``features'' to their respective ``geometry'';
+\item the possibility to serialize geodata into traditional formats used in GIS applications (GML, KML, etc.) and
+\item the choice of triple stores supporting as many as possible functions to perform quantitative reasoning on geodata.
+\end{enumerate}
     
     It is clear that a trade-off should be made depending on the technological infrastructure (e.g: data storage capacity, further reasoning on specific points on a complex geometry). The following points helps understanding better some of the challenges: 
 
 \begin{itemize}
-\item\textbf{Complex Geometry Coverage:} We have seen that on the Web of Data, there are few modeling of geodata with their correct shape represented as a LINE or POLYGON. However, some content providers (e.g. IGN) need to publish all types of geodata including complex geometries representing roads, rivers, administrative regions, etc. Two representations are suitable: \textit{OS Spatial} and \textit{NeoGeo} ontologies (Table~\ref{tab:reqgeosparql}). Direct representation of the GeoSPARQL vocabulary is also suitable.
-\item \textbf{Features connected to Geometry:} In modeling geodata, we advocate a clear separation between the features and their geometry. This is consistent with the consensus obtained from the different GeoVocamps\footnote{\url{http://www.vocamp.org}} and the outcome of this approach is expressed in the modeling design of NeoGeo. The top level classes \texttt{spatial:Feature} and \texttt{geom:Geometry}are connected with the property \texttt{geom:geometry}.
+\item\textbf{Complex Geometry Coverage:} We have seen that on the Web of Data, there are few modeling of geodata with their correct shape represented as line or polygon. However, some content providers (e.g. IGN) need to publish all types of geodata including complex geometries representing roads, rivers, administrative regions, etc. Two representations are suitable: \textit{OS Spatial} and \textit{NeoGeo} ontologies (Table~\ref{tab:reqgeosparql}). Direct representation of the GeoSPARQL vocabulary is also suitable.
+\item \textbf{Features connected to Geometry:} In modeling geodata, we advocate a clear separation between the features and their geometry. This is consistent with the consensus obtained from the different GeoVocamps\footnote{\url{http://www.vocamp.org}} and the outcome of this approach is expressed in the modeling design of NeoGeo. The top level classes \texttt{spatial:Feature} and \texttt{geom:Geometry} are connected with the property \texttt{geom:geometry}.
 
 \item \textbf{Literal versus structured Geometry:} Decomposing a LINE or a POLYGON into multiple results in an ``explosion'' in the size of the dataset and the creation of numerous blank nodes. However, sharing points between descriptions is a use case with such a need. IGN has such use-cases and the natural solution at this stage is to consider reusing the NeoGeo ontology . The choice of the triple store (e.g.,Virtuoso vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
 \end{itemize}
