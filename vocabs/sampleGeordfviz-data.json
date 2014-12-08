@@ -1,0 +1,44 @@
+[
+{
+        "endpoint": "http://healthdata.tw.rpi.edu/sparql", 
+        "geoData": {
+            "items": [
+                {
+                    "describe": "http://healthdata.tw.rpi.edu/sparql?default-graph-uri=&query=DESCRIBE%3Chttp%3A%2F%2Fwww.w3.org%2FPeople%2FBerners-Lee%2Fcard%23i%3E&format=text%2Frdf%2Bn3&timeout=0&debug=on", 
+                    "lat": "42.361860", 
+                    "long": "-71.091840", 
+                    "name": "Tim Berners-Lee", 
+                    "resource": "http://www.w3.org/People/Berners-Lee/card#i"
+                }
+            ]
+        }
+    }, 
+    {
+        "endpoint": "http://purl.org/twc/hub/sparql", 
+        "geoData": {
+            "items": [
+                {
+                    "describe": "http://purl.org/twc/hub/sparql?default-graph-uri=&query=DESCRIBE%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FAdministrative_Office_of_the_United_States_Courts%3E&format=text%2Frdf%2Bn3&timeout=0&debug=on", 
+                    "lat": "38.8951", 
+                    "long": "-77.0367", 
+                    "name": "Administrative Office of the United States Courts", 
+                    "resource": "http://dbpedia.org/resource/Administrative_Office_of_the_United_States_Courts"
+                }
+            ]
+        }
+    }, 
+    {
+        "endpoint": "http://linguistic.linkeddata.es/sparql", 
+        "geoData": {
+            "items": [
+                {
+                    "describe": "http://linguistic.linkeddata.es/sparql?default-graph-uri=&query=DESCRIBE%3Chttp%3A%2F%2Flinguistic.linkeddata.es%2Fmlode%2Fresource%2FVillage%2FBandiagara%3E&format=text%2Frdf%2Bn3&timeout=0&debug=on", 
+                    "lat": "14.35", 
+                    "long": "-3.6167", 
+                    "name": "Bandiagara", 
+                    "resource": "http://linguistic.linkeddata.es/mlode/resource/Village/Bandiagara"
+                }
+            ]
+        }
+    }
+]

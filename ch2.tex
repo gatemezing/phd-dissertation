@@ -1,5 +1,5 @@
 
-\chapter{Publishing and Querying Geodata}
+\chapter{Publishing, Interlinking and Querying Geodata}
 \label{ch:ch2}
 
 \begin{flushright}
@@ -40,6 +40,69 @@ LOD Greek & 634 KTriples & SPARQL endpoint \\
 
 For publishing geospatial data on the Web, some tools are needed for converting native formats into RDF. Those tools are based on OGC libraries for extracting features, and vocabularies provided to build the RDF. Once the dataset obtained, it has to be stored in an efficient way, interconnected to other datasets, and then consumed using SPARQL queries. Moreover, all those steps might be integrated in frameworks that ease the overall process of publishing geodata. In this chapter, we discuss the aforementioned topics, each time surveying the state-of-art and highlighting our contributions. 
 
+\section{Current Representation of Geodata on the Web}\label{sec:scenario}
+%\section{Scenario: 7$^{th}$ Arrondissement of Paris}                      \label{sec:scenario}
+%\todo{Update the scenario with the current version of DBpedia 2014, DBpedia-FR}
+In this section, we review the modeling of the 7$^{th}$ arrondissement of Paris, France in different geospatial datasets on the Web. The 7$^{th}$ arrondissement of Paris is one of the 20 arrondissements (administrative districts) of the capital city of France. It includes some of Paris's major tourist attractions such as the Eiffel Tower, some world famous museums (e.g: \textit{mus\'{e}e d'Orsay}) and contains a number of French national institutions, including numerous government ministries\footnote{\url{http://en.wikipedia.org/wiki/7th_arrondissement_of_Paris}}. We use it throughout this paper to highlight the diversity of representations one can use for this geographical entity. We assume that this district should be modeled as a POLYGON composed of a number of POINTs needed to ``interpolate'' its effective boundaries. We assume the use of the WGS84\footnote{\url{http://en.wikipedia.org/wiki/World_Geodetic_System}} geodetic system.
+
+
+\subsection{DBpedia Modeling}
+We provide below an excerpt of the DBpedia 3.8 description for the same resource:
+{\small
+\begin{verbatim}
+  dbpedia:7th_arrondissement_of_Paris a gml:_Feature ;
+    a <http://dbpedia.org/class/yago/1900SummerOlympicVenuEs>
+    rdfs:label "7. arrondissementti (Pariisi)"@fi; (14 different languages)
+    dbpprop:commune "Paris" ;
+    dbpprop:departement  dbpedia:Paris ;
+    dbpprop:region dbpedia:Ile-de-France_(region) ;
+    grs:point "48.85916666666667 2.312777777777778" ;
+    geo:geometry "POINT(2.31278 48.8592)" ;
+    geo:lat "48.859165"^^xsd:float;
+    geo:long "2.312778"^^xsd:float.
+\end{verbatim}
+}
+First, we observe that the type \texttt{gml:\_Feature} and the property \texttt{grs:point} are not resolvable since there are no OWL ontologies that provide a description of them. Second, the property \texttt{geo:geometry} used by DBpedia is not defined in the WGS84 vocabulary. For the geometry, the 7th arrondissement is a simple POINT defined by a latitude and a longitude.
+
+\subsection{Geonames Modeling}
+In Geonames, the 7$^{th}$ arrondissement is considered as a 3$^{rd}$ order administrative division, represented by a POINT for the geometry model. The RDF description of this resource gives other information such as the alternate name in French, the country code and the number of inhabitants.
+{\small
+\begin{verbatim}
+  gnr:6618613 a gn:Feature ;
+    gn:name "Paris 07";
+    gn:alternateName "7ème arrondissement";
+    gn:featureClass gn:A [
+      a skos:ConceptScheme ;
+      rdfs:comment "country, state, region ..."@en .
+    ] ;
+    gn:featureCode gn:A.ADM4 [
+      a skos:Concept ;
+      rdfs:comment "a subdivision of a 3rd order admin division"@en .
+    ];
+    gn:countryCode "FR";
+    gn:population "57410";
+    geo:lat "48.8565";
+    geo:long "2.321".
+\end{verbatim}
+}
+
+\subsection{LinkedGeoData Modeling}
+In LinkedGeoData dataset, the district is a \texttt{lgdo:Suburb} which is  subClass of \texttt{ldgo:Place}. Its geometry is still modeled as a POINT and not as a complex geometry of type POLYGON as we could have expected for this type of spatial object.
+{\small
+\begin{verbatim}
+  lgd:node248177663 a lgdo:Suburb ;
+    rdfs:label "7th Arrondissement"@en , "7e Arrondissement" ;
+    lgdo:contributor lgd:user13442 ;
+    lgdo:ref%3AINSEE 75107 ;
+    lgdp:alt_name "VIIe Arrondissement" ;
+    georss:point "48.8570281 2.3201953" ;
+    geo:lat 48.8570281 ;
+    geo:long 2.3201953 .
+\end{verbatim}
+}
+
+\subsection{Discussion}
+These samples from DBpedia, Geonames and LinkedGeoData give an overview of the different views of the same reality, in this case the district of the 7$^{th}$ Arrondissement in Paris. Regarding the ``symbolic representation'', two datasets opted for ``Feature'' (DBpedia and Geonames) while LGD classifies it as a ``Suburb'' or ``Place''. They all represent the shape of the district as a POINT which is not very efficient if we consider a query such as \emph{show all monuments located within the 7th arrondissement of international importance}. To address this type of query and more complicated ones, there is a need for more advanced modeling as we describe in the next section.
 
 \section{Existing Tools for Converting Geospatial Data}
 \label{sec:toolgeo}
@@ -151,69 +214,7 @@ Figure \ref{fig:shape2rdf-generic} shows a generic architecture for tools to con
 
 
 
-\section{Current Representation of Geodata on the Web}\label{sec:scenario}
-%\section{Scenario: 7$^{th}$ Arrondissement of Paris}                      \label{sec:scenario}
-%\todo{Update the scenario with the current version of DBpedia 2014, DBpedia-FR}
-In this section, we review the modeling of the 7$^{th}$ arrondissement of Paris, France in different geospatial datasets on the Web. The 7$^{th}$ arrondissement of Paris is one of the 20 arrondissements (administrative districts) of the capital city of France. It includes some of Paris's major tourist attractions such as the Eiffel Tower, some world famous museums (e.g: \textit{mus\'{e}e d'Orsay}) and contains a number of French national institutions, including numerous government ministries\footnote{\url{http://en.wikipedia.org/wiki/7th_arrondissement_of_Paris}}. We use it throughout this paper to highlight the diversity of representations one can use for this geographical entity. We assume that this district should be modeled as a POLYGON composed of a number of POINTs needed to ``interpolate'' its effective boundaries. We assume the use of the WGS84\footnote{\url{http://en.wikipedia.org/wiki/World_Geodetic_System}} geodetic system.
 
-
-\subsection{DBpedia Modeling}
-We provide below an excerpt of the DBpedia 3.8 description for the same resource:
-{\small
-\begin{verbatim}
-  dbpedia:7th_arrondissement_of_Paris a gml:_Feature ;
-    a <http://dbpedia.org/class/yago/1900SummerOlympicVenuEs>
-    rdfs:label "7. arrondissementti (Pariisi)"@fi; (14 different languages)
-    dbpprop:commune "Paris" ;
-    dbpprop:departement  dbpedia:Paris ;
-    dbpprop:region dbpedia:Ile-de-France_(region) ;
-    grs:point "48.85916666666667 2.312777777777778" ;
-    geo:geometry "POINT(2.31278 48.8592)" ;
-    geo:lat "48.859165"^^xsd:float;
-    geo:long "2.312778"^^xsd:float.
-\end{verbatim}
-}
-First, we observe that the type \texttt{gml:\_Feature} and the property \texttt{grs:point} are not resolvable since there are no OWL ontologies that provide a description of them. Second, the property \texttt{geo:geometry} used by DBpedia is not defined in the WGS84 vocabulary. For the geometry, the 7th arrondissement is a simple POINT defined by a latitude and a longitude.
-
-\subsection{Geonames Modeling}
-In Geonames, the 7$^{th}$ arrondissement is considered as a 3$^{rd}$ order administrative division, represented by a POINT for the geometry model. The RDF description of this resource gives other information such as the alternate name in French, the country code and the number of inhabitants.
-{\small
-\begin{verbatim}
-  gnr:6618613 a gn:Feature ;
-    gn:name "Paris 07";
-    gn:alternateName "7ème arrondissement";
-    gn:featureClass gn:A [
-      a skos:ConceptScheme ;
-      rdfs:comment "country, state, region ..."@en .
-    ] ;
-    gn:featureCode gn:A.ADM4 [
-      a skos:Concept ;
-      rdfs:comment "a subdivision of a 3rd order admin division"@en .
-    ];
-    gn:countryCode "FR";
-    gn:population "57410";
-    geo:lat "48.8565";
-    geo:long "2.321".
-\end{verbatim}
-}
-
-\subsection{LinkedGeoData Modeling}
-In LinkedGeoData dataset, the district is a \texttt{lgdo:Suburb} which is  subClass of \texttt{ldgo:Place}. Its geometry is still modeled as a POINT and not as a complex geometry of type POLYGON as we could have expected for this type of spatial object.
-{\small
-\begin{verbatim}
-  lgd:node248177663 a lgdo:Suburb ;
-    rdfs:label "7th Arrondissement"@en , "7e Arrondissement" ;
-    lgdo:contributor lgd:user13442 ;
-    lgdo:ref%3AINSEE 75107 ;
-    lgdp:alt_name "VIIe Arrondissement" ;
-    georss:point "48.8570281 2.3201953" ;
-    geo:lat 48.8570281 ;
-    geo:long 2.3201953 .
-\end{verbatim}
-}
-
-\subsection{Discussion}
-These samples from DBpedia, Geonames and LinkedGeoData give an overview of the different views of the same reality, in this case the district of the 7$^{th}$ Arrondissement in Paris. Regarding the ``symbolic representation'', two datasets opted for ``Feature'' (DBpedia and Geonames) while LGD classifies it as a ``Suburb'' or ``Place''. They all represent the shape of the district as a POINT which is not very efficient if we consider a query such as \emph{show all monuments located within the 7th arrondissement of international importance}. To address this type of query and more complicated ones, there is a need for more advanced modeling as we describe in the next section.
 
 \section{Interlinking Geospatial Data}
 \label{sec:interlinking}
@@ -299,7 +300,7 @@ The datatypes strdf:WKT and strdf:GML are introduced to represent geometries ser
 %\label{tab:triplestore}
 %\end{table}
 
-\subsection{How to choose a Triple Store }
+\subsection{Assessing Triple Stores }
 %\todo{update the table with strabon and changes in virtuoso 7.} \\
 There are many criteria that can be used to assess triple stores based on the requirements dataset publishers. Most importantly are the compatibility with the set of standards for RDF and SPARQL (e.g., SPARQL1.0, SPARQL1.1). Table \ref{tab:generictriples} provides an overview comparing ``generic'' triple stores. Currently, none of the triple stores listed supports security mechanisms built natively. Regarding specific geospatial triple stores (or extensions of geospatial in RDF stores), more specific requirements are needed to index and provide native functions/operations over geometries. In Table \ref{tab:generictriples}, triple stores are compared based on the following features:
 
@@ -462,7 +463,7 @@ Each module has its own way to be used within the lifting process in DataLift. F
 
 
 
-\subsection{Related Work: GeoKnow Stack}
+\subsection{GeoKnow Stack Framework}
 \label{sec:geoknow}
 
 The \textsc{Geoknow Stack} is a workbench developed within the Geoknow project\footnote{\url{http://geoknow.eu/}}, aiming at bringing geospatial knowledge integration to the Linked Data, with reasoning on Billion-triples and providing data provenance, and adaptive authoring, exploration and curation of geospatial data. GeoKnow Stack consists of eight tools integrated in 6 modules for Extraction, storage and querying, authoring, linking, enrichment and exploration. Figure \ref{fig:geoknow} shows the architecture. 
@@ -491,7 +492,7 @@ Below a brief description of the main modules:
 \item \textbf{Exploration:} The workflow proposes two tools for this module: \textsc{Mappify} and \textsc{Facet}. The former is a tool for exploring (geographical) Linked Data datasets on the Web, while the latter allows  to explore the specific slice of data named ``facet''  of a Linked Data endpoint in a graphical way, by defining set of constraints on properties of the database. Once the facet is define, the information in the facet can be clicked-through in a tabular interface and visualized on a map. Facete is available at \url{http://144.76.166.111/facete/}.
 \end{itemize} 
 
-
+\todo{add LOD2 work}
 
 \subsection{Comparison between Geoknow Stack and Datalift}
 \label{sec:geoknow-datalift}
@@ -803,10 +804,10 @@ French District Evolution & 150, 356 & Geography \\
 \end{table}
 
 
-\section{Spatial Queries Use Cases}
+\section{Evaluation}
 \label{sec:geoqueries}
 
-We illustrate in this section some queries making use of geospatial data and geometries functions implemented in endpoints. In the different queries, we use the following POINTs in WGS84: Eurecom is located at (7.0463, 43.6266) and Eiffel Tower at  (2.2942 48.8628).
+We illustrate in this section different queries making use of geospatial data and geometries functions implemented in three endpoints (virtuoso, owlim, sesame). Within the queries, we use the following points in WGS84, in the the form (longitude latitude): Eurecom, located at (7.0463, 43.6266) and Eiffel Tower, located at (2.2942 48.8628). We perform the time for retrieving the results as well as the expressivity of the types of SPARQL quieries available to users to get the results.
 
 \subsection{UC: Querying LinkedGeodata}
 \label{sec:linkedgeodata}
@@ -843,7 +844,7 @@ WHERE
 
 		\\ \specialrule{1pt}{1pt}{1pt}
 \end{tabular}
-\caption{Results of the public buildings 10 km around EURECOM from LinkedGeoData endpoint}
+\caption{Results of the public buildings 10 km around EURECOM from LinkedGeoData endpoint.}
 \label{tab:lgd-query}
 }
 \end{table}
@@ -870,7 +871,7 @@ WHERE {
 
 %\todo{make a table to compare the results and comment them}
 
-\subsection{Case of Structured geometries}
+\subsection{Case of Structured Geometries}
 \label{sec:ignsparql}
 %Here adapt the use case of French Geofla, and compare with the previous.
  We query data.ign.fr endpoint that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results consisting of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. Not all the SPARQL1.1 property paths \footnote{\url{http://www.w3.org/TR/sparql11-query/\#propertypaths}} are fully implemented in Virtuoso endpoints. 
@@ -893,6 +894,7 @@ FILTER ((?x > 2.2942 && ?x < 7.0463) &&(?y > 43.6266 && ?y < 48.8628)) .
  \end{verbatim}
  
 
+The result in section \ref{sec:ignsparql} suggests that it's possible to reduce the time of querying geographic data by just using standard SPARQL queries without geosptial built-in functions.  
 
 \section{Summary}
 \label{sec:ch2-summary}
