@@ -17,9 +17,9 @@ In recent years, governments worldwide have mandated publication of open governm
 To publish data on the Web, stakeholders have to follow different tasks sometimes includes in different life cycle models. As described in \cite{bpgld}, different proposals of life cycles all share common activities, summarized in the need to specify, model and publish data in standard open Web formats. Below are four different life cycles and their specificities:
 
 \begin{itemize}
-\item Hyland et al.\cite{bhyland11} provide a six-step ``cookbook'' to model, create, publish, and announce government linked data. They highlight the role of the World Wide Web Consortium (W3C) which is currently driving specifications and best practices for the publication of governmental data. Hyland et al. lifecycle consists of the following activities: (1) Identify, (2) Model, (3) Name, (4) Describe, (5) Convert, (6) Publish, and (7) Maintain.
+\item Hyland et al. \cite{bhyland11} provide a six-step ``cookbook'' to model, create, publish, and announce government linked data. They highlight the role of the World Wide Web Consortium (W3C) which is currently driving specifications and best practices for the publication of governmental data. Hyland et al. lifecycle consists of the following activities: (1) Identify, (2) Model, (3) Name, (4) Describe, (5) Convert, (6) Publish, and (7) Maintain.
 
-\item According to Hausenblas et al.\cite{hausenblas12} existing data management approaches assume control over schema, data and data generation, which is not the case in the Web because it is open, de-centralized environment. Based on their experience in Linked Data publishing and consumption over the past years, they identify involved parties and fundamental phases, which provide for a multitude of so called Linked Data life cycles that consist of the following steps: (1) data awareness, (2) modeling, (3) publishing, (4) discovery, (5) integration, and (6) use cases.
+\item According to Hausenblas et al. \cite{hausenblas12} existing data management approaches assume control over schema, data and data generation, which is not the case in the Web because it is open, de-centralized environment. Based on their experience in Linked Data publishing and consumption over the past years, they identify involved parties and fundamental phases, which provide for a multitude of so called Linked Data life cycles that consist of the following steps: (1) data awareness, (2) modeling, (3) publishing, (4) discovery, (5) integration, and (6) use cases.
 
 \item Villaz\'{o}n-Terrazas et al. propose in \cite{bvillazon} a first step to formalize their experience gained in the development of government Linked Data, into a preliminary set of methodological guidelines for generating, publishing and exploiting Linked Government Data. Their life cycle consists of the following activities: (1) Specify, (2) Model, (3) Generate, (4) Publish, and (5) Exploit.
 
@@ -39,14 +39,25 @@ To publish data on the Web, stakeholders have to follow different tasks sometime
 %\begin{wrapfigure}{r}{0.7\textwidth}
 \centering{
 \includegraphics[scale=.6]{img/datalift-ldcycle.png}
-
 \label{fig:datalift-ld}
-\caption{Datalift life cycle for publishing linked data}
+\caption{Datalift life cycle for publishing Linked Data.}
 }
 %\end{wrapfigure}
 \end{figure}
 
-Although the process of lifting raw data to interlinked data in Datalift seems to be linear, it can also be cyclic with a maintenance task in the life cycle. Table \ref{tab:lifecycle} summarizes the ten best practices to be taken into account to publish data as Linked Data on the Web.
+Although the process of lifting raw data to interlinked data in Datalift seems to be linear, it can also be cyclic with a maintenance task in the life cycle. Table \ref{tab:lifecycle} summarizes the ten best practices to be taken into account to publish data as Linked Data on the Web. Figure \ref{fig:bp-workflow} depicts the four big steps to consider when publishing Linked Data according to Table \ref{tab:lifecycle}
+
+\begin{figure}
+
+\centering{
+\includegraphics[scale=.65]{img/bp-worflow.pdf}
+\label{fig:bp-workflow}
+\caption{Four steps to follow for publishing Linked Data by Governments and Institutions.}
+}
+
+\end{figure}
+
+
 
 \begin{table}[ht!b]
 \centering{
@@ -80,7 +91,7 @@ Recognize your responsibility in maintaining data once it is published. Ensure t
 }
 \end{table}
 
-In this chapter, we mainly describe our contributions on concrete implementations regarding how to use standard vocabularies (Section \ref{sec:lov-approach}, Section \ref{sec:prefharmoni} and Section \ref{sec:vocabranking}), how to model and convert the data (Section \ref{sec:data2rdf}, Step \#3 \& Step \#7) and practical consideration on how to specify appropriate license on vocabularies and datasets (Section \ref{sec:checker}, cf. Step \#4).  
+In this chapter, we mainly present our contributions around Linked Open Vocabularies (LOV). Section \ref{sec:lov-approach} describes the scope and the how LOV can be used with an ontology methodology (e.g., NeOn methodology) to booster the search and the quality of vocabularies to reuse. In section \ref{sec:prefharmoni}, we propose and implement an heuristic to align vocabularies on the Web of Data and a ranking of vocabularies based on information content (IC) metrics. We finally describe a module of Datalift that reuses the LOV catalogue in the process of converting raw dataset for reusing terms already defined in other vocabularies (Section \ref{sec:data2rdf}). We finally conclude the chapter in Section \ref{ch6:conclusion}.  
 
 
 %citing glossary uses \cite{glossairegld}
@@ -100,6 +111,12 @@ In particular, we distinguish six categories of catalogs:
  \item \textit{Catalogs of ontologies maintained by a single organization} which often uses a platform such as Neologism\footnote{\url{http://neologism.deri.ie}} for publishing vocabularies.
  \item \textit{Vocabularies crawled by Semantic Web search engines} containing snapshots at the time of the crawsuch as Watson\footnote{\url{http://watson.kmi.open.ac.uk/}}, Sindice\footnote{\url{http://www.sindice.com}}, Falcon-s\footnote{\url{http://ws.nju.edu.cn/falcons/}} or Swoogle. For example, the NanJing Vocabulary Repository (NJVR)- a dump of Falcon-s ontologies, reported as of June, 17th 2,996 vocabularies crawled from 261 pay-level domains.
 \end{itemize}
+
+We observe that the existing catalogs of vocabularies in the literature have some limitations compared with LOV. In terms of coverage, the number of vocabularies indexed by LOV is constantly growing and it is the only catalog, to the best of our knowledge, that provide all types of search criteria (metadata search, within/across ontologies search), both an API and a SPARQL endpoint access and that can be as well classified as an ``Application platform'' apart from being at the same time an ontology directory and an ontology registry. According to the categories of ontology libraries defined in~\cite{AquinJoWS12}, LOV falls under the category of ``curated ontology directory'' and an ``application platform'' because the ontologies are curated manually with statistics automatically generated, and because it exposes its data via an API. Furthermore, LOV provides an answer to some of the issues mentioned in the survey reported in~\cite{AquinJoWS12}, such as ``where has an ontology been used before?'' or ``is this ontology compatible with mine?''. In particular, LOV provides vocabulary usage statistics of the LOD Cloud datasets and it exposes vocabularies dependency using the Vocabulary-of-A-Friend (VOAF) ontology.
+
+\paragraph{}
+vocab.cc\footnote{\url{http://vocab.cc}} is a service which is similar to prefix.cc since it enables to look up and search for Linked Data vocabularies while providing more specific information about the usage of a particular class or property in the Billion Triple Challenge Dataset (BTCD). It also provides the ranking of those properties or classes. The authors mentioned that ``common prefixes are resolved with data from prefix.cc''. Although they don't give further details, this service is somehow related to prefix.cc. Triple-Checker\footnote{\url{https://github.com/cgutteridge/TripleChecker}} is a web service based on prefix.cc which aims at finding typos and common errors in RDF data. It parses a given URI/URL and the output is divided in two sections: the namespaces and the term section. The former matches against prefix.cc to determine whether they are ``common prefixes'' and the latter provides the term definition.
+
 
 \begin{landscape}
 \begin{table}[!htbp]
@@ -139,9 +156,7 @@ Web Prot\'{e}g\'{e} & 69 & No & --//-- & Yes \\
 \end{table}
 \end{landscape}
 
-We observe that the existing catalogs of vocabularies in the literature have some limitations compared with LOV. In terms of coverage, the number of vocabularies indexed by LOV is constantly growing and it is the only catalog, to the best of our knowledge, that provide all types of search criteria (metadata search, within/across ontologies search), both an API and a SPARQL endpoint access and that can be as well classified as an ``Application platform'' apart from being at the same time an ontology directory and an ontology registry. According to the categories of ontology libraries defined in~\cite{AquinJoWS12}, LOV falls under the category of ``curated ontology directory'' and an ``application platform'' because the ontologies are curated manually with statistics automatically generated, and because it exposes its data via an API. Furthermore, LOV provides an answer to some of the issues mentioned in the survey reported in~\cite{AquinJoWS12}, such as ``where has an ontology been used before?'' or ``is this ontology compatible with mine?''. In particular, LOV provides vocabulary usage statistics of the LOD Cloud datasets and it exposes vocabularies dependency using the Vocabulary-of-A-Friend (VOAF) ontology.
 
-vocab.cc\footnote{\url{http://vocab.cc}} is a service which is similar to prefix.cc since it enables to look up and search for Linked Data vocabularies while providing more specific information about the usage of a particular class or property in the Billion Triple Challenge Dataset (BTCD). It also provides the ranking of those properties or classes. The authors mentioned that ``common prefixes are resolved with data from prefix.cc''. Although they don't give further details, this service is somehow related to prefix.cc. Triple-Checker\footnote{\url{https://github.com/cgutteridge/TripleChecker}} is a web service based on prefix.cc which aims at finding typos and common errors in RDF data. It parses a given URI/URL and the output is divided in two sections: the namespaces and the term section. The former matches against prefix.cc to determine whether they are ``common prefixes'' and the latter provides the term definition.
 
 \section{Linked Open Vocabulary (LOV) and Vocabularies}        \label{sec:lov-approach}
 The Linked Open Vocabularies (LOV) initiative aims to bring more insights about published vocabularies in order to foster their reuse. Compared to other projects, LOV benefits from a community:
@@ -179,10 +194,10 @@ Below we illustrate some of the LOV features useful for ontology search and reus
 
 %\todo{reference the image of vocabs evolution in LOV}
 
-\begin{figure}[h!t]
+\begin{figure}[h!tb]
 \centering
   \includegraphics[width=\linewidth]{img/LOVEvol.png}
-  \caption{Graph evolution of vocabularies inserted into LOV since from 2011 to 2014.}
+  \caption{Graph evolution of vocabularies inserted into LOV from 2011 to 2014.}
   \label{fig:translations}
 \end{figure}
 
@@ -536,7 +551,7 @@ The linked data principles have gained significant momentum over the last few ye
 
 To the best of our knowledge, recommending vocabularies to reuse are limited to ``popular'' or ``well-known'' ones. This paper proposes a metric combining different features such as how vocabularies are interlinked, or how they are used in real world datasets. This contribution originates also in the desire to bring the traditional concept of Information Content (IC) into the field of the semantic web applied to vocabularies. Many catalogs of ontologies already provide some ranking metrics based on some features. However, we are interested in applying the principles of IC on vocabularies to investigate if such techniques can give more insights in ontology ranking and ontology usage (e.g in visualization applications).
 
-This Section is organized as follows: Section~\ref{sec:theory} defines the theory of Information Content, and the features used for applying Partition Information Content to vocabularies. We present our experiments on the LOV catalogue in the Section~\ref{sec:experiments}. We discuss how this ranking metric can be used for vocabulary design and maintenance in Section~\ref{sec:application}. We compare our results with other rankings for vocabularies in Section~\ref{sec:related} before concluding and outlining future work (Section~\ref{sec:conclusion}).
+This Section is organized as follows: Section~\ref{sec:theory} defines the theory of Information Content, and the features used for applying Partition Information Content to vocabularies. We present our experiments on the LOV catalogue in the Section~\ref{sec:experiments}. We discuss how this ranking metric can be used for vocabulary design and maintenance in Section~\ref{sec:application}. We compare our results with other rankings for vocabularies in Section~\ref{sec:related}.
 
 
 
@@ -772,7 +787,7 @@ Figure \ref{fig:matchingprocess} illustrates the process of matching the propert
 
 
 \section{Summary}
-\label{sec:summary}
+\label{ch6:conclusion}
 We have presented in this chapter our contribution to Linked Open Vocabularies, as part of implementations of the benefits of using LOV in ontology engineering (case of NeOn methodology), prefixes harmonization and alignment of vocabularies published on the Web, or on ranking vocabularies using the principles of Information Content. By applying this latter to Linked Open Vocabularies, we tried to use features that we consider ``relevant'' to be taken into account when comparing vocabularies (e.g: datasets reused, external vocabularies). We compare with other rankings that are mostly based on the ``popularity'' of vocabularies. This work can path the way for assessing vocabularies with applications in a more systemic approach for recommending classes/properties in ontology management, or in visualization applications to propose the most \textit{``oh yeah?''} suitable property to be visualized for RDF entities when there is large a large number of properties.
 
 \todo{add what next?}

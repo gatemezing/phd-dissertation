@@ -207,43 +207,79 @@ Currently, the tools achieving the transformations of geospatial data into RDF s
 Figure \ref{fig:shape2rdf-generic} shows a generic architecture for tools to convert ESRI ShapeFiles into different flavor of RDF. Tools differ mainly in the presence or not of the CRS reprojection, the vocabularies used for the RDF output, and the compatibility with GML and WKT representations.   
 
 \begin{figure}[ht!b]
+\centering{
 \includegraphics[scale=0.7]{img/shape2rdf-generic.pdf}
 \label{fig:shape2rdf-generic}
 \caption{Generic architecture of tools for converting raw geospatial data into RDF.}
+}
 \end{figure}
-
-
-
 
 
 \section{Interlinking Geospatial Data}
 \label{sec:interlinking}
 
-We present in this section different criteria that can be used to interlink geospatial datasets in the context of Web of Data, as well as some distance measures adapted for combining two geospatial datasets. For more details on mapping techniques, the readers can refer to \cite{euzenat2007}, and functions implemented in SILK \cite{jentzsch2010silk,isele2011} and LIMES \cite{ngau11} interlink tools. Among the set of properties usually used as data linking criteria, geolocation (addresses, postal code, latitude/longitude, etc) remains one of the most commonly used.
+We present in this section different criteria that can be used to interlink geospatial datasets in the context of Web of Data, as well as some distance measures adapted for combining two geospatial datasets. For more details on mapping techniques, the readers can refer to \cite{euzenat2007}, and functions implemented in SILK \cite{jentzsch2010silk,isele2011} and LIMES \cite{ngau11} interlinking tools. Among the set of properties usually used as data linking criteria, geolocation (addresses, postal code, latitude/longitude, etc) remains one of the most commonly used. 
 
-In \cite{anamaria08}, the author mentions many different forms of interlinking geospatial datasets. We highlight below some of the most important criteria to be taken into account in the process of interlinking two geospatial datasets.
+In this thesis, our linking approach is mainly based on geolocation properties comparison, although is by either combining well-known functions implemented in SILK and LIMES. The result of this interlinking process is a list of \textit{``owl:sameAs''} links between entities of each datasets, with a certain score.
 
-\subsection{Geometrical Criteria}
-\subsection{Topological Criteria}
-\subsection{Attributes Criteria}
+\subsection{Criteria for interlinking geospatial Data}
+Data interlinking task is generally performed by comparing properties values of each resource of a source dataset with corresponding properties of the resources described in the target datasets \cite{scharffe2010}. In the field of geographic databases, data matching is also performed by comparing properties, and especially geometries (points, lines, polygons, etc.) that are used to represent the shape and the location of geographic features. This task is usually based on distance measures chosen according to the type of the geometric primitives that must be compared \cite{mustiere2008,anamaria08,Julius09,walter1999}.
 
+
+In \cite{anamaria08}, the author mentions many different forms of interlinking geospatial datasets. We highlight below some of the most important criteria to be taken into account in the process of interlinking two geospatial datasets:
+\begin{itemize}
+\item \textbf{Geometrical criteria:} This criteria is based on the geometry of the objects, which is very specific to geographic data. In general, geometry refers to the location and the implicit information regarding the shape(length, orientation, etc.). 
+\item \textbf{Topological criteria:}
+Topology describes the relations of inclusion between objects and use the notion of neighborhood. Topological relationships are used for relations such as: the forest borders the road, two roads are connected, etc. Topological relationships are created from the geometry of the initial geographical objects. 
+\item \textbf{Attributes criteria:} This criteria uses different attributes belonging to the geographical object, such as name, nature or number of ways. As illustrated in Figure \ref{fig:geomObject}, the attributes of a geographic object can be quantitative or qualitative. The nature of the geographical object is the most important attribute to use in the process of interlinking geospatial data \cite{anamaria08}. This motivates the creation of domain ontologies to provide context in the process of interlinking, where domain-specific ontology alignment frameworks such as TaxoMap \cite{reynaud2007,hamdi2010} gives good precision for a large topographic ontology.
+
+\end{itemize}
+
+\begin{figure}[ht!b]
+\centering{
+\includegraphics[scale=0.65]{img/geometric-object.pdf}
+\label{fig:geomObject}
+\caption{Features of a geographic object adapted from \cite{anamaria08}.}
+}
+\end{figure}
 
 \subsection{Functions for Comparing Geometries}
-\todo{only describe distance and hausdorff -see these anamaria08}
-\todo{add table for distance functions implemented in SILK and LIMES, and compare them?} \\
+%\todo{only describe distance and hausdorff -see these anamaria08}
+%\todo{add table for distance functions implemented in SILK and LIMES, and compare them?} \\
+\paragraph{Euclidean Distance:}
+For two objects represented with points, the principal distance used  for measuring their position is the euclidean distance (see Figure \ref{fig:geodistances}). Considering two objects $O_{1} = (x_{1}, y_{1})$ and $O_{2} = (x_{2}, y_{2})$, the euclidean distance $dy_{E}$ between the two objects is defined as follows:
+\begin{equation}
+d_{E} = \sqrt{((x_{1} - x_{2})^2 + ((y_{1} - y_{2})^2}
+\end{equation}
 
 
-However, resources that actually refer to complex topographic features are generally described by very simple geolocation properties, such as a position defined by coordinates (longitude, latitude). On the other hand, geographic reference datasets provide more precise geometric information about geographic features. Interlinking thematic Linked Open Datasets with geographic reference datasets enable to take advantage of both information sources to link independent thematic datasets and create rich cartographic applications for data visualization \cite{feliachi2013}. 
+\begin{figure}[ht!b]
+\centering{
+\includegraphics[scale=0.65]{img/geodistances.pdf}
+\label{fig:geodistances}
+\caption{The most used distances on geometries: (a) the euclidean distance and (b) the Hausdorff distance.}
+}
+\end{figure}
 
-Data interlinking task is generally performed by comparing properties values of each resource of a source dataset with corresponding properties of the resources described in the target datasets \cite{scharffe2010}. In the field of geographic databases, data matching is also performed by comparing properties, and especially structured geometries (points, lines, polygons, etc.) that are used to represent the shape and the location of geographic features. This task is usually based on distance measures chosen according to the type of the geometric primitives that must be compared \cite{mustiere2008,anamaria08,Julius09,walter1999}.
 
-In this thesis, our linking approach is mainly based on geolocation properties comparison, although is by either combining well-known functions implemented in SILK and LIMES. The result of this interlinking process is a list of \textit{``owl:sameAs''} links between entities of each datasets, with a certain score. Listing \ref{} presents a sample of 
-the script used to interlink shops in LinkedGeoData and addresses from OSM-France (which is developed in Section \ref{sec:bano2rdf}).
+\paragraph{Hausdorff distance:}
+For complex geometries (polylines, linestring, polygones, etc.) there are different measures in the literature, such as mean distance, Fr\'echet distance and Hausdorff distance \cite{anamaria08}. However, at the time of writing this thesis, a Hausdorff distance measure is mostly used in LIMES framework for complex geometries. Considering two linestrings $L_{1}$ and $L_{2}$, the Hausdorff distance represents the maximal distance between the two lines according to the following equation:
+\begin{equation}
+d_{H} = max(d_{1}, d_{2} )
+\end{equation}
+where $d_{1}$ and $d_{2}$ are defined as follows:
 
-\todo{add listing of lime script here}
+
+\begin{align}
+d_{1} = max_{p_{1} \in L_{1}}[min_{p_{2} \in L_{2}}[d_{E}(p_{1}, p_{2})]] \\
+d_{2} = max_{p_{2} \in L_{2}}{p_{2}}[min_{p_{1} \in L_{1}}[d_{E}(p_{2}, p_{1})]]
+\end{align}
+
+
+
+Currently on the Web of Data, resources that actually refer to complex topographic features are generally described by very simple geolocation properties, such as a position defined by coordinates (longitude, latitude). On the other hand, geographic reference datasets provide more precise geometric information about geographic features. Interlinking thematic Linked Open Datasets with geographic reference datasets enable to take advantage of both information sources to link independent thematic datasets and create rich cartographic applications for data visualization \cite{feliachi2013}. 
 
  
-   
 \section{Survey on Triple Stores}
 \label{sec:surveytps}
 
