@@ -1,12 +1,11 @@
 
-\chapter{Licenses Compatibility Checking}
+\chapter{License Compatibility Checking}
 \label{ch:ch7}
 \begin{flushright}
-\textit{``Cool URIs don't change''} \\
- Tim Berners-Lee
+\textit{``What kind of Web do we want?’''} \\
+ Tim Berners-Lee\footnote{\url{https://webwewant.org/}}
  \end{flushright}
  
-\todo{Change this citation}
 
 \section*{Introduction}
 \todo{add intro of what is about here} \\
@@ -57,6 +56,7 @@ All these works either propose new ways to model licenses information or new for
 Up to our knowledge, the issue of licensed vocabularies has never been addressed. More precisely, no available framework exists dealing with such licenses and verifying in an automated way their potential compatibility with the license associated to datasets. The goal of supporting users in dealing with licensing information has been recently addressed by Cabrio et al.~\cite{CabrioESWC2014} with a different goal, i.e., supporting data publishers in creating RDF licenses representations from natural language texts. 
 
 \section{The LIVE Framework}
+\label{sec:live}
 The LIVE framework is a Javascript application, combining HTML and Bootstrap. Hence, installation has no prerequisite. Since the tool is written in Javascript, the best way to monitor the execution time is with the \texttt{performance.now()} function. We use the $10$ LOD datasets with the highest number of links towards other LOD datasets available at \url{http://lod-cloud.net/state/#links}. For each of the URLs in Datahub, we retrieve the VoID\footnote{\url{http://www.w3.org/TR/void/}} file in Turtle format, and we use the \textit{voidChecker} function\footnote{\url{http://www.eurecom.fr/~atemezin/licenseChecker/voidChecker.html}} of the LIVE tool to retrieve the associated license, if any.  
 The goal of the LIVE framework is to support data producers to assign a license to the data ensuring the consistency of such license with respect to the licenses assigned to the vocabularies she exploits in the dataset. 
 The input of the LIVE framework (Figure~\ref{fig:framework}) consists in the dataset (URI or VOiD) whose license has to be verified. The framework is composed by two modules. The first module takes care of retrieving the vocabularies used in the dataset, and for each vocabulary, retrieves the associate license\footnote{Note that the LIVE framework relies on the dataset of machine-readable licenses (RDF, Turtle syntax) presented in~\cite{CabrioESWC2014}.} (if any) querying the LOV repository. 
