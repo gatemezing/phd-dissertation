@@ -6,7 +6,7 @@
 \textit{``If you're a geospatial developer, AJAX is not a domestic cleaning product. \\
 If you're a web dev, a polygon is not a dead parrot''}\footnote{\url{http://www.w3.org/2014/03/lgd/report}}.\\
 Steve Peters \\
-(UK Government's Department \\for Communities and Local Government) 
+(UK Government's Department \\for Communities and Local Government)
 
 \end{flushright}
 
@@ -38,7 +38,7 @@ LOD Greek & 634 KTriples & SPARQL endpoint \\
 }
 \end{table}
 
-For publishing geospatial data on the Web, some tools are needed for converting native formats into RDF. Those tools are based on OGC libraries for extracting features, and vocabularies provided to build the RDF. Once the dataset obtained, it has to be stored in an efficient way, interconnected to other datasets, and then consumed using SPARQL queries. Moreover, all those steps might be integrated in frameworks that ease the overall process of publishing geodata. In this chapter, we discuss the aforementioned topics, each time surveying the state-of-art and highlighting our contributions. 
+For publishing geospatial data on the Web, some tools are needed for converting native formats into RDF. Those tools are based on OGC libraries for extracting features, and vocabularies provided to build the RDF. Once the dataset obtained, it has to be stored in an efficient way, interconnected to other datasets, and then consumed using SPARQL queries. Moreover, all those steps might be integrated in frameworks that ease the overall process of publishing geodata. In this chapter, we discuss the aforementioned topics, each time surveying the state-of-art and highlighting our contributions.
 
 \section{Current Representation of Geodata on the Web}\label{sec:scenario}
 %\section{Scenario: 7$^{th}$ Arrondissement of Paris}                      \label{sec:scenario}
@@ -117,7 +117,7 @@ To address the need for converting geodata into a graph model such as RDF, there
 Almost all the tools use the OGC libraries for parsing and extracting features from shape formats, such as GDAL (Geospatial Data Abstraction Library) and GeoTools.
 
 \subsection{Geometry2RDF} \label{sec:geo2rdf}
-Geometry2RDF \cite{deLeon2010} is a java based tool\footnote{\url{https://github.com/boricles/geometry2rdf}} that generates RDF triples from geometrical information, which can be available in GML or WKT. The tool takes as input any ESRI shapefiles, spatial DBMS (Oracle,  PostgreSQL, MySQL, etc), transforms into GML (using GeoTools\footnote{\url{http://www.geotools.org}}) and then generates RDF (using Jena\footnote{\url{https://jena.apache.org/}}) consistent with the NeoGeo vocabulary. The default CRS used for the geometry is WGS84. The architecture is flexible to run as a standalone platform or as a library. 
+Geometry2RDF \cite{deLeon2010} is a java based tool\footnote{\url{https://github.com/boricles/geometry2rdf}} that generates RDF triples from geometrical information, which can be available in GML or WKT. The tool takes as input any ESRI shapefiles, spatial DBMS (Oracle,  PostgreSQL, MySQL, etc), transforms into GML (using GeoTools\footnote{\url{http://www.geotools.org}}) and then generates RDF (using Jena\footnote{\url{https://jena.apache.org/}}) consistent with the NeoGeo vocabulary. The default CRS used for the geometry is WGS84. The architecture is flexible to run as a standalone platform or as a library.
 
 \subsection{TripleGeo}
 TripleGeo \cite{triplegeo2014} is an ETL (Extract- Transform-Load) tool derived from Geometry2RDF (Cf. Section \ref{sec:geo2rdf}) to transform a variety of geospatial databases and shapefiles (including KML and INSPIRE compliant files) into RDF triples. Triples can be exported according to the GeoSPAQL standard, the WGS84 vocabulary and the Virtuoso RDF vocabulary\footnote{\url{http://docs.openlinksw.com/virtuoso/rdfsparqlgeospat.html}}. In addition TripleGeo allows on-the-fly reprojection between CRSs, e.g., transform geometries from GreekGrid87 (a local CRS) into WGS84 (used for GPS locations). The code is available at \url{https://github.com/GeoKnow/TripleGeo}.
@@ -132,18 +132,18 @@ shp2GeoSPARQL \cite{saavedra14} is also an extension of Geometry2DF which transf
 
 \subsection{GeomRDF: Datalift tool for Converting Geodata}
 \label{sec:geomRDF}
-GeomRDF \cite{hamdi14} is a tool developed within the Datalift platform that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components: 
+GeomRDF \cite{hamdi14} is a tool developed within the Datalift platform that transforms geospatial dataset from traditional GIS formats into RDF, and overcome the limitations of the existing tools mentioned in Section \ref{sec:limitations}. GeoRDF is based on a vocabulary that reuses and extends GeoSPARQL and NeoGeo so that geometries can be defined in any CRS, and represented both as structured geometries and GeoSPARQL standard compliant. \geom is composed of three components:
 
 \begin{itemize}
-\item \textbf{input parsers:} This component extracts from the different input format all the features and their descriptions. 
+\item \textbf{input parsers:} This component extracts from the different input format all the features and their descriptions.
 \item \textbf{feature parsers:} This component extracts for all the features their properties depending on their type, either thematic (attributes and properties of a geographic entity) or geometric (the geometry associated to the entity). For example, in the case of a Multipolygon, the parser stores first all the Polygons composing the original Multipolygon. Then, it stores the exterior and the eventual LinearRings for each Polygon, as well as the points included in the LinearRings. Finally the coordinates of each point are also stored. At this stage, GeoRDF provides a \textit{``CRS reprojection''} functionality, which consists of transforming on-the-fly between different CRSs, before the storage of the geometries.
 
-\item  \textbf{RDF Builder:} This module is in charge of generating RDF triples according to the \texttt{geom} vocabulary for geometry, \textbf{geofla} and \textbf{topo} for different topographic entities.  
+\item  \textbf{RDF Builder:} This module is in charge of generating RDF triples according to the \texttt{geom} vocabulary for geometry, \textbf{geofla} and \textbf{topo} for different topographic entities.
 
 
 \end{itemize}
 
-GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}. Listing \ref{lst:nicegeomrdf} presents a snippet in TURTLE of GeomRDF for geometry of the city of Nice (France). It also contains the structured modeling of a MultiPolygon as a set of Polygon, containing Points in an LinearRing. 
+GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}. Listing \ref{lst:nicegeomrdf} presents a snippet in TURTLE of GeomRDF for geometry of the city of Nice (France). It also contains the structured modeling of a MultiPolygon as a set of Polygon, containing Points in an LinearRing.
 
 
 
@@ -203,8 +203,8 @@ gsp:asWKT "<http://data.ign.fr/id/ignf/crs/WGS84GDD> MULTIPOLYGON (((7.308745254
 \subsection{Limitations of existing tools}
 \label{sec:limitations}
 
-Currently, the tools achieving the transformations of geospatial data into RDF still suffer from some limitations. On one hand, they are all compatible with GeoSPARQL standard, which in turns has a handful endpoints that implements all the requirements. Moreover, geometries are literals (e.g., wktLiteral, gmlLiteral) with embedded CRS. On the other hand, tools based on NeoGeo vocabulary outputs structured geometries that can be easily handled by existing Triple Stores and SPARQL queries. However, NeoGeo only allows geometry in WGS84 CRS. The ideal scenario could be a tool that provides output consistent with both GeoSPARQL and structured geometries handling multiple CRSs. 
-Figure \ref{fig:shape2rdf-generic} shows a generic architecture for tools to convert ESRI ShapeFiles into different flavor of RDF. Tools differ mainly in the presence or not of the CRS reprojection, the vocabularies used for the RDF output, and the compatibility with GML and WKT representations.   
+Currently, the tools achieving the transformations of geospatial data into RDF still suffer from some limitations. On one hand, they are all compatible with GeoSPARQL standard, which in turns has a handful endpoints that implements all the requirements. Moreover, geometries are literals (e.g., wktLiteral, gmlLiteral) with embedded CRS. On the other hand, tools based on NeoGeo vocabulary outputs structured geometries that can be easily handled by existing Triple Stores and SPARQL queries. However, NeoGeo only allows geometry in WGS84 CRS. The ideal scenario could be a tool that provides output consistent with both GeoSPARQL and structured geometries handling multiple CRSs.
+Figure \ref{fig:shape2rdf-generic} shows a generic architecture for tools to convert ESRI ShapeFiles into different flavor of RDF. Tools differ mainly in the presence or not of the CRS reprojection, the vocabularies used for the RDF output, and the compatibility with GML and WKT representations.
 
 \begin{figure}[ht!b]
 \centering{
@@ -218,7 +218,7 @@ Figure \ref{fig:shape2rdf-generic} shows a generic architecture for tools to con
 \section{Interlinking Geospatial Data}
 \label{sec:interlinking}
 
-We present in this section different criteria that can be used to interlink geospatial datasets in the context of Web of Data, as well as some distance measures adapted for combining two geospatial datasets. For more details on mapping techniques, the readers can refer to \cite{euzenat2007}, and functions implemented in SILK \cite{jentzsch2010silk,isele2011} and LIMES \cite{ngau11} interlinking tools. Among the set of properties usually used as data linking criteria, geolocation (addresses, postal code, latitude/longitude, etc) remains one of the most commonly used. 
+We present in this section different criteria that can be used to interlink geospatial datasets in the context of Web of Data, as well as some distance measures adapted for combining two geospatial datasets. For more details on mapping techniques, the readers can refer to \cite{euzenat2007}, and functions implemented in SILK \cite{jentzsch2010silk,isele2011} and LIMES \cite{ngau11} interlinking tools. Among the set of properties usually used as data linking criteria, geolocation (addresses, postal code, latitude/longitude, etc) remains one of the most commonly used.
 
 In this thesis, our linking approach is mainly based on geolocation properties comparison, although is by either combining well-known functions implemented in SILK and LIMES. The result of this interlinking process is a list of \textit{``owl:sameAs''} links between entities of each datasets, with a certain score.
 
@@ -228,9 +228,9 @@ Data interlinking task is generally performed by comparing properties values of 
 
 In \cite{anamaria08}, the author mentions many different forms of interlinking geospatial datasets. We highlight below some of the most important criteria to be taken into account in the process of interlinking two geospatial datasets:
 \begin{itemize}
-\item \textbf{Geometrical criteria:} This criteria is based on the geometry of the objects, which is very specific to geographic data. In general, geometry refers to the location and the implicit information regarding the shape(length, orientation, etc.). 
+\item \textbf{Geometrical criteria:} This criteria is based on the geometry of the objects, which is very specific to geographic data. In general, geometry refers to the location and the implicit information regarding the shape(length, orientation, etc.).
 \item \textbf{Topological criteria:}
-Topology describes the relations of inclusion between objects and use the notion of neighborhood. Topological relationships are used for relations such as: the forest borders the road, two roads are connected, etc. Topological relationships are created from the geometry of the initial geographical objects. 
+Topology describes the relations of inclusion between objects and use the notion of neighborhood. Topological relationships are used for relations such as: the forest borders the road, two roads are connected, etc. Topological relationships are created from the geometry of the initial geographical objects.
 \item \textbf{Attributes criteria:} This criteria uses different attributes belonging to the geographical object, such as name, nature or number of ways. As illustrated in Figure \ref{fig:geomObject}, the attributes of a geographic object can be quantitative or qualitative. The nature of the geographical object is the most important attribute to use in the process of interlinking geospatial data \cite{anamaria08}. This motivates the creation of domain ontologies to provide context in the process of interlinking, where domain-specific ontology alignment frameworks such as TaxoMap \cite{reynaud2007,hamdi2010} gives good precision for a large topographic ontology.
 
 \end{itemize}
@@ -277,51 +277,51 @@ d_{2} = max_{p_{2} \in L_{2}}{p_{2}}[min_{p_{1} \in L_{1}}[d_{E}(p_{2}, p_{1})]]
 
 
 
-Currently on the Web of Data, resources that actually refer to complex topographic features are generally described by very simple geolocation properties, such as a position defined by coordinates (longitude, latitude). On the other hand, geographic reference datasets provide more precise geometric information about geographic features. Interlinking thematic Linked Open Datasets with geographic reference datasets enable to take advantage of both information sources to link independent thematic datasets and create rich cartographic applications for data visualization \cite{feliachi2013}. 
+Currently on the Web of Data, resources that actually refer to complex topographic features are generally described by very simple geolocation properties, such as a position defined by coordinates (longitude, latitude). On the other hand, geographic reference datasets provide more precise geometric information about geographic features. Interlinking thematic Linked Open Datasets with geographic reference datasets enable to take advantage of both information sources to link independent thematic datasets and create rich cartographic applications for data visualization \cite{feliachi2013}.
 
- 
+
 \section{Survey on Triple Stores}
 \label{sec:surveytps}
 
-A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqles \cite{sparqles13} and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions. 
+A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqles \cite{sparqles13} and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions.
 
 
 \subsection{Generic Triple Stores}
 \label{sec:genrictps}
 
-We briefly describes some well-known triple stores that has proven to have passed the ``10 Billion Statements'', that is they are able to load and handle more than 10 billion of triples. 
+We briefly describes some well-known triple stores that has proven to have passed the ``10 Billion Statements'', that is they are able to load and handle more than 10 billion of triples.
 \subsubsection{Virtuoso}
-Virtuoso is a triple store developed by OpenLink\footnote{\url{http://virtuoso.openlinksw.com/}} and releases both in Open source and commercial versions. It implements part of SPARQL1.1 and store billion of triples. The geospatial extension implements subset of SQL MM functions. A geometry stores in Virtuoso uses a special RDF typed literal \texttt{virtrdf:Geometry}\footnote{\url{http://www.openlinksw.com/schemas/virtrdf\#}}. Such a literal is automatically indexed in an R tree index. Only geometry in WGS84 can be manipulated. Virtuoso is used as back-end for one of the most used dataset in the LOD cloud, \textsc{DBPEDIA}\footnote{http://dbpedia.org/sparql}  
+Virtuoso is a triple store developed by OpenLink\footnote{\url{http://virtuoso.openlinksw.com/}} and releases both in Open source and commercial versions. It implements part of SPARQL1.1 and store billion of triples. The geospatial extension implements subset of SQL MM functions. A geometry stores in Virtuoso uses a special RDF typed literal \texttt{virtrdf:Geometry}\footnote{\url{http://www.openlinksw.com/schemas/virtrdf\#}}. Such a literal is automatically indexed in an R tree index. Only geometry in WGS84 can be manipulated. Virtuoso is used as back-end for one of the most used dataset in the LOD cloud, \textsc{DBPEDIA}\footnote{http://dbpedia.org/sparql}
 
 
 \subsubsection{OWLIM}
-OWLIM is a semantic repository developed by Ontotext\footnote{\url{http://www.ontotext.com/owlim}}, which provides support and querying of 
-two-dimensional point geometries modeled with the W3C Geo vocabulary. It implements spatial predicates represented as property funcions. The available four operations are: Buffer, Distance, Nearby and Point-in-polygon. OWLIM is implemented as a storage and inference layer for Sesame, with custom spatial index. 
+OWLIM is a semantic repository developed by Ontotext\footnote{\url{http://www.ontotext.com/owlim}}, which provides support and querying of
+two-dimensional point geometries modeled with the W3C Geo vocabulary. It implements spatial predicates represented as property funcions. The available four operations are: Buffer, Distance, Nearby and Point-in-polygon. OWLIM is implemented as a storage and inference layer for Sesame, with custom spatial index.
 
 \subsubsection{AllegroGraph}
-AllegroGraph\footnote{\url{http://franz.com/agraph/allegrograph/}} is another RDF store developed and maintained by Franz Inc. which stores geospatial data types as native data structures. Support is provided both for Cartesian coordinate systems and for spherical coordinate systems. Every datum in an AllegroGraph store is a UPI, and for geospatial data, the added UPI type is \texttt{:geospatial} with type code \texttt{+geospatial+}. Geometries are assigned to geometric objects through the use of property \url{<http://franz.com/ns/allegrograph/3.0/geospatial/pos>}, and for querying a GEO operator is introduced to express geospatial query patterns in SPARQL. AllegroGraph provides some operations on geodata, such as Bounding Box, Distance and Buffer. 
+AllegroGraph\footnote{\url{http://franz.com/agraph/allegrograph/}} is another RDF store developed and maintained by Franz Inc. which stores geospatial data types as native data structures. Support is provided both for Cartesian coordinate systems and for spherical coordinate systems. Every datum in an AllegroGraph store is a UPI, and for geospatial data, the added UPI type is \texttt{:geospatial} with type code \texttt{+geospatial+}. Geometries are assigned to geometric objects through the use of property \url{<http://franz.com/ns/allegrograph/3.0/geospatial/pos>}, and for querying a GEO operator is introduced to express geospatial query patterns in SPARQL. AllegroGraph provides some operations on geodata, such as Bounding Box, Distance and Buffer.
 
 
-    
+
 
 \subsection{Geospatial Triple Stores}
 \label{sec:geotps}
-We discuss in this section two triple stores built for indexing and querying geospatial data, Parliament and Strabon. We acknowledge that there might be some other solutions (e.g., Oracle DBMS version 111g, release 2). More details can be found in \cite{koubarakis12, battle12, garbis13}. In \cite{garbis13}, the authors present a benchmark of Geospatial RDF stores in the context of the TELIOS project\footnote{http://geographica.di.uoa.gr}, which uses real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores. 
+We discuss in this section two triple stores built for indexing and querying geospatial data, Parliament and Strabon. We acknowledge that there might be some other solutions (e.g., Oracle DBMS version 111g, release 2). More details can be found in \cite{koubarakis12, battle12, garbis13}. In \cite{garbis13}, the authors present a benchmark of Geospatial RDF stores in the context of the TELIOS project\footnote{http://geographica.di.uoa.gr}, which uses real-world and synthetic data to test the offered functionality and the performance of some prominent geospatial RDF stores.
 
 \subsubsection{Parliament}
 \
-The RDF store Parliament\footnote{\url{http://parliament.semwebcentral.org}} developed by BBN Technologies fully implements most of the functionality of GeoSPARQL \cite{battle12}. 
+The RDF store Parliament\footnote{\url{http://parliament.semwebcentral.org}} developed by BBN Technologies fully implements most of the functionality of GeoSPARQL \cite{battle12}.
 Parliament has been extended to provide the first implementation of GeoSPARQL, therefore geometries are represented using the WKT and GML serializations.
 Therefore, topological functions belonging in the OGC Simple Feature Access, Egenhofer and RCC8 families are exposed by Parliament.
 Topological properties and non-topological functions are also available.In addition, multiple coordinate reference systems may be used. Parliament is implemented in C++, and Java Native Interface is used to couple with Jena, and includes a rule engine, serving as a means of inference. It registers the presence of a spatial object in an R-Tree.
 
 \subsubsection{Strabon}
 %\todo{read again the paper}
-Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame\footnote{\url{http://rdf4j.org/}}, allowing it to manage both thematic and spatial data expressed in \texttt{stRDF}. PostGIS is used as the relational backend of Strabon. 
-stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data. 
-The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components. 
+Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame\footnote{\url{http://rdf4j.org/}}, allowing it to manage both thematic and spatial data expressed in \texttt{stRDF}. PostGIS is used as the relational backend of Strabon.
+stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data.
+The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components.
 
-  
+
 %\begin{table}[!htbp]
  %\begin{tabularx}{\textwidth}{|X|X|X|X|X|l|}
  %\hline
@@ -345,83 +345,64 @@ There are many criteria that can be used to assess triple stores based on the re
 \item the coverage of spatial functions,
 \item the compliance with GeoSPARQL standard,
 \item the extensions to existing vocabularies and SPARQL to manage geodata.
-\end{itemize}       
-
-
+\end{itemize}
 
 \begin{table}[htb!]
-    \caption{Survey of some generic popular triple stores.} \label{tab:generictriples}
-    \small
+    \caption{Survey of some generic popular triple stores.}
+    \label{tab:generictriples}
     \centering
-   
-    %\begin{tabularx}{\textwidth}{@{}lccc@{}}
-    %\begin{tabularx}{\textwidth}{@{}l@{}ccc@{}@{}@{}}
-     \begin{tabular}{*{7}{l}}
+    \begin{tabular}{lllllll}
     \toprule
     \textbf{Feature} & \textbf{Virtuoso} & \textbf{OWLIM} & \textbf{AllegroGraph} & \textbf{4Store} &  \textbf{Sesame} & \textbf{Fuseki} \\
     \toprule
-    
     \texttt{SPARQL1.0} & Yes & Yes & Yes & Yes & Yes & Yes \\
     \midrule
-    
     \texttt{SPARQL1.1} & Partial & Yes & Partial & Partial & Partial & Yes \\
     \midrule
-    
-   \texttt{SPARQL Update} & Non-std & Yes & Yes & Yes & Yes & Yes \\
+    \texttt{SPARQL Update} & Non-std & Yes & Yes & Yes & Yes & Yes \\
     \midrule
-    
-   \texttt{Reasoning} & Rules & Rules & Rules & Add-on & Little & Rules \\
+    \texttt{Reasoning} & Rules & Rules & Rules & Add-on & Little & Rules \\
     \midrule
-    
-    \texttt{10 billion statement} & Yes & Yes & Yes & Maybe & No & No \\
+    \texttt{10 billion statements} & Yes & Yes & Yes & No & No & No \\
     \midrule
-    
-      \texttt{Clustering} & Yes & Yes & Yes & Yes & No & No \\
+    \texttt{Clustering} & Yes & Yes & Yes & Yes & No & No \\
     \midrule
-    
-      \texttt{Open source} & Yes/No & No & No & Yes & Yes & Yes \\
-    
-    
+    \texttt{Open source} & Yes & No & No & Yes & Yes & Yes \\
     \bottomrule
-     
-     
-     \end{tabular}
-    
-    %\end{tabularx}
-    \end{table}
-  
-  
-    \paragraph{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}, \texttt{Parliament } and  \texttt{Virtuoso} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata. Moreover, the choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
-    
+    \end{tabular}
+\end{table}
 
- \begin{table}[ht!bp]
-    \caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.} \label{tab:triplestore}
-    
-    \centering
-    %\begin{tabular}{*{7}{c}}
-     \begin{tabular}{@{}  l  l  l @{} }
-     %\begin{tabularx}{\textwidth}{@{}llX@{}}
+\paragraph{Serialization and Triple stores:} We also advocate the use of properties that can provide compatibility with other formats (GML, KML, etc.). This choice can be triple store independent, as there could be ways to use content-negotiation to reach the same result. In Table \ref{tab:triplestore}, \texttt{Open Sahara}, \texttt{Parliament } and  \texttt{Virtuoso} are WKT/GML-compliant with respectively $23$ and $13$ functions dealing with geodata. Moreover, the choice of the triple store (e.g.,Virtuoso\footnote{Here we used Virtuoso Open Edition, V6.xx} vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
+
+\begin{table}[ht!bp]
+  \caption{Triple stores survey with respect to geometry types supported and geospatial functions implemented.}
+  \label{tab:triplestore}
+  \centering
+  \begin{tabular}{lll}
     \toprule
-    \textbf{Triplestore} 		& \textbf{WKT-Compliance } &  \textbf{GML-Compliance } & \textbf{Geometry supported} & \textbf{Geospatial Functions} &  \textbf{Geovocabulary }\\
+    \textbf{Triplestore} & \textbf{WKT-Compliance } &  \textbf{GML-Compliance } \\
+    \textbf{Geometry supported} & \textbf{Geospatial Functions} &  \textbf{Geo-vocabulary} \\
     \toprule
-    \texttt{Virtuoso} 	& Yes & Yes & Point & SQL/MM (subset) & W3C Geo + Typed Literal\\
+    \texttt{Virtuoso} & Yes & Yes \\
+    Point & SQL/MM (subset) & W3C Geo + Typed Literal \\
     \midrule
-    \texttt{AllegroGraph} & \-- & -- & Point & Buffer, Bounding Box, Distance & ``strip'' mapping data \\
+    \texttt{AllegroGraph} & \-- & \-- \\
+    Point & Buffer, Bounding Box, Distance & ``strip'' mapping data \\
     \midrule
-    \texttt{OWLIM-SE} & N/A & N/A & Point & Distance, Buffer, Nearby, Within & W3C Geo\\ 
+    \texttt{OWLIM-SE} & N/A & N/A \\
+    Point & Distance, Buffer, Nearby, Within & W3C Geo \\
     \midrule
-    \texttt{Open Sahara} & \ Yes & Yes & Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8   & Typed Literal \\
+    \texttt{Open Sahara} & \ Yes & Yes \\
+    Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8 & Typed Literal \\
     \midrule
-    \texttt{Parliament} & \ Yes & Yes & Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8   &  GeoSPARQL vocabulary\\
+    \texttt{Parliament} & \ Yes & Yes \\
+    Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8 &  GeoSPARQL vocabulary\\
     \midrule
-    \texttt{Strabon} & \ Yes & Yes & Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8   &  stRDF\\
+    \texttt{Strabon} & \ Yes & Yes \\
+    Point, Line, Polygons & OGC-SFA, Egenhofer, RCC-8 &  stRDF\\
     \bottomrule
-  
-     \end{tabular}
-    %\end{tabularx}
-    \end{table}
-   
-
+  \end{tabular}
+\end{table}
 
 %\subsection{Benchmarks for Geospatial RDF Stores}
 
@@ -429,7 +410,7 @@ There are many criteria that can be used to assess triple stores based on the re
 
 \section{Datalift: A tool for Managing Linked (Geo)Data Publishing Workflow}
 \label{sec:toolLD}
-In this section, we present the Datalift platform, as a tool to help for lifting raw data to RDF. existing tools that manage the workflow of publishing geodata on the Web. To the best of our knowledge, a related framework providing similar functionalities is the \textsc{Geoknow Stack} that we discuss in section \ref{sec:geoknow}. 
+In this section, we present the Datalift platform, as a tool to help for lifting raw data to RDF. existing tools that manage the workflow of publishing geodata on the Web. To the best of our knowledge, a related framework providing similar functionalities is the \textsc{Geoknow Stack} that we discuss in section \ref{sec:geoknow}.
 
 \subsection{Datalift Platform}
 \label{sec:datalift}
@@ -443,7 +424,7 @@ The ambition of DataLift is to act as a catalyst for the emergence of the Web of
 \item Access control and license management.
 \end{enumerate}
 
-Figure \ref{fig:liftprocess} gives an overview of the different steps in lifting raw source data into RDF using different modules of Datalift. 
+Figure \ref{fig:liftprocess} gives an overview of the different steps in lifting raw source data into RDF using different modules of Datalift.
 
 \begin{figure}[!htp]
 \centering{
@@ -494,7 +475,7 @@ All the documentation for installing Datalift is available at \url{http://datali
 
 \paragraph{Usage:}
 The data lifting workflow has several distinct steps. DataLift makes it possible to replay each step in producing different results for each step. To facilitate access to all the different treatments and their results, they are grouped as one project. The project gathers together the various sources used and the results of all treatments done.
-Each module has its own way to be used within the lifting process in DataLift. For more details, the readers are encouraged to read this resource at \url{http://datalift.org/wiki/index.php/How_to_use_the_Datalift_platform_to_publish_a_dataset_on_the_Web#The_lifting_project. 
+Each module has its own way to be used within the lifting process in DataLift. For more details, the readers are encouraged to read this resource at \url{http://datalift.org/wiki/index.php/How_to_use_the_Datalift_platform_to_publish_a_dataset_on_the_Web#The_lifting_project.
 }
 
 
@@ -502,7 +483,7 @@ Each module has its own way to be used within the lifting process in DataLift. F
 \subsection{GeoKnow Stack Framework}
 \label{sec:geoknow}
 
-The \textsc{Geoknow Stack} is a workbench developed within the Geoknow project\footnote{\url{http://geoknow.eu/}}, aiming at bringing geospatial knowledge integration to the Linked Data, with reasoning on Billion-triples and providing data provenance, and adaptive authoring, exploration and curation of geospatial data. GeoKnow Stack consists of eight tools integrated in 6 modules for Extraction, storage and querying, authoring, linking, enrichment and exploration. Figure \ref{fig:geoknow} shows the architecture. 
+The \textsc{Geoknow Stack} is a workbench developed within the Geoknow project\footnote{\url{http://geoknow.eu/}}, aiming at bringing geospatial knowledge integration to the Linked Data, with reasoning on Billion-triples and providing data provenance, and adaptive authoring, exploration and curation of geospatial data. GeoKnow Stack consists of eight tools integrated in 6 modules for Extraction, storage and querying, authoring, linking, enrichment and exploration. Figure \ref{fig:geoknow} shows the architecture.
 
 \begin{figure*}[htb!p]
 \vspace{-6cm}
@@ -519,20 +500,20 @@ Below a brief description of the main modules:
 \begin{itemize}
 \item \textbf{Extraction and Loading:} The module is in charge of loading/importing RDF datasets, extract and convert legacy datasets using extractors/mappers such as TripleGeo (Cf.Section \ref{sec:toolgeo}) and Sparqlify\footnote{\url{http://sparqlify.org/}}. Sparqlify is a SPARQL-SQL rewriter that enables one to define RDF views on relational databases and query them with SPARQL. Currently in alpha state, it powers the Linked-Data Interface of the LinkedGeoData Server and provides access to billions of virtual triples from the OpenStreetMap database.
 \item \textbf{Storage and Querying:} The module is powered by Virtuoso 7.0 triple store for querying the datasets.
-\item \textbf{Authoring module} integrated the OntoWiki tool \cite{ontowiki14} that facilitates the visual presentation of a knowledge base as an information map, with different views on instance data. It enables intuitive authoring of semantic content, with an inline WYSIWYG editing mode for editing RDF content. 
+\item \textbf{Authoring module} integrated the OntoWiki tool \cite{ontowiki14} that facilitates the visual presentation of a knowledge base as an information map, with different views on instance data. It enables intuitive authoring of semantic content, with an inline WYSIWYG editing mode for editing RDF content.
 
-\item \textbf{Linking and Fusion:} To achieve this module, LIMES is the tool integrated in the workbench. LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces \cite{ngau11}. It is easily configurable via a web interface or can also be downloaded as standalone tool for carrying out link discovery locally. LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude \cite{song13}. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. The algorithms implemented  include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID \cite{ngon13}. 
+\item \textbf{Linking and Fusion:} To achieve this module, LIMES is the tool integrated in the workbench. LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces \cite{ngau11}. It is easily configurable via a web interface or can also be downloaded as standalone tool for carrying out link discovery locally. LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude \cite{song13}. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. The algorithms implemented  include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID \cite{ngon13}.
 
 \item \textbf{Enrichment:} During the enrichment step, the tool \textsc{GeoLift} \cite{geolift14} to enrich geographic content using three techniques: linking, dereferencing and Natural Language Processing (NLP). The code is available at \url{https://github.com/AKSW/GeoLift/}.
 
 \item \textbf{Exploration:} The workflow proposes two tools for this module: \textsc{Mappify} and \textsc{Facet}. The former is a tool for exploring (geographical) Linked Data datasets on the Web, while the latter allows  to explore the specific slice of data named ``facet''  of a Linked Data endpoint in a graphical way, by defining set of constraints on properties of the database. Once the facet is define, the information in the facet can be clicked-through in a tabular interface and visualized on a map. Facete is available at \url{http://144.76.166.111/facete/}.
-\end{itemize} 
+\end{itemize}
 
 \todo{add LOD2 work}
 
 \subsection{Comparison between Geoknow Stack and Datalift}
 \label{sec:geoknow-datalift}
-As described above, Geoknow Stack share similar goals and functionalities with Datalift. However, while the latter is cross-domain and generic, the former is more target for geospatial data. Moreover, Datalift implement connectors for many triple stores, while Geoknow Stack is powered by Virtuoso. Datalift is available in different platforms (Linux, Windows and Mac OS), while the current version of Geoknow can be installed only in Linux. Table \ref{tab:geoknow-datalift} gives more dimensions of both frameworks. 
+As described above, Geoknow Stack share similar goals and functionalities with Datalift. However, while the latter is cross-domain and generic, the former is more target for geospatial data. Moreover, Datalift implement connectors for many triple stores, while Geoknow Stack is powered by Virtuoso. Datalift is available in different platforms (Linux, Windows and Mac OS), while the current version of Geoknow can be installed only in Linux. Table \ref{tab:geoknow-datalift} gives more dimensions of both frameworks.
 
 \begin{table}[ht!bp]
     \caption{Comparison of Datalift with GeoKnow Stack} \label{tab:geoknow-datalift}
@@ -547,7 +528,7 @@ As described above, Geoknow Stack share similar goals and functionalities with D
     \midrule
     \texttt{Triple Store} & Virtuoso 7 & Sesame, Virtuoso 6, AllegroGraph\\
     \midrule
-    \texttt{Shape2RDF} &  Few models for geometry & More generic approach\\ 
+    \texttt{Shape2RDF} &  Few models for geometry & More generic approach\\
     \midrule
     \texttt{Interlinking Tool} & LIMES & SILK \\
     \midrule
@@ -569,18 +550,18 @@ As described above, Geoknow Stack share similar goals and functionalities with D
     \midrule
     \texttt{Authoring} & Wiki integrated & N/A\\
     \bottomrule
-  
+
     % \end{tabular}
     \end{tabularx}
     \end{table}
- 
 
-\section{Publishing French Authoritative Datasets} \label{sec:publishing}   
 
-In this section, we provide our contribution on the process of publishing different datasets from the French National Mapping agency and OSM-France. We detailed the workflow starting from the conversion of source files, their modeling using the vocabularies implemented, the interconnection with relevant data sources. We conclude this section by showing the current status of the French LOD cloud according to our contributions so far. 
+\section{Publishing French Authoritative Datasets} \label{sec:publishing}
+
+In this section, we provide our contribution on the process of publishing different datasets from the French National Mapping agency and OSM-France. We detailed the workflow starting from the conversion of source files, their modeling using the vocabularies implemented, the interconnection with relevant data sources. We conclude this section by showing the current status of the French LOD cloud according to our contributions so far.
 
 \subsection{Publishing French Administrative Units (GeoFla)} \label{sec:geofla}
-As a dataset dedicated to administrative units, GEOFLA\circledR is very likely to be reused by other datasets, either by reusing directly its URIs for georeferencing needs, or by reusing its description of administrative units - labels, properties and geometries - for interlinking purposes. 
+As a dataset dedicated to administrative units, GEOFLA\circledR is very likely to be reused by other datasets, either by reusing directly its URIs for georeferencing needs, or by reusing its description of administrative units - labels, properties and geometries - for interlinking purposes.
 
 \subsubsection{Data conversion}
 \label{sec:dconversion}
@@ -593,7 +574,7 @@ We had to make choices based on the set of best practices related to URI design\
 
 
 \subsubsection{Interlinking with existing GeoData} \label{sec:mapping}
-We interlinked our datasets with NUTS, DBpedia FR\footnote{\url{http://fr.dbpedia.org/}} and GADM datasets. SILK \cite{jentzsch2010silk} is used to interlink the departments in our dataset with departments in DBpedia FR, using labels and INSEE Code. We obtained $93$ matches (all correct) while three are missing for the departments 07, 09 and 75\footnote{\url{https://github.com/gatemezing/ign-iswc2014/tree/master/interlinking/matched}}. The 
+We interlinked our datasets with NUTS, DBpedia FR\footnote{\url{http://fr.dbpedia.org/}} and GADM datasets. SILK \cite{jentzsch2010silk} is used to interlink the departments in our dataset with departments in DBpedia FR, using labels and INSEE Code. We obtained $93$ matches (all correct) while three are missing for the departments 07, 09 and 75\footnote{\url{https://github.com/gatemezing/ign-iswc2014/tree/master/interlinking/matched}}. The
 LIMES tool\footnote{\url{https://github.com/AKSW/LIMES.}} is then used to perform the rest of the interlinking tasks \cite{ngon13} with the trigrams function based on the labels with restriction to France.
 
 \begin{itemize}
@@ -602,7 +583,7 @@ LIMES tool\footnote{\url{https://github.com/AKSW/LIMES.}} is then used to perfor
  \item Geofla-RDF with NUTS (316 236 triples): Using a \textit{``naive''} script with \texttt{trigrams} function on \texttt{geofla:Commune/rdfs:label} and \texttt{spatial:Feature/ramon:name} reveal two odd results located in Germany and Switzerland. The latter being the \textit{JURA } and the former named \textit{``Celle''}.  In order to remove those odd effects, we add another restrictions based on \textsf{ramon:code} by filtering the ones located in France (136 features) . The final matchings give a total of \textbf{105} correct links: 14 communes, 75 departments and 16 regions.
 \end{itemize}
 
-The above results show good precision of the matching algorithm (score above 0.98) and a rather low recall value with DBPedia-FR (0.627). The few number of matched entities is likely due to the low coverage of French features  in the datasets. 
+The above results show good precision of the matching algorithm (score above 0.98) and a rather low recall value with DBPedia-FR (0.627). The few number of matched entities is likely due to the low coverage of French features  in the datasets.
 
 
 \begin{table}[!htbp]
@@ -613,7 +594,7 @@ The above results show good precision of the matching algorithm (score above 0.9
  \textbf{Datasets}	 & Precision & Recall & F1-score \\   \specialrule{1pt}{1pt}{1pt}
  NUTS & $0.98$ & $1$ & $0.90$   \\
  GADM & $1$ & $0.86$ & $0.92$  \\
- DBpedia-FR & $1$ & $0.627$ & $0.77$   
+ DBpedia-FR & $1$ & $0.627$ & $0.77$
  \\ \specialrule{1pt}{1pt}{1pt}
 \end{tabular}
 \caption{Evaluation results in the interlinking process. }
@@ -624,14 +605,14 @@ The above results show good precision of the matching algorithm (score above 0.9
 The SPARQL endpoint for the French Administrative dataset is available for querying at \url{http://data.ign.fr/id/sparql}.
 
 %(\texttt{[filter (contains(ramon:code), ``FR'')]})
-%leading to \texttt{nuts:DE931 sameAs geoign:commune/41030} 
+%leading to \texttt{nuts:DE931 sameAs geoign:commune/41030}
 
 
 
 \subsection{Publishing  French Gazetteer} \label{sec:bdtopo}
 
-In this section, we present some first tests of converting BDTOPO\circledR ~into RDF and interlinking with LinkedGeoData using LIMES. The results confirm the need for geographic publishers to publish georeference data on the Web. 
-%We  then discuss some challenges related to updating the datasets, versioning and license policies. 
+In this section, we present some first tests of converting BDTOPO\circledR ~into RDF and interlinking with LinkedGeoData using LIMES. The results confirm the need for geographic publishers to publish georeference data on the Web.
+%We  then discuss some challenges related to updating the datasets, versioning and license policies.
 
 \paragraph{Data conversion, URIs and Interlinking:}
 Shapefiles are converted into RDF using the same two conversion process as for GEOFLA\circledR. The URIs for each resource follow the pattern: \url{rtopo:CLASS/ID} for the feature, while  \url{rtopo:geom/CLASS/ID} is used to reference the geometry of the resource.
@@ -651,7 +632,7 @@ The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of
 \textsf{lgdo:AerialwayThing} &  11 \\
 \textsf{lgdo:EmergencyThing} &  56 \\
 \textsf{lgdo:HistoricThing} &  257 \\
-\textsf{lgdo:MilitaryThing} &  8 
+\textsf{lgdo:MilitaryThing} &  8
 		\\ \specialrule{1pt}{1pt}{1pt}
 \end{tabular}
 \caption{Interlinking results using the Hausdorff metric of LIMES tool between LinkedGeoData and toponyms in the French Gazetteer}
@@ -664,7 +645,7 @@ The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of
 \label{sec:bano2rdf}
 OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project contains already 15 millions of indirect georeferencing locations. The geometries are POINTs and use WGS84 CRS. One of the requirement is to provide a RDF-ize version of the data, enriching the dataset with external/existing relevant ones. The goal of \textsc{Bano2RDF} with three basic requirements:
 \begin{description}
-\item [\ding{117}~Requirement 1 (Req1)-Model:] Model the existing data according to an existing vocabulary, generic enough to cover the scope of the existing dataset. 
+\item [\ding{117}~Requirement 1 (Req1)-Model:] Model the existing data according to an existing vocabulary, generic enough to cover the scope of the existing dataset.
 \item[\ding{117}~Requirement 2 (Req2)-Provenance:] Add relevance metadata on the published dataset  such as provenance, spatial coverage, licensing, authorship, etc.
 \item[\ding{117}~Requirement 3 (Req3)-Stable URIs]: Define a policy to provide and ensure stable URIs for identifying uniquely each address entity on the Web.
 \item[\ding{117}~Requirement 4 (Req4)-Interconnection:] Find relevant dataset already published on the Web to which interconnect for better discoverability.
@@ -684,23 +665,23 @@ Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} i
 \begin{verbatim}
 <http://www.openstreetmap.fr/bano/data/> a dcat:Catalog ;
 		dcterms:title "Donnees des adresses du projet BANO en RDF"@fr ;
-		dcterms:description "Le projet BANO en RDF de Base d'Adresses Nationale 
+		dcterms:description "Le projet BANO en RDF de Base d'Adresses Nationale
 		Ouverte par OpenStreetMap France."@fr ;
 		foaf:homepage <http://openstreetmap.fr/bano> ;
 		dcterms:language "fr" ;
 		dcterms:license <http://www.opendatacommons.org/licenses/odbl/> ;
-		dcterms:publisher <http://www.openstreetmap.fr/> ; 
+		dcterms:publisher <http://www.openstreetmap.fr/> ;
 		dcterms:issued "2014-05-14"^^xsd:date ; # data issued
 		dcterms:modified "2014-08-21"^^xsd:date ; #last modification
 		dcterms:spatial <http://id.insee.fr/geo/departement/06>,
 		 <http://id.insee.fr/geo/pays/france> .
 		
-\end{verbatim}   
+\end{verbatim}
 
-Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mostly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples. 
+Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mostly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples.
 
 \paragraph{Interconnection with LinkedGeoData:}
-Regarding the interconnection with more existing geodata, first results of mappings with LinkedGeoData amenities using LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of 0.97, i.e, we consider \textit{``very closed''} resources with 30 meters distances. Listing \ref{scriptLIMES} shows the configuration used for finding corresponding buildings of LinkedGeoData in Bano2RDF dataset. 
+Regarding the interconnection with more existing geodata, first results of mappings with LinkedGeoData amenities using LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of 0.97, i.e, we consider \textit{``very closed''} resources with 30 meters distances. Listing \ref{scriptLIMES} shows the configuration used for finding corresponding buildings of LinkedGeoData in Bano2RDF dataset.
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {LIMES script used to interconnect Bano2RDF dataset located in the region of Marseille with Building in LinkedGeoData.}, label=scriptLIMES, captionpos=b}
 \begin{lstlisting}
@@ -736,7 +717,7 @@ Regarding the interconnection with more existing geodata, first results of mappi
 		<RESTRICTION>?x a locn:Address</RESTRICTION>
 		<RESTRICTION>?x locn:postalCode ?code</RESTRICTION>
 		<RESTRICTION>FILTER(regex(str(?code), '690'))</RESTRICTION>
-		<PROPERTY>locn:geometry/geos:asWKT RENAME polygon</PROPERTY> 
+		<PROPERTY>locn:geometry/geos:asWKT RENAME polygon</PROPERTY>
 		<TYPE>SPARQL</TYPE>
 	</SOURCE>
 	<TARGET>
@@ -766,18 +747,18 @@ Regarding the interconnection with more existing geodata, first results of mappi
 </LIMES>
 	
 \end{lstlisting}
-  
+
 Table \ref{tab:bano-gld} shows the first results of the mappings. For each type of amenities in LinkedGeoData, it shows the number of matched resources, and the percentage of the result with respect to the distinct individuals of the category. For example, the mapping reveals $735$ parkings located in Paris (postal code starting with 750). Since there are $250,516$ resources of type ``Parking'' in LinkedGeoData, the percentage is 0.293\%, i.e.,(735/250680)*100.  The table also reveals the low presence of the addresses for French territory in LinkedGeoData. All the results of the mappings are available at \url{https://github.com/gatemezing/bano2rdf-matching}. Shops and restaurants are the resources with most \texttt{owl:sameAs} links between Bano2RDF and LGD datasets.
 
 \begin{table}[ht!b]
-        
+
         \begin{tabular}{|c|c|c|c|c|c|c|}
             \cline{1-7}
            \multirow{2}{*}{LGData Amenities}  & \multicolumn{2}{|p{2cm}|}{Bano-750xx (248,052)} & \multicolumn{2}{|p{2cm}|}{Bano-130xx (401,404)} & \multicolumn{2}{|p{2cm}|}{Bano-690xx (89,061)}\\
             \cline{2-7}
              & \#matched & \% & \#matched & \% & \#matched & \% \\
             \hline
-            \multicolumn{1}{|p{2cm}|}{Building (22,283)} & 05& 0.022 & 12 & 0.053 & 0 & 0  \\ 
+            \multicolumn{1}{|p{2cm}|}{Building (22,283)} & 05& 0.022 & 12 & 0.053 & 0 & 0  \\
             \hline
             \multicolumn{1}{|p{2cm}|}{Parking (250,516)} & 735 & 0.293 & 625 & 0.24 & 210 & 0.083  \\
             \hline
@@ -794,7 +775,7 @@ Table \ref{tab:bano-gld} shows the first results of the mappings. For each type 
             \multicolumn{1}{|p{2cm}|}{PostOffice (87,731)} & 971 & 1.106 & 555 & 0.632 & 173 & 0.197  \\
             \hline
         \end{tabular}
-        
+
         \caption{Initial mappings of Bano2RDF with LGD amenities resources respectively in Paris, Marseille and Lyon. The links are obtained using LIMES tool with a threshold of .97 using the \texttt{Hausdorff} distance.}
         \label{tab:bano-gld}
     \end{table}
@@ -804,13 +785,13 @@ Table \ref{tab:bano-gld} shows the first results of the mappings. For each type 
 \label{sec:frenchCloud}
 %\todo{Summarize here our contributions to the French LOD Cloud. Give some statistics and explain the figure}\\
 
-We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{void} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}.  
+We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{void} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}.
 
 \begin{figure}[h!tb]
   \centering{
- 
+
       \includegraphics[width=\linewidth]{img/frenchCloud.png}
-  
+
     \caption{French LOD cloud diagram based on the different datasets published in 4-5 stars. }
     \label{fig:frenchLOD}
   }
@@ -852,7 +833,7 @@ The query below finds public buildings 10 km around Eurecom with their correspon
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {Query on LinkedGeodata endpoint to find all public buildings 10 km around Eurecom building in SophiaTech.}, label=snapshot, captionpos=b}
 \begin{lstlisting}
-Prefix lgd:<http://linkedgeodata.org/> 
+Prefix lgd:<http://linkedgeodata.org/>
 Prefix lgdo:<http://linkedgeodata.org/ontology/>
 
 SELECT ?s ?name  (bif:st_distance(bif:st_point(?long, ?lat), bif:st_point(7.0463, 43.6266)) as ?distance)
@@ -890,7 +871,7 @@ WHERE
 \subsection{UC: Querying FactForge (OWLIM)}
 \label{sec:factforge}
 
-The query below find in FactForge\footnote{\url{http://factforge.net/sparql}} the french departments within the Bounding Box of Eurecom and Eiffel Tower. We use the function \texttt{omgeo:within}. The results\footnote{\url{http://goo.gl/dLc45p}} consist of 36 departments and the query takes \textbf{1.369 s} to be completed.  
+The query below find in FactForge\footnote{\url{http://factforge.net/sparql}} the french departments within the Bounding Box of Eurecom and Eiffel Tower. We use the function \texttt{omgeo:within}. The results\footnote{\url{http://goo.gl/dLc45p}} consist of 36 departments and the query takes \textbf{1.369 s} to be completed.
 \begin{verbatim}
 PREFIX omgeo: <http://www.ontotext.com/owlim/geo#>
 PREFIX geo-ont: <http://www.geonames.org/ontology#>
@@ -910,9 +891,9 @@ WHERE {
 \subsection{Case of Structured Geometries}
 \label{sec:ignsparql}
 %Here adapt the use case of French Geofla, and compare with the previous.
- We query data.ign.fr endpoint that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results consisting of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. Not all the SPARQL1.1 property paths \footnote{\url{http://www.w3.org/TR/sparql11-query/\#propertypaths}} are fully implemented in Virtuoso endpoints. 
- 
- 
+ We query data.ign.fr endpoint that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results consisting of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. Not all the SPARQL1.1 property paths \footnote{\url{http://www.w3.org/TR/sparql11-query/\#propertypaths}} are fully implemented in Virtuoso endpoints.
+
+
  \begin{verbatim}
  SELECT DISTINCT ?name  WHERE {
 ?dep a geofla:Departement .
@@ -926,15 +907,15 @@ WHERE {
 ?pm geom:coordX ?x .
 ?pm geom:coordY ?y .
 FILTER ((?x > 2.2942 && ?x < 7.0463) &&(?y > 43.6266 && ?y < 48.8628)) .
-} 
+}
  \end{verbatim}
- 
 
-The result in section \ref{sec:ignsparql} suggests that it's possible to reduce the time of querying geographic data by just using standard SPARQL queries without geosptial built-in functions.  
+
+The result in section \ref{sec:ignsparql} suggests that it's possible to reduce the time of querying geographic data by just using standard SPARQL queries without geosptial built-in functions.
 
 \section{Summary}
 \label{sec:ch2-summary}
-In this chapter, we have surveyed tools for extracting and converting geospatial data in RDF. Then, we described GeomRDF, a tool developed within the Datalift project which goes beyond the state-of-art by providing structured geometries and conform to GeoSPARQL. Moreover, we have described the limitation of existing data models by discussing some recommendations to publishers of geodata on storage aspects. Similarly, an extensive description of Datalift tool used to publish data on the Web has been provided, with special focus of our contribution to build the French LOD cloud with datasets in 4-5 stars according to Linked Data principles. Finally, we have shown some real world use-cases of SPARQL queries making use of either structured geometries or built-in geospatial functions. According to the requirements of the users and the underlying datasets, the user can choose between the simplicity of SPARQL query, with limitations to the endpoint (for e.g., when using built-in geospatial functions of a given endpoint), or the expressivity of the \texttt{geom} vocabulary regardless the endpoint, with a more longest SPARQL query.   
+In this chapter, we have surveyed tools for extracting and converting geospatial data in RDF. Then, we described GeomRDF, a tool developed within the Datalift project which goes beyond the state-of-art by providing structured geometries and conform to GeoSPARQL. Moreover, we have described the limitation of existing data models by discussing some recommendations to publishers of geodata on storage aspects. Similarly, an extensive description of Datalift tool used to publish data on the Web has been provided, with special focus of our contribution to build the French LOD cloud with datasets in 4-5 stars according to Linked Data principles. Finally, we have shown some real world use-cases of SPARQL queries making use of either structured geometries or built-in geospatial functions. According to the requirements of the users and the underlying datasets, the user can choose between the simplicity of SPARQL query, with limitations to the endpoint (for e.g., when using built-in geospatial functions of a given endpoint), or the expressivity of the \texttt{geom} vocabulary regardless the endpoint, with a more longest SPARQL query.
 
 
-The next chapter is about consuming datasets published on the Web, where we explore tools for visualizing data published as LOD, and later propose our approach which is a category-based visualization wizard. 
+The next chapter is about consuming datasets published on the Web, where we explore tools for visualizing data published as LOD, and later propose our approach which is a category-based visualization wizard.
