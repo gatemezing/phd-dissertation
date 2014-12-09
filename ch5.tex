@@ -523,7 +523,7 @@ In the context of \emph{Confomaton}, we have developed the so-called \emph{media
   \item \textbf{Published}, the timestamp of when the micropost was authored, or the media item was uploaded, e.g. \texttt{2011-10-27T12:24:41Z}
 \end{itemize}
 
-\begin{lstlisting}[caption={Sample output of the media collector showing Google+ and Flickr results using \#iswc2011 as query term},label={lst:media}]
+\begin{lstlisting}[caption={Sample output of the media collector showing Google+ and Flickr results using \#iswc2011 as query term.}, language=json, label={lst:media}]
 {
   "GooglePlus": [
     {
@@ -635,16 +635,16 @@ In order to build the application, we had to look at some relevant datasets in \
 We have reused some external ontologies for more interoperability:
 \begin{itemize}
 \item \texttt{aiiso}\footnote{\url{http://vocab.org/aiiso/schema}} for the type of school and codes of school.
-\item \texttt{geofla}\footnote{\url{http://data.ign.fr/def/geofla#}} since the schools are considered as a topographic entities,
-<<<<<<< HEAD
-\item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie\#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf#} . 
+\item \texttt{geofla}\footnote{\url{http://data.ign.fr/def/geofla\#}} since the schools are considered as a topographic entities,
+
+\item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie\#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf\#} . 
 \item \texttt{skos:Concept} for describing the 30 types of nature of schools. 
 \item \texttt{qb:DimensionProperty} and \texttt{qb:MeasureProperty} \cite{dcube} for modeling the dimensions and different indicators available for a given school. 
-=======
-\item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf#} .
+
+\item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie\#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf\#} .
 \item \texttt{skos:Concept} for describing the 30 types of nature of schools.
 \item \texttt{qb:DimensionProperty} and \texttt{qb:MeasureProperty} \cite{dcube} for modeling the dimensions and different indicators available for a given school.
->>>>>>> ffe949eee8f18d3294f252750b578ca4853609d1
+
 \end{itemize}
 The resulting vocabulary is available at \url{http://purl.org/ontology/dvia/ecole}.
 

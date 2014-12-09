@@ -9,7 +9,7 @@
 
 %\todo{Start here with the GLD diagram in the publication life-cycle, with emphasis on Datalift one}
 
-\section{Introduction}
+\section*{Introduction}
 %What this chapter is about, what we are achieving and introduce the various sections
 
 In recent years, governments worldwide have mandated publication of open government content to the public Web for the purpose of facilitating open societies and to support governmental accountability and transparency initiatives. In order to realize the goals of open government initiatives, the W3C Government Linked Data Working Group have provided some guidance to aid in the access and re-use of open government data. Based on the ability of Linked Data to provide a simple mechanism for combining data from multiple sources across the Web, it also addresses many objectives of open government transparency initiatives through the use international Web standards for the publication, dissemination and reuse of structured data \cite{bpgld}.
@@ -261,16 +261,17 @@ The NeOn Methodology is a scenario-based methodology that supports the collabora
 				} ORDER BY ?alignment\end{verbatim}}
 				
 	Figure \ref{fig:eqCR} shows the alignments between foaf and dcterms vocabularies by mean of \url{owl:equivalentClass} and \url{owl:equivalentProperty}. 
-=======
-LOV is a catalog and API that can fits well within the Neon methodology for building vocabularies and ontologies. Based on the Neon Methodology's glossary of activities for building ontologies, LOV is relevant in four activities:
->>>>>>> ffe949eee8f18d3294f252750b578ca4853609d1
 
-\begin{description}%[fragile]
+LOV is a catalog and API that can fits well within the Neon methodology for building vocabularies and ontologies. Based on the Neon Methodology's glossary of activities for building ontologies, LOV is relevant in four activities:
+
+
+\begin{description}
+
  \item [Ontology Search.] Main LOV's feature is the search of vocabulary terms. These vocabularies are categorized within LOV according to the domain they address. In this way, LOV contributes to ontology search by means of (a) keyword search and (b) domain browsing.
  \item [Ontology Assessment.] LOV provides a score for each term retrieved by a keyword search. This score can be used during the assessment stage and includes a unique term statistical feature\footnote{\url{http://lov.okfn.org/dataset/lov/stats/}} which provides for each term registered in LOV the following information: (a) ``LOV distribution'' that represents the number of vocabularies in LOV that refer to a particular element; (b) ``LOV popularity'' that shows the number of other vocabulary elements that refers to a particular one; and (c) ``LOD distribution'' that refers to the number of datasets in LOD which use a particular vocabulary; and (d) ``LOD popularity'' that refers to the number of vocabulary element occurrences in the LOD.
  \item [Ontology Mapping.] As explained in section \ref{voafRelations}, vocabularies rely on each other in seven different ways. In LOV these relationships are explicitly stated using VOAF vocabulary. This data could be useful to find alignments between ontologies, for example one user might be interested in finding equivalent classes for a given class or all the equivalent classes among two ontologies. The following example shows the retrieved data when asking for all the equivalent classes and properties between the vocabularies foaf and dcterms by means of the related VOAF query\footnote{\url{http://goo.gl/sTIGQ6}. Prefixes are omitted for readability purpose. You can find the correct namespace for a prefix in LOV.}:
      
-	{\small\begin{verbatim}
+\begin{lstlisting}
     SELECT DISTINCT ?elem1 ?alignment ?elem2 {
 	   {?elem1 <http://www.w3.org/2002/07/owl#equivalentClass> ?elem2}
 	   UNION {?elem1 <http://www.w3.org/2002/07/owl#equivalentProperty> ?elem2}
@@ -281,7 +282,9 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
 	   ?elem1 ?alignment ?elem2.
 	   ?elem1 rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/>.
 	   ?elem2 rdfs:isDefinedBy <http://purl.org/dc/terms/>.
-	} ORDER BY ?alignment\end{verbatim}}
+	} ORDER BY ?alignment
+	
+	\end{lstlisting}
 	
 	Figure \ref{fig:eqCR} shows the alignments between foaf and dcterms vocabularies by mean of \url{owl:equivalentClass} and \url{owl:equivalentProperty}.
     \begin{figure}
@@ -290,15 +293,17 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
       \caption{Equivalent classes and properties between foaf and dcterms}
       \label{fig:eqCR}
     \end{figure}
- \item [Ontology Localization.] Labels in different languages are stored in the LOV endpoint for the ontology terms that provide such information. This annotations could be used when translating terms into different languages. This information could be extracted by querying the SPARQL endpoint as in the following example\footnote{\url{http://goo.gl/JJCJ01}} where all the labels defined for the terms that have at least one \url{rdfs:label} containing strictly ``person":
+    
+ \item [Ontology Localization.] Labels in different languages are stored in the LOV endpoint for the ontology terms that provide such information. This annotations could be used when translating terms into different languages. This information could be extracted by querying the SPARQL endpoint as in the following example\footnote{\url{http://goo.gl/JJCJ01}} where all the labels defined for the terms that have at least one \emph{rdfs:label} containing strictly ``person":
 		
-    {\small\begin{verbatim}
+    \begin{lstlisting}
     SELECT DISTINCT ?label2 ?element{
 		?element rdfs:label ?label1 .
 		?element rdfs:label ?label2 .
 		FILTER (?label1 != ?label2 ).
 		FILTER(REGEX(STR(?label1), "person", "i")).
-	} ORDER BY ?element\end{verbatim}}
+	} ORDER BY ?element
+	\end{lstlisting}
 							
    An excerpt of the query result is shown in figure \ref{fig:translations}. From that result, ``Persona''@es and ``Personne''@fr could be used as translations for the English term ``Person'' in Spanish and French respectively.
    \begin{figure}
@@ -307,6 +312,7 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
      \caption{Translations example for foaf:Person}
      \label{fig:translations}
    \end{figure}
+   
 \end{description}
 
 Figure \ref{fig:LOVandNeOn} shows the activities LOV can support within the overall Neon methodologies activity workflow.
@@ -776,15 +782,15 @@ Closer to our work, Schaible \emph{et al.} reported on an empirical study involv
 \section{Datalift Module for Selecting Vocabularies}
 \label{sec:data2rdf}
 Datalift platform comes with a module to map data objects and properties to ontology classes and predicates available in the LOV catalogue. Data2Ontology takes an input a ``raw RDF'', that is a dataset that has been converted directly from legacy format to triples. The goal is to help to publishers reusing existing ontologies for converting their dataset for easy discovery and interlinking. It consists of three main components assisting the publisher in selecting properties suitable for the dataset to be published. \begin{description}
-\item[\odot~ \textbf{LOV component:}] This component is in charge to connect with the LOV catalogue to retrieve up-to-date ontologies using the LOV search API\footnote{\url{http://lov.okfn.org/dataset/lov/apidoc/\#lov2search}}.
-\item[\odot~ \textbf{Matching Workflow:}] Data2Ontology offers to map the data to LOV by automatically proposing a list of best matches. The suggestions are based on the algorithm that:
+\item[$\odot$~ \textbf{LOV component:}] This component is in charge to connect with the LOV catalogue to retrieve up-to-date ontologies using the LOV search API\footnote{\url{http://lov.okfn.org/dataset/lov/apidoc/\#lov2search}}.
+\item[$\odot$~ \textbf{Matching Workflow:}] Data2Ontology offers to map the data to LOV by automatically proposing a list of best matches. The suggestions are based on the algorithm that:
    \begin{enumerate}
    \item maximizes linguistic proximity between data properties and ontology predicates,
    \item maximizes the estimated quality of the target ontology using LOV evaluation criteria, and
    \item minimizes the number of candidates target ontologies to increase the overall semantic of the transformed dataset.
    \end{enumerate}
 
- \item[\odot~ \textbf{SPARQL Generator:}] This module receives as input the desired mappings and creates the SPARQL CONSTRUCT query needed to implement the mapping. The query can further be modified before the execution to generate a new dataset in the lifting process with Datalift.
+ \item[$\odot$~ \textbf{SPARQL Generator:}] This module receives as input the desired mappings and creates the SPARQL CONSTRUCT query needed to implement the mapping. The query can further be modified before the execution to generate a new dataset in the lifting process with Datalift.
 
 \end{description}
 Figure \ref{fig:matchingprocess} illustrates the process of matching the properties with ontologies. Depending on the data properties and object properties used to map the elements of the datasets, Data2Ontology can also automatically infer the class model. However, the user can still distribute the predicate matches among several interconnected classes, as well as to add new predicates and values. Once the properties are matched with the desired predicates and their classes, the resulting model can be viewed as a graph.
