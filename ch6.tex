@@ -231,6 +231,7 @@ Interaction with Contributors & No &  - & No & Yes \\
 }
 \end{table}
 
+
 \subsection{LOV vs NeOn Methodology}
 \label{sec:Lovandneon}
 The NeOn Methodology is a scenario-based methodology that supports the collaborative aspects of ontology development and reuse, as well as the dynamic evolution of ontology networks in distributed environments. The key assets of the NeOn Methodology are \cite{MC10}:
@@ -240,27 +241,6 @@ The NeOn Methodology is a scenario-based methodology that supports the collabora
  \item Methodological guidelines for different processes and activities of the ontology network development process, such as the reuse and re-engineering of ontological and non-ontological resources, the ontology requirements specification, the ontology localization, the scheduling, etc.
 \end{itemize}
 
-<<<<<<< HEAD
- LOV is a catalog and API that can fits well within the Neon methodology for building vocabularies and ontologies.  Based on the Neon Methodology's glossary of activities for building ontologies, LOV is relevant in four activities:
-		
-\begin{description}
-		\item [Ontology Search.] Main LOV's feature is the search of vocabulary terms. These vocabularies are categorized within LOV according to the domain they address. In this way, LOV contributes to ontology search by means of (a) keyword search and (b) domain browsing.
-		\item [Ontology Assessment.] LOV provides a score for each term retrieved by a keyword search. This score can be used during the assessment stage and includes a unique term statistical feature\footnote{\url{http://lov.okfn.org/dataset/lov/stats/}} which provides for each term registered in LOV the following information: (a) ``LOV distribution'' that represents the number of vocabularies in LOV that refer to a particular element; (b) ``LOV popularity'' that shows the number of other vocabulary elements that refers to a particular one; and (c) ``LOD distribution'' that refers to the number of datasets in LOD which use a particular vocabulary; and (d) ``LOD popularity'' that refers to the number of vocabulary element occurrences in the LOD.
-		\item [Ontology Mapping.] As explained in section \ref{voafRelations}, vocabularies rely on each other in seven different ways. In LOV these relationships are explicitly stated using VOAF vocabulary. This data could be useful to find alignments between ontologies, for example one user might be interested in finding equivalent classes for a given class or all the equivalent classes among two ontologies. The following example shows the retrieved data when asking for all the equivalent classes and properties between the vocabularies foaf and dcterms by means of the related VOAF query\footnote{\url{http://goo.gl/sTIGQ6}. Prefixes are omitted for readability purpose. You can find the correct namespace for a prefix in LOV.}: 
-				
-		{\small\begin{verbatim}SELECT DISTINCT ?elem1 ?alignment ?elem2 {
-				     {?elem1 <http://www.w3.org/2002/07/owl#equivalentClass> ?elem2}
-				     UNION {?elem1 <http://www.w3.org/2002/07/owl#equivalentProperty> ?elem2}
-				     UNION {?elem2 <http://www.w3.org/2002/07/owl#equivalentClass> ?elem1}
-				     UNION {?elem2 <http://www.w3.org/2002/07/owl#equivalentProperty> ?elem1}
-				     FILTER(!isBlank(?elem2))
-				     FILTER(!isBlank(?elem1))
-				     ?elem1 ?alignment ?elem2.
-				     ?elem1 rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/>.
-				     ?elem2 rdfs:isDefinedBy <http://purl.org/dc/terms/>.
-				} ORDER BY ?alignment\end{verbatim}}
-				
-	Figure \ref{fig:eqCR} shows the alignments between foaf and dcterms vocabularies by mean of \url{owl:equivalentClass} and \url{owl:equivalentProperty}. 
 
 LOV is a catalog and API that can fits well within the Neon methodology for building vocabularies and ontologies. Based on the Neon Methodology's glossary of activities for building ontologies, LOV is relevant in four activities:
 
@@ -269,9 +249,9 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
 
  \item [Ontology Search.] Main LOV's feature is the search of vocabulary terms. These vocabularies are categorized within LOV according to the domain they address. In this way, LOV contributes to ontology search by means of (a) keyword search and (b) domain browsing.
  \item [Ontology Assessment.] LOV provides a score for each term retrieved by a keyword search. This score can be used during the assessment stage and includes a unique term statistical feature\footnote{\url{http://lov.okfn.org/dataset/lov/stats/}} which provides for each term registered in LOV the following information: (a) ``LOV distribution'' that represents the number of vocabularies in LOV that refer to a particular element; (b) ``LOV popularity'' that shows the number of other vocabulary elements that refers to a particular one; and (c) ``LOD distribution'' that refers to the number of datasets in LOD which use a particular vocabulary; and (d) ``LOD popularity'' that refers to the number of vocabulary element occurrences in the LOD.
- \item [Ontology Mapping.] As explained in section \ref{voafRelations}, vocabularies rely on each other in seven different ways. In LOV these relationships are explicitly stated using VOAF vocabulary. This data could be useful to find alignments between ontologies, for example one user might be interested in finding equivalent classes for a given class or all the equivalent classes among two ontologies. The following example shows the retrieved data when asking for all the equivalent classes and properties between the vocabularies foaf and dcterms by means of the related VOAF query\footnote{\url{http://goo.gl/sTIGQ6}. Prefixes are omitted for readability purpose. You can find the correct namespace for a prefix in LOV.}:
+ \item [Ontology Mapping.] In LOV vocabularies rely on each other in seven different ways. These relationships are explicitly stated using VOAF vocabulary. This data could be useful to find alignments between ontologies, for example one user might be interested in finding equivalent classes for a given class or all the equivalent classes among two ontologies. Listing \ref{list:alignment} shows the retrieved data when asking for all the equivalent classes and properties between the vocabularies foaf and dcterms by means of the related VOAF query\footnote{\url{http://goo.gl/sTIGQ6}. Prefixes are omitted for readability purpose. You can find the correct namespace for a prefix in LOV.}:
      
-\begin{lstlisting}
+\begin{lstlisting}[float=htb,caption={SPARQL query asking for all the equivalent classes and properties between the vocabularies foaf and dcterms. },label=list:alignment]
     SELECT DISTINCT ?elem1 ?alignment ?elem2 {
 	   {?elem1 <http://www.w3.org/2002/07/owl#equivalentClass> ?elem2}
 	   UNION {?elem1 <http://www.w3.org/2002/07/owl#equivalentProperty> ?elem2}
@@ -294,9 +274,9 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
       \label{fig:eqCR}
     \end{figure}
     
- \item [Ontology Localization.] Labels in different languages are stored in the LOV endpoint for the ontology terms that provide such information. This annotations could be used when translating terms into different languages. This information could be extracted by querying the SPARQL endpoint as in the following example\footnote{\url{http://goo.gl/JJCJ01}} where all the labels defined for the terms that have at least one \emph{rdfs:label} containing strictly ``person":
+ \item [Ontology Localization.] Labels in different languages are stored in the LOV endpoint for the ontology terms that provide such information. This annotations could be used when translating terms into different languages. This information could be extracted by querying the SPARQL endpoint as shown in Listing \ref{list:person}\footnote{\url{http://goo.gl/JJCJ01}} where all the labels defined for the terms that have at least one \emph{rdfs:label} containing strictly ``person":
 		
-    \begin{lstlisting}
+    \begin{lstlisting}[float=htb,caption={SPARQL query asking all the labels defined for the terms containing person. },label=list:person]
     SELECT DISTINCT ?label2 ?element{
 		?element rdfs:label ?label1 .
 		?element rdfs:label ?label2 .
@@ -323,7 +303,7 @@ Figure \ref{fig:LOVandNeOn} shows the activities LOV can support within the over
   \label{fig:LOVandNeOn}
 \end{figure}
 
-\section{Prefixes harmonization}
+\subsection{Prefixes harmonization}
 \label{sec:prefharmoni}
 
 RDF vocabularies bring their meaning to linked data by defining classes and properties, and their formal semantics. Relying on W3C standards RDFS or OWL, those vocabularies are a fundamental layer in the architecture of the Semantic Web. Without the explicit semantics declared in vocabularies, linked data, even using RDF, would be just linked pieces of information where links have no meaning. Interoperability between data and datasets rely heavily on shared vocabularies, but given the distributed nature of the Web, vocabularies are published by independent parties and there is no centralized coordination of this publication, nor should it be. Various independent services have been developed in order to discover vocabularies and provide information about them, and the community of data publishers and vocabulary managers have all interest in complementarity and coordination between such services. In this section, we focus on a specific aspect of vocabularies: their identification by namespaces and associated prefixes.
@@ -332,7 +312,7 @@ In the original XML syntax of RDF, prefixes are simply local shortcuts associate
 
 A vocabulary publisher needs to have access to some services capable of monitoring the existing prefixes usage in order to stick to those rules. Moreover, we focus on two services providing such information on prefixes usage namely prefix.cc\footnote{Service: \url{http://prefix.cc/}; Code: \url{https://github.com/cygri/prefix.cc}} and LOV (Linked Open Vocabularies)~\cite{Datalift:D22}. Both services provide associations between prefixes and namespaces but following a different logic. The prefix.cc service allows anybody to suggest a prefix to namespace association. It supports polysemy and synonymy, and has a very loose control on its crowd-sourced information. What it provides is more a measure of popularity of prefixes and namespaces than a way to put order in them. LOV has a much more strict policy forbidding polysemy and synonymy, enforced by a dedicated back-office database infrastructure, ensuring that each vocabulary in the LOV database is uniquely identified by a prefix, this unique identification allowing the usage of prefixes in various LOV publication URIs. This requirement leads sometimes to a situation where LOV uses prefixes different from the ones recommended by the vocabulary publishers.
 
-\subsection{Aligning LOV with Prefix.cc} \label{sec:alignment}
+\subsubsection{Aligning LOV with Prefix.cc} \label{sec:alignment}
 In this section, we present how we perform the alignment between the two services LOV and prefix.cc. Figure~\ref{fig:evolution} shows the evolution of the number of prefixes registered in these two services between April 2009 and July 2013. Our main goals are to align Qnames (prefix) to a unique URI in LOV and to make sure that all the vocabularies in LOV are actually inserted in prefix.cc.
 
 \begin{figure}[ht]
@@ -348,7 +328,7 @@ In this section, we present how we perform the alignment between the two service
 We propose to perform SPARQL queries over all the files of prefix.cc at\\
  \url{http://prefix.cc/popular/all.file.vann} in the FROM clause and compare them to the content of the LOV SPARQL endpoint\footnote{\url{http://lov.okfn.org/endpoint/lov}} via a SERVICE\footnote{\url{http://www.w3.org/2009/sparql/docs/fed/service}} call. The SERVICE keyword defined in the SPARQL 1.1 Query Language instructs a federated query processor to invoke a portion of a SPARQL query against a remote SPARQL endpoint~\cite{eric2013}. Results are returned to the federated query processor and are combined with results from the rest of the query. To be more generic and standards-compliant, the queries could be run with the Jena ARQ command-line tool to produce a CSV or a JSON serialization that could be easily consumed either by the prefix.cc backend via phpMyAdmin or by the LOV backend.
 
-\subsection{First Task: prefixes in LOV not present in Prefix.cc}  \label{sec:notInPrefix}
+\subsubsection{First Task: prefixes in LOV not present in Prefix.cc}  \label{sec:notInPrefix}
 First, we compute $<LOV> INTERSECTS <PREFIX.CC>$ and $<LOV> MINUS \, \{<LOV> INTERSECTS <PREFIX.CC> \}$. The following SPARQL query finds namespace URIs in LOV that do not exist in prefix.cc along with their LOV prefix.
 \begin{verbatim}
 PREFIX vann: <http://purl.org/vocab/vann/>
@@ -370,14 +350,14 @@ ORDER BY ?prefix
 \end{verbatim}
 The first results\footnote{This query was performed in two weeks between March, 2nd and March, 20th 2013 and at this time, card(LOV) = 321 vocabularies while card(Prefix.cc) = 925} shown the following: $card(LOV) \bigcap card(PREFIX.cc) = 188$\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/firstAlignments/intersection-prefixLOV-02-03.csv}} and $card (LOV) - card( PREFIX.cc) = 133$\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/firstAlignments/inLovNotINPrefixcc-02-03.csv}} prefixes in LOV not yet registered in prefix.cc. At this point, a first batch of $80$ prefixes/namespaces from LOV were safely imported in prefix.cc since there were no conflicts. For the remaining conflicting ones, they needed more in-depth analysis.
 
-\subsection{Second Task: Dealing with Conflicts between Prefix.cc and LOV}  \label{sec:conflicts}
+\subsubsection{Second Task: Dealing with Conflicts between Prefix.cc and LOV}  \label{sec:conflicts}
 In the process of alignment, there were two types of conflicts and we provide appropriate actions and/or solutions accordingly:
 \begin{itemize}
  \item Clashes: cases where we have in both services the same prefix but different URIs;
  \item Disagreements on preferred namespace: cases where for the same URI, we found different prefixes.
 \end{itemize}
 
-\subsubsection*{Clashes.} We performed a SPARQL query as above to identify clashes in vocabularies ($30$). In Table~\ref{tab:clashes-types}, we identify seven different types of issues to deal with, such as (i) real conflicts, (ii) URIs are 404, (iii) URIs are obsolete versions and (iv) two URIs redirecting to the same resource.
+\paragraph{Clashes.} We performed a SPARQL query as above to identify clashes in vocabularies ($30$). In Table~\ref{tab:clashes-types}, we identify seven different types of issues to deal with, such as (i) real conflicts, (ii) URIs are 404, (iii) URIs are obsolete versions and (iv) two URIs redirecting to the same resource.
 \begin{table}
 \centering{
 \begin{tabular*}{14cm}{lcl}
@@ -398,7 +378,7 @@ In the process of alignment, there were two types of conflicts and we provide ap
 }
 \end{table}
 
-\subsubsection*{Disagreements on namespace URIs.} The general idea is that if vocabulary editors have not included explicitly a \\ \texttt{vann:preferredNamespacePrefix} in their description, the curators of LOV are free to change it and put whatever seems appropriate. At the same time, in prefix.cc, having multiple prefixes for the same namespace IRI in not a problem. However, we computed those prefixes in LOV that have different prefixes in prefix.cc. The following query retrieves the URIs falling in those disagreements:
+\paragraph{Disagreements on namespace URIs.} The general idea is that if vocabulary editors have not included explicitly a \\ \texttt{vann:preferredNamespacePrefix} in their description, the curators of LOV are free to change it and put whatever seems appropriate. At the same time, in prefix.cc, having multiple prefixes for the same namespace IRI in not a problem. However, we computed those prefixes in LOV that have different prefixes in prefix.cc. The following query retrieves the URIs falling in those disagreements:
 \begin{verbatim}
 PREFIX vann: <http://purl.org/vocab/vann/>
 SELECT ?prefix ?lovURI ?prefixcc
@@ -425,7 +405,7 @@ From the results of this query ($61$ cases), we have three actions to perform:
   \item No changes when the lovPrefix is contained in the set of prefixes of prefix.cc.
 \end{itemize}
 
-\subsection{Social Aspects} \label{sec: social}
+\subsubsection{Social Aspects} \label{sec: social}
 Several vocabularies are maintained by a community of users. As part of the alignment process, we contacted the authors, creators or maintainers (if they exist) of vocabularies to involve them as well in the process of changing prefixes, and agree with them to fix some issues regarding their vocabularies. From the homepages of the vocabulary authors and editors collected in LOV, we connect to their social platform accounts such as LinkedIn, Google+ or Twitter. Table~\ref{tab:contact-editors} summarizes some cases of real conflicts where the LOV curators have to find and contact the editors of the vocabularies for negotiation.
 
 \begin{table}[htp]
@@ -449,13 +429,13 @@ Several vocabularies are maintained by a community of users. As part of the alig
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  4. Finding Vocabularies in Prefix.cc  %%%
+%%%   Finding Vocabularies in Prefix.cc  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Finding Vocabularies in Prefix.cc}   \label{sec:finding}
+\subsubsection{Finding Vocabularies in Prefix.cc}   \label{sec:finding}
 We want to find out in prefix.cc, which of the couples (prefix, URI) could be potentially a vocabulary to be further assess to be included in the LOV catalog. To address this question, we first compute all the differences on prefix.cc NOT in LOV, i.e. $PREFIX.CC$ MINUS $(LOV <INTERSECT> PREFIX.CC)$, performing using a SPARQL query. This results in $742$ URIs to be checked\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/input/notInLOV.json}}.
 
-\subsubsection{LOV Check API}
+\paragraph{LOV Check API}
 We have implemented an API\footnote{\url{http://lov.okfn.org/dataset/lov/apidoc/}} that allows a user to run the LOV-Bot over a distant vocabulary. It takes as parameter the vocabulary URI to process and the time out (integer) specified to stop the process. The result of this action is a set of $26$ property-values from which we are interested in using only $8$ of them, namely:
 \begin{itemize}
  \item \textbf{uri} (string); uri of the vocabulary.
@@ -563,7 +543,7 @@ From the list of URIs that were not LOV-able vocabularies, we wanted to do more 
 \end{table}
 
 
-\section{Vocabulary Ranking metrics}
+\section{Vocabulary Ranking Metrics}
 \label{sec:vocabranking}
 
 \label{sec:introduction}
@@ -617,7 +597,7 @@ We consider very important that a vocabulary is being reused by other vocabulari
 
 
 
-\subsection{Experiments on Vocabularies}
+\subsubsection{Experiments on Vocabularies}
 \label{sec:experiments}
 We use the LOV catalogue, and particularly the LOV aggregator\footnote{\url{http://lov.okfn.org/endpoint/lov_aggregator}} to look at the terms (classes and properties) to compute their Information Content (IC). LOV defines the \textit{LOV Distribution} as the number of vocabularies in LOV that refer to a particular element and the \textit{LOV popularity} as the number of other vocabulary elements that refers to a particular one. Based on the concept of Partitioned Information Content, we implement our ranking measure according to the algorithm~\ref{rankingvocab}. We take the subset of classes and/or properties with LOV popularity and LOV distribution greater than one. The initial set of vocabularies in LOV is $366$. After filtering the candidate terms, we came out with a set of $161$ vocabularies ($44\%$ or $161$ vocabularies) for computing their ranking.
 
@@ -713,7 +693,7 @@ The Table~\ref{tab:top20} shows the Top 20 namespaces of vocabularies according 
 
 
 
-\subsection{Application of Information Content on Vocabularies}
+\subsubsection{Application of Information Content on Vocabularies}
 \label{sec:application}
 We foresee various applications using the ranking method based on the Information Content metric while designing semantic web applications, vocabulary life-cycle management or novel recommendation services. We make the following recommendations when using the PIC ranking method on vocabularies:
 \begin{itemize}
@@ -726,7 +706,7 @@ The use of the information content on LOV vocabularies can be applied in the dat
 
 
 
-\subsection{Related Work and Discussion}
+\subsubsection{Related Work and Discussion}
 \label{sec:related}
 In this section, we look at three other catalogues providing rankings for vocabularies: vocab.cc, LODStats and prefix.cc. vocab.cc\footnote{\url{http://vocab.cc/v/tco}} does not provide a ranking for vocabularies but rather proposes a rank for classes and properties. The proposed ranking presented in Table~\ref{tab:compareRanking} is taken from the ranking of classes assuming the namespace is used only once per class.
 
@@ -810,7 +790,7 @@ Figure \ref{fig:matchingprocess} illustrates the process of matching the propert
 \label{ch6:conclusion}
 We have presented in this chapter our contribution to Linked Open Vocabularies, as part of implementations of the benefits of using LOV in ontology engineering (case of NeOn methodology), prefixes harmonization and alignment of vocabularies published on the Web, or on ranking vocabularies using the principles of Information Content. By applying this latter to Linked Open Vocabularies, we tried to use features that we consider ``relevant'' to be taken into account when comparing vocabularies (e.g: datasets reused, external vocabularies). We compare with other rankings that are mostly based on the ``popularity'' of vocabularies. This work can path the way for assessing vocabularies with applications in a more systemic approach for recommending classes/properties in ontology management, or in visualization applications to propose the most \textit{``oh yeah?''} suitable property to be visualized for RDF entities when there is large a large number of properties.
 
-\todo{add what next?}
+%\todo{add what next?}
 %\section{URI Patterns}
 %\label{sec:uris}
 

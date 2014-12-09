@@ -82,7 +82,8 @@ Another application can be to detect which visualization is best suited for geod
 \label{sec:ldvizwiz}
 
 %\todo{present in detail the queries for detecting ALL the categories} \\
-
+\subsection{Workflow}
+\label{sec:wizard-wflow}
 We propose a workflow composed of four principal steps for a Linked Data Visualization Wizard, as depicted in Figure~\ref{fig:workflow}. Our requirement is to provide a tool that hide the complexity of SPARQL to lay users and at the same time, can be embedded in existing Linked Data infrastructure and workflow. First, we proposed to detect the presence of data belonging to one of the seven categories (Table~\ref{tab:taxonomy}) using generic SPARQL queries. More precisely, we perform \texttt{ASK} queries to test whether or not a particular query pattern has a solution. Second, we look at entities in a dataset that have \texttt{owl:sameAs} links with external objects and we retrieve the properties associated to those objects. We argue that the objects that are interlinked with other datasets are of primary importance in a visualization. We show the results of this mining process to the user (the categories that have been detected, the properties going with the categories and the external domain). Based on this information, the user can make a personalized ``mashup'' by aggregating the suitable visualization widgets. Some default visualizations are available according to the top categories detected. The last step is to publish the visualization and a metadata report in RDF/XML TURTLE or N3.
 
 \begin{figure*}[!htbp]
@@ -105,7 +106,7 @@ Let consider a graph $<G,c>$ to be $G=\{(s,p,o)| p \in URI, s \in URI, o \in (UR
 
 In the following sections, we describe each of the steps involved in the Linked Data Visualization Wizard in more details.
 
-\subsection{Category Detection}
+\subsubsection{Category Detection}
 The goal of the category detection task is to use SPARQL queries to detect the presence of some high level categories in the dataset. We perform \texttt{ASK} queries as implementation of the $\Sigma $ function using standard vocabularies as defined in the Table~\ref{tab:taxonomy}. We start with six categories, namely: geographic information, person, organization, event, time and knowledge organization systems. We select popular vocabularies based on two existing catalogues: LOV~\cite{pyv2012} and prefix.cc\footnote{\url{http://prefix.cc}}.
 
 %asking geodata
@@ -187,7 +188,7 @@ frame=single, caption= {Generic query to detect SKOS data from a SPARQL endpoint
 \end{lstlisting}
 
 
-\subsection{Property Aggregation}
+\subsubsection{Property Aggregation}
 We take the benefits of the \texttt{owl:sameAs} links between entities to have access to the properties of the entities in the external namespaces different from the origin dataset. This module also aggregates the properties found in the dataset with the ones found in the interlinked sets. This is based on the assumption that during the linkage process, external datasets not only help in not breaking the \textit{follow-your-nose} principle, but also add more information to be viewed in visualization applications. As shown in the code below, at this stage, we have collected and aggregated external properties gathered from the enrichment process of the workflow.
 
 \begin{verbatim}
@@ -199,10 +200,10 @@ We take the benefits of the \texttt{owl:sameAs} links between entities to have a
 4-AGGREGATE (3) with properties FROM S.
 \end{verbatim}
 
-\subsection{Visualization Generator}
+\subsubsection{Visualization Generator}
 This module aims at recommending the appropriate visualizations based on the categories detected by the wizard. It might also help the user to make a report summarizing the result of the mining process, and then use different visualization libraries to view the data. This module can be viewed as a recommender system because it derives visualizations based on the categories. The input to build each visualization is the corresponding SELECT query of each ASK queries used to detect the categories. Moreover, some adjustment are made to avoid blank nodes and to get the labels of the resources. The generator can be coupled with a mashup widget generator for some  categories. For example, users could expect for event data, a combination of map view (where), a timeline (when) and facets based on the agents (who).
 
-\subsection{Visualization Publisher}
+\subsubsection{Visualization Publisher}
 The publisher module aims at exporting the combined visualizations, along with the report of all the process of mining the dataset, in a format easy to share, either as HTML, SVG or in the different RDF syntax flavor. For the latter, apart from using metadata information (creator, issued date, license), we model the categories we have detected using the \texttt{dcterms:subject} property of a \texttt{dcat:Dataset}, the queries used (using the \texttt{prov:wasDerivedFrom} property), the sample resources for each category (using the \texttt{void:exampleResource} property) and the visualization generated (using the \texttt{dvia} and \texttt{chart}\footnote{\url{http://data.lirmm.fr/ontologies/chart}} vocabularies).
 
 \subsection{Implementation and Evaluation}
@@ -764,9 +765,11 @@ One of the challenges in the Apps for Europe -project - and open data projects i
 
 In order to promote the reuse and discovery of open data applications, Apps for Europe has created an RDF vocabulary\footnote{\url{https://github.com/mmlab/apps4eu-vocabulary}}  that can be used for describing open data events and also the applications that have been built on top of the open data. Furthermore, Apps for Europe has also developed a Wordpress plugin\footnote{\url{https://github.com/mmlab/AppsForX }}  that open data event organizers can install on their web pages, to make it simpler to populate the RDF data for the events and applications.
 
-
-\subsection{Modeling events and applications in RDF}
+\subsection{Modeling Approaches}
 \label{sec:modeleventsapps}
+
+\subsubsection{Modeling Events and Applications in RDF}
+\label{sec:modeleventrdf}
 
 One of the key factors in improving the discovery of open data events is to present the information in a structured machine readable format, so that applications (such as crawlers) can easily consume the data. This follows the Semantic Web movement, where the goal is to convert the current, unstructured documents (readable by humans) into structured documents.
 
@@ -789,7 +792,7 @@ In \ref{fig:modelA}, the model is complex, because it requires us to specify an 
 }
 \end{figure}
 
-\subsection{Improving the model for specifying winners}
+\subsubsection{Improving the model for specifying winners}
 Open data events often include competitions where the best applications are rewarded, and this information was modeled in the Apps for Europe RDF vocabulary as well. However, we found that the current model for this was unnecessarily complicated and therefore the model was simplified. Previously, winning apps required a separate ``Submission''-class in order to state that they had won a competition. Furthermore, the vocabulary didn't allow to state which position (winner, second, third etc.) the winning application was awarded. These problems were fixed by introducing a new property ``wonPrize'' for applications, so that we can directly state that an application won a prize without needing to have an intermediary ``Submission''-class, and by introducing the new classes ``FirstPrize'', ``SecondPrize'', and ``ThirdPrize'' that are all subclasses of the ``Prize''-class. We concluded that it is satisfactory to be able to state positions one to three for the winning apps, and therefore we didn't implement a more complicated vocabulary that would have enabled to state an arbitrary position (by having a position attribute for the prize for example).
 
 Also some other minor changes were suggested for the vocabulary:
@@ -801,15 +804,18 @@ Also some other minor changes were suggested for the vocabulary:
 \end{itemize}
 
 
-\subsection{Universal JavaScript plugin for RDF population}
+\subsection{Implementation and Application}
 \label{sec:plugin}
+
+\subsubsection{Universal JavaScript plugin for RDF population}
+\label{sec:universal}
 
 The inspiration for the JavaScript based solution came from services like \url{https://muut.com/}, which offers embeddable commenting and discussion forums and it can be installed on any web page independent of the CMS. Since almost all people have JavaScript support enabled in their browsers\footnote{ According to a study by Yahoo only about 1\% have JavaScript disabled in their browsers. Source: \url{https://developer.yahoo.com/blogs/ydnfourblog/many-users-javascript-disabled-14121.html} [Referenced 2014-06-02]}  it enables us to implement a solution that can be installed on any web page and also works on almost any browser.
 
 The most striking difference between the CMS based plugin and the JavaScript plugin is the user base, since the JavaScript solution works on any web page while the CMS plugin obviously only can be installed on a dedicated websites. Also the technical approach differs significantly, because in the CMS based approach the server will do all the work for producing the HTML and RDFa markup for the events, while in the JavaScript approach it is the client browser that is responsible for this task.
 
 
-\subsubsection{Technical description}
+\paragraph{Technical description:}
 The JavaScript plugin consists of three distinct parts (Cf. Figure \ref{fig:jsplugin}) that are technically independent of each other, but they can still be deployed on the same server if needed:
 
 \begin{description}
@@ -863,7 +869,7 @@ The last component of the puzzle is the embeddable script, that is responsible o
 \end{algorithm}
 
 
-\subsection{Creating the Knowledge-base for past events}
+\subsubsection{Creating the Knowledge-base for Past Events}
 The final task was to create the knowledge base for past events by using the Apps for Europe RDF vocabulary and generating data to feed the endpoint at \url{http://apps4europe.eurecom.fr/sparql} . The list of events was extracted from the Apps for Europe Google spreadsheet\footnote{\url{https://docs.google.com/spreadsheet/ccc?key=0AiXRLGASq8I0dDlfZURkWGpSODBJaWotQUp3eGNwNGc&usp=sharing}}.
 
 The goal was to populate the events and applications, so that they would follow and fulfill the Apps for Europe vocabulary as well as possible. However, the format and information provided on the event web pages varied, and therefore we were usually only able to populate the following information for most of the events:

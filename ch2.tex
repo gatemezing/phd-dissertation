@@ -822,7 +822,7 @@ French District Evolution & 150, 356 & Geography \\
 
 We illustrate in this section different queries making use of geospatial data and geometries functions implemented in three endpoints (virtuoso, owlim, sesame). Within the queries, we use the following points in WGS84, in the the form (longitude latitude): Eurecom, located at (7.0463, 43.6266) and Eiffel Tower, located at (2.2942 48.8628). We perform the time for retrieving the results as well as the expressivity of the types of SPARQL quieries available to users to get the results.
 
-\subsection{UC: Querying LinkedGeodata}
+\subsection{Querying LinkedGeodata}
 \label{sec:linkedgeodata}
 
 The query below finds public buildings 10 km around Eurecom with their corresponding distance from LinkedGeodata endpoint. In this query, we use the functions of \texttt{st\_distance}, \texttt{st\_intersects} and \texttt{st\_point}. Time used to answer this query is \textbf{341 ms}, monitored by using the time command on \texttt{CURL -g <query>}. The result is listed in Table \ref{tab:lgd-query}
@@ -864,7 +864,7 @@ WHERE
 
 
 
-\subsection{UC: Querying FactForge (OWLIM)}
+\subsection{Querying FactForge (OWLIM)}
 \label{sec:factforge}
 
 The query below find in FactForge\footnote{\url{http://factforge.net/sparql}} the french departments within the Bounding Box of Eurecom and Eiffel Tower. We use the function \texttt{omgeo:within}. The results\footnote{\url{http://goo.gl/dLc45p}} consist of 36 departments and the query takes \textbf{1.369 s} to be completed.
