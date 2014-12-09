@@ -9,12 +9,13 @@ Log Tracking
 - On October 31, first "dirty" draft of all the document
 - First comments from Raphael on Friday 7th, November 2014 regarding the structure and extensions of document. 
 - Break writing from Saturday, 8th November till Tuesday, 18th, November 2014.
-- Resuming on 19th, November, 2014. TODO: Review the first comments of Raphael.
+- ~~Resuming on 19th, November, 2014~~.  
 
 
 
 TODO
 =====
+- [ ] Review the first comments of Raphael.
 - [x] Add vocabularies in appendix
 - [x] Remove numbering the introduction in each chapter
 - [x] Introduction: Match contributions with research questions
