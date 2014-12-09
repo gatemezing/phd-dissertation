@@ -608,7 +608,7 @@ The \texttt{Perfect School} application is intended to provide useful informatio
 \subsection{Dataset Modeling}
 
 \subsubsection{Legacy Datasets}
-In order to build the application, we had to look at some relevant datasets in \utl{data.gouv.fr}. The ones selected for building the application are the following:
+In order to build the application, we had to look at some relevant datasets in \url{http://data.gouv.fr}. The ones selected for building the application are the following:
 
 \begin{itemize}
 \item The file at \url{http://www.data.gouv.fr/DataSet/564055} in CSV format, containing a list of $67, 201$ schools (name, status, type), with geolocation position in Lambert 93, for the academic year 2011-2012. The file contains the following attributes (in French): 
@@ -636,7 +636,7 @@ In order to build the application, we had to look at some relevant datasets in \
 We have reused some external ontologies for more interoperability:
 \begin{itemize}
 \item \texttt{aiiso}\footnote{\url{http://vocab.org/aiiso/schema}} for the type of school and codes of school.
-\item \texttt{geofla}\footnote{\url{http://data.ign.fr/def/geofla\#}} since the schools are considered as a topographic entities,
+\item \texttt{geofla}\footnote{\url{http://data.ign.fr/def/geofla#}} since the schools are considered as a topographic entities,
 \item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie\#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf#} . 
 \item \texttt{skos:Concept} for describing the 30 types of nature of schools. 
 \item \texttt{qb:DimensionProperty} and \texttt{qb:MeasureProperty} \cite{dcube} for modeling the dimensions and different indicators available for a given school. 
