@@ -15,10 +15,10 @@ Log Tracking
 
 TODO
 =====
-- Add vocabularies in appendix
-- Remove numbering the introduction in each chapter
-- Introduction: Match contributions with research questions
-- Be factual and perspectives in each summary, so that the reader is not lost
-- Extend more the conclusion
-- Reduce the number of sections (esp. Chap2/Chap3) by merging some stuff
-- Add a section on INTERLINKING datasets.
+- [x] Add vocabularies in appendix
+- [x] Remove numbering the introduction in each chapter
+- [x] Introduction: Match contributions with research questions
+- [] Be factual and perspectives in each summary, so that the reader is not lost
+- [] Extend more the conclusion
+- [] Reduce the number of sections (esp. Chap2/Chap3) by merging some stuff
+- [x] Add a section on INTERLINKING datasets.
