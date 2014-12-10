@@ -10,16 +10,17 @@ Log Tracking
 - First comments from Raphael on Friday 7th, November 2014 regarding the structure and extensions of document. 
 - Break writing from Saturday, 8th November till Tuesday, 18th, November 2014.
 - ~~Resuming on 19th, November, 2014~~.  
+-  Release versin v1 on 10th, December, 2014. Link: [https://www.dropbox.com/s/znxcvuc8qkb7dex/Thesis-atemezing-v1.pdf?dl=0] 
 
 
 
 TODO
 =====
-- [ ] Review the first comments of Raphael.
+- [x] Review the first comments of Raphael.
 - [x] Add vocabularies in appendix
 - [x] Remove numbering the introduction in each chapter
 - [x] Introduction: Match contributions with research questions
 - [ ] Be factual and perspectives in each summary, so that the reader is not lost
-- [ ] Extend more the conclusion
-- [ ] Reduce the number of sections (esp. Chap2/Chap3) by merging some stuff
+- [x] Extend more the conclusion
+- [x] Reduce the number of sections (esp. Chap2/Chap3) by merging some stuff
 - [x] Add a section on INTERLINKING datasets.
