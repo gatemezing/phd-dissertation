@@ -8,7 +8,9 @@
 
 
 \section*{Introduction}
-\todo{add intro of what is about here} \\
+%\todo{add intro of what is about here} \\
+
+In this chapter, we report the state of license information attached to both datasets and ontologies on the Web. Given the diversity of the licenses, we analyze the LOD cloud and LOV to report vocabularies available to describe license information (Section \ref{sec:stats-license}). Section \ref{sec:soalicense} presents related work on licenses on the Web, with emphasis on datasets. We then propose a framework to check compatibility between ontologies and datasets based on the defeasible theory (Section \ref{sec:live}). We conclude in Section \ref{sec:summary-ch6} with some perspectives for future work.
 
 \section{Background}
 The license of a dataset in the Web of Data can be specified within the data, or outside of it, for example in a separate document linking the data. In line with the Web of Data philosophy~\cite{LinkedData2011}, licenses for such datasets should be specified in RDF, for instance through the Dublin Core vocabulary\footnote{\url{http://purl.org/dc/terms/license}}. Despite such guidelines, still a lot of effort is needed to enhance the association of licenses to data on the Web, and to process licensed material in an automated way. The scenario becomes even more complex when another essential component in the Web of Data is taken into account: the vocabularies. Our goal is to support the data provider in assigning a license to her data, and verifying its compatibility with the licenses associated to the adopted vocabularies.
@@ -34,6 +36,7 @@ The first step to be addressed consists in analyzing how many vocabularies are l
 We are aware that the obtained results are referred to the data available on LOV and LODstats, and that such repositories of vocabularies are not exhaustive. However, they provide us a reliable picture of what is the ongoing trend in licensing vocabularies\footnote{We refer the reader interested into statistics about the distribution of licenses on the Web of Data to~\cite{DBLP:conf/semweb/Rodriguez-DoncelGM13,DBLP:conf/semweb/GovernatoriRVG13}.}. This is particularly true in the case of LOV that furthermore supports a number of good practices for the publication of a vocabulary, among which the addition of the license associated to the vocabulary is highly encouraged.
 
 \section{Related work about licenses in the Web of Data}
+\label{sec:soalicense}
 
 In the Web scenario, a number of works address the problem of representing and/or reasoning over licensing information.
 Iannella~\footnote{\url{http://odrl.net/1.1/ODRL-11.pdf}} presents the Open Digital Rights Language (ODRL) for expressing rights information over content, and Gangadharan et al.~\cite{ODRLS} further extend ODRL developing the ODRL-S language to implement the clauses of service licensing.
