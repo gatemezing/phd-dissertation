@@ -10,7 +10,7 @@ Log Tracking
 - First comments from Raphael on Friday 7th, November 2014 regarding the structure and extensions of document. 
 - Break writing from Saturday, 8th November till Tuesday, 18th, November 2014.
 - ~~Resuming on 19th, November, 2014~~.  
--  Release versin v1 on 10th, December, 2014. Link: [https://www.dropbox.com/s/znxcvuc8qkb7dex/Thesis-atemezing-v1.pdf?dl=0] 
+-  Release version v1 on 10th, December, 2014. Link:https://www.dropbox.com/s/znxcvuc8qkb7dex/Thesis-atemezing-v1.pdf?dl=0 
 
 
 
@@ -24,3 +24,4 @@ TODO
 - [x] Extend more the conclusion
 - [x] Reduce the number of sections (esp. Chap2/Chap3) by merging some stuff
 - [x] Add a section on INTERLINKING datasets.
+- [ ] Jodi to read the document, version v1
