@@ -92,7 +92,7 @@ The example below represents in GeoJSON the location (point) of ``Eurecom'':
 
  
  \paragraph{KML:}
-KML\footnote{\url{http://www.opengeospatial.org/standards/kml}} is a language for the visualization of geographic information in 2D (on a map) or 3D (on a globe), including annotation of maps and images. Hence it can be used to specify layers for use in creating maps in a GIS system.  A Placemark is one of the most commonly used features in Google Earth. It marks a position on the Earth's surface, using a yellow pushpin as the icon. The simplest Placemark includes only a \texttt{<Point>} element, which specifies the location of the Placemark.
+KML(Keyhole Markup Language)\footnote{\url{http://www.opengeospatial.org/standards/kml}} is a language for the visualization of geographic information in 2D (on a map) or 3D (on a globe), including annotation of maps and images. Hence it can be used to specify layers for use in creating maps in a GIS system.  A Placemark is one of the most commonly used features in Google Earth. It marks a position on the Earth's surface, using a yellow pushpin as the icon. The simplest Placemark includes only a \texttt{<Point>} element, which specifies the location of the Placemark.
 A Placemark object contains the following elements:
 \begin{itemize}
 \item \textit{A name} that is used as the label for the Placemark
@@ -100,7 +100,8 @@ A Placemark object contains the following elements:
 \item \textit{A Point} that specifies the position of the Placemark on the Earth's surface (longitude, latitude, and optional altitude)
 \end{itemize}
 
-KML can be used to carry GML content, and GML can be ``styled'' to KML for the purposes of presentation. KML instances may be transformed loosely to GML, however roughly 90\% of GML's structures (such as, metadata, coordinate reference systems, horizontal and vertical datums, etc.) cannot be transformed to KML\footnote{\url{http://en.wikipedia.org/wiki/Geography_Markup_Language}}. KML has very limited support for metadata as recommended by ISO 19115. The CRS in use is implicit and unique.
+KML can be used to carry GML content, and GML can be ``styled'' to KML for the purposes of presentation. KML instances may be transformed loosely to GML, however roughly 90\% of GML's structures (such as metadata, coordinate reference systems, horizontal and vertical datums, etc.) cannot be transformed to KML%\footnote{\url{http://en.wikipedia.org/wiki/Geography_Markup_Language}}.
+KML has very limited support for metadata as recommended by ISO 19115 \cite{iso19115}. The CRS in use is implicit and unique.
 
 \section{A REST Service for Converting Geo Data}
 \label{sec:rest-service}
@@ -198,7 +199,7 @@ will return a string in JSON format (no line breaking):
 
 JSON format return can also be applied for batch converter. The command is as before. An example of JSON format return of batch converter from WGS84 to Lambert93:
 
-\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Sample output of the batch converter}, label=snapshot, captionpos=b}
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Sample output of the batch converter}, label=snapshot, language=json, captionpos=b}
 \begin{lstlisting}
 {"point1":{"y":6543019.59988031,"x":882408.2999938729},"point2":{"y":6544401.599880268,"x":881947.5999938913},"point3":{"y":6581538.799879094,"x":849722.3999950405},"point4":{"y":6561282.999879616,"x":917481.0999927416},"point5":{"y":6561139.999879618,"x":917474.5999927415}}
 \end{lstlisting}
@@ -250,12 +251,12 @@ There is no need for evaluation of conversion between Lambert 93 to UTM, since i
 \section{Current Modeling Approach}
 \label{sec:currentmodel}
 In this section, we review different approaches used to model geographical data on the Web, with their advantages and limitations.
-We first provide the status of vocabularies usage for geospatial data on the Web (Section \ref{sec:vocgeoreview}), followed by a review of vocabularies for features and geometries, and finally the description of the GeoSPARQL specification and implementation.
+We first provide the status of vocabularies usage for geospatial data on the Web (Section \ref{sec:vocgeoreview}), followed by a review of vocabularies for features and geometries, and finally the description of the GeoSPARQL specification and implementation. Further, section \ref{sec:geomfeaturevocab} details our contributions by implementing vocabularies for geometries and features. 
  
 \subsection{Status of Vocabularies Usage for Geospatial Data}
 \label{sec:vocgeoreview}
 
-The publication \cite{demter-2012-ekaw} of statistics concerning the actual usage of vocabularies on the LOD cloud \footnote{\url{http://stats.lod2.eu}} provides not only an overview of best practice usage recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides a rapid view of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
+Publishing statistics concerning the actual usage of vocabularies on the LOD cloud \footnote{\url{http://stats.lod2.eu}} \cite{demter-2012-ekaw} provides not only an overview of best practices recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides an overview of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
 
 \begin{table*}[!htbp]
 \centering{
@@ -277,8 +278,8 @@ UK administrative-geography &   3 &  229 689 & OS dataset \\
 \subsubsection{GeoSPARQL Standard and specifications}
 \label{sec:specgeosparql}
 
-OGC-Simple Features Access standard aims to support both representing and querying geospatial data on the Semantic Web. The standard document~\cite{ogc2012} contains 30 requirements. It also defines a vocabulary for representing geospatial data in RDF and provides an extension to the SPARQL query language for processing geospatial data. 
-Moreover, GEOSPARQL defines functions that request or check properties of a geometry (e.g., isSimple, isEmpty, Dimension, GeometryType, SRID), function that test test topological relations (e.g., contains),
+OGC-Simple Features Access standard aims to support both representing and querying geospatial data on the Semantic Web. The standard ~\cite{ogc2012} contains 30 requirements. It also defines a vocabulary for representing geospatial data in RDF and provides an extension to the SPARQL query language for processing geospatial data. 
+Moreover, GeoSPARQL defines functions that request or check properties of a geometry (e.g., isSimple, isEmpty, Dimension, GeometryType, SRID), function that test test topological relations (e.g., contains),
 and functions that construct new geometries from existing ones (e.g., buffer). 
  The proposed standard follows a modular design with five components: 
 \begin{itemize}
@@ -392,7 +393,7 @@ The EPSG Geodetic Parameter Registry\footnote{\url{http://www.epsg-registry.org/
 
 \subsubsection{CRS requirements for the  French Territory} \label{sec:reqs}
 
-As explained in Section \ref{sec:context}, making explicit the CRS used in a given dataset is a very important issue when dealing with direct location data. This is especially important in the field of geographical information where different CRSs are commonly used due to technical or legal requirements. For INSPIRE Directive, CRS are considered as reference data used for linking thematic data \cite{inspire2009}, and must be described according to ISO 19111 standard. To be consistent with Linked Data principles, CRS should be identified by URIs, like in OGC proposal. Moreover, as Linked Data users are not always familiar with CRS identifiers commonly used within the geographic information community, URI used to identify CRS should use more intuitive names. Finally, consistently with our goal of contributing to a better georeferencing of data on the French territory, we need an access to the descriptions of all French CRSs, including some deprecated but still used CRSs like ``Lambert 1''.
+As explained in Section \ref{sec:context}, making explicit the CRS used in a given dataset is a very important issue when dealing with direct location data. This is especially important in the field of geographical information where different CRSs are commonly used due to technical or legal requirements. For INSPIRE Directive, CRS are considered as reference data used for linking thematic data \cite{inspire2009}, and must be described according to the ISO 19111 standard. To be consistent with Linked Data principles, CRS should be identified by URIs, like in OGC proposal. Moreover, as Linked Data users are not always familiar with CRS identifiers commonly used within the geographic information community, URIs used to identify CRS should use more intuitive names\footnote{\url{http://philarcher.org/diary/2013/uripersistence/}} by following some best practices \cite{isaURI}. Finally, consistently with our goal of contributing to better georeferencing of data on the French territory, we need access to the descriptions of all French CRSs, including some deprecated but still used CRSs like ``Lambert 1''.
 
 \begin{table}[!htp]
 \centering{
@@ -413,8 +414,8 @@ rtopo &  \url{http://data.ign.fr/id/topo/}
 }
 \end{table}
 
-The Information and Service System for European Coordinate Reference Systems\footnote{\url{http://www.crs-geo.eu}}  provides an access to ISO 19111 standard-based descriptions of the main European CRSs but has the same limitation as the EPSG registry: access to the descriptions is not allowed by URI, but only through a cartographic interface.
-\url{SpatialReference.org} initiative aims at allowing users to use URI-based references to spatial reference systems, including some CRSs defined and maintained by IGN France.  Besides, the proposed URL policy is not very intuitive. As an example, this URL identifies the projected system defined by IGN France, Lambert 93: \url{http://spatialreference.org/ref/sr-org/7527/}. Moreover, the definitions of some deprecated CRSs such as Lambert zone projected CRSs (which are still used in some datasets) seem to be referenced only for the authority EPSG and not for IGNF, which also maintains a registry of CRSs. ISO 19111 standard-based definitions of all CRSs defined and maintained by IGN France are  published in an XML file\footnote{\url{ http://librairies.ign.fr/geoportail/resources/IGNF.xml}}.
+The Information and Service System for European Coordinate Reference Systems\footnote{\url{http://www.crs-geo.eu}}  provides access to ISO 19111 standard-based descriptions of the main European CRSs but has the same limitation as the EPSG registry: access to the descriptions is not allowed by URI, but only through a cartographic interface.
+The \url{http://spatialReference.org} initiative aims at allowing the use of URI-based references to spatial reference systems, including some CRSs defined and maintained by IGN France.  However, the proposed URL policy is not very intuitive. As an example, this URL identifies the projected system defined by IGN France, Lambert 93: \url{http://spatialreference.org/ref/sr-org/7527/}. Moreover, the definitions of some deprecated CRSs such as Lambert zone projected CRSs (which are still used in some datasets) seem to be referenced only for the authority EPSG and not for IGNF, which also maintains a registry of CRSs. ISO 19111 standard-based definitions of all CRSs defined and maintained by IGN France are  published in an XML file\footnote{\url{ http://librairies.ign.fr/geoportail/resources/IGNF.xml}}.
 References to equivalent definitions provided by the EPSG registry are explicitly stated with EPSG SRID. CRSs are identified by URIs using short names instead of numeric codes. For example, \url{http://registre.ign.fr/ign/IGNF/crs/NTFLAMB2E}  is the URI designed for the ``Lambert 2 \'{e}tendu'' projected system. Indeed ``NTFLAMB2E'' is used to identify the projected system ``Lambert 2 \'{e}tendu'' which is based on NTF (New French Triangulation) geodetic reference system. Unfortunately, this registry is still in evolution and its URIs are not dereferenceable yet.
 
 \begin{figure}[!htbp]
@@ -466,19 +467,19 @@ In~\cite{Atemezing:TC12}, we already surveyed numerous vocabularies for represen
  \item the ability to represent structured geometries (e.g. for performing simple spatial queries on the data, even when they are stored in a triple store that do not implement the GeoSPARQL standard),
  \item the integration of any coordinate reference system  (e.g. for allowing projected coordinates for cartographic purposes).
 \end{itemize}
-In addition to these recommendations, we also think that the domain of the property used to link a feature to its geometry should be left empty in order to accept links between any type of resource and a geometry. This would be useful for example, to associate a person to the coordinates of their birthplace.
+In addition to these recommendations, we also suggest that the domain of the property used to link a feature to its geometry should be left empty in order to accept links between any type of resource and a geometry. This would be useful for example, to associate a person to the coordinates of their birthplace.
 
-\subsection{A vocabulary for Geometries} \label{sec:geomvocab}
+\subsection{A vocabulary for geometries} \label{sec:geomvocab}
 
-On the current usage of georeferencing resources on the Web of data, it is assumed that the coordinates should be in WGS84, and hence the definition of the point. However, publishers might have data in different CRSs according to the location. Thus, our proposal is to define a more generic class for a POINT  with the benefit of choosing the CRS of the underlying data, as depicted in the Listing 2.3. 
+On the current usage of georeferencing resources on the Web of Data, it is assumed that the coordinates should be in WGS84, and hence the definition of the point. However, publishers might have data in different CRSs according to the location. Thus, our proposal is to define a more generic class for a POINT  with the benefit of choosing the CRS of the underlying data, as depicted in the Listing 2.3. 
 The naming convention used for the \texttt{geom} vocabulary follows the terms used by the Simple Features vocabulary. The French translation of terms is based on the glossary of multilingual terminology of ISO/TC 211 available at \url{http://www.isotc211.org/Terminology.htm}.
 
-\begin{deflda}:
-A resource of type \texttt{geom:Geometry} should be associated to exactly one resource of type \texttt{ignf:CRS} via the property \texttt{geom:crs}.
+\begin{deflda}
+(Geometry): A resource of type \texttt{geom:Geometry} should be associated to exactly one resource of type \texttt{ignf:CRS} via the property \texttt{geom:crs}.
 \end{deflda}
 
-\begin{deflda}:
-\textbf{A POINT} is a subclass of a \textbf{GEOMETRY}.
+\begin{deflda}
+(Class Point): \textbf{A POINT} is a subclass of a \textbf{GEOMETRY}.
 \end{deflda}
 
 Regarding alignments with some existing vocabularies, the class \texttt{geom:Geometry} is a subclass of both \texttt{sf:Geometry} and \texttt{ngeo:Geometry}. The class contains in addition the property \texttt{geom:crs}. Moreover, it is possible to obtain equivalences between data modeled with \emph{ngeo} vocabulary and \emph{geom} vocabulary. The following SPARQL query make it possible:
@@ -500,11 +501,11 @@ CONSTRUCT {
 \end{lstlisting}
 
 
-\begin{deflda}:
-An instance of the class \texttt{geom:Point} is associated with exactly one instance of \texttt{ignf:CRS} via the property \texttt{geom:crs}. An instance of a \texttt{geom:Point} has exactly one coordinate X and exactly one coordinate Y. The coordinates are \texttt{xsd:double} and referred to the following properties:
+\begin{deflda}
+(Points): An instance of the class \texttt{geom:Point} is associated with exactly one instance of \texttt{ignf:CRS} via the property \texttt{geom:crs}. An instance of a \texttt{geom:Point} has exactly one coordinate X and exactly one coordinate Y. The coordinates are \texttt{xsd:double} and referred to the following properties:
 \begin{itemize}
- \item \texttt{geom:coordX} refers to, in an ellipsoidal CRS, the longitude of a point and within a projected CRS, the value of false easting of a point.
- \item \texttt{geom:coordY} refers to, in an ellipsoidal CRS, the latitude of a point and within a projected CRS, the value of false northing of a point.
+ \item \texttt{geom:coordX} in an ellipsoidal CRS, refers to the longitude of a point and within a projected CRS and the value of false easting of a point.
+ \item \texttt{geom:coordY} in an ellipsoidal CRS, refers to the latitude of a point and within a projected CRS and the value of false northing of a point.
 \end{itemize}
 \end{deflda}
 
@@ -552,7 +553,7 @@ We have also defined a property \texttt{geom:geometry} with an empty domain. Thu
   \begin{center}
   \includegraphics[width=0.9\textwidth]{img/vocabs-ign.pdf}
   \vspace{-15pt}
-  \caption{High level classes of ignf, geom and topo vocabularies; relationships between them and mappings with external vocabularies.}
+  \caption{High level classes of the \texttt{ignf}, \texttt{geom} and \texttt{topo} vocabularies; relationships between them and mappings with external vocabularies.}
   \vspace{-10pt}
   \label{fig:geomcrs}
   \end{center}
@@ -574,7 +575,7 @@ A topographic entity \texttt{topo:EntiteTopographique} is the class associated t
   cdtopo:typedeconstruction:liste & list of types of construction \\
   cdtopo:typedereservoir:liste & list of types of tanks \\
   cdtopo:typedevegetation:liste & list of types of vegetation \\
-  cdtopo:typederelief:liste & list of types of relief \\
+  cdtopo:typederelief:liste & list of types of relief features\\
   cdtopo:typedevoieferree:liste & list of types of railway track \\
   cdtopo:typedetransportcable:liste & list of types of cableway transport \\
   cdtopo:typedefranchissement:liste & list of types of crossing \\
@@ -603,26 +604,27 @@ A Commune has an attribute called \textit{``nature''} whose enumerated values pr
 
 
 \subsection{Discussions}
-The alignment of existing taxonomies for describing geodata enables interoperability of symbolic descriptions. The need for a better choice of geometric structure, typically the choice between literal versus structured representations depends on three criteria: 
+The alignment of existing taxonomies for describing geodata enables interoperability of symbolic descriptions. The need for a better choice of geometric structure, typically the choice between literal versus structured representations depends on four criteria: 
 \begin{enumerate}
 \item  the coverage of all the complex geometries as they appear in the data;
 \item  a rapid mechanism for connecting ``features'' to their respective ``geometry'';
 \item the possibility to serialize geodata into traditional formats used in GIS applications (GML, KML, etc.) and
-\item the choice of triple stores supporting as many as possible functions to perform quantitative reasoning on geodata.
+\item the choice of triple stores supporting as many functions as possible  to perform quantitative reasoning on geodata.
 \end{enumerate}
     
     It is clear that a trade-off should be made depending on the technological infrastructure (e.g: data storage capacity, further reasoning on specific points on a complex geometry). The following points helps understanding better some of the challenges: 
 
 \begin{itemize}
-\item\textbf{Complex Geometry Coverage:} We have seen that on the Web of Data, there are few modeling of geodata with their correct shape represented as line or polygon. However, some content providers (e.g. IGN) need to publish all types of geodata including complex geometries representing roads, rivers, administrative regions, etc. Two representations are suitable: \textit{OS Spatial} and \textit{NeoGeo} ontologies (Table~\ref{tab:reqgeosparql}). Direct representation of the GeoSPARQL vocabulary is also suitable.
+\item\textbf{Complex Geometry Coverage:} We have seen that on the Web of Data, there is little modeling of geodata with their correct shape represented as lines or polygons. However, some content providers (e.g. IGN) need to publish all types of geodata including complex geometries representing roads, rivers, administrative regions, etc. Two representations are suitable: the \textit{OS Spatial} and \textit{NeoGeo} ontologies (Table~\ref{tab:reqgeosparql}). A direct representation of the GeoSPARQL vocabulary is also suitable.
+
 \item \textbf{Features connected to Geometry:} In modeling geodata, we advocate a clear separation between the features and their geometry. This is consistent with the consensus obtained from the different GeoVocamps\footnote{\url{http://www.vocamp.org}} and the outcome of this approach is expressed in the modeling design of NeoGeo. The top level classes \texttt{spatial:Feature} and \texttt{geom:Geometry} are connected with the property \texttt{geom:geometry}.
 
-\item \textbf{Literal versus structured Geometry:} Decomposing a LINE or a POLYGON into multiple results in an ``explosion'' in the size of the dataset and the creation of numerous blank nodes. However, sharing points between descriptions is a use case with such a need. IGN has such use-cases and the natural solution at this stage is to consider reusing the NeoGeo ontology . The choice of the triple store (e.g.,Virtuoso vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on-top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
+\item \textbf{Literal versus structured Geometry:} Decomposing a LINE or a POLYGON results in an ``explosion'' in the size of the dataset and the creation of numerous blank nodes. However, sharing points between descriptions is a use case with many real-world applications. IGN has such use cases and the natural solution at this stage is to consider reusing the NeoGeo ontology . The choice of the triple store (e.g.,Virtuoso vs Open Sahara) is not really an issue, as the IndexingSail\footnote{\url{https://dev.opensahara.com/projects/useekm/wiki/IndexingSail}} service could also be wrapped on top of Virtuoso to support full OpenGIS Simple Features functions\footnote{\url{http://www.opengeospatial.org/standards/sfs}}.
 \end{itemize}
 
 
 \subsection*{Publishing Structured Geometries from Geographic Data}
-The vocabulary for geometry reused by a geodata converter that takes traditional GIS data as input and outputs RDF data with geometries defined both with a \texttt{gsp:wktLiteral} and with a structured representation is compliant with the vocabularies presented in the previous sections. Geometries are automatically associated with the chosen CRS. This converter is implemented as a plugin of the Datalift platform (Section \ref{sec:geomRDF}) and can be reused easily for geographic data publishing purpose. The result in the RDF data is a set of triples where each member of a complex geometry can be identified by a single URI, latitude and longitude values.
+The vocabulary for geometry reused by a geodata converter that takes traditional GIS data as input and outputs RDF data with geometries defined both with a \texttt{gsp:wktLiteral} and with a structured representation is compliant with the vocabularies presented in the previous sections. Geometries are automatically associated with the chosen CRS. This converter is implemented as a plugin of the Datalift platform (Section \ref{sec:geomRDF}) and can be reused easily for geographic data publishing purposes. The result in the RDF data is a set of triples where each member of a complex geometry can be identified by a single URI with properties for latitude and longitude values.
 
 
 \section{Summary}
