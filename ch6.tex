@@ -661,16 +661,18 @@ The Table~\ref{tab:top20} shows the Top 20 namespaces of vocabularies according 
 }
 \end{table}
 
-\begin{algorithm}[h]
+\begin{algorithm}[H]
 \caption{Ranking vocabularies algorithm} \label{rankingvocab}
 \begin{algorithmic}[1]
    \STATE REQUIRE Dump of $lov aggregator$ file
     \STATE Upload in a triple store for querying
     \STATE Select subset of candidate vocabs $ LOV aggregator endpoint $
     \FOR { $term \in lovaggregator$ }
-    	\IF {($LOV distribution \geq 1$ )\AND ($LOV Popularity \geq 1$)}
+    	\IF {$LOV$ distribution $\geq 1$}
+    	   \IF  {$LOV$ Popularity $\geq 1$}
      		\STATE $candidateterms \leftarrow$ append $term$
        \ENDIF
+     \ENDIF
     \ENDFOR
     \FOR { each $term \in candidateterms$}
 	\STATE GROUP BY vocabulary namespace
