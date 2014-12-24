@@ -127,9 +127,11 @@ As we have seen, geodata interpretation relies on a coordinate reference system,
 Previous closed-source software called Circ\'e\footnote{\url{http://geodesie.ign.fr/?p=53&page=circe}}, published by IGN-France, provides the abilities to convert coordinate between CRSs in France and WGS 84. It has two conversions modes: standard and grid. In each mode the user is required to input the source CRS values in order to convert. Based on what datum and projection method used, the number of required fields are different. 
 Circ\'e also has a batch converting mode which is done by supplying a file. The format of the content of the file is simple. The available formats are converted into \textsl{[location name] {Lat/Lon} {Lon/Lat} [Altitude/Height]}. There is an option to choose which format to use. But due to the fact that it is a closed source software, no one can use the software as a service for their system.
 
-Another tool is a Web based application called the world coordinate converter at \url{http://twcc.free.fr}. This tool can convert between numerous CRSs. Unlike Circ\'e which only supports France and WGS 84, this tool supports conversion of international CRSs and nationals' CRSs. The result output from these two tools are the same. However, just like Circ\'e, no API or any open service for the community to use their full power horse unless going to their website and use it like an application.
+Another tool is a Web based application called the world coordinate converter at \url{http://twcc.free.fr}. This tool can convert between numerous CRSs. Unlike Circ\'e which only supports France and WGS 84, this tool supports conversion of international CRSs and national CRSs. The result output from those previous two tools are the same. However, just like Circ\'e, no API or any open service for the community to use their full power horse unless going to their website and use it like an application.
 
-These tools are great as a standalone tool for end user, but not so great for developer community. The developer can only use them to test their result. There is no possible way to use their fully function algorithm unless develop it again. 
+These tools are great as a standalone tool for end user, but not so great for the developer community. The developer can only use them to test their result. There is no  way to use either fully functional algorithm except to develop it again.
+
+ 
 \paragraph{Our proposal:} The purpose of the REST Converter is to propose a web based service to perform conversion between various CRSs.
 
 The algorithms implemented are the ones described at \url{http://geodesie.ign.fr/index.php?page=algorithmes} and available within the standalone Circ\'e software\footnote{\url{http://fr.wikipedia.org/wiki/Circe_(logiciel)}}.
@@ -141,7 +143,7 @@ At the moment, the following features are implemented in the Geo Converter:
 \item from/to WGS 84 UTM to/from Lambert 93
 \end{itemize}   
 
-The API can also convert a file with space separated values. The API supports JSON as one of the output format. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
+The API can also convert a file with space separated values. The API supports JSON as one of the output formats. The code of the REST service is available at \url{https://github.com/vienlam/Geo}.
 
  
 
@@ -153,30 +155,31 @@ The API can also convert a file with space separated values. The API supports JS
 The API is working through URL like any RESTful service does. The syntax for the service is (note that \{\} is required and [] is optional):
 \url{http://{domainname}/eurecom.geo.rest/api/converter/{D1}[P1]{D2}[P2]?{Parameters}} \\
 Where: \\
-\texttt{domainname}: Eurecom domain name.\\
+\texttt{domainname}: The service, currently hosted at Eurecom domain name.\\
 \texttt{D1} and \texttt{D2}: Datum of source and target CRS respectively.\\
 \texttt{P1} and \texttt{P2}: Projection of source and target CRS respectively.\\
-\texttt{Parameters:} The required parameters as input to the service. See table below for detail of required parameters for each converter. Parameters are provided as p1=v1\&p2=v1 where p1 is the first parameter with v1 is its value, etc.\\
-An example can be:
+\texttt{Parameters:} The required parameters as input to the service. See the table below for detail of required parameters for each converter. Parameters are provided as p1=v1\&p2=v1 where p1 is the first parameter with v1 is its value, etc.\\
+\\
+An example:
 \begin{verbatim}
 eurecom.fr/eurecom.geo.rest/api/converter/WGS84RGF93Lambert93?lon=4.7021484375&
 lat=45.2130035559939
 \end{verbatim}
 
 \subsubsection{Batch Converter}
-The API also support batch converter by using file. The URL syntax is:
+The API also support batch conversion from files input. The URL syntax is:
 \begin{verbatim}
 http://{domainname}/eurecom.geo.rest/api/converter/file/
 {D1}[P1]{D2}[P2]?{Parameters}
 \end{verbatim}
 
-Where D1, P1, D2, and P2 is as before. The parameters are the source file, and the encoding system. 
-The order of the input coordinates in the file is matter, so the exact order is as follow:
-{longitude/x} {latitude/y} [zone] [hemisphere]
-The first value should be longitude, in case geographic coordinate, or x, in case of planimetric coordinate. The second value is latitude or y. In case of UTM coordinates, the following third value is the zone. The last value is hemisphere. 
+where D1, P1, D2, and P2 are as before. The parameters are the source file and the encoding system. 
+The order of the input coordinates in the file matters, the exact order is as follow:
+\textit{{longitude/x} {latitude/y} [zone] [hemisphere]}
+The first value should be longitude, in the case of geographic coordinates, or x, in the case of planimetric coordinates. The second value is latitude or y. In case of UTM coordinates, the third value is the zone. The last value is hemisphere. 
 
 \subsubsection{Result Format}
-Normally, the API will return the result in form of normal string with the space character as delimiter for each coordinate. In case of batch converter, each location will be in one line. For example:
+Normally, the API will return the result in form of a normal string with the specify space character also as delimiter for each coordinate. In case of batch converter, each location will be in one line. For example:
 \begin{verbatim}
 eurecom.fr/eurecom.geo.rest/api/converter/WGS84RGF93Lambert93?lon=4.7021484375&
 lat=45.2130035559939
@@ -193,7 +196,7 @@ The order of value respond to the order of coordinate as follow:
 \end{verbatim}
 
 \paragraph{JSON format result:}
-However, one can ask the API to return the result string in JSON format. To demand the API to do so, simply put the json parameter with the value 1 to the link. For example:
+However, one can ask the API to return the result string in JSON format. To demand the API to do so, simply set the json parameter to the value 1 : json=1. For example:
 \begin{verbatim}
 eurecom.fr/eurecom.geo.rest/api/converter/WGS84RGF93Lambert93?lon=4.7021484375&
 lat=45.2130035559939&json=1
@@ -204,7 +207,7 @@ will return a string in JSON format (no line breaking):
 {"y":6458515.660215093,"x":833607.9336802219}
 \end{verbatim}
 
-JSON format return can also be applied for batch converter. The command is as before. An example of JSON format return of batch converter from WGS84 to Lambert93:
+JSON format result can also be specified for the batch converter. The command is as before. An example of JSON format results of batch converter from WGS84 to Lambert93:
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Sample output of the batch converter}, label=snapshot, language=json, captionpos=b}
 \begin{lstlisting}
@@ -263,7 +266,7 @@ We first provide the status of vocabularies usage for geospatial data on the Web
 \subsection{Status of Vocabularies Usage for Geospatial Data}
 \label{sec:vocgeoreview}
 
-Publishing statistics concerning the actual usage of vocabularies on the LOD cloud \footnote{\url{http://stats.lod2.eu}} \cite{demter-2012-ekaw} provides not only an overview of best practices recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides an overview of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the web. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed.
+Publishing statistics concerning the actual usage of vocabularies on the LOD cloud \footnote{\url{http://stats.lod2.eu}} \cite{demter-2012-ekaw} provides not only an overview of best practices recommended by Tim Berners-Lee\footnote{\url{http://www.w3.org/DesignIssues/LinkedData.html}}, but also provides an overview of the vocabularies re-used in various datasets and domains. Concerning the geographic domain, the results show that W3C Geo\footnote{\url{http://www.w3.org/2003/01/geo/wgs84_pos}} is the most widely used vocabulary, followed by the \texttt{spatialrelations}\footnote{\url{http://data.ordnancesurvey.co.uk/ontology/spatialrelations}} ontology of Ordnance Survey (OS). At the same time, the analysis reveals that the property \texttt{geo:geometry} is used in $1,322,302,221$ triples, exceeded only by the properties \texttt{rdf:type} ($6,251,467,091$ triples) and \texttt{rdfs:label}\\($1,586,115,316$ triples). This shows the importance of geodata on the Web which contains almost 20\% of triples of the LOD cloud datasets. Table~\ref{tab:vocabLOD} summarizes the results for four vocabularies (WGS84, OS spatial relation, Geonames ontology and OS admin geography) where the number of datasets using these vocabularies and the actual number of triples are computed\footnote{LOD cache should be understood as \url{http://lod.openlinksw.com/sparql/}. There are many more vocabularies used in the LOD cloud that contain also geographical information but that are never re-used.}.
 
 \begin{table*}[!htbp]
 \centering{
@@ -277,7 +280,7 @@ Geonames ontology &   5 & 8 272 905 & LOD cache\\
 UK administrative-geography &   3 &  229 689 & OS dataset \\
 \hline
 \end{tabular}
-\caption{Statistics on the usage of the four main geographic vocabularies (LOD cache should be understood as \texttt{http://lod.openlinksw.com/sparql/}). There are many more vocabularies used in the LOD cloud that contain also geographical information but that are never re-used.}
+\caption{Statistics on the usage of the four main geographic vocabularies in the LOD cache.}
 \label{tab:vocabLOD}
 }
 \end{table*}
@@ -337,7 +340,7 @@ Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
 \label{sec:topofunc}
 %\todo{update the information in this section. link geosparql http://www.opengeospatial.org/standards/geosparql}
 
-Based on the GeoSPARQL requirements, we were interested in comparing some geospatial vocabularies\footnote{\url{http://labs.mondeca.com/dataset/lov/vocabularySpace_Space.html}} to see how far they take already into account topological functions and which are the standard they followed among OpenGIS Simple Features (SF), Region Connection Calculus (RCC) and Egenhofer relations. We find that the NeoGeo (Spatial and Geometry) and OS Spatial vocabularies have integrated in their modeling partial or full aspects of topological functions as summarized in Table~\ref{tab:geosparql}.
+Based on the GeoSPARQL requirements, we were interested in comparing some geospatial vocabularies to see how far they take already into account topological functions and which are the standard they followed among OpenGIS Simple Features (SF), Region Connection Calculus (RCC) and Egenhofer relations. We find that the NeoGeo (Spatial and Geometry) and OS Spatial vocabularies have integrated in their modeling partial or full aspects of topological functions as summarized in Table~\ref{tab:geosparql}.
 
 As geodata has to be stored in triple stores with efficient geospatial indexing and querying capabilities, we also survey the current state of the art  in supporting simple or complex geometries and topological functions compatible with SPARQL 1.1. Table~\ref{tab:triplestore} shows which triple stores can support part of the GeoSPARQL standard regarding serialization and spatial functions.
 \begin{table}
@@ -371,7 +374,7 @@ Modeling of features can be grouped into four categories depending on the struct
   \item (i): One way for structuring the features is to define high level codes (generally using a small finite set of codes) corresponding to specific
       types. Further, sub-types are attached to those codes in the classification. This approach is used in the Geonames ontology\footnote{\url{http://geonames.org/ontology/ontology_v3.0.rdf}} for codes and classes (A, H, L, P, R, S, T, U, V), with each of the letter corresponding to a precise category (e.g: A for administrative borders). Classes are then defined as \texttt{gn:featureClass a skos:ConceptScheme}, while codes are \texttt{gn:featureCode a skos:Concept}.
       
-  \item (ii): A second approach consists in defining a complete standalone ontology that does not reuse other vocabularies. A top level class is used under which a taxonomy is formed using the \texttt{rdfs:subClassOf} property. The LinkedGeoData ontology\footnote{\url{http://linkedgeodata.org/ontology}} follows this approach, where the $1294$ classes are built around a nucleus of $16$ high-level concepts which are: \texttt{Aerialway, Aeroway, Amenity, Barrier, Boundary, Highway, Historic, Landuse, Leisure, ManMade},\\ \texttt{Natural, Place, Power, Route, Tourism, Waterway}. The same approach is used for the French GeOnto ontology (Section~\ref{sec:alignment}), which defines two high-level classes \texttt{ArtificialTopographyEntity} and \texttt{Natural\-TopographyEntity} with a total of $783$ classes.
+  \item (ii): A second approach consists in defining a complete standalone ontology that does not reuse other vocabularies. A top level class is used under which a taxonomy is formed using the \texttt{rdfs:subClassOf} property. The LinkedGeoData ontology\footnote{\url{http://linkedgeodata.org/ontology}} follows this approach, where the $1294$ classes are built around a nucleus of $16$ high-level concepts which are: \texttt{Aerialway, Aeroway, Amenity, Barrier, Boundary, Highway, Historic, Landuse, Leisure, ManMade},\\ \texttt{Natural, Place, Power, Route, Tourism, Waterway}. The same approach is used for the French GeOnto ontology (Section~\ref{sec:interlinking}), which defines two high-level classes \texttt{ArtificialTopographyEntity} and \texttt{Natural\-TopographyEntity} with a total of $783$ classes.
   
   \item (iii): A third approach consists in defining several smaller ontologies, one for each sub-domain. An ontology network is built with a central ontology used to interconnect the different other ontologies. One obvious advantage of this approach is the modularity of the conceptualizing which should ease as much as possible the reuse of modular ontologies. The Ordnance Survey (OS) follows this approach providing ontologies for administrative regions\footnote{\url{http://www.ordnancesurvey.co.uk/ontology/admingeo.owl}}, for statistics decomposition\footnote{\url{http://statistics.data.gov.uk/def/administrative-geography}} and for postal codes\footnote{\url{http://www.ordnancesurvey.co.uk/ontology/postcode.owl}}. The \texttt{owl:imports} statements are used in the core ontology. Similarly, GeoLinkedData makes use of three different ontologies covering different domains.
   
@@ -383,7 +386,7 @@ For this last approach, we have built an associated OWL vocabulary composed of a
 \subsubsection{Vocabularies for Geometry Shape}
 The geometry of a point of interest is also modeled in different ways. We include more details here to the survey started by Salas and Harth~\cite{Salas2011}:
 \begin{itemize}
-  \item \textit{Point representation}: the classical way to represent a location by providing the latitude and longitude in a given coordinate reference system (the most used on the web is the WGS84 datum represented in RDF by the W3C Geo vocabulary). For example, Geonames defines the class \texttt{gn:Feature a skos:ConceptScheme} as a \texttt{SpatialThing} in the W3C Geo vocabulary.
+  \item \textit{Point representation}: the classical way to represent a location by providing the latitude and longitude in a given coordinate reference system (the most used on the Web is the WGS84 datum represented in RDF by the W3C Geo vocabulary). For example, Geonames defines the class \texttt{gn:Feature a skos:ConceptScheme} as a \texttt{SpatialThing} in the W3C Geo vocabulary.
   
   \item \textit{Rectangle} (``bounding box''): which represents a location with two points or four segments making a geo-referenced rectangle. In this approach, the vocabulary provides more properties for each segment. The FAO Geopolitical ontology\footnote{\url{http://www.fao.org/countryprofiles/geoinfo/geopolitical/resource/}} uses this approach.
   

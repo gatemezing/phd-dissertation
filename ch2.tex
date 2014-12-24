@@ -211,12 +211,45 @@ Figure \ref{fig:shape2rdf-generic} shows a generic architecture for tools to con
 \end{figure}
 
 
-\section{Interlinking Geospatial Data}
+\section{Interlinking Geospatial Vocabulary and Data}
 \label{sec:interlinking}
 
-We present in this section different criteria that can be used to interlink geospatial datasets in the context of Web of Data, as well as some distance measures adapted for combining two geospatial datasets. For more details on mapping techniques, the readers can refer to \cite{euzenat2007}, and functions implemented in SILK \cite{jentzsch2010silk,isele2011} and LIMES \cite{ngau11} interlinking tools. Among the set of properties usually used as data linking criteria, geolocation (addresses, postal code, latitude/longitude, etc) remains one of the most commonly used.
+We present in this section different criteria that can be used to interlink geospatial datasets in the context of Web of Data, as well as some distance measures adapted for combining two geospatial datasets. We first provide results of aligning two existing ontologies of previous project GeOnto with five ontologies and two flat taxonomies containing geospatial. For more details on mapping techniques, the readers can refer to \cite{euzenat2007}, and functions implemented in SILK \cite{jentzsch2010silk,isele2011} and LIMES \cite{ngau11} interlinking tools. Among the set of properties usually used as data linking criteria, geolocation (addresses, postal code, latitude/longitude, etc) remains one of the most commonly used.
 
 In this thesis, our linking approach is mainly based on geolocation properties comparison, although is by either combining well-known functions implemented in SILK and LIMES. The result of this interlinking process is a list of \textit{``owl:sameAs''} links between entities of each datasets, with a certain score.
+
+\subsection{Schema Alignment of Existing Vocabularies}                                         \label{sec:vocabalignment}
+%IGN is a public service in France in charge of describing, from the physical and geometry point of view, the surface of the French territory and the occupation of the land, and to elaborate and update continuously the forestal resources. They are also experimenting in exposing some of their data as Linked Data and act as an important provider in the \url{http://data.gouv.fr} portal.
+IGN-France has previously developed two complementary vocabularies (GeOnto and bdtopo) which differ in their provenance but have the same scope, for describing geographic entities in the French territory. GeOnto is the product of a French research project\footnote{\url{http://geonto.lri.fr/Livrables.html}} aiming at building and aligning heterogeneous ontologies in the geographic domain. A ``light'' version of the final ontology at \url{http://semantics.eurecom.fr/datalift/tc2012/vocabs/GeoOnto/} defines two high level classes in a total of $783$ classes and $17$ properties ($12$ Data Properties and $5$ Object Properties). GeOnto contains labels in both French and English, without comments specified for the terms. The bdtopo ontology is derived from a geospatial database with the same name. It contains $237$ classes and $51$ properties ($47$ DP / $4$ OP). All the labels and comments are in French.
+
+\subsubsection{GeOnto Alignment Process: First results}
+The first step towards interoperability of French geographic features and the existing vocabularies is to align GeOnto to other vocabularies. We choose GeOnto because it covers a large number of categories and also has labels in English. We have performed the alignment with five OWL vocabularies (bdtopo, LGD, DBpedia, Schema.org and Geonames) and two flat taxonomies (Foursquare, Google Place). For the latter, we have transformed the flat list of types and categories into an OWL ontology. For each alignment performed, we only consider \texttt{owl:equivalentClass} axioms. We use the Silk tool \cite{Julius09} to compute the alignment using two metrics for string comparison: the \textit{levenshteinDistance} and \textit{jaro} distances. They work on the English labels except for the alignment with bdtopo where we use the French labels. We apply the average aggregation function on these metrics with an empirically derived threshold. However, for generating the final mapping file for vocabularies of small size, we manually validate and insert relations of type \texttt{rdfs:subClassOf}. The threshold to validate the results is set to $100$\% for links considered to be correct and greater than $40$\% for links to be verified. The alignment with Geonames is special, considering the property restriction used in the ontology for codes.
+
+Table~\ref{tab:mappings} summarizes the result of the alignment process between GeOnto and the existing vocabularies and taxonomies. All the resources of this work are available at \url{http://semantics.eurecom.fr/datalift/tc2012/}.
+\begin{table}
+\centering{
+\begin{tabularx}{\textwidth}{|X|X|r|}%{|l|l|c|}
+\hline
+\textbf{Vocabulary}    	& \textbf{\#Classes} 	& \textbf{\#Aligned Classes}    \\ \hline
+LGD 			& \texttt{owl:Class}:$1294$     &  $178$			            \\  \hline
+
+DBpedia     	& \texttt{owl:Class}:$366$ 	    & $42$			   				 \\ \hline
+				
+Schema.org 		& \texttt{owl:Class}:$296$ 	    &  $52$			     			 \\ \hline
+				
+Geonames		& \texttt{skos:ConceptScheme}:$12$  &  --			    	 	  \\
+               	& \texttt{skos:Concept}:$699$       &  $287$               			\\ \hline
+Foursquare 		& $359$ 	    			        & $46$ 			 			   \\ \hline
+Google Place 	& $126$ 	  			            & $41$ 			 	 			\\ \hline
+bdtopo 			& \texttt{owl:Class}:$237$ 	  	    & $153$ 			 	 		\\ \hline
+\end{tabularx}
+\caption{Results of the alignment process between GeOnto and existing vocabularies/taxonomies.}
+\label{tab:mappings}
+}
+\end{table}
+
+In general, we obtain good results with Silk, with precision beyond $80$\%: Google Place: $94$\%, LGD: $98$\%, DBpedia: $89$\%, Foursquare: $92$\% , Geonames: $87$\% and bdtopo: $92$\%. We obtained a precision of only $50$\% with schema.org due to numerous fine-grained categories that are badly aligned (e.g. \texttt{ign:Berge owl:equivalentClass schema:Park}).
+
 
 \subsection{Criteria for interlinking geospatial Data}
 Data interlinking task is generally performed by comparing properties values of each resource of a source dataset with corresponding properties of the resources described in the target datasets \cite{scharffe2010}. In the field of geographic databases, data matching is also performed by comparing properties, and especially geometries (points, lines, polygons, etc.) that are used to represent the shape and the location of geographic features. This task is usually based on distance measures chosen according to the type of the geometric primitives that must be compared \cite{mustiere2008,anamaria08,Julius09,walter1999}.
