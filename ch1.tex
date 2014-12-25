@@ -24,12 +24,21 @@ In this chapter, we first describe the notion of geographic information, with it
 %\todo{Use some materials from Deliverable spatial data of Datalift- ADD part of the work of Nathalie thesis-
 %ADD also Ruas thesis} \\
 
-Geographical phenomena require two descriptors to represent the real world; \textit{what is represented,} and \textit{where it is.} as reported by authors in \cite{burrough98}. For the former, concepts such as ``town'', ``school'', ``river'', are used to recognize the phenomena and described in terms of well-established ``objects'' or ``entities''. At the same time, the type of concepts used to describe a phenomena vary from one scale of resolution to another, depending on the perception of the human observation of the world. The \textit{where it is} of the phenomena may be defined in terms of a geometrically exact or a relative location. The \textit{what is represented} uses local or world coordinate systems - local or internationally accepted projections that uses geometrical coordinates of latitude and longitude - defined using a standard system of spheroids, projections, and coordinates \cite{burrough98}. Two approaches are generally used to represent geographical primitives in GIS: vector and raster approaches. In the vector data model, a space is represented by a geometry that describes the location and implicitly the shape, and information attributes such as the name, nature, length, or surface. In general, the geometry of a geographic object can be described using three primitives:
+Geographical phenomena require two descriptors to represent the real world; \textit{what is represented,} and \textit{where it is.} as reported by authors in \cite{burrough98}. For the former, concepts such as ``town'', ``school'', ``river'', are used to recognize the phenomena and described in terms of well-established ``objects'' or ``entities''. At the same time, the type of concepts used to describe a phenomena vary from one scale of resolution to another, depending on the perception of the human observation of the world. The \textit{where it is} of the phenomena may be defined in terms of a geometrically exact or a relative location. The \textit{what is represented} uses local or world coordinate systems - local or internationally accepted projections that uses geometrical coordinates of latitude and longitude - defined using a standard system of spheroids, projections, and coordinates \cite{burrough98}. Figure \ref{fig:geomtypes} depicts different geometries for representing features. Two approaches are generally used to represent geographical primitives in GIS: vector and raster approaches. In the vector data model, a space is represented by a geometry that describes the location and implicitly the shape, and information attributes such as the name, nature, length, or surface. In general, the geometry of a geographic object can be described using three primitives:
 \begin{itemize}
 \item \textbf{Point} represented in terms of XY coordinates.
 \item \textbf{Line} represented by a sets of XY coordinate pairs that define a connected path through space. 
 \item \textbf{Polygon} represented in terms of the XY coordinates of its boundary, or in terms of the set of XY coordinates that are enclosed by such a boundary. 
 \end{itemize}    
+
+\begin{figure}[ht!b]
+\centering{
+\includegraphics[scale=0.60]{img/geom_types.pdf}
+\label{fig:geomtypes}
+\caption{Different geometries for representing a feature.}
+}
+\end{figure}
+
 
 Figure \ref{fig:vectormodel} shows different representations of an address in the BD ADRESS\circledR \hspace{1pt} database, including points, buildings, path and additional address location.
 
@@ -329,7 +338,7 @@ Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
  \begin{itemize}
  \item 8 for RCC: equals(EQ), disconnected(DC), externally connected(EC), partially overlapping(PO), tangential proper part inverse(TPPi), tangential proper part (TPP), non-tangential proper part inverse(NTPPi), non-tangential proper part(NTPP)
 \item 8 for Simple Features : equals, disjoint, intersects, touches, within, contains, overlaps and cross.
-\item 8 for Egenhofer relations: egenhofer relations: equals, disjoint, meet, overlpa, covers, coveredBy, inside and contains
+\item 8 for Egenhofer relations: equals, disjoint, meet, overlap, covers, coveredBy, inside and contains
 \item 9 for functions that generate new geometries (Non Topological functions) 
  \end{itemize}
 
@@ -340,7 +349,16 @@ Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
 \label{sec:topofunc}
 %\todo{update the information in this section. link geosparql http://www.opengeospatial.org/standards/geosparql}
 
-Based on the GeoSPARQL requirements, we were interested in comparing some geospatial vocabularies to see how far they take already into account topological functions and which are the standard they followed among OpenGIS Simple Features (SF), Region Connection Calculus (RCC) and Egenhofer relations. We find that the NeoGeo (Spatial and Geometry) and OS Spatial vocabularies have integrated in their modeling partial or full aspects of topological functions as summarized in Table~\ref{tab:geosparql}.
+Based on the GeoSPARQL requirements, we were interested in comparing some geospatial vocabularies to see how far they take already into account topological functions and which are the standard they followed among OpenGIS Simple Features (SF), Region Connection Calculus (RCC) and Egenhofer relations (see Figure \ref{fig:toporelations}). We find that the NeoGeo (Spatial and Geometry) and OS Spatial vocabularies have integrated in their modeling partial or full aspects of topological functions as summarized in Table~\ref{tab:geosparql}.
+
+\begin{figure}[h!tb]
+\centering{
+\includegraphics[scale=.7]{img/egenhofer_relations.pdf}
+\label{fig:toporelations}
+\caption{Illustration of the topological relations by Max Egenhofer.}
+}
+\end{figure}
+
 
 As geodata has to be stored in triple stores with efficient geospatial indexing and querying capabilities, we also survey the current state of the art  in supporting simple or complex geometries and topological functions compatible with SPARQL 1.1. Table~\ref{tab:triplestore} shows which triple stores can support part of the GeoSPARQL standard regarding serialization and spatial functions.
 \begin{table}
