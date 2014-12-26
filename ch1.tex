@@ -324,9 +324,9 @@ Feature			& Req 4 			& Defines $8$ Simple Features Object Properties(OP) \\
 Geometry		& Req 8 			& Defines OP \texttt{hasGeometry} and \texttt{defaultGeometry} \\
 				& Req 9 			& Defines $6$ Data Properties: e.g: \texttt{dimension, isEmpty, etc.}  \\ \hline
 				& Req 10-13			& \texttt{wktLiteral} definitions \& URI encoding  \\
-Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
+Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKT literal  \\
 	zation			& Req 15-17			& GMLLiteral should be accepted  \\
-				& Req 18			& Defines \texttt{asGML} to retrieve GMLLiteral \\
+				& Req 18			& Defines \texttt{asGML} to retrieve GML literal \\
 \hline
 \end{tabularx}
 \caption{Requirements and implementations for vocabulary definitions in GeoSPARQL.}
@@ -334,12 +334,12 @@ Seriali- 	& Req 14			& Defines \texttt{asWKT} to retrieve WKTLiteral  \\
 }
 \end{table}
 
- Each of the components described above has associated requirements. Concerning the vocabulary requirements, Table~\ref{tab:reqgeosparql} summarizes the seventeen requirements presented in the GeoSPARQL draft document. GeoSPARQL requires the implementation of functions extensions for Geo-spatial (33) , and provides also corresponding relationships between topological functions. The functions are listed below:
+ Each of the components described above has associated requirements. Concerning the vocabulary requirements, Table~\ref{tab:reqgeosparql} summarizes the seventeen requirements presented in the GeoSPARQL draft document. GeoSPARQL requires the implementation of thirty three functions extensions for geospatial, and provides also corresponding relationships between topological functions. The functions are listed below:
  \begin{itemize}
- \item 8 for RCC: equals(EQ), disconnected(DC), externally connected(EC), partially overlapping(PO), tangential proper part inverse(TPPi), tangential proper part (TPP), non-tangential proper part inverse(NTPPi), non-tangential proper part(NTPP)
-\item 8 for Simple Features : equals, disjoint, intersects, touches, within, contains, overlaps and cross.
+ \item 8 for RCC: equals (EQ), disconnected (DC), externally connected (EC), partially overlapping(PO), tangential proper part inverse(TPPi), tangential proper part (TPP), non-tangential proper part inverse (NTPPi), non-tangential proper part (NTPP)
+\item 8 for Simple Features: equals, disjoint, intersects, touches, within, contains, overlaps and cross.
 \item 8 for Egenhofer relations: equals, disjoint, meet, overlap, covers, coveredBy, inside and contains
-\item 9 for functions that generate new geometries (Non Topological functions) 
+\item 9 for functions that generate new geometries (Non-topological functions) 
  \end{itemize}
 
 
@@ -389,8 +389,7 @@ OntoMedia Space & \texttt{adjacent-below, adjacent-above, orbit-around, is\_boun
 \subsubsection{Vocabularies for Features}
 Modeling of features can be grouped into four categories depending on the structure of the data, the intended purpose of the data modeling, and the (re)-use of other resources.
 \begin{itemize}
-  \item (i): One way for structuring the features is to define high level codes (generally using a small finite set of codes) corresponding to specific
-      types. Further, sub-types are attached to those codes in the classification. This approach is used in the Geonames ontology\footnote{\url{http://geonames.org/ontology/ontology_v3.0.rdf}} for codes and classes (A, H, L, P, R, S, T, U, V), with each of the letter corresponding to a precise category (e.g: A for administrative borders). Classes are then defined as \texttt{gn:featureClass a skos:ConceptScheme}, while codes are \texttt{gn:featureCode a skos:Concept}.
+  \item (i): One way to structure the features is to define high level codes (generally using a small finite set of codes) corresponding to specific types. Further, sub-types are attached to those codes in the classification. This approach is used in the Geonames ontology\footnote{\url{http://geonames.org/ontology/ontology_v3.0.rdf}} for codes and classes (A, H, L, P, R, S, T, U, V), with each of the letter corresponding to a precise category (e.g.: A for administrative borders). Classes are then defined as \texttt{gn:featureClass a skos:ConceptScheme}, while codes are \texttt{gn:featureCode a skos:Concept}.
       
   \item (ii): A second approach consists in defining a complete standalone ontology that does not reuse other vocabularies. A top level class is used under which a taxonomy is formed using the \texttt{rdfs:subClassOf} property. The LinkedGeoData ontology\footnote{\url{http://linkedgeodata.org/ontology}} follows this approach, where the $1294$ classes are built around a nucleus of $16$ high-level concepts which are: \texttt{Aerialway, Aeroway, Amenity, Barrier, Boundary, Highway, Historic, Landuse, Leisure, ManMade},\\ \texttt{Natural, Place, Power, Route, Tourism, Waterway}. The same approach is used for the French GeOnto ontology (Section~\ref{sec:interlinking}), which defines two high-level classes \texttt{ArtificialTopographyEntity} and \texttt{Natural\-TopographyEntity} with a total of $783$ classes.
   
