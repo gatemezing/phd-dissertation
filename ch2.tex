@@ -142,8 +142,8 @@ GeomRDF \cite{hamdi14} is a tool developed within the Datalift platform that tra
 GeomRDF is implemented as a module of the RDF publication platform Datalift. Moreover, it has been validated against the French Administrative Units dataset. GeomRDF can also can also bee used as a stand-alone library and can be accessed at \url{https://github.com/fhamdi/GeomRDF}. Listing \ref{lst:nicegeomrdf} presents a snippet in TURTLE of GeomRDF for geometry of the city of Nice (France). It also contains the structured modeling of a MultiPolygon as a set of Polygon, containing Points in an LinearRing.
 
 
-
- \begin{lstlisting}[label=lst:nicegeomrdf, float=tp, numbers=left, numberstyle=\tiny, caption = Sample of structured geometry of the city of Nice]
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption = {Sample of structured geometry of the city of Nice.}, language=ttl, label=lst:nicegeomrdf, captionpos=b}
+\begin{lstlisting}
 @prefix geom:<http://data.ign.fr/def/geometrie#> .
 @prefix rgeofla:<http://data.ign.fr/id/geofla/commune/> .
 @orefix gsp: <http://www.opengis.net/ont/geosparql#> .
@@ -220,7 +220,7 @@ In this thesis, our linking approach is mainly based on geolocation properties c
 
 \subsection{Schema Alignment of Existing Vocabularies}                                         \label{sec:vocabalignment}
 %IGN is a public service in France in charge of describing, from the physical and geometry point of view, the surface of the French territory and the occupation of the land, and to elaborate and update continuously the forestal resources. They are also experimenting in exposing some of their data as Linked Data and act as an important provider in the \url{http://data.gouv.fr} portal.
-IGN-France has previously developed two complementary vocabularies (GeOnto and bdtopo) which differ in their provenance but have the same scope, for describing geographic entities in the French territory. GeOnto is the product of a French research project\footnote{\url{http://geonto.lri.fr/Livrables.html}} aiming at building and aligning heterogeneous ontologies in the geographic domain. A ``light'' version of the final ontology at \url{http://semantics.eurecom.fr/datalift/tc2012/vocabs/GeoOnto/} defines two high level classes in a total of $783$ classes and $17$ properties ($12$ Data Properties and $5$ Object Properties). GeOnto contains labels in both French and English, without comments specified for the terms. The bdtopo ontology is derived from a geospatial database with the same name. It contains $237$ classes and $51$ properties ($47$ DP / $4$ OP). All the labels and comments are in French.
+IGN-France has previously developed two complementary vocabularies (GeOnto and bdtopo) which differ in their provenance but have the same scope, for describing geographic entities in the French territory. GeOnto is the product of a French research project\footnote{\url{http://geonto.lri.fr/Livrables.html}} aiming at building and aligning heterogeneous ontologies in the geographic domain. A ``light'' version of the final ontology at \url{http://semantics.eurecom.fr/datalift/tc2012/vocabs/GeoOnto/} defines two high level classes in a total of $783$ classes and $17$ properties ($12$ Data Properties and $5$ Object Properties). GeOnto contains labels in both French and English, without comments specified for the terms. The bdtopo ontology is derived from a geospatial database with the same name. It contains $237$ classes and $51$ properties ($47$ Data Properties / $4$ Object Properties). All the labels and comments are in French.
 
 \subsubsection{GeOnto Alignment Process: First results}
 The first step towards interoperability of French geographic features and the existing vocabularies is to align GeOnto to other vocabularies. We choose GeOnto because it covers a large number of categories and also has labels in English. We have performed the alignment with five OWL vocabularies (bdtopo, LGD, DBpedia, Schema.org and Geonames) and two flat taxonomies (Foursquare, Google Place). For the latter, we have transformed the flat list of types and categories into an OWL ontology. For each alignment performed, we only consider \texttt{owl:equivalentClass} axioms. We use the Silk tool \cite{Julius09} to compute the alignment using two metrics for string comparison: the \textit{levenshteinDistance} and \textit{jaro} distances. They work on the English labels except for the alignment with bdtopo where we use the French labels. We apply the average aggregation function on these metrics with an empirically derived threshold. However, for generating the final mapping file for vocabularies of small size, we manually validate and insert relations of type \texttt{rdfs:subClassOf}. The threshold to validate the results is set to $100$\% for links considered to be correct and greater than $40$\% for links to be verified. The alignment with Geonames is special, considering the property restriction used in the ontology for codes.
@@ -312,7 +312,7 @@ Currently on the Web of Data, resources that actually refer to complex topograph
 \section{Survey on Triple Stores}
 \label{sec:surveytps}
 
-A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqles \cite{sparqles13} and we classify them in two group: (i) ``generic triple stores'' that handle any RDF triples and (ii) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions.
+A triple store is a back-end that has some form of persistent storage of RDF data and provides mechanisms to run SPARQL \cite{sparql11} queries against that data. The SPARQL support can either be built-in as part of the main tool, or an add-on installed separately. In this section, we discuss the most used triple stores based on the list maintained by sparqles \cite{sparqles13} and we classify them in two group: (1) ``generic triple stores'' that handle any RDF triples and (2) ``geospatial triple stores'', the ones designed to handle geographic data and implement topological functions.
 
 
 \subsection{Generic Triple Stores}
@@ -688,7 +688,7 @@ OpenStreetMap France is working on providing the location addresses of France in
 %\todo{find URI for 450, route des chappes, biot in bano2rdf as sample}
 %http://id.osmfr.org/bano/01001A008W-1 {codeinsee + code +numrue}
 
-Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} is used in an \textit{ad-hoc} script\footnote{\url{https://github.com/osm-fr/bano/blob/master/out/csv2ttl.py}} to convert CSV data into RDF. URIs used to identify objects are of the form: \url{http://id.osmfr.org/bano/INSEE-CODE+FANTOIR-CODE+Street-Number}. For example, the location corresponding to EURECOM in SophiaTech (\textit{450, route des chappes, biot, 06410 Biot, FRANCE}) is identified by the URI \\
+Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} is used in an \textit{ad-hoc} script\footnote{\url{https://github.com/osm-fr/bano/blob/master/out/csv2ttl.py}} to convert CSV data into RDF. URIs used to identify objects are of the form: \url{http://id.osmfr.org/bano/INSEE-CODE+FANTOIR-CODE+Street-Number}. For example, the location corresponding to EURECOM in SophiaTech (\textit{450, route des chappes, 06410 Biot, FRANCE}) is identified by the URI \\
 \texttt{<http://id.osmfr.org/bano/060180238L-450>}. Moreover, the property \\ \texttt{locn:location} links to French Statistic dataset\footnote{\url{http://id.insee.fr}} for communes in France. Metadata are inserted at the beginning of the dataset in RDF corresponding to a department, using vocabularies to model license, spatial coverage of the data (i.e., \texttt{dcat}, \texttt{dcterms}, \texttt{foaf}). The extract below represents the metadata for the department of ``ALPES-MARITIMES'' which the commune of Biot belongs:
 
 \begin{verbatim}
@@ -710,9 +710,9 @@ Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} i
 Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mostly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples.
 
 \paragraph{Interconnection with LinkedGeoData:}
-Regarding the interconnection with more existing geodata, first results of mappings with LinkedGeoData amenities using LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of 0.97, i.e, we consider \textit{``very closed''} resources with 30 meters distances. Listing \ref{scriptLIMES} shows the configuration used for finding corresponding buildings of LinkedGeoData in Bano2RDF dataset.
+Regarding the interconnection with more existing geodata, first results of mappings with LinkedGeoData amenities using LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of $0.97$, i.e, we consider \textit{``very closed''} resources with 30 meters distances. Listing \ref{scriptLIMES} shows the configuration used for finding corresponding buildings of LinkedGeoData in Bano2RDF dataset.
 
-\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {LIMES script used to interconnect Bano2RDF dataset located in the region of Marseille with Building in LinkedGeoData.}, label=scriptLIMES, captionpos=b}
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {This LIMES script is used to interconnect the Bano2RDF dataset located in the region of Marseille with buildings in LinkedGeoData.}, language=XML, label=scriptLIMES, captionpos=b}
 \begin{lstlisting}
 <LIMES>
 	
@@ -724,12 +724,13 @@ Regarding the interconnection with more existing geodata, first results of mappi
 	<PREFIX>
      <NAMESPACE>http://www.w3.org/ns/locn#</NAMESPACE>
      <LABEL>locn</LABEL>
-
     </PREFIX>
+    
 	<PREFIX>
 		<NAMESPACE>http://www.opengis.net/ont/geosparql#</NAMESPACE>
 		<LABEL>geos</LABEL>
 	</PREFIX>
+	
 	<PREFIX>
 		<NAMESPACE>http://linkedgeodata.org/ontology/</NAMESPACE>
 		<LABEL>lgdo</LABEL>
@@ -777,7 +778,7 @@ Regarding the interconnection with more existing geodata, first results of mappi
 	
 \end{lstlisting}
 
-Table \ref{tab:bano-gld} shows the first results of the mappings. For each type of amenities in LinkedGeoData, it shows the number of matched resources, and the percentage of the result with respect to the distinct individuals of the category. For example, the mapping reveals $735$ parkings located in Paris (postal code starting with 750). Since there are $250,516$ resources of type ``Parking'' in LinkedGeoData, the percentage is 0.293\%, i.e.,(735/250680)*100.  The table also reveals the low presence of the addresses for French territory in LinkedGeoData. All the results of the mappings are available at \url{https://github.com/gatemezing/bano2rdf-matching}. Shops and restaurants are the resources with most \texttt{owl:sameAs} links between Bano2RDF and LGD datasets.
+Table \ref{tab:bano-gld} shows the first results of the mappings. For each type of amenities in LinkedGeoData, it shows the number of matched resources, and the percentage of the result with respect to the distinct individuals of the category. For example, the mapping reveals $735$ parkings located in Paris (postal code starting with 750). Since there are $250,516$ resources of type ``Parking'' in LinkedGeoData, the percentage is 0.293\%, i.e.,(735/250680)*100.  The table also reveals the low presence of the addresses for French territory in LinkedGeoData. All the results of the mappings are available at \url{https://github.com/gatemezing/bano2rdf-matching}. Based on the results of the interlinking process shown in Table \ref{tab:bano-gld}, shops and restaurants are the resources with most \texttt{owl:sameAs} links between the Bano2RDF and LGD datasets.
 
 \begin{table}[ht!b]
 
@@ -814,7 +815,7 @@ Table \ref{tab:bano-gld} shows the first results of the mappings. For each type 
 \label{sec:frenchCloud}
 %\todo{Summarize here our contributions to the French LOD Cloud. Give some statistics and explain the figure}\\
 
-We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{void} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}.
+We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars\footnote{\url{http://5stardata.info/}} on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{VOID} \cite{alexander09} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}.
 
 \begin{figure}[h!tb]
   \centering{

@@ -53,6 +53,7 @@ sensitive=true,
 morecomment=[l][\color{brown}]{@},
 morecomment=[l][\color{red}]{\#},
 morestring=[b][\color{blue}]\",
+morekeywords={geom,rgeofla,rdfs,gsp,rdf}
 }
 
 %% language json
@@ -89,6 +90,32 @@ morestring=[b][\color{blue}]\",
       {[}{{{\color{delim}{[}}}}{1}
       {]}{{{\color{delim}{]}}}}{1},
 }
+
+%% Defining XML environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{color}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={LIMES,PREFIX,SOURCE,TARGET,METRIC,ACCEPTANCE,REVIEW,EXECUTION,OUTPUT}% list your attributes here
+}
+%%% End definition XML %%
 
 \newenvironment{ttbox}{
  \begin{center}\vspace{-.5ex}
@@ -206,8 +233,6 @@ morestring=[b][\color{blue}]\",
 \DeclareMathOperator{\Enqueue}{Enqueue}
 \DeclareMathOperator{\findResult}{findRes}
 \DeclareMathOperator{\dom}{dom}
-
-
 
 
 
