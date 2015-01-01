@@ -14,6 +14,14 @@ Steve Peters \\
 \label{sec:intro-ch2}
 So far, the Web of Data has taken advantage of geocoding technologies for publishing large amounts of data. For example, Geonames provides more than 10 millions records (e.g. $5,240,032$ resources of the form \url{http://sws.geonames.org/10000/}) while LinkedGeoData has more than $60,356,364$ triples. All the above mentioned data is diverse in their structure, the access point (SPARQL endpoint, Web service or API), the entities they represent and the vocabularies used for describing them. Table~\ref{tab:srce-data} summarizes for different providers the number of geodata available (resources, triples) and how the data can be accessed.
 
+
+To publish geospatial data on the Web, some tools are needed for converting native formats into RDF. Those tools are based on OGC libraries for extracting features, and vocabularies provided to build the RDF. Once the dataset obtained, it has to be stored in an efficient way, interconnected to other datasets, and then consumed using SPARQL queries. Moreover, all those steps might be integrated in frameworks that ease the overall process of publishing geodata. In this chapter, we first discuss different representation on the Web of the 7$^{th}$ arrondissement of Paris in DBpedia, Geoname and LinkedGeoData (Section \ref{sec:scenario}). Section \ref{sec:toolgeo} provides an overview of four tools for converting geospatial data into RDF, with a brief discussion on their limitations. Criteria to interlink geodata is then described in Section \ref{sec:interlinking}, followed by a survey on triple stores (Section \ref{sec:surveytps}). We then describe Datalift, a tool for managing the workflow of publishing raw data to RDF (Section \ref{sec:toolLD}), followed by our contributions of publishing French authoritative datasets using Datalift. An evaluation on time execution of built-on geo-functions of three triple stores is presented in Section \ref{sec:geoqueries}, and a brief summary (Section \ref{sec:ch2-summary}) to conclude the chapter.
+
+\section{Current Representation of Geodata on the Web}\label{sec:scenario}
+%\section{Scenario: 7$^{th}$ Arrondissement of Paris}                      \label{sec:scenario}
+%\todo{Update the scenario with the current version of DBpedia 2014, DBpedia-FR}
+In this section, we review the modeling of the 7$^{th}$ arrondissement of Paris, France in different geospatial datasets on the Web. The 7$^{th}$ arrondissement of Paris is one of the 20 arrondissements (administrative districts) of the capital city of France. It includes some of Paris's major tourist attractions such as the Eiffel Tower, some world famous museums (e.g: \textit{mus\'{e}e d'Orsay}) and contains a number of French national institutions, including numerous government ministries\footnote{\url{http://en.wikipedia.org/wiki/7th_arrondissement_of_Paris}}. We use it throughout this paper to highlight the diversity of representations one can use for this geographical entity. We assume that this district should be modeled as a POLYGON composed of a number of POINTs needed to ``interpolate'' its effective boundaries. We assume the use of the WGS84\footnote{\url{http://en.wikipedia.org/wiki/World_Geodetic_System}} geodetic system.
+
 \begin{table}[!htbp]
 \centering{
 \begin{tabular}{lllc}
@@ -37,14 +45,6 @@ LOD Greek & 634 KTriples & SPARQL endpoint \\
 \label{tab:srce-data}
 }
 \end{table}
-
-For publishing geospatial data on the Web, some tools are needed for converting native formats into RDF. Those tools are based on OGC libraries for extracting features, and vocabularies provided to build the RDF. Once the dataset obtained, it has to be stored in an efficient way, interconnected to other datasets, and then consumed using SPARQL queries. Moreover, all those steps might be integrated in frameworks that ease the overall process of publishing geodata. In this chapter, we discuss the aforementioned topics, each time surveying the state-of-art and highlighting our contributions.
-
-\section{Current Representation of Geodata on the Web}\label{sec:scenario}
-%\section{Scenario: 7$^{th}$ Arrondissement of Paris}                      \label{sec:scenario}
-%\todo{Update the scenario with the current version of DBpedia 2014, DBpedia-FR}
-In this section, we review the modeling of the 7$^{th}$ arrondissement of Paris, France in different geospatial datasets on the Web. The 7$^{th}$ arrondissement of Paris is one of the 20 arrondissements (administrative districts) of the capital city of France. It includes some of Paris's major tourist attractions such as the Eiffel Tower, some world famous museums (e.g: \textit{mus\'{e}e d'Orsay}) and contains a number of French national institutions, including numerous government ministries\footnote{\url{http://en.wikipedia.org/wiki/7th_arrondissement_of_Paris}}. We use it throughout this paper to highlight the diversity of representations one can use for this geographical entity. We assume that this district should be modeled as a POLYGON composed of a number of POINTs needed to ``interpolate'' its effective boundaries. We assume the use of the WGS84\footnote{\url{http://en.wikipedia.org/wiki/World_Geodetic_System}} geodetic system.
-
 
 \subsection{DBpedia Modeling}
 We provide below an excerpt of the DBpedia 3.8 description for the same resource:
