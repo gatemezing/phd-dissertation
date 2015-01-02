@@ -464,9 +464,9 @@ Below is a brief description of the main modules:
 \item \textbf{Authoring module} integrated the OntoWiki tool \cite{ontowiki14} that facilitates the visual presentation of a knowledge base as an information map, with different views on instance data. It enables intuitive authoring of semantic content, with an inline \textit{``What You See is What You Get''} (WYSIWYG) editing mode for editing RDF content.
 \item \textbf{Linking and Fusion:} To achieve this module, LIMES is the tool integrated in the workbench. LIMES is an abbreviation of the LInk discovery framework for MEtric Spaces, a tool for interlinking resources on the Web of Data\footnote{\url{http://aksw.org/Projects/LIMES.html}}. It implements time-efficient approaches for large-scale link discovery based on the characteristics of metric spaces \cite{ngau11}. It is easily configurable via a web interface or can also be downloaded as standalone tool for carrying out link discovery locally. LIMES can reduce the number of comparisons needed during the mapping process by several orders of magnitude \cite{song13}. The approaches implemented in LIMES include the original LIMES algorithm for edit distances, REEDED for weighted edit distances, HR3, HYPPO, and ORCHID. The algorithms implemented  include the supervised, active and unsupervised versions of EAGLE, COALA and EUCLID \cite{ngon13}.
 
-\item \textbf{Enrichment:} During the enrichment step, the tool \textsc{GeoLift} \cite{geolift14} to enrich geographic content using three techniques: linking, dereferencing and Natural Language Processing (NLP). The code is available at \url{https://github.com/AKSW/GeoLift/}.
+\item \textbf{Enrichment:} During the enrichment step, the tool \textsc{GeoLift} \cite{geolift14} is used to enrich geographic content using three techniques: linking, dereferencing and Natural Language Processing (NLP). The code is available at \url{https://github.com/AKSW/GeoLift/}
 
-\item \textbf{Exploration:} The workflow proposes two tools for this module: \textsc{Mappify} and \textsc{Facet}. The former is a tool for exploring (geographical) Linked Data datasets on the Web, while the latter allows  to explore the specific slice of data named ``facet''  of a Linked Data endpoint in a graphical way, by defining set of constraints on properties of the database. Once the facet is define, the information in the facet can be clicked-through in a tabular interface and visualized on a map. Facete is available at \url{http://144.76.166.111/facete/}.
+\item \textbf{Exploration:} The workflow proposes two tools for this module: \textsc{Mappify} and \textsc{Facete}. The former is a tool for exploring (geographical) Linked Data datasets on the Web, while the latter allows  to explore the specific slice of data named ``facet''  of a Linked Data endpoint in a graphical way, by defining set of constraints on properties of the database. Once the facet is define, the information in the facet can be clicked-through in a tabular interface and visualized on a map. \textsc{Facete} is available at \url{http://144.76.166.111/facete/}.
 \end{itemize}
 
 %\todo{add LOD2 work}
@@ -538,17 +538,17 @@ All the documentation for installing Datalift is available at \\\url{http://data
 
 \paragraph{Usage:}
 The data lifting workflow has several distinct steps. DataLift makes it possible to replay each step in producing different results for each step. To facilitate access to all the different treatments and their results, they are grouped as one project. The project gathers together the various sources used and the results of all treatments done.
-Each module has its own way to be used within the lifting process in DataLift. For more details, the readers are encouraged to read this resource at \url{http://datalift.org/wiki/index.php/How_to_use_the_Datalift_platform_to_publish_a_dataset_on_the_Web#The_lifting_project.
+Each module has its own way to be used within the lifting process in DataLift. For more details, the readers are encouraged to read this resource at \\\url{http://datalift.org/wiki/index.php/How_to_use_the_Datalift_platform_to_publish_a_dataset_on_the_Web#The_lifting_project.
 }
 
 
 
 \paragraph{Comparison between Datalift and Geoknow Stack }
 %\label{sec:geoknow-datalift}
-As described above, Geoknow Stack share similar goals and functionalities with Datalift. However, while the latter is cross-domain and generic, the former is more target for geospatial data. Moreover, Datalift implement connectors for many triple stores, while Geoknow Stack is powered by Virtuoso. Datalift is available in different platforms (Linux, Windows and Mac OS), while the current version of Geoknow can be installed only in Linux. Table \ref{tab:gknow-datalift} gives more dimensions of both frameworks.
+As described above, the Geoknow Stack shares similar goals and functionalities with Datalift. However, while the latter is cross-domain and generic, the former is more targeted for geospatial data. Moreover, Datalift implement connectors for many triple stores, while Geoknow Stack is powered by Virtuoso. Datalift is available in different platforms (Linux, Windows and Mac OS), while the current version of Geoknow can be installed only in Linux. Table \ref{tab:gknow-datalift} gives more features used to compare both frameworks, such as modules, platform for installation, access control and authoring modules.
 
 \begin{table}[ht!bp]
-    \caption{Comparison of Datalift with GeoKnow Stack} \label{tab:gknow-datalift}
+   
     \small
     \center
     \begin{tabularx}{\textwidth}{@{}llX@{}}
@@ -585,6 +585,7 @@ As described above, Geoknow Stack share similar goals and functionalities with D
 
     % \end{tabular}
     \end{tabularx}
+     \caption{Comparison of Datalift with the GeoKnow Stack} \label{tab:gknow-datalift}
     \end{table}
 
 
