@@ -594,29 +594,29 @@ As described above, the Geoknow Stack shares similar goals and functionalities w
 In this section, we provide our contribution on the process of publishing different datasets from the French National Mapping agency and OSM-France. We detailed the workflow starting from the conversion of source files, their modeling using the vocabularies implemented, the interconnection with relevant data sources. We conclude this section by showing the current status of the French LOD cloud according to our contributions so far.
 
 \subsection{Publishing French Administrative Units (GEOFLA)} \label{sec:geofla}
-As a dataset dedicated to administrative units, GEOFLA\circledR is very likely to be reused by other datasets, either by reusing directly its URIs for georeferencing needs, or by reusing its description of administrative units - labels, properties and geometries - for interlinking purposes.
+As a dataset dedicated to administrative units, GEOFLA is very likely to be reused by other datasets, either by reusing directly its URIs for georeferencing needs, or by reusing its description of administrative units-labels, properties and geometries- for interlinking purposes.
 
 \subsubsection{Data conversion}
 \label{sec:dconversion}
-GEOFLA  is delivered as a set of 4 shapefiles  that describe the boundaries and properties of administrative units of mainland France (for CRS reasons, overseas territories are delivered within different shapefiles) : communes, cantons, arrondissements and departements. For the sake of our application, we have generated another shapefile describing regions by aggregating the geometries of the instances of departments based on their region's foreign key value. This  dataset is updated every year.  Publishing this data in RDF with unique identifiers on the Web will ease the interlinking with some existing datasets describing French boundaries in the wild. We follow a two steps conversion: we use the SHP2RDF module of Datalift to obtain a raw RDF from shapefiles, and the RDF2RDF module of Datalift  using a set of SPARQL construct queries\footnote{ \url{https://github.com/gatemezing/ign-iswc2014/tree/master/rdf2rdf}} for getting a refined RDF datasets using suitable vocabularies.
+GEOFLA  is delivered as a set of 4 shapefiles  that describe the boundaries and properties of administrative units of mainland France (for CRS reasons, overseas territories are delivered within different shapefiles): communes, cantons, arrondissements and departements. For the sake of our application, we have generated another shapefile describing regions by aggregating the geometries of the instances of departments based on their region's foreign key value. GEOFLA is updated every year.  Publishing this data in RDF with unique identifiers on the Web will ease the interlinking with some existing datasets describing French boundaries in the wild. We follow a two-step conversion: we use the SHP2RDF module of Datalift to obtain a raw RDF from shapefiles, and the RDF2RDF module of Datalift  using a set of SPARQL construct queries\footnote{ \url{https://github.com/gatemezing/ign-iswc2014/tree/master/rdf2rdf}} for getting a refined RDF datasets using suitable vocabularies.
 
 \subsubsection{URI design policy} \label{sec:urigeofla}
 
-One of the requirements to publish data is to have unique ids and stable URIs\footnote{\url{http://www.w3.org/TR/ld-bp/}} . Since our legacy databases have unique IDs to refer to the objects, we had to make sure they were unique at Web level. Thus, the base scheme for vocabularies URIs is: \url{http://data.ign.fr/def/}. Besides, the base schema for identifying a real world resource uses \url{http://{BASE}/id/}. For example, IGN main buildings  are located in the commune with the URI \url{rgeofla:commune/94067}, corresponding to Saint-Mand\'{e}, and \url{rgeofla:departement/94} corresponds to the department ``Val de Marne'' to which the commune belongs.
-We had to make choices based on the set of best practices related to URI design\footnote{\url{http://www.w3.org/TR/ld-bp/\#HTTP-URIS}} which should guarantee stable and human readable identifiers.
+One of the requirements to publish data is to have unique identifiers and stable URIs\footnote{\url{http://www.w3.org/TR/ld-bp/}}. Since our legacy databases have unique IDs to refer to the objects, we had to make sure they were unique at Web level. Thus, the base scheme for vocabularies URIs is: \url{http://data.ign.fr/def/}. Besides, the base schema for identifying a real world resource uses \url{http://{BASE}/id/}. For example, IGN main buildings  are located in the commune with the URI \url{rgeofla:commune/94067}, corresponding to Saint-Mand\'{e}, and \url{rgeofla:departement/94} corresponding to the department ``Val de Marne'' to which the commune belongs.
+We had to make choices based on the set of best practices related to URI design\footnote{\url{http://www.w3.org/TR/ld-bp/\#HTTP-URIS}} which should guarantee both stable and human readable identifiers.
 
 
 \subsubsection{Interlinking with existing GeoData} \label{sec:mapping}
-We interlinked our datasets with NUTS, DBpedia FR\footnote{\url{http://fr.dbpedia.org/}} and GADM datasets. SILK \cite{jentzsch2010silk} is used to interlink the departments in our dataset with departments in DBpedia FR, using labels and INSEE Code. We obtained $93$ matches (all correct) while three are missing for the departments 07, 09 and 75\footnote{\url{https://github.com/gatemezing/ign-iswc2014/tree/master/interlinking/matched}}. The
+We interlinked our datasets with the NUTS, DBpedia FR\footnote{\url{http://fr.dbpedia.org/}} and GADM datasets. SILK \cite{jentzsch2010silk} is used to interlink the departments in our dataset with departments in DBpedia FR, using labels and INSEE Code. We obtained $93$ matches (all correct) while three resources are missing for the departments 07, 09 and 75\footnote{\url{https://github.com/gatemezing/ign-iswc2014/tree/master/interlinking/matched}}. The
 LIMES tool\footnote{\url{https://github.com/AKSW/LIMES.}} is then used to perform the rest of the interlinking tasks \cite{ngon13} with the trigrams function based on the labels with restriction to France.
 
 \begin{itemize}
  \item GEOFLA-RDF with DBpedia FR: \textbf{23,252} links obtained. This results show the missing of nearly 13,435 communes not correctly typed in DBpedia FR as \texttt{Spatial Feature} or \texttt{Place}, or not having a French Wikipedia entry.
  \item GEOFLA-RDF with GADM (8,314,443 features): \textbf{70} links obtained: 10 communes, 51 departments and 9 regions. The property \texttt{gadm:in\_country} is used to restrict the interlinking to France. E.g.: The city of Saint-Alban in Quebec is a commune in France.
- \item GEOFLA-RDF with NUTS (316,236 triples): Using a \textit{``naive''} script with \texttt{trigrams} function on \texttt{geofla:Commune/rdfs:label} and \texttt{spatial:Feature/ramon:name} reveal two odd results located in Germany and Switzerland. The latter being the \textit{JURA } and the former named \textit{``Celle''}.  In order to remove those odd effects, we add another restrictions based on \textsf{ramon:code} by filtering the ones located in France (136 features) . The final matchings give a total of \textbf{105} correct links: 14 communes, 75 departments and 16 regions.
+ \item GEOFLA-RDF with NUTS (316,236 triples): Using a ``naive'' script with \texttt{trigrams} function on \texttt{geofla:Commune/rdfs:label} and \texttt{spatial:Feature/ramon:name} reveal two odd results located in Germany and Switzerland. The former named \textit{``Celle''} and the latter being the \textit{JURA}. In order to remove those odd effects, we add another restrictions based on \textsf{ramon:code} by filtering the ones located in France (136 features) . The final matchings give a total of \textbf{105} correct links: 14 communes, 75 departments and 16 regions.
 \end{itemize}
 
-The results in Table \ref{tab:mappingEval} show good precision of the matching algorithm (score above 0.98) and a rather low recall value with DBPedia-FR (0.627). The few number of matched entities is likely due to the low coverage of French features  in the datasets.
+The results in Table \ref{tab:mappingEval} show good precision of the matching algorithm (score above 0.98) and a rather low recall value with DBPedia-FR (0.627). The few number of matched entities is likely due to the low coverage of French features in the target and external datasets used for the interlinking.
 
 
 \begin{table}[!htbp]
@@ -649,8 +649,7 @@ In this section, we present some first tests of converting BDTOPO\circledR ~into
 
 \paragraph{Data conversion, URIs and Interlinking:}
 Shapefiles are converted into RDF using the same two conversion process as for GEOFLA\circledR. The URIs for each resource follow the pattern: \url{rtopo:CLASS/ID} for the feature, while  \url{rtopo:geom/CLASS/ID} is used to reference the geometry of the resource.
-The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of  1,137,543 triples (103,413 features). We chose LinkedGeoData (LGD)
-\footnote{\url{http://linkedgeodata.org/sparql}} to perform the alignments using the main class \texttt{lgdo:Amenity}\footnote{\url{http://linkedgeodata.org/ontology/}} (5,543 001 triples), as they are closed to the features contained in the gazetteer. We perform the interlinking on the geometries using the \texttt{hausdorff} metric of LIMES tool. A total of \textbf{654} alignments was obtained above the threshold ($0.9$). This relatively low number of hits can be explained by the coverage of French data in LGD, and the subset of BDTOPO\circledR  ~used for the interlinking. Table~\ref{tab:lgdmapping} provides details of the alignments with subclasses of Amenity.
+The gazetteer dataset in RDF is part of the BD TOPO\circledR ~database consisting of  1,137,543 triples (103,413 features). We chose LinkedGeoData (LGD)\footnote{\url{http://linkedgeodata.org/sparql}} to perform the alignments using the main class \texttt{lgdo:Amenity}\footnote{\url{http://linkedgeodata.org/ontology/}} (5,543,001 triples), as they are closed to the features contained in the gazetteer. We perform the interlinking on the geometries using the \texttt{hausdorff} metric of LIMES tool. A total of \textbf{654} alignments was obtained above the threshold ($0.9$). This relatively low number of hits can be explained by the coverage of French data in LGD, and the subset of BDTOPO\circledR  ~used for the interlinking. Table~\ref{tab:lgdmapping} provides details of the alignments with subclasses of Amenity.
 
 \begin{table}[!htbp]
 \centering{
@@ -676,16 +675,16 @@ The gazetteer dataset in RDF is part of BD TOPO\circledR ~database consisting of
 
 \subsection{Publishing Addresses of OSM-France in RDF}
 \label{sec:bano2rdf}
-OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project contains already 15 millions of indirect georeferencing locations. The geometries are POINTs and use WGS84 CRS. One of the requirement is to provide a RDF-ize version of the data, enriching the dataset with external/existing relevant ones. The goal of \textsc{Bano2RDF} with three basic requirements:
+OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project already contains  15 million indirect georeferencing locations. The geometries are POINTs and use WGS84 CRS. One of the requirements is to provide an RDF-ize version of the data, enriching the dataset with existing relevant ones. The goal of \textsc{Bano2RDF} with six basic requirements:
 \begin{description}
-\item [\ding{117}~Requirement 1 (Req1)-Model:] Model the existing data according to an existing vocabulary, generic enough to cover the scope of the existing dataset.
-\item[\ding{117}~Requirement 2 (Req2)-Provenance:] Add relevance metadata on the published dataset  such as provenance, spatial coverage, licensing, authorship, etc.
-\item[\ding{117}~Requirement 3 (Req3)-Stable URIs]: Define a policy to provide and ensure stable URIs for identifying uniquely each address entity on the Web.
-\item[\ding{117}~Requirement 4 (Req4)-Interconnection:] Find relevant dataset already published on the Web to which interconnect for better discoverability.
+\item [\ding{117}~Requirement 1-Model:] Model the existing data according to an existing vocabulary, generic enough to cover the scope of the existing dataset.
+\item[\ding{117}~Requirement 2-Provenance:] Add relevance metadata on the published dataset  such as provenance, spatial coverage, licensing, authorship, etc.
+\item[\ding{117}~Requirement 3-Stable URIs:] Define a policy to provide and ensure stable URIs for identifying uniquely each address entity on the Web.
+\item[\ding{117}~Requirement 4-Interconnection:] Find relevant dataset already published on the Web to which interconnect for better discoverability.
 
-\item[\ding{117}~Requirement 5 (Req5)-Access to data:] Provide primarily a frequent dump of the dataset in RDF.
+\item[\ding{117}~Requirement 5-Access to data:] Provide primarily a frequent dump of the dataset in RDF.
 
-\item[\ding{117}~Requirement 6 (Req6)-GeoSPARQL interoperability:] Provide different representations of geometries of locations that are interoperable with GeoSPARQL standard.
+\item[\ding{117}~Requirement 6-GeoSPARQL interoperability:] Provide different representations of geometries of locations that are interoperable with GeoSPARQL standard.
 
 \end{description}
 
@@ -693,9 +692,10 @@ OpenStreetMap France is working on providing the location addresses of France in
 %http://id.osmfr.org/bano/01001A008W-1 {codeinsee + code +numrue}
 
 Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} is used in an \textit{ad-hoc} script\footnote{\url{https://github.com/osm-fr/bano/blob/master/out/csv2ttl.py}} to convert CSV data into RDF. URIs used to identify objects are of the form: \url{http://id.osmfr.org/bano/INSEE-CODE+FANTOIR-CODE+Street-Number}. For example, the location corresponding to EURECOM in SophiaTech (\textit{450, route des chappes, 06410 Biot, FRANCE}) is identified by the URI \\
-\texttt{<http://id.osmfr.org/bano/060180238L-450>}. Moreover, the property \\ \texttt{locn:location} links to French Statistic dataset\footnote{\url{http://id.insee.fr}} for communes in France. Metadata are inserted at the beginning of the dataset in RDF corresponding to a department, using vocabularies to model license, spatial coverage of the data (i.e., \texttt{dcat}, \texttt{dcterms}, \texttt{foaf}). The extract below represents the metadata for the department of ``ALPES-MARITIMES'' which the commune of Biot belongs:
+\texttt{<http://id.osmfr.org/bano/060180238L-450>}. Moreover, the property \\ \texttt{locn:location} links to the French Statistic dataset\footnote{\url{http://id.insee.fr}} for communes in France. Metadata are inserted at the beginning of the dataset in RDF corresponding to a department, using vocabularies to model license, spatial coverage of the data (i.e., \texttt{dcat}, \texttt{dcterms}, \texttt{foaf}). The extract below represents the metadata for the department of ``ALPES-MARITIMES'' to which the commune of Biot belongs:
 
-\begin{verbatim}
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {the metadata used in the BANO2RDF dataset.}, language=json, label=scriptLIMES, captionpos=b}
+\begin{lstlisting}
 <http://www.openstreetmap.fr/bano/data/> a dcat:Catalog ;
 		dcterms:title "Donnees des adresses du projet BANO en RDF"@fr ;
 		dcterms:description "Le projet BANO en RDF de Base d'Adresses Nationale
@@ -704,17 +704,25 @@ Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} i
 		dcterms:language "fr" ;
 		dcterms:license <http://www.opendatacommons.org/licenses/odbl/> ;
 		dcterms:publisher <http://www.openstreetmap.fr/> ;
-		dcterms:issued "2014-05-14"^^xsd:date ; # data issued
+		dcterms:issued "2014-05-14"^^xsd:date ; # dataset issued
 		dcterms:modified "2014-08-21"^^xsd:date ; #last modification
 		dcterms:spatial <http://id.insee.fr/geo/departement/06>,
 		 <http://id.insee.fr/geo/pays/france> .
 		
-\end{verbatim}
+\end{lstlisting}
 
-Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mostly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples.
+Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mainly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples.
 
 \paragraph{Interconnection with LinkedGeoData:}
-Regarding the interconnection with more existing geodata, first results of mappings with LinkedGeoData amenities using LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of $0.97$, i.e, we consider \textit{``very closed''} resources with 30 meters distances. Listing \ref{scriptLIMES} shows the configuration used for finding corresponding buildings of LinkedGeoData in Bano2RDF dataset.
+The first results of mappings with LinkedGeoData amenities using the LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of $0.97$, i.e, we consider \textit{``very closed''} resources with a distance of 30 meter, based on the following equation:  
+
+\begin{align*}
+\theta = \frac{1}{1+d} \\
+ d	= \frac{1-\theta}{\theta}
+\end{align*}
+Where $\theta$ =0.97 (threshold) and d= distance in Kilometer (km).
+
+Listing \ref{scriptLIMES} shows the configuration used for finding corresponding buildings of LinkedGeoData in the Bano2RDF dataset.
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {This LIMES script is used to interconnect the Bano2RDF dataset located in the region of Marseille with buildings in LinkedGeoData.}, language=XML, label=scriptLIMES, captionpos=b}
 \begin{lstlisting}
@@ -819,7 +827,7 @@ Table \ref{tab:bano-gld} shows the first results of the mappings. For each type 
 \label{sec:frenchCloud}
 %\todo{Summarize here our contributions to the French LOD Cloud. Give some statistics and explain the figure}\\
 
-We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars\footnote{\url{http://5stardata.info/}} on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{VOID} \cite{alexander09} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}.
+We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars\footnote{\url{http://5stardata.info/}} on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{VOID} \cite{alexander09} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, as well as links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}. It is expected to add the FrLOD datasets in the Linking Open Data Cloud at \url{http://datahub.io/group/lodcloud}
 
 \begin{figure}[h!tb]
   \centering{
@@ -863,7 +871,7 @@ We illustrate in this section different queries making use of geospatial data an
 \subsection{Querying LinkedGeodata}
 \label{sec:linkedgeodata}
 
-The query below finds public buildings 10 km around Eurecom with their corresponding distance from LinkedGeodata endpoint. In this query, we use the functions of \texttt{st\_distance}, \texttt{st\_intersects} and \texttt{st\_point}. Time used to answer this query is \textbf{341 ms}, monitored by using the time command on \texttt{CURL -g <query>}. The result is listed in Table \ref{tab:lgd-query}
+The query below finds public buildings 10 km around Eurecom with their corresponding distance from the LinkedGeodata endpoint. In this query, we use the functions of \texttt{st\_distance}, \texttt{st\_intersects} and \texttt{st\_point}. Time used to answer this query is \textbf{341 ms}, monitored by using the time command on \texttt{CURL -g <query>}. The result is listed in Table \ref{tab:lgd-query}.
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {Query on LinkedGeodata endpoint to find all public buildings 10 km around Eurecom building in SophiaTech.}, label=snapshot, captionpos=b}
 \begin{lstlisting}
@@ -900,12 +908,12 @@ WHERE
 }
 \end{table}
 
-
+The result time is faster when using built-in geospatial  functions for Virtuoso. Additionally, it might take much more time (x100) and a resulting long query if just using standard SPARQL functions without geographic functions.
 
 \subsection{Querying FactForge (OWLIM)}
 \label{sec:factforge}
 
-The query below find in FactForge\footnote{\url{http://factforge.net/sparql}} the french departments within the Bounding Box of Eurecom and Eiffel Tower. We use the function \texttt{omgeo:within}. The results\footnote{\url{http://goo.gl/dLc45p}} consist of 36 departments and the query takes \textbf{1.369 s} to be completed.
+The query below find in FactForge\footnote{\url{http://factforge.net/sparql}} the French departments within the Bounding Box of Eurecom and the Eiffel Tower. We use the function \texttt{omgeo:within}. The results\footnote{\url{http://goo.gl/dLc45p}} consist of 36 departments and the query takes \textbf{1.369 s} to be completed.
 \begin{verbatim}
 PREFIX omgeo: <http://www.ontotext.com/owlim/geo#>
 PREFIX geo-ont: <http://www.geonames.org/ontology#>
@@ -925,7 +933,7 @@ WHERE {
 \subsection{Querying Structured Geometries}
 \label{sec:ignsparql}
 %Here adapt the use case of French Geofla, and compare with the previous.
- We query data.ign.fr endpoint that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results consisting of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. Not all the SPARQL1.1 property paths \footnote{\url{http://www.w3.org/TR/sparql11-query/\#propertypaths}} are fully implemented in Virtuoso endpoints.
+ We query the \url{http://data.ign.fr} endpoint that contains structured geometries of French departments, powered by Datalift, using the default triple store Sesame. The query finds all the departments containing in the Bounding Box formed by EURECOM and Eiffel Tower. The results consisting of 94 departments is obtained after \textbf{23.496s} when launched against \url{data.ign.fr/id/sparql}. Not all the SPARQL1.1 property paths \footnote{\url{http://www.w3.org/TR/sparql11-query/\#propertypaths}} are fully implemented in Virtuoso endpoints.
 
 
  \begin{verbatim}
@@ -945,11 +953,11 @@ FILTER ((?x > 2.2942 && ?x < 7.0463) &&(?y > 43.6266 && ?y < 48.8628)) .
  \end{verbatim}
 
 
-The result in section \ref{sec:ignsparql} suggests that it's possible to reduce the time of querying geographic data by just using standard SPARQL queries without geosptial built-in functions.
+The result in section \ref{sec:ignsparql} suggests that it may be possible to reduce the time of querying geographic data by just using standard SPARQL queries without  built-in geospatial functions.
 
 \section{Summary}
 \label{sec:ch2-summary}
-In this chapter, we have surveyed tools for extracting and converting geospatial data in RDF. Then, we described GeomRDF, a tool developed within the Datalift project which goes beyond the state-of-art by providing structured geometries and conform to GeoSPARQL. Moreover, we have described the limitation of existing data models by discussing some recommendations to publishers of geodata on storage aspects. Similarly, an extensive description of Datalift tool used to publish data on the Web has been provided, with special focus of our contribution to build the French LOD cloud with datasets in 4-5 stars according to Linked Data principles. Finally, we have shown some real world use-cases of SPARQL queries making use of either structured geometries or built-in geospatial functions. According to the requirements of the users and the underlying datasets, the user can choose between the simplicity of SPARQL query, with limitations to the endpoint (for e.g., when using built-in geospatial functions of a given endpoint), or the expressivity of the \texttt{geom} vocabulary regardless the endpoint, with a more longest SPARQL query.
+In this chapter, we have surveyed tools for extracting and converting geospatial data in RDF. Then, we described GeomRDF, a tool developed within the Datalift project which goes beyond the state of the art by providing structured geometries and conforming to GeoSPARQL. Moreover, we have described the limitation of the existing data models by discussing some recommendations to publishers of geodata on storage aspects. Similarly, an extensive description of the Datalift tool used to publish data on the Web has been provided, with a special focus of our contribution to build the French LOD cloud with datasets in 4-5 stars according to Linked Data principles. Finally, we have shown some real world use-cases of SPARQL queries making use of either structured geometries or built-in geospatial functions. Depending on the requirements of the users and the underlying datasets, the user can choose between the simplicity of SPARQL query, with limitations to the endpoint (for e.g., when using built-in geospatial functions of a given endpoint), or the expressivity of the \texttt{geom} vocabulary regardless the endpoint, with a more longest SPARQL query.
 
 
 The next chapter is about consuming datasets published on the Web, where we explore tools for visualizing data published as LOD, and later propose our approach which is a category-based visualization wizard.
