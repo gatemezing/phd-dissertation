@@ -25,10 +25,11 @@ In this section, we describe also visualization tools that natively do not take 
 
 \end{itemize}
 
+
 \subsection{Tools for visualizing Structured Data}
 \label{sec:strucdataviz}
 
-In this section, we review tools that are used to visualize structured data and RDF data. The former categories can be extended to support RDF, while the latter tools are trying to cover visualization charts/graphs as much as possible.
+In this section, we review tools that are used to visualize structured data and RDF data. The former categories can be extended to support RDF, while the latter tools are trying to cover visualization charts/graphs as much as possible. The authors in \cite{odm14} propose an overview of all JavaScript visualization libraries and frameworks that are open source, supporting at least bar charts, line charts and pie charts. However, the focus is rather for tools to create dashboard in open data in general, and two of the tools their report are also included in this section, such as D3.js and Google Charts.
 
 \subsubsection{Choosel}
 \label{sec:choosel}
@@ -65,7 +66,7 @@ Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analy
 
 
 \subsubsection{Linked Data API}
-The Linked Data API (LDA) [cite], provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) Generation of documents (information resources) for the publishing of Linked Data; (ii) Provision of sophisticated querying and data extraction features, without the need for end-users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
+The Linked Data API (LDA) \cite{ldapi}, provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) Generation of documents (information resources) for the publishing of Linked Data; (ii) Provision of sophisticated querying and data extraction features, without the need for end-users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
 
 \textsc{Elda}\footnote{\url{http://www.epimorphics.com/web/tools/elda.html}} is a java implementation of the LDA by Epimorphics. Elda comes with some pre-built samples and documentation, which allows us to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI or through query parameters.
 

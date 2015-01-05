@@ -13,7 +13,7 @@ Linked Data offers some great advantages for publishing government data. The app
 
 Despite the presence of more and more datasets published as Linked Data, there is still a need to help end users to discover what (unknown) datasets describe by hiding the complexity of SPARQL queries from such users. The RDF model, its various serializations and the SPARQL query language are foreign to the majority of developers who understandably want to be able to use the tool chains that they are familiar with to access government data. Sometimes, publishing data purely as RDF, and providing access purely through SPARQL queries raises an unacceptable barrier onto the use of that data. Moreover, the task of identifying the key categories of datasets can help in selecting and matching the most suitable visualization types.
 
-In this chapter, we present our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mapping}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). Besides, we reverse engineer the GKP (Section \ref{sec:propEntities}) to look for the most important properties of an Entity. Then, we present two domain applications in events (Section \ref{sec:confomaton}) and statistics (Section \ref{sec:perfectSchool} ). Finally, we discuss how to improve the discovery of applications developed in Open data events (Section \ref{sec:contests}) by proposing a vocabulary and a plugin to easily annotate their web pages  and later generate RDF data.
+In this chapter, we present our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mappingviz}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). Besides, we reverse engineer the GKP (Section \ref{sec:propEntities}) to look for the most important properties of an Entity. Then, we present two domain applications in events (Section \ref{sec:confomaton}) and statistics (Section \ref{sec:perfectSchool} ). Finally, we discuss how to improve the discovery of applications developed in Open data events (Section \ref{sec:contests}) by proposing a vocabulary and a plugin to easily annotate their web pages  and later generate RDF data.
 
 
 \section{Wizard for Visualizations: Theorical foundations}
@@ -41,7 +41,7 @@ When developing an application, there are some \textit{``important''} classes/ca
 
 
 \subsection{Mapping Datatype, Views and Vocabularies}
-\label{sec:mapping}
+\label{sec:mappingviz}
 %\todo{add ref. to "Interactive Data Visualization" by Ward et al.}
 
 The On-line Library of Information Visualization Environments (OLIVE)\footnote{\url{http://lte-projects.umd.edu/Olive/}} is a web site describing eight categories of information visualization environments differentiated by data type and collected by students, following a visualization course given at Maryland College Park, mostly inspired from the work of Ben Shneiderman \cite{Shneiderman99}. Based on the classification provided by OLIVE, we propose a set of mappings between those categories (excluding the workspace dimension), views that can be applied to this category and a suitable list of vocabularies from the Linked Open Vocabularies catalogue \cite{lov11}\footnote{\url{lov.okfn.org/dataset/lov/}} that correspond to those categories. Those vocabularies are easy to be found as there is a manual classification of vocabularies by the curators of the catalogue based on the content and scope of the terms and properties. According to the seven categories defined in Section ~\ref{sec:vizTypes}, we have identified some of their corresponding one to one mapping with the set of vocabularies:
@@ -756,8 +756,6 @@ Figure ~\ref{fig:searchingSchool} shows the three different views on a running e
 
 \section{Improving the discovery of applications contests in Open Data Events}
 \label{sec:contests}
-
-%\todo{add Alexis work + add appendix of content scrapping and JS apps installation }
 
 \subsection{Background}
 \label{sec:backcontest}

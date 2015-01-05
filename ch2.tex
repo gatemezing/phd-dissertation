@@ -694,7 +694,7 @@ OpenStreetMap France is working on providing the location addresses of France in
 Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} is used in an \textit{ad-hoc} script\footnote{\url{https://github.com/osm-fr/bano/blob/master/out/csv2ttl.py}} to convert CSV data into RDF. URIs used to identify objects are of the form: \url{http://id.osmfr.org/bano/INSEE-CODE+FANTOIR-CODE+Street-Number}. For example, the location corresponding to EURECOM in SophiaTech (\textit{450, route des chappes, 06410 Biot, FRANCE}) is identified by the URI \\
 \texttt{<http://id.osmfr.org/bano/060180238L-450>}. Moreover, the property \\ \texttt{locn:location} links to the French Statistic dataset\footnote{\url{http://id.insee.fr}} for communes in France. Metadata are inserted at the beginning of the dataset in RDF corresponding to a department, using vocabularies to model license, spatial coverage of the data (i.e., \texttt{dcat}, \texttt{dcterms}, \texttt{foaf}). The extract below represents the metadata for the department of ``ALPES-MARITIMES'' to which the commune of Biot belongs:
 
-\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {the metadata used in the BANO2RDF dataset.}, language=json, label=scriptLIMES, captionpos=b}
+\lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {The metadata information used in the BANO2RDF dataset.}, language=json, label=metadatabano2rdf, captionpos=b}
 \begin{lstlisting}
 <http://www.openstreetmap.fr/bano/data/> a dcat:Catalog ;
 		dcterms:title "Donnees des adresses du projet BANO en RDF"@fr ;
