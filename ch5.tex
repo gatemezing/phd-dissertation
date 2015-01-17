@@ -1,4 +1,4 @@
-\chapter{New Approaches for Generating Visualizations and Applications}
+\chapter{Creating and Generating Visual Applications}
 \label{ch:ch5}
 
 \begin{flushright}
@@ -8,12 +8,12 @@
 
 \section*{Introduction}
 \label{sec:introch5}
-The object of visualization is to develop insights from collected data. Moreover, according to Information Theory, vision is the sense that has the largest bandwidth (100 Mbits/s), which makes it the best suited channel to convey information to the brain \cite{Ware:2014}. Based on the Visual Information Seeking Mantra: \textit{``overview first, zoom and filter, then details on demand''} \cite{Shneiderman99}, we advocate for more visual interactive representations of RDF graphs using SPARQL Endpoints.   At the same time,  we use the term ``Linked Data Visualization'', to refer to a \textit{combination of charts, graphics, and other visual elements built on top of 4-5 stars datasets accessible via a SPARQL endpoint}.
-Linked Data offers some great advantages for publishing government data. The approach makes it easy to publish information in a way that allows it to be combined with other sets of data. The benefits also arise from the semantics associated to things, common identifiers for things, from the inherent extensibility of the RDF data model, and from the publication of data in a standard format. Linked Data is a great way of publishing information for diverse and distributed organizations, such as government \cite{tennison10}.
+The object of visualization is to develop insights from collected data. Moreover, according to Information Theory, human vision is the sense that has the largest bandwidth (100 Mbits/s), which makes it the best suited channel to convey information to the brain \cite{Ware:2014}. Based on the Visual Information Seeking Mantra of Shneiderman: \textit{``overview first, zoom and filter, then details on demand''} \cite{Shneiderman99}, we advocate for more visual interactive representations of RDF graphs using SPARQL endpoints.   At the same time,  we use the term ``Linked Data Visualization'', to refer to a \textit{combination of charts, graphics, and other visual elements built on top of 4-5 star datasets accessible via a SPARQL endpoint}.
+Linked Data offers some great advantages for publishing government data. The approach makes it easy to publish information in a way that allows it to be combined with other sets of data. The benefits also arise from the semantics associated to things, common identifiers with resources, from the inherent extensibility of the RDF data model, and from the publication of data in a standard format. Linked Data is a great way of publishing information for diverse and distributed organizations, such as government \cite{tennison10}.
 
 Despite the presence of more and more datasets published as Linked Data, there is still a need to help end users to discover what (unknown) datasets describe by hiding the complexity of SPARQL queries from such users. The RDF model, its various serializations and the SPARQL query language are foreign to the majority of developers who understandably want to be able to use the tool chains that they are familiar with to access government data. Sometimes, publishing data purely as RDF, and providing access purely through SPARQL queries raises an unacceptable barrier onto the use of that data. Moreover, the task of identifying the key categories of datasets can help in selecting and matching the most suitable visualization types.
 
-In this chapter, we present our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and a set of mapping views associated with vocabularies (section~\ref{sec:mappingviz}). In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been performed on numerous SPARQL endpoints (Section~\ref{sec:evaluation}). Besides, we reverse engineer the GKP (Section \ref{sec:propEntities}) to look for the most important properties of an Entity. Then, we present two domain applications in events (Section \ref{sec:confomaton}) and statistics (Section \ref{sec:perfectSchool} ). Finally, we discuss how to improve the discovery of applications developed in Open data events (Section \ref{sec:contests}) by proposing a vocabulary and a plugin to easily annotate their web pages  and later generate RDF data.
+In this chapter, we present our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and in section~\ref{sec:mappingviz} a set of mapping views associated with vocabularies. In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been generated from numerous SPARQL endpoints (Section~\ref{sec:evaluation}). We do reverse engineer the GKP (Section \ref{sec:propEntities}) to look for the most important properties of an Entity. Then, we present two domain applications around events (Section \ref{sec:confomaton}) and statistics (Section \ref{sec:perfectSchool}). Finally, we discuss how to improve the discovery of applications developed in open Data events (Section \ref{sec:contests}) by proposing a vocabulary and a plugin to easily annotate their Web pages and generate RDF data.
 
 
 \section{Wizard for Visualizations: Theorical foundations}
@@ -21,7 +21,7 @@ In this chapter, we present our contribution on consuming datasets by generating
 
 %\ghis{find a good justifying example} \\
 \subsection*{Background}
-With the growing adoption of the Linked Data principles, there is a real need to support data consumers in quickly getting visualizations that enable to explore a dataset. In order to involve more general Web users into the Semantic Web and Linked Data world, tools that reuse existing visualization libraries are needed for showing the key information about RDF datasets. Many datasets are published on top of SPARQL endpoints and yet, are not ``visually'' accessible. Thus, understanding the underlying graphs and consuming them require lay users to have some knowledge in writing queries.
+With the growing adoption of the Linked Data principles, there is a real need to support data consumers in quickly exploring a dataset through visualizations. In order to involve more general Web users into the Semantic Web and Linked Data world, tools that reuse existing visualization libraries are needed for showing the key information about RDF datasets. Many datasets are published on top of SPARQL endpoints and yet, are not ``visually'' accessible. Thus, understanding the underlying graphs and consuming them require lay users to have some knowledge in writing queries.
 
 In this section, we propose a first step towards making available a semi-automatic way for the production of possible visualization of linked data sets of high-level categories grouping objects that are worth viewing and we associate them with some very well known vocabularies. Then, we describe the implementation of a Linked Data Visualization Wizard and its main components. This wizard can be used to easily visualize slices of datasets based on generic types detected.
 
@@ -30,13 +30,13 @@ In this section, we propose a first step towards making available a semi-automat
 \label{sec:vizTypes}
 When developing an application, there are some \textit{``important''} classes/categories, objects or datatypes that can be detected first to help to guide in the progress of creating a set of visualizations tied with those categories. We distinguish seven categories while acknowledging that this is not necessary an exhaustive list:
 \begin{itemize}
- \item{\S~[\textbf{Geographic information}]}: This category is for data generated and modeled using \texttt{geo:SpatialThing}, \texttt{dbpedia-owl:Place}, \texttt{schema:Place} or \texttt{gml:\_Feature} classes.
- \item{\S~[\textbf{Temporal information}]}: This category also includes dataset containing date, time (e.g: \texttt{xsd:dateTime}) and period or interval of time, using the OWL Time ontology.
- \item{\S~[\textbf{Event information}]}: This category is for any action of activity occurring at some place at some time.
- \item{\S~[\textbf{Agent/Person information}]}: This category is heavily influenced by the use of \texttt{foaf:Person} or \texttt{foaf:Agent}.
- \item{\S~[\textbf{Organization information}]}: This category is related to organizations or companies data, with the use of the \texttt{org} vocabulary\footnote{\url{http://www.w3.org/TR/vocab-org/}} or the \texttt{foaf:Organization} class.
- \item{\S~[\textbf{Statistics information}]}: This category refers to statistical data generally modeled using the \texttt{data cube} vocabulary\footnote{\url{http://www.w3.org/TR/vocab-data-cube/}} or the SDMX model\footnote{\url{http://sdmx.org/}}.
- \item{\S~[\textbf{Knowledge Classification}]}: This category refers to dataset describing schemas, classifications or taxonomies using the \texttt{SKOS} vocabulary.
+ \item{[\textbf{Geographic information}]}: This category is for data generated and modeled using \texttt{geo:SpatialThing}, \texttt{dbpedia-owl:Place}, \texttt{schema:Place} or \texttt{gml:\_Feature} classes.
+ \item{[\textbf{Temporal information}]}: This category also includes datasets containing date, time (e.g: \texttt{xsd:dateTime}) and period or interval of time, using the OWL Time ontology.
+ \item{[\textbf{Event information}]}: This category is for any action of activity occurring at some place at some time.
+ \item{[\textbf{Agent/Person information}]}: This category is heavily influenced by the use of \texttt{foaf:Person} or \texttt{foaf:Agent}.
+ \item{[\textbf{Organization information}]}: This category is related to organizations or companies data, with the use of the \texttt{org} vocabulary\footnote{\url{http://www.w3.org/TR/vocab-org/}} or the \texttt{foaf:Organization} class.
+ \item{[\textbf{Statistical information}]}: This category refers to statistical data generally modeled using the \texttt{data cube} vocabulary\footnote{\url{http://www.w3.org/TR/vocab-data-cube/}} or the SDMX model\footnote{\url{http://sdmx.org/}}.
+ \item{[\textbf{Knowledge classification}]}: This category refers to dataset describing schemas, classifications or taxonomies using the \texttt{SKOS} vocabulary.
 \end{itemize}
 
 
@@ -48,12 +48,12 @@ The On-line Library of Information Visualization Environments (OLIVE)\footnote{\
  \begin{itemize}
  \item \textbf{Geography} space, consisting of 21 vocabularies for features: \texttt{geo}, \texttt{gn}, \texttt{gf}, \texttt{om}, \texttt{geop}, \texttt{md}, \texttt{lgdo}, \texttt{loc}, \texttt{igeo}, \texttt{osadm}, \texttt{geod}, \texttt{ostop}, \texttt{place}, \texttt{geos}, \texttt{locn}, \texttt{coun}, \texttt{postcode}, \texttt{osr}, \texttt{geof}, \texttt{g50k} and \texttt{ad}.
  \item \textbf{Geometry} space, for vocabularies dealing with the geometries, mostly combined with the features, such as:
- \item \textbf{Time} space, consisting of 14 vocabularies, such as \texttt{cal}, \texttt{date}, \texttt{gts}, \texttt{interval}, \texttt{ncal}, \texttt{oh}, \texttt{te}, \texttt{thors}, \texttt{ti}, \texttt{time}, \texttt{tl}, \texttt{tm}, \texttt{tvc} and \texttt{tzont}.
+ \item \textbf{Time} space, consisting of 14 vocabularies, \texttt{cal}, \texttt{date}, \texttt{gts}, \texttt{interval}, \texttt{ncal}, \texttt{oh}, \texttt{te}, \texttt{thors}, \texttt{ti}, \texttt{time}, \texttt{tl}, \texttt{tm}, \texttt{tvc} and \texttt{tzont}.
  \item \textbf{Event} space, containing vocabularies such  as \texttt{event}, \texttt{lode}, \texttt{music}, \texttt{sem}, \texttt{situ}, \texttt{sport}, \texttt{stories}, \texttt{theatre}, \texttt{tis} and \texttt{tisc}.
  \item \textbf{Government} space, with 9 vocabularies (\texttt{cgov}, \texttt{ctorg}, \texttt{elec}, \texttt{few}, \texttt{gc}, \texttt{gd}, \texttt{oan}, \texttt{odd}, \texttt{parl}) and the \texttt{org} vocabulary belonging to the W3C recommendation vocabularies at \url{ http://lov.okfn.org/dataset/lov/lov#W3C}.
  \end{itemize}
- Metadata vocabularies, such as \texttt{rdfs}, \texttt{dcterms} or \texttt{dce} can be used in association with any of the visual element to give basic description of the resource of a giving dimension. For example, a popup information can be fired on a map view to display the relevant information of a geodata resource such as the label, the abstract or description.
-Another application can be to detect which visualization is best suited for geodata. Geodata belongs to a  two-Dimension visual representation. Geodata is usually displayed using geographical-based visualizations (map, geo charts, etc.) and it is often modeled by vocabularies in the space named \texttt{Geometry} and \texttt{Geography}\footnote{All the prefixes used for the vocabularies are the same used in LOV catalogue.}   vocabularies in RDF datasets. Hence those vocabularies can be combined to detect the presence or not of geographic information in a dataset, and thus yield to recommend a map view. Table~\ref{tab:taxonomy} gives an overview of those mappings. For the tabular representation, it is the ``default'' visual representation of RDF data and can be used by any vocabulary without restriction.
+ Vocabularies used to provide metadata information, such as \texttt{rdfs}, \texttt{dcterms} or \texttt{dce} can be used in association with any of the visual elements to give a basic description of the resource of a given dimension. For example, popup information can be shown on a map view to display the relevant information of a geodata resource such as the label, the abstract or the description.
+Another application is to detect which visualization is best suited for geodata. Geodata belongs to a  two-dimension visual representation. Geodata is usually displayed using geographical-based visualizations (map, geo charts, etc.) and it is often modeled by vocabularies in the space named \texttt{Geometry} and \texttt{Geography}\footnote{All the prefixes used for the vocabularies are the same used in LOV catalog.}   vocabularies in RDF datasets. Hence those vocabularies can be combined to detect whether a dataset contains geographic information, and thus determine whether to recommend a map view. Table~\ref{tab:taxonomy} gives an overview of those mappings. The tabular representation is the ``default'' visual representation of RDF data and can be used by any vocabulary without restriction.
 
 
 \begin{table}[!htbp]
@@ -62,17 +62,17 @@ Another application can be to detect which visualization is best suited for geod
  \specialrule{1pt}{1pt}{1pt}
  \textbf{Dimension}	 	& \textbf{Vocabulary Space}  & \textbf{Visual element}		 \\ \specialrule{1pt}{1pt}{1pt}
  Temporal 	     &  \textsf{Time space} &     TimeLine		      	 		 \\
- one-Dimension  & \textsf{any}	   & Tabular, text							 \\
- two-Dimension   & \textsf{Geography space}     & Map view 						\\
+ One dimension  & \textsf{any}	   & Tabular, text							 \\
+ Two dimension   & \textsf{Geography space}     & Map view 						\\
  			& \textsf{Geometry space}    & Maps view                            \\
- three-Dimension  	& \textsf{Event space}  	& Map + TimeLine	 			\\
- Multi-Dimension  & \textsf{qb}, \textsf{sdmx-model}, \textsf{scovo}      & Charts, graphs   			 		\\
+ Three dimension  	& \textsf{Event space}  	& Map + TimeLine	 			\\
+ Multi dimension  & \textsf{qb}, \textsf{sdmx-model}, \textsf{scovo}      & Charts, graphs   			 		\\
  Tree	      &   \textsf{skos, Government space}            & Treemap, Org view   				\\
  Network	  & \textsf{any vocab.}   & Graph, network map  			 			
  \\
  \specialrule{1pt}{1pt}{1pt}
 \end{tabular}
-\caption{A taxonomy of information visualization consuming Linked Datasets with associated views and suitable vocabulary space.}
+\caption{A taxonomy of information visualizations for consuming Linked Datasets with suitable vocabulary space and visual elements.}
 \label{tab:taxonomy}
 }
 \end{table}
@@ -84,7 +84,7 @@ Another application can be to detect which visualization is best suited for geod
 %\todo{present in detail the queries for detecting ALL the categories} \\
 \subsection{Workflow}
 \label{sec:wizard-wflow}
-We propose a workflow composed of four principal steps for a Linked Data Visualization Wizard, as depicted in Figure~\ref{fig:workflow}. Our requirement is to provide a tool that hide the complexity of SPARQL to lay users and at the same time, can be embedded in existing Linked Data infrastructure and workflow. First, we proposed to detect the presence of data belonging to one of the seven categories (Table~\ref{tab:taxonomy}) using generic SPARQL queries. More precisely, we perform \texttt{ASK} queries to test whether or not a particular query pattern has a solution. Second, we look at entities in a dataset that have \texttt{owl:sameAs} links with external objects and we retrieve the properties associated to those objects. We argue that the objects that are interlinked with other datasets are of primary importance in a visualization. We show the results of this mining process to the user (the categories that have been detected, the properties going with the categories and the external domain). Based on this information, the user can make a personalized ``mashup'' by aggregating the suitable visualization widgets. Some default visualizations are available according to the top categories detected. The last step is to publish the visualization and a metadata report in RDF/XML TURTLE or N3.
+We propose a workflow composed of four principal steps for a Linked Data Visualization Wizard, as depicted in Figure~\ref{fig:workflow}. Our goal is to provide a tool that hides the complexity of SPARQL from lay users and at the same time, can be embedded in the existing Linked Data infrastructure and workflow. First, we proposed detecting the presence of data belonging to one of the seven categories (Table~\ref{tab:taxonomy}) by using generic SPARQL queries. More precisely, we perform \texttt{ASK} queries to test whether or not a particular query pattern has a solution. Second, we look at entities in a dataset that have \texttt{owl:sameAs} links with external objects and we retrieve the properties associated to those objects. We argue that the objects that are interlinked with other datasets are of primary importance in a visualization. We show the results of this mining process to the user (the categories that have been detected, the properties going with the categories and the external domain). Based on this information, the user can make a personalized ``mashup'' by aggregating suitable visualization widgets. Some default visualizations are available according to the top categories detected. The last step is to publish the visualization and a report in RDF/XML, Turtle or N3.
 
 \begin{figure*}[!htbp]
 \begin{center}
@@ -101,10 +101,10 @@ We propose a workflow composed of four principal steps for a Linked Data Visuali
 \end{center}
 \end{figure*}
 
-Let consider a graph $<G,c>$ to be $G=\{(s,p,o)| p \in URI, s \in URI, o \in (URI \cup LIT)\} $ where $URI$ is the set of URIs, $LIT$ is the set of literals, and $c$ the context. We define $L=\{V_{1}, V_{2}, ...,V_{n} | V_{i}=P_{i} \cup T_{i}\} $ the list of vocabularies in LOV, with $P_{i}$ and $T_{i}$ respectively the properties and terms of a vocabulary $V_{i}$. Let also $D=\{D_{1}, D_{2}, ..,D_{m} \} $ be the domains of vocabularies. We assume $ \forall V \in L, \exists D_{k} \in \Phi(L,D) $. We define a generic function $\Sigma:(G,c)\mapsto B $ to detect categories in a dataset as follows: $\Sigma((G,c))=\{B| ( \exists(s,p,o) \in G: p \in V) \cup (\exists(s, rdf:type,o) \in G: o \in V)\} $ where $B =\{True, False\} $.
+Let consider a graph $<G,c>$ to be $G=\{(s,p,o)| p \in URI, s \in URI, o \in (URI \cup LIT)\} $ where $URI$ is the set of URIs, $LIT$ is the set of literals, and $c$ is the context. We define $L=\{V_{1}, V_{2}, ...,V_{n} | V_{i}=P_{i} \cup T_{i}\} $ the list of vocabularies in LOV, with $P_{i}$ and $T_{i}$ respectively the properties and terms of a vocabulary $V_{i}$. Let also $D=\{D_{1}, D_{2}, ..,D_{m} \} $ be the domains of vocabularies. We assume $ \forall V \in L, \exists D_{k} \in \Phi(L,D) $. We define a generic function $\Sigma:(G,c)\mapsto B $ to detect categories in a dataset as follows: $\Sigma((G,c))=\{B| ( \exists(s,p,o) \in G: p \in V) \cup (\exists(s, rdf:type,o) \in G: o \in V)\} $ where $B =\{True, False\} $.
 
 
-In the following sections, we describe each of the steps involved in the Linked Data Visualization Wizard in more details.
+In the following sections, we describe each of the steps involved in the Linked Data Visualization Wizard in more detail.
 
 \subsubsection{Category Detection}
 The goal of the category detection task is to use SPARQL queries to detect the presence of some high level categories in the dataset. We perform \texttt{ASK} queries as implementation of the $\Sigma $ function using standard vocabularies as defined in the Table~\ref{tab:taxonomy}. We start with six categories, namely: geographic information, person, organization, event, time and knowledge organization systems. We select popular vocabularies based on two existing catalogues: LOV~\cite{pyv2012} and prefix.cc\footnote{\url{http://prefix.cc}}.
@@ -793,11 +793,10 @@ In \ref{fig:modelA}, the model is complex, because it requires us to specify an 
 \subsubsection{Improving the model for specifying winners}
 Open data events often include competitions where the best applications are rewarded, and this information was modeled in the Apps for Europe RDF vocabulary as well. However, we found that the current model for this was unnecessarily complicated and therefore the model was simplified. Previously, winning apps required a separate ``Submission''-class in order to state that they had won a competition. Furthermore, the vocabulary didn't allow to state which position (winner, second, third etc.) the winning application was awarded. These problems were fixed by introducing a new property ``wonPrize'' for applications, so that we can directly state that an application won a prize without needing to have an intermediary ``Submission''-class, and by introducing the new classes ``FirstPrize'', ``SecondPrize'', and ``ThirdPrize'' that are all subclasses of the ``Prize''-class. We concluded that it is satisfactory to be able to state positions one to three for the winning apps, and therefore we didn't implement a more complicated vocabulary that would have enabled to state an arbitrary position (by having a position attribute for the prize for example).
 
-Also some other minor changes were suggested for the vocabulary:
+Also, we add some other minor changes to the Apps4X vocabulary:
 \begin{itemize}
 \item Use the word ``Prize'' instead of ``Award'' (i.e. rename in all places)
-\item Normalize the values for juryRate and usersRate attributes (because otherwise they can't be compared to each other)
-\item alternatively reuse the review vocabulary from vocab.org\footnote{\url{http://vocab.org/review/terms.html }}  or schema.org\footnote{\url{http://schema.org/Review}}
+\item Normalize the values for juryRate and usersRate attributes (because otherwise they can't be compared to each other). Alternatively reuse the review vocabulary from vocab.org\footnote{\url{http://vocab.org/review/terms.html }}  or schema.org\footnote{\url{http://schema.org/Review}}
 \item Introduce properties \texttt{connectedApp} (for Event) and \texttt{connectedEvent} (for Application), so that applications and events can be linked together.
 \end{itemize}
 
@@ -857,11 +856,11 @@ The admin interface is implemented in HTML, CSS and JavaScript. Bootstrap\footno
 The last component of the puzzle is the embeddable script, that is responsible of displaying the event and application information in human readable form on the event organizer's website. The event organizer will get the embed code from the admin interface, which he will then insert into the HTML code of his website. The embed code is just a reference to an external JavaScript file that will be loaded from the Apps for Europe server and then executed in the browser. A detailed description of how the script works is given below:
 \begin{algorithm}
 \textsl{
-1. The event organizer will embed the code on his own web page.\\
-2. On page load, the <script>-tag is parsed by the browser and the actual script is loaded from the Apps for Europe -server.\\
+1.The event organizer will embed the code on his own web page.\\
+2.On page load, the <script>-tag is parsed by the browser and the actual script is loaded from the Apps for Europe server.\\
 3.	The script is executed.\\
 (a).	The script will fetch the event or application information using an AJAX-request.\\
-(b).	After the server has responded with the event/application information, the information is displayed on the page in human readable form by modifying the DOM of the page. Furthermore, the same information is presented also in computer readable format by embedding RDFa in the DOM.
+(b).	After the server has responded with the event/application information, the information is displayed on the page in human readable form by modifying the DOM of the page. Furthermore, the same information is  also presented in computer readable format by embedding RDFa in the DOM.
 }
 
 \end{algorithm}
@@ -882,14 +881,15 @@ The goal was to populate the events and applications, so that they would follow 
 
 Similarly, the information provided for applications varied even more, and sometimes we were able only to populate the title, description and the homepage of the application. Because of these problems, the data populated into the triple store doesn't include all the information we would have hoped to have.
 
-The original idea was to automate the triple store data population as far as possible using content scraping , but because of the heterogeneity of the web pages (in terms of structure and data)  a semi-automated approach was used. Especially the problems listed below prevented a fully automatic approach from being implemented:
+The original idea was to automate the triple store data population as far as possible using content scraping , but because of the heterogeneity of the web pages (in terms of both structure and data)  a semi-automated approach was used. Two particular problems prevented a fully automatic approach from being implemented:
 
-\begin{itemize}
-\item because of the heterogeneity in the structure of the web pages, it is for example extremely hard to ``automatically'' know which part of the page contains the event location or application homepage link
-\item many links to the event pages were broken, and thus manual work was required in order to relocate the actual page
-\end{itemize}
+\begin{enumerate}
+\item First, because of the heterogeneity in the structure of the web pages, it is for example extremely hard to ``automatically'' know which part of the page contains the event location or application homepage link.
+\item Second, many links to the event pages were broken, and thus manual work was required in order to relocate the actual page.
+\end{enumerate}
 
-In order to be as efficient as possible in the data population the semi-automatic approach was used. Here, the key idea was to populate event pages having only a few application entries (less than 10) manually using the JavaScript plugin, and for the rest of the event pages web scraping was used to populate the application entries (the scraping script had to be configured for each event website separately). More details of the script can be found in Appendix A.
+
+In order to be as efficient as possible in the data population a semi-automatic approach was used. Here, the key idea was to populate event pages with only a few application entries (less than 10) manually using the JavaScript plugin, and for the rest of the event pages web scraping was used to populate the application entries (the scraping script had to be configured for each event website separately). More details of the script can be found in Appendix A.
 
 The goal was to populate all the past events (112 in total). However, many of the websites for the past events had already disappeared or didn't include enough information for data population. Furthermore, the data population process turned out to take much more time than anticipated, and therefore we managed to populate only 28 events and in total 889 application entries. The average number of application entries per event was 34 and the median 22.
 
@@ -904,7 +904,7 @@ Visualizations and applications could be built on top of the knowledge base, but
 The dataset is available below in different formats as dump for download in RDF/Turtle and MongoDB:
 
 \begin{itemize}
-\item RDF in turtle format: \\
+\item RDF in Turtle format: \\
 \url{https://www.dropbox.com/s/3075qsblxzau2fk/rdfInTurtleFormat.tar.gz}
 \item MongoDB dump: \url{https://www.dropbox.com/s/m2sr4na12v3yk07/apps4europe.tar.gz}
 \end{itemize}
