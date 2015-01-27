@@ -67,17 +67,17 @@ Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analy
 \subsubsection{Linked Data API}
 The Linked Data API (LDA) \cite{ldapi}, provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) the generation of documents (information resources) for publishing of Linked Data; (ii) the provision of sophisticated querying and data extraction features, without the need for end users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
 
-\textsc{Elda}\footnote{\url{http://www.epimorphics.com/web/tools/elda.html}} is a Java implementation of the LDA by the company Epimorphics. \textsc{Elda} comes with some pre-built samples and documentation which allow developers to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI or through query parameters.
+\textsc{Elda}\footnote{\url{http://www.epimorphics.com/web/tools/elda.html}} is a Java implementation of the LDA by the company Epimorphics. \textsc{Elda} comes with some pre-built samples and documentation, which allow developers to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources.
 
 \subsubsection{Sgvizler}
-\texttt{Sgvizler} \cite{Martin2012} is a javascript which renders the result of SPARQL SELECT queries into charts or html elements. The name and tool relies queries against SPARQL endpoints using visualizations based on Google Visualization API, SPARQLer , Snorql\footnote{\url{http://dbpedia.org/snorql/}} and Spark\footnote{\url{http://code.google.com/p/rdf-spark }}. All the major chart types offered by the Google Visualization API are supported by Sgvizler. The user inputs a SPARQL query which is sent to a designated SPARQL endpoint. The endpoint must return the results back in SPARQL Query Results XML Format or SPARQL Query Results in JSON format. Sgvizler parses the results into the JSON format that Google prefers and displays the chart using the Google Visualization API or a custom-made visualization or formatting function. Sgvizler needs, in addition to the Google Visualization API, the javascript framework jQuery  to work. One of the drawback of Sgvizler that it is up to the user to test the query and embed it into the HTML page.
+\texttt{Sgvizler} \cite{Martin2012} is a JavaScript library which renders the result of SPARQL SELECT queries into charts or HTML elements. The tool relies on queries against SPARQL endpoints using visualizations based on Google Visualization API, SPARQLer, Snorql\footnote{\url{http://dbpedia.org/snorql/}} and Spark\footnote{\url{http://code.google.com/p/rdf-spark }}. All the major chart types offered by the Google Visualization API are supported by Sgvizler. The user inputs a SPARQL query which is sent to a designated SPARQL endpoint. The endpoint must return the results back in XML format or SPARQL Query Results in JSON format. Sgvizler parses the results into the JSON format that Google prefers and displays the chart using the Google Visualization API or a custom-made visualization or formatting function. Sgvizler needs, in addition to the Google Visualization API, the JavaScript framework jQuery  to work. One of the drawback of Sgvizler that it is up to the user to test the query and embed it into the HTML page.
 
 \subsubsection{Facete}
-Facete \cite{facete:2014} is an exploration tool for (geographical) Linked Data datasets on the Web. Also called ``Semmap'', the application allows the user to explore the specific slice of data named \textit{'facet'}  of a Linked Data endpoint in a graphical way, available at \url{http://144.76.166.111/facete/}. The facet is created by defining a set of constraints on properties in the database. Once the facet is defined, the information in the facet can be clicked-through in a tabular interface and visualized on a map. The user can choose a SPARQL endpoint and graph for listing the content and visualize the dataset. The application is divided in three main views:
+Facete \cite{facete:2014} is an exploration tool for (geographical) Linked Data datasets on the Web. Also called ``Semmap'', the application allows the user to explore the specific slice of data named \textit{`facet'}  of a Linked Data endpoint in a graphical way, available at \url{http://144.76.166.111/facete/}. The facet is created by defining a set of constraints on properties in the database. Once the facet is defined, the information in the facet can be clicked-through in a tabular interface and visualized on a map. The user can choose a SPARQL endpoint and graph for listing the content and visualizing the dataset. The application has three main views:
 \begin{enumerate}
 \item Selection: A tree-based structure of the dataset. It shows all items' properties and sub-properties.
-\item  Data: shows a tabular representation of the data in the facet. All properties that have been marked with an arrow symbol in the facet tree are shown as columns. The columns contain the property values for every item according to the selected filter criteria.
-\item Geographical: A map view showing a representation of the elements in the facet with geo-coordinates available.
+\item  Data: A tabular representation of the data in one facet. All properties that have been marked with an arrow symbol in the facet tree are shown as columns. The columns contain the property values for every item based on the selected filter criteria.
+\item Geographical: A map view showing a representation of the elements with geo-coordinates in the facet.
 \end{enumerate}
 
 %\todo{insert image of the landing page of facete?}
@@ -85,18 +85,18 @@ Facete \cite{facete:2014} is an exploration tool for (geographical) Linked Data 
 \subsubsection{VisualBox}
 
 Visualbox\footnote{\url{http://alangrafu.github.io/visualbox/}} is another tool that aims at facilitating the creation of visualizations by providing an editor for SPARQL queries and different
-visual tools to visualize the data. Visualbox is derived from LODSPeaKr \cite{graves13} mainly based on the Model- View - Component (MVC) paradigm. A visualization is created in a Component consisting of one or more SPARQL queries (models), and usually one (but sometimes more) templates (Views).
-Visualbox is target to users that have at least some basic knowledge of SPARQL and an understanding of RDF, and runs the query on the server side. Visualbox uses Haanga\footnote{\url{http://haanga.net}}, a template engine that provides a syntax for creating templates by defining markers in a document (usually a HTML page) of the form {{variable}} that later will be compiled and replaced by values taken from a data source. One of the drawback of Visualbox is the impossibility to extend with custom visualization nor enable third party filters.
+visual tools to visualize the data. Visualbox is derived from LODSPeaKr \cite{graves13} mainly based on the Model-View-Component (MVC) paradigm. A visualization is created in a Component consisting of one or more SPARQL queries (models), and usually one (but sometimes more) templates (Views).
+Visualbox is designed for users that have at least some basic knowledge of SPARQL and an understanding of RDF, and it runs the query on the server side. Visualbox uses Haanga\footnote{\url{http://haanga.net}}, a template engine that provides a syntax for creating templates by defining markers in a document (usually an HTML page) of the form {{variable}} that later will be compiled and replaced by values taken from a data source. One of the drawback of Visualbox is that it cannot be extended with custom visualization third-party filters cannot be used.
 Currently, it implements visualization filters for D3.js (5), Google Maps, Google Charts(6) and TimeKnots library (TimeLine with events)\footnote{\url{https://github.com/alangrafu/timeknots}}.
 
 \subsubsection{Payola}
 Payola \cite{payola13} is a Web framework for analyzing and visualizing Linked Data, and enables users to build instances of Linked Data visualization Model (LDVM) pipelines \cite{brunetti13}. LDVM is an adaptation of the Data State Reference Model (DSRM) proposed by Chi \cite{chi2000} applied to visualizing RDF and Linked Data. It extends DSRM with three additional concepts that are reusable software components:
 \begin{itemize}
-\item \textbf{Analyzers}: They take as input compatible datasets, and perform adapted SPARQL queries: hierarchical dataset, geocoordinates dataset, etc.
-\item \textbf{Visualization transformers}: They can be any software component that transform data between different formats or perfom aggregations for better visualization. They are generally SPARQL CONTRUCT queries, with the input signatures corresponding to the FROM clauses and their output data samples corresponding to the CONSTRUCT clauses.
-\item \textbf{Visualizers}: They consume RDF data and produce a visualization a user can interact with. They are visual tools libraries consuming data in RDF/JSON\footnote{\url{https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html}}
+\item \textbf{Analyzers}: They take as input compatible datasets (hierarchical dataset, geocoordinates dataset, etc) and perform adapted SPARQL queries: .
+\item \textbf{Visualization transformers}: They can be any software component that transforms data between different formats or perfoms aggregations for better visualization. They are generally SPARQL CONTRUCT queries, with input signatures corresponding to the FROM clauses and output data samples corresponding to the CONSTRUCT clauses.
+\item \textbf{Visualizers}: They consume RDF data and produce a visualization a user can interact with. They are visual tools libraries consuming data in RDF/JSON\footnote{\url{https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html}}.
 \end{itemize}
-Basically a user builds different instances of LDVM based on the datasets used in the analyzers and transformers. Figure \ref{fig:ldvm-lod} depicts a sample of a LDVM pipeline applied to two different datasets publised as LOD.
+A developer builds different instances of LDVM based on the datasets used in the analyzers and transformers. Figure \ref{fig:ldvm-lod} depicts a sample of a LDVM pipeline applied to two different datasets publised as LOD.
 
 \begin{figure}
 \center
@@ -108,16 +108,16 @@ Basically a user builds different instances of LDVM based on the datasets used i
 
 \subsection{Discussion}
 \label{sec:discussion}
-There are currently many projects aiming at visualizing (RDF) Linked Data. A survey by Dadzie and Rowe \cite{Dadzie:2011} concluded with the fact that many visualization tools are not easy to use by lay users. In~\cite{Klimek2014}, there is a recent review of some visualizations tools that can be summarized as follows:
+There are currently many projects aiming at visualizing (RDF) Linked Data. A survey by Dadzie and Rowe \cite{Dadzie:2011} concluded with the fact that many visualization tools are not easy to use by lay users. In~\cite{Klimek2014} a recent review of some visualizations tools that can be summarized as follows:
 \begin{itemize}
- \item \textit{Vocabulary based visualization tools:} these tools are built for specific vocabularies and that help in visualizing data modelled according to those vocabularies, such as CubeViz \cite{cubeviz:2012}, FOAF explorer\footnote{\url{http://foaf-visualizer.gnu.org.ua/}} and Map4rdf \cite{leon2012}. They aim at visualizing data modelled respectively with \texttt{dq,foaf} and \texttt{geo+scovo}.
- \item \textit{Mashup tools:} they are used to create mashup visualizations with different widgets and some data analysis, such as DERI Pipes \cite{danh2009}. Mashup tools can be integrated into the LD wizard to combine different visual views.
+ \item \textit{Vocabulary-based visualization tools:} these tools are built for specific vocabularies and they help in visualizing data modelled according to those vocabularies, such as CubeViz \cite{cubeviz:2012}, FOAF explorer\footnote{\url{http://foaf-visualizer.gnu.org.ua/}} and Map4RDF \cite{leon2012}. They aim at visualizing data modelled respectively with \texttt{dq,foaf} and \texttt{geo+scovo}.
+ \item \textit{Mashup tools:} they are used to create mashup visualizations with different widgets and some data analysis, such as DERI Pipes \cite{danh2009}. Mashup tools can be integrated into the LD wizard to combine different views of the data.
  \item \textit{Generic RDF visualization tools:} they typically support data browsing and entity rendering. They can also be used to build applications. In this category, we can mention Graphity\footnote{\url{https://github.com/Graphity/graphity-browser}}, lodlive\footnote{\url{http://en.lodlive.it/}} and Balloon Synopsis\footnote{\url{https://github.com/schlegel/balloon-synopsis}}.
 \end{itemize}
-While these tools are often extensible and support specific domain datasets, they suffer from the following drawbacks:
+While above-mentioned tools are often extensible and support specific domain datasets, they suffer from the following drawbacks:
 \begin{itemize}
- \item \textit{They are not easy to set up and use by lay users}. Sometimes, users just need to have a visual summary of a dataset in order to start exploring the data. Our approach to this challenge is to provide such a lightweight javascript-based tool that supports a quick exploration task.
- \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more target at geodata. A tabular view enables to visualize slices of data and a map view can be activated when there is geo data. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) according to a systematic analysis of what are the high level categories present in a dataset.
+ \item \textit{They are not easy for lay users to set up and use }. Sometimes, users just need a visual summary of a dataset in order to start exploring the data. Our approach to this challenge is to provide such a lightweight JavaScript-based tool that supports a quick exploration task.
+ \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more relevant for geodata. A tabular view enables slices of data to be visualized and a map view can be activated when there is geodata. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) based on a systematic analysis of the high-level categories present in a dataset.
 \end{itemize}
 
 The outcome of this state of the art can then be used to assess different visual tools in the process of creating Web-based visualizations. Some criteria can be used for assessing visual tools, such as (i) usability , (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. In \cite{deliverable2012b}, the readers can find more details on this survey. Table \ref{tab:visuTools} gives an overview of the selected tools studied based on the following features:
@@ -125,10 +125,10 @@ The outcome of this state of the art can then be used to assess different visual
 \item \textit{Data Formats} for the format of data taken as input by the tool;
 \item \textit{Data Access}, for the way to access the data from the tool, such as Web service, SPARQL endpoint, etc.
 \item \textit{Language code}, the programming language used to develop the tool;
-\item \textit{Type of Views}, the different views potentially accessible when using the tool;
-\item \textit{Imported Libraries}, the external libraries available within the tool,
-\item \textit{License} for the Intellectual Properties rights of the tool,
-\item \textit{SemWeb Compliant}, whether the tool can be easily transposed or compliant with structured data; and
+\item \textit{Type of views}, the different views potentially accessible when using the tool;
+\item \textit{Imported libraries}, the external libraries available within the tool,
+\item \textit{License} for the Intellectual Property rights of the tool,
+\item \textit{SemWeb Compliant}, whether the tool can be easily extended or is compliant with structured data; and
 
 \end{itemize}
 
@@ -186,34 +186,37 @@ The outcome of this state of the art can then be used to assess different visual
 \end{table}
 \end{landscape}
 
+%\todo{Write here starting by "By contrast, our work ....}
 \section{Describing Applications on the Web}
  \label{sec:descApps}
 
  \subsection{Motivation}
-As many initiatives on Linked Open Data is growing, tools and technologies are getting more and more mature to help pro-consumers to leverage the lifting process of the data. At the same times, standardization bodies such as W3C are helping in providing best practices to publish Open Government Data by using appropriate vocabularies, taking care of stability in the URIs policies, and making links to other datasets. It is the case for instance of the Government Linked Data Working Group\footnote{\url{http://www.w3.org/2011/gld/}} which has released best practices and vocabularies to help governments publishing their data using Semantic Web technologies. Having a look at different proposals of the Life Cycle of Government Linked Data, one of the last stage is ``Publication'' where the data is released according to the 4-5 stars principles\footnote{\url{http://5stardata.info/}}, with a given access to a SPARQL endpoint. However, for a better understanding of the data, one of the next step is usually to generate visualizations through intuitive visual tools(charts, graphs, etc.) that will benefit to citizens, data journalists and other public authorities to improve the quality of their decisions. Currently, one way of creating new applications is to look around previous initiatives to see what type of application exists already and make something similar according to a given dataset and domain. Another approach is by organizing \textit{contests} where the challenges are to mash up unexpected datasets with clear and beautiful visualizations. Such approach is harder as developers also try figure out which tool and library is used for different applications. What if we describe applications according to the facets/views, datasets, visual tools used to build them? How are the types of information that can help create a vocabulary for annotating Web-based visualizations online ?
+As many initiatives on Linked Open Data are growing, tools and technologies are getting more and more mature to help consumers to leverage the lifting process of the data. At the same times, standardization bodies such as the W3C are helping by providing best practices to publish Open Government Data by using appropriate vocabularies, taking care of stability in the URIs policies, and making links to other datasets. For instance the Government Linked Data Working Group\footnote{\url{http://www.w3.org/2011/gld/}} has released best practices and vocabularies to help governments publishing their data using Semantic Web technologies. Having a look at different proposals of the Life Cycle of Government Linked Data, one of the last stage is ``Publication'' where the data is released according to the 4-5 star principles\footnote{\url{http://5stardata.info/}}, with a given access to a SPARQL endpoint. However, for a better understanding of the data, one of the next steps is usually to generate visualizations through intuitive visual tools(charts, graphs, etc.) that will benefit to citizens, data journalists and other public authorities. Currently, one way of creating new applications is to look around previous initiatives to see what type of applications exist already and to make something similar according to a given dataset and domain. Another approach is by organizing \textit{contests} where the challenges are to mash up unexpected datasets with clear and beautiful visualizations. This approach is harder because developers also try figure out which tool and library is used for different applications. What if we describe applications according to the facets/views, datasets, visual tools used to build them? How are the types of information that can help create a vocabulary for annotating Web-based visualizations online?
 
 \subsection{Catalogs of Applications}
-We provide below two use case of the current description of applications developed by datasets published on the Web. We expose also the limitation of the approach as they don't fully make use of semantics for more discovery of visual tools, datasets used to developed such applications.
+We provide below two use cases of the current description of applications developed by datasets published on the Web. We expose also the limitation of the approach as they do not fully make use of semantics for improve discovery of the visual tools and datasets used to develop such applications.
 
 \subsubsection{Open Data Service}
 The Open Data Service at the University of Southampton\footnote{\url{http://data.southampton.ac.uk/apps.html}} has a register of all the applications developed using their datasets. A catalog of the Applications using the data is available at \url{http://id.southampton.ac.uk/dataset/apps}. Each application is described by giving three main categories of information:
-\begin{itemize}
-\item The available distributions corresponding to the different formats HTML, RDF/XML and RDF/TURTLE ;
+\begin{enumerate}
+\item The available distributions corresponding to the different formats HTML, RDF/XML and RDF/Turtle ;
 \item Dataset information, which defines the type, the number of triples, license information, the publisher and the publication date.
 \item The provenance, such as files used to generate the dataset for building the application, as well as the script itself.
-\end{itemize}
+\end{enumerate}
 
-Currently, some vocabularies are used to model the catalog, such as \texttt{DCAT} vocabulary \cite{dcat} and proprietary vocabularies. Each application is then described the type (Web, mobile Web, android, etc. ), the authors, the date of creation and the datasets used to build the application. Figure \ref{fig:app-amenity} depicts the HTML view of a Web application
-for a searchable map for finding buildings within the University sites. This initiative seems to be isolated. Thus, there is a real need to have a common layer of semantics for describing such applications. This would benefits the interoperability and more discovery of applications on the Web.
+
+
+Currently, some vocabularies are used to model the catalog, such as the \texttt{DCAT} vocabulary \cite{dcat} and proprietary vocabularies. Each application is then described the type (Web, mobile Web, android, etc.), the authors, the date of creation and the datasets used to build the application. Figure \ref{fig:app-amenity} depicts the HTML view of a Web application
+for a searchable map for finding buildings within the University sites. This initiative seems to be not extended. Thus, there is a real need to have a common layer of semantics for describing such applications. This would benefit the interoperability and discovery of applications on the Web.
 \begin{figure}
 \includegraphics[scale=.7]{img/soton-map-amenities.pdf}
 \label{fig:app-amenity}
 \vspace{-10pt}
-\caption{Description of a Web application of an application at the Open Data Service}
+\caption{Sample description of a Web application  at the Open Data Service}
 \end{figure}
 
 \subsubsection{RPI Applications}
-Another approach from the researchers at the Rensselaer Polytech Institute\footnote{\url{http://data-gov.tw.rpi.edu}} is to put at the bottom of the static page of a demo/application showcasing the benefits of Open Data for \texttt{data.gov}\footnote{\url{https://www.data.gov/}} some basic metadata (description, URL to dataset, author), and also a link to the SPARQL query used for generating the application. As this information is human-readable and can help, the main drawback is the lack of a machine-readable version, using semantics to discover and connect different demos and datasets with authors. A more vocabulary can leverage the issue by annotating such applications to help discovering and aggregating other similar applications in other Open Data initiatives.
+Another approach, taken by the researchers at the Rensselaer Polytech Institute\footnote{\url{http://data-gov.tw.rpi.edu}}, is to put at the bottom of the static page of a demo/application showcasing the benefits of Open Data for \texttt{data.gov}\footnote{\url{https://www.data.gov/}} some basic metadata (description, URL to dataset, author), and also a link to the SPARQL query used for generating the application. As this information is human-readable and can help, the main drawback is the lack of a machine-readable version, using semantics to discover and connect different demos and datasets with authors. A more vocabulary can leverage the issue by annotating such applications to help discovering and aggregating other similar applications in other Open Data initiatives.
 
 
 \section{Describing and Modeling Applications}
