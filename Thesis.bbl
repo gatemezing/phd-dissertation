@@ -327,12 +327,7 @@ W3C SPARQL~Working Group.
 Carlos~Buil Aranda, Aidan Hogan, J{\"{u}}rgen Umbrich, and Pierre{-}Yves
   Vandenbussche.
 \newblock {SPARQL} web-querying infrastructure: Ready for action?
-\newblock In Harith Alani, Lalana Kagal, Achille Fokoue, Paul~T. Groth, Chris
-  Biemann, Josiane~Xavier Parreira, Lora Aroyo, Natasha~F. Noy, Chris Welty,
-  and Krzysztof Janowicz, editors, {\em The Semantic Web - {ISWC} 2013 - 12th
-  International Semantic Web Conference, Sydney, NSW, Australia, October 21-25,
-  2013, Proceedings, Part {II}}, volume 8219 of {\em Lecture Notes in Computer
-  Science}, pages 277--293. Springer, 2013.
+\newblock In Alani et~al. \cite{semweb/2013-2}, pages 277--293.
 
 \bibitem{ashworth99}
 M~Ashworth.
@@ -710,9 +705,7 @@ Guido Governatori, Antonino Rotolo, Serena Villata, and Fabien Gandon.
 V\'{\i}ctor Rodr\'{\i}guez-Doncel, Asunci{\'o}n G{\'o}mez-P{\'e}rez, and
   Nandana Mihindukulasooriya.
 \newblock Rights declaration in linked data.
-\newblock In Olaf Hartig, Juan Sequeda, Aidan Hogan, and Takahide Matsutsuka,
-  editors, {\em COLD}, volume 1034 of {\em CEUR Workshop Proceedings}.
-  CEUR-WS.org, 2013.
+\newblock In Hartig et~al. \cite{DBLP:conf/semweb/2013cold}.
 
 \bibitem{ODRLS}
 G.~R. Gangadharan, V.~D'Andrea, R.~Iannella, and M.~Weiss.
@@ -729,7 +722,8 @@ G.~R. Gangadharan, Michael Weiss, Vincenzo D'Andrea, and Renato Iannella.
 Nadia Nadah, M{\'e}lanie~Dulong de~Rosnay, and Bruno Bachimont.
 \newblock Licensing digital content with a generic ontology: escaping from the
   jungle of rights expression languages.
-\newblock In {\em Proceedings of ICAIL}, pages 65--69. ACM, 2007.
+\newblock In {\em Proceedings of ICAIL\/} \cite{DBLP:conf/icail/2007}, pages
+  65--69.
 
 \bibitem{DBLP:conf/apscc/TruongGCDP11}
 Hong~Linh Truong, G.~R. Gangadharan, Marco Comerio, Schahram Dustdar, and
@@ -795,5 +789,542 @@ Ruben Verborgh, Olaf Hartig, Ben De~Meester, Gerald Haesendonck, Laurens
 \newblock Low-cost queryable linked data through triple pattern fragments.
 \newblock In {\em Proceedings of the 13th International Semantic Web
   Conference: Posters and Demos}, 2014.
+
+\bibitem{semweb/2013-2}
+Harith Alani, Lalana Kagal, Achille Fokoue, Paul~T. Groth, Chris Biemann,
+  Josiane~Xavier Parreira, Lora Aroyo, Natasha~F. Noy, Chris Welty, and
+  Krzysztof Janowicz, editors.
+\newblock {\em The Semantic Web - {ISWC} 2013 - 12th International Semantic Web
+  Conference, Sydney, NSW, Australia, October 21-25, 2013, Proceedings, Part
+  {II}}, volume 8219 of {\em Lecture Notes in Computer Science}. Springer,
+  2013.
+
+\bibitem{vandenbussche:11}
+P.Y. Vandenbussche, B.~Vatant, and L.~Rozat.
+\newblock Linked open vocabularies: an initiative for the web of data.
+\newblock In {\em QetR Workshop, Chambery, France.}, 2011.
+
+\bibitem{Governatori_onelicense}
+Guido Governatori, Antonino Rotolo, Serena Villata, and Fabien G.
+\newblock One license to compose them all a deontic logic approach to data
+  licensing on the web of data, 2012.
+
+\bibitem{pybernard12}
+Pierre-Yves Vandenbussche and Bernard Vatant.
+\newblock {Metadata Recommendations For Linked Open Vocabularies}.
+\newblock OKFN, 2012.
+\newblock
+  \url{http://lov.okfn.org/dataset/lov/Recommendations_Vocabulary_Design.pdf}.
+
+\bibitem{Janowicz09}
+Krzysztof Janowicz, Sven Schade, Arne Br\"oring, Carsten Kessler, Christoph
+  Stasch, Patrick Mau\'e, and Thorsten Diekhof.
+\newblock {A transparent semantic enablement layer for the geospatial web}.
+\newblock In {\em 2$^{nd}$ International Terra Cognita Workshop}, 2009.
+
+\bibitem{iso2003}
+{International Organization for Standardization (TC 211)}.
+\newblock {ISO 19107: Geographic information - Spatial Schema.}, 2003.
+
+\bibitem{iso2005}
+{International Organization for Standardization (TC 211)}.
+\newblock {ISO 19109: Geographic information - Rules for application schema.},
+  2005.
+
+\bibitem{iso2007}
+{International Organization for Standardization (TC 211)}.
+\newblock {ISO 19111: Geographic information - Spatial referencing by
+  coordinates}, 2007.
+
+\bibitem{wp2013}
+B\'en\'edicte Bucher, Nathalie Abadie, and Ghislain~Auguste Atemezing.
+\newblock Mod\'elisation de connaissances sp\'ecifiques: information spatiale.
+\newblock Rapport de Recherche. D\'elivrable WP2.T.2.3- Projet Datalift, 2013.
+
+\bibitem{wgs84}
+W3C Semantic Web Interest~Group (SWIG).
+\newblock Wgs84 rdf geoposition vocabulary, 2004.
+\newblock \url{http://www.w3.org/2003/01/geo/}.
+
+\bibitem{Tim06}
+Tim Berners-lee, Yuhsin Chen, Lydia Chilton, Dan Connolly, Ruth Dhanaraj, James
+  Hollenbach, Adam Lerer, and David Sheets.
+\newblock Tabulator: Exploring and analyzing linked data on the semantic web.
+\newblock In {\em In Proceedings of the 3rd International Semantic Web User
+  Interaction Workshop}, 2006.
+
+\bibitem{Harris2013}
+S.~Harris and A~Seaborne.
+\newblock {SPARQL 1.1 Query Language}, 2013.
+\newblock \url{http://www.w3.org/TR/sparql11-query/}.
+
+\bibitem{geroimenko2006visualising}
+Vladimir Geroimenko and Chaomei Chen.
+\newblock Visualising the semantic web, 2006.
+
+\bibitem{josep2012}
+Josep~Maria Brunetti, Soren Auer, and Roberto Garcia.
+\newblock The linked data visualization model.
+\newblock In {\em In Proceedings of the 11th International Semantic Web
+  Conference}, 2012.
+
+\bibitem{isacc11}
+Antoine Isaac, William Waites, Jeff Young, and Marcia Zeng.
+\newblock {Library Linked Data Incubator Group: Datasets, Value Vocabularies,
+  and Metadata Element Sets}.
+\newblock W3C Incubator Group Report, 2011.
+\newblock \url{http://www.w3.org/2005/Incubator/lld/XGR-lld-vocabdataset/}.
+
+\bibitem{Sean2009}
+Sean Bechhofer and Alistair Mile.
+\newblock {SKOS Simple Knowledge Organization System Reference}.
+\newblock W3C Recommendation, 2009.
+\newblock \url{http://www.w3.org/TR/skos-reference/}.
+
+\bibitem{bhyland2013}
+Bernadette Hyland, Ghislain~Auguste Atemezing, Michael Pendleton, and Biplav
+  Srivastava.
+\newblock {Linked Data Glossary}.
+\newblock W3C Working Group Note, 2013.
+\newblock \url{http://www.w3.org/TR/ld-glossary/}.
+
+\bibitem{Heath_Bizer_2011}
+Tom Heath and Christian Bizer.
+\newblock {\em {Linked Data: Evolving the Web into a Global Data Space: Theory
+  and Technology}}.
+\newblock Morgan \& Claypool Publishers, 2011.
+
+\bibitem{ThomasSteiner2012}
+Thomas Steiner and Stefan Mirea.
+\newblock {SEKI@home or Crowdsourcing an Open Knowledge Graph}.
+\newblock In {\em 1$^{st}$ International Workshop on Knowledge Extraction \&
+  Consolidation from Social Media (KECSM'12)}, Boston, USA, 2012.
+
+\bibitem{Ashutosh:2010}
+Ashutosh Jadhav, Hemant Purohit, Pramod Ananthram, Ajith Ranabahu, Vinh Nguyen,
+  Pablo Mendes, Alan~Gary Smith, Michael Cooney, and Amit Sheth.
+\newblock {Twitris 2.0 : Semantically Empowered System for Understanding
+  Perceptions From Social Data}.
+\newblock In {\em Semantic Web Challenge at the 9$^{th}$ International Semantic
+  Web Conference (ISWC'10)}, Shanghai, China, 2010.
+
+\bibitem{BeckerNG10}
+Hila Becker, Mor Naaman, and Luis Gravano.
+\newblock {Learning similarity metrics for event identification in social
+  media}.
+\newblock In {\em 3$^{rd}$ ACM International Conference on Web Search and Data
+  Mining}, pages 291--300, New York, NY, USA, 2010.
+
+\bibitem{ChoudhuryB:2011}
+Smitashree Choudhury and John~G. Breslin.
+\newblock {Extracting Semantic Entities and Events from Sports Tweets}.
+\newblock In {\em Making Sense of Microposts (\#MSM2011)}, 2011.
+
+\bibitem{Grishman96}
+Ralph Grishman and Beth Sundheim.
+\newblock {Message Understanding Conference-6: a brief history}.
+\newblock In {\em 16$^{th}$ International Conference on Computational
+  linguistics (COLING'96)}, pages 466--471, Copenhagen, Denmark, 1996.
+
+\bibitem{Liu:WSM11}
+Xueliang Liu, Rapha{\"e}l Troncy, and Beno{\^i}t Huet.
+\newblock {Using Social Media to Identify Events}.
+\newblock In {\em 3$^{rd}$ Workshop on Social Media (WSM'11)}, Scottsdale,
+  Arizona, USA, 2011.
+
+\bibitem{Mendes:ISEMANTICS10}
+Pablo Mendes, Alexandre Passant, and Pavan Kapanipathi.
+\newblock {TWARQL: Tapping into the Wisdom of the Crowd}.
+\newblock In {\em 6$^{th}$ International Conference on Semantic Systems
+  (I-SEMANTICS'10)}, Graz, Austria, 2010.
+
+\bibitem{Moller:ISWC07}
+Knud M{\"o}ller, Tom Heath, Siegfried Handschuh, and John Domingue.
+\newblock {Recipes for Semantic Web dog food - The ESWC and ISWC metadata
+  projects}.
+\newblock In {\em 6$^{th}$ International Semantic Web Conference (ISWC'07)},
+  pages 802--815, Busan, Korea, 2007.
+
+\bibitem{rizzo2011pd}
+Giuseppe Rizzo and Rapha{\"e}l Troncy.
+\newblock {NERD: A Framework for Evaluating Named Entity Recognition Tools in
+  the Web of Data}.
+\newblock In {\em 10$^{th}$ International Semantic Web Conference (ISWC'11),
+  Demo Session}, pages 1--4, Bonn, Germany, 2011.
+
+\bibitem{Rowe:SWJ11}
+Matthew Rowe and Milan Stankovic.
+\newblock {Aligning Tweets with Events: Automation via Semantics}.
+\newblock {\em Semantic Web Journal}, 2011.
+
+\bibitem{Shaw:ASWC09}
+R.~Shaw, R.~Troncy, and L.~Hardman.
+\newblock {LODE: Linking Open Descriptions of Events}.
+\newblock In {\em 4$^{th}$ Asian Semantic Web Conference (ASWC'09)}, pages
+  153--167, Shanghai, China, 2009.
+
+\bibitem{Stankovic:SDoW08}
+Milan Stankovic.
+\newblock {Modeling Online Presence}.
+\newblock In {\em 1$^{st}$ Social Data on the Web Workshop (SDoW'08)}, 2008.
+
+\bibitem{Weller11}
+Katrin Weller, Evelyn Drge, and Cornelius Puschmann.
+\newblock {Citation Analysis in Twitter: Approaches for Defining and Measuring
+  Information Flows within Tweets during Scientific Conferences}.
+\newblock In {\em Making Sense of Microposts (\#MSM2011)}, pages 1--12, 2011.
+
+\bibitem{Ritter:2011}
+Alan Ritter, Sam Clark, Mausam, and Oren Etzioni.
+\newblock Named entity recognition in tweets: An experimental study.
+\newblock In {\em EMNLP}, pages 1524--1534, 2011.
+
+\bibitem{DBLP:conf/jurix/GovernatoriLRVG13}
+Guido Governatori, Ho-Pun Lam, Antonino Rotolo, Serena Villata, and Fabien
+  Gandon.
+\newblock Heuristics for licenses composition.
+\newblock In {\em Proceedings of JURIX}, pages 77--86. IOS Press, 2013.
+
+\bibitem{DBLP:conf/jurix/2013}
+Kevin~D. Ashley, editor.
+\newblock {\em Legal Knowledge and Information Systems - JURIX 2013: The
+  Twenty-Sixth Annual Conference, December 11-13, 2013, University of Bologna,
+  Italy}, volume 259 of {\em Frontiers in Artificial Intelligence and
+  Applications}. IOS Press, 2013.
+
+\bibitem{bookSVM}
+N.~Cristianini and J.~Shawe-Taylor.
+\newblock {\em An Introduction to Support Vector Machines and Other
+  Kernel-based Learning Methods}.
+\newblock Cambridge University Press, 2010.
+
+\bibitem{DBLP:conf/icail/2007}
+{\em The Eleventh International Conference on Artificial Intelligence and Law,
+  Proceedings of the Conference, June 4-8, 2007, Stanford Law School, Stanford,
+  California, USA}. ACM, 2007.
+
+\bibitem{DBLP:journals/ijdc/GrothGCM12}
+Paul~T. Groth, Yolanda Gil, James Cheney, and Simon Miles.
+\newblock Requirements for provenance on the web.
+\newblock {\em IJDC}, 7(1):39--56, 2012.
+
+\bibitem{Maher.2000}
+Michael~J. Maher, Andrew Rock, Grigoris Antoniou, David Billington, and Tristan
+  Miller.
+\newblock Efficient defeasible reasoning systems.
+\newblock {\em International Journal of Artificial Intelligence Tools},
+  10:483--501, 2001.
+
+\bibitem{DBLP:conf/icdt/BunemanKT01}
+Peter Buneman, Sanjeev Khanna, and Wang~Chiew Tan.
+\newblock Why and where: A characterization of data provenance.
+\newblock In den Bussche and Vianu \cite{DBLP:conf/icdt/2001}, pages 316--330.
+
+\bibitem{PhDComerio}
+Marco Comerio.
+\newblock {\em Web Service Contracts: Specification, Selection and
+  Composition}.
+\newblock PhD thesis, University of Milano-Bicocca, 2009.
+
+\bibitem{DBLP:conf/icail/Governatori11}
+Guido Governatori.
+\newblock On the relationship between carneades and defeasible logic.
+\newblock In {\em Proceedings of ICAIL}, pages 31--40. ACM, 2011.
+
+\bibitem{DBLP:conf/icail/2011}
+Kevin~D. Ashley and Tom~M. van Engers, editors.
+\newblock {\em The 13th International Conference on Artificial Intelligence and
+  Law, Proceedings of the Conference, June 6-10, 2011, Pittsburgh, PA, USA}.
+  ACM, 2011.
+
+\bibitem{DBLP:conf/iccbss/GangadharanTTDDIW08}
+G.~R. Gangadharan, Hong~Linh Truong, Martin Treiber, Vincenzo D'Andrea,
+  Schahram Dustdar, Renato Iannella, and Michael Weiss.
+\newblock Consumer-specified service license selection and composition.
+\newblock In {\em Proceedings of ICCBSS, IEEE}, pages 194--203, 2008.
+
+\bibitem{DBLP:conf/iccbss/2008}
+{\em Seventh International Conference on Composition-Based Software Systems
+  (ICCBSS 2008), February, 25-29, 2008, Madrid, Spain, Proceedings}. IEEE
+  Computer Society, 2008.
+
+\bibitem{DBLP:journals/ijswis/BizerHB09}
+Christian Bizer, Tom Heath, and Tim Berners-Lee.
+\newblock Linked data - the story so far.
+\newblock {\em Int. J. Semantic Web Inf. Syst.}, 5(3):1--22, 2009.
+
+\bibitem{DBLP:conf/apscc/2011}
+James~J. Park, Christos Nikolaou, and Jiannong Cao, editors.
+\newblock {\em 2011 IEEE Asia-Pacific Services Computing Conference, APSCC
+  2011, Jeju, Korea (South), December 12-15, 2011}. IEEE, 2011.
+
+\bibitem{DBLP:conf/icsoc/2007}
+Bernd~J. Kr{\"a}mer, Kwei-Jay Lin, and Priya Narasimhan, editors.
+\newblock {\em Service-Oriented Computing - ICSOC 2007, Fifth International
+  Conference, Vienna, Austria, September 17-20, 2007, Proceedings}, volume 4749
+  of {\em Lecture Notes in Computer Science}. Springer, 2007.
+
+\bibitem{DBLP:conf/semweb/2011-1}
+Lora Aroyo, Chris Welty, Harith Alani, Jamie Taylor, Abraham Bernstein, Lalana
+  Kagal, Natasha~Fridman Noy, and Eva Blomqvist, editors.
+\newblock {\em The Semantic Web - ISWC 2011 - 10th International Semantic Web
+  Conference, Bonn, Germany, October 23-27, 2011, Proceedings, Part I}, volume
+  7031 of {\em Lecture Notes in Computer Science}. Springer, 2011.
+
+\bibitem{DBLP:conf/icdt/2001}
+Jan~Van den Bussche and Victor Vianu, editors.
+\newblock {\em Database Theory - ICDT 2001, 8th International Conference,
+  London, UK, January 4-6, 2001, Proceedings}, volume 1973 of {\em Lecture
+  Notes in Computer Science}. Springer, 2001.
+
+\bibitem{DBLP:conf/semweb/SantosE10}
+C{\'a}ssia~Trojahn dos Santos and J{\'e}r{\^o}me Euzenat.
+\newblock Consistency-driven argumentation for alignment agreement.
+\newblock In Shvaiko et~al. \cite{DBLP:conf/semweb/2010om}.
+
+\bibitem{DBLP:conf/semweb/2010om}
+Pavel Shvaiko, J{\'e}r{\^o}me Euzenat, Fausto Giunchiglia, Heiner
+  Stuckenschmidt, Ming Mao, and Isabel~F. Cruz, editors.
+\newblock {\em Proceedings of the 5th International Workshop on Ontology
+  Matching (OM-2010), Shanghai, China, November 7, 2010}, volume 689 of {\em
+  CEUR Workshop Proceedings}. CEUR-WS.org, 2010.
+
+\bibitem{DBLP:conf/dalt/FornaraC09}
+Nicoletta Fornara and Marco Colombetti.
+\newblock Ontology and time evolution of obligations and prohibitions using
+  semantic web technology.
+\newblock In Baldoni et~al. \cite{DBLP:conf/dalt/2009}, pages 101--118.
+
+\bibitem{DBLP:conf/dalt/2009}
+Matteo Baldoni, Jamal Bentahar, M.~Birna van Riemsdijk, and John Lloyd,
+  editors.
+\newblock {\em Declarative Agent Languages and Technologies VII, 7th
+  International Workshop, DALT 2009, Budapest, Hungary, May 11, 2009. Revised
+  Selected and Invited Papers}, volume 5948 of {\em Lecture Notes in Computer
+  Science}. Springer, 2010.
+
+\bibitem{opmManual09}
+Moreau et~al.
+\newblock {\em The Open Provenance Model Core Specification (v1.1)}, 2009.
+\newblock \url{http://eprints.ecs.soton.ac.uk/18332/1/opm.pdf}.
+
+\bibitem{opmManual10}
+Jun Zhao.
+\newblock {\em Guide to the Open Provenance Vocabulary}, 2010.
+\newblock url{http://purl.org/net/opmv/guide}.
+
+\bibitem{Miller08}
+P.~Miller, R.~Styles, and T.~Heath.
+\newblock Open data commons, a license for open data.
+\newblock In {\em LDOW}, 2008.
+
+\bibitem{ODRL}
+Renato Iannella.
+\newblock {\em Open Digital Rights Language (ODRL)}, 2002.
+\newblock \url{http://odrl.net/1.1/ODRL-11.pdf}.
+
+\bibitem{ccManual08}
+Hal Abelson, Ben Adida, Mike Linksvayer, and Nathan Yergler.
+\newblock {\em cc{REL}: The Creative Commons Rights Expression Language}, 2008.
+
+\bibitem{talis}
+{\em ODC Public Domain Dedication and License}, 2008.
+\newblock \url{http://download.opencontentlawyer.com/ODC_PDDL.pdf}.
+
+\bibitem{DBLP:conf/dlog/ZhangAGC09}
+Rui Zhang, Alessandro Artale, Fausto Giunchiglia, and Bruno Crispo.
+\newblock Using description logics in relation based access control.
+\newblock In Grau et~al. \cite{DBLP:conf/dlog/2009}.
+
+\bibitem{DBLP:conf/dlog/2009}
+Bernardo~Cuenca Grau, Ian Horrocks, Boris Motik, and Ulrike Sattler, editors.
+\newblock {\em Proceedings of the 22nd International Workshop on Description
+  Logics (DL 2009), Oxford, UK, July 27-30, 2009}, volume 477 of {\em CEUR
+  Workshop Proceedings}. CEUR-WS.org, 2009.
+
+\bibitem{sacco2011}
+Owen Sacco and Alexandre Passant.
+\newblock A {P}rivacy {P}reference {O}ntology ({PPO}) for {L}inked {D}ata.
+\newblock In {\em Proceedings of the 4th Workshop about Linked Data on the Web
+  (LDOW-2011)}, 2011.
+
+\bibitem{hollen09}
+James Hollenbach, Joe Presbrey, and Tim Berners-Lee.
+\newblock Using {RDF} {M}etadata {T}o {E}nable {A}ccess {C}ontrol on the
+  {S}ocial {S}emantic {W}eb.
+\newblock In {\em Proceedings of the Workshop on Collaborative Construction,
+  Management and Linking of Structured Knowledge (CK-2009)}, 2009.
+
+\bibitem{DBLP:conf/semweb/AbelCHKKO07}
+Fabian Abel, Juri Luca~De Coi, Nicola Henze, Arne~Wolf Koesling, Daniel Krause,
+  and Daniel Olmedilla.
+\newblock Enabling advanced and context-dependent access control in rdf stores.
+\newblock In {\em Proceedings of the 6th International Semantic Web Conference
+  (ISWC-2007), LNCS 4825}, pages 1--14, 2007.
+
+\bibitem{DBLP:conf/semweb/2007}
+Karl Aberer, Key-Sun Choi, Natasha~Fridman Noy, Dean Allemang, Kyung-Il Lee,
+  Lyndon J.~B. Nixon, Jennifer Golbeck, Peter Mika, Diana Maynard, Riichiro
+  Mizoguchi, Guus Schreiber, and Philippe Cudr{\'e}-Mauroux, editors.
+\newblock {\em The Semantic Web, 6th International Semantic Web Conference, 2nd
+  Asian Semantic Web Conference, ISWC 2007 + ASWC 2007, Busan, Korea, November
+  11-15, 2007}, volume 4825 of {\em Lecture Notes in Computer Science}.
+  Springer, 2007.
+
+\bibitem{CEUR-WS.org/Vol-576/paper1}
+Hannes Muhleisen, Martin Kost, and Johann-Christoph Freytag.
+\newblock {SWRL-based Access Policies for Linked Data}.
+\newblock In {\em Proceedings of the 2nd Workshop on Trust and Privacy on the
+  Social and Semantic Web (SPOT2010)}, 2010.
+
+\bibitem{stroka2010}
+Stephanie Stroka, Sebastian Schaffert, and Tobias Burger.
+\newblock {Access Control in the Social Semantic Web - Extending the idea of
+  FOAF+SSL in KiWi}.
+\newblock In {\em Proceedings of the 2nd Workshop on Trust and Privacy on the
+  Social and Semantic Web (SPOT2010)}, 2010.
+
+\bibitem{LinkedDataStory}
+Christian Bizer, Tom Heath, and Tim Berners-lee.
+\newblock Linked data-the story so far.
+\newblock {\em International Journal on Semantic Web and Information Systems},
+  5(3):1--22, 2009.
+
+\bibitem{DBLP:conf/policy/CoiOZBS08}
+Juri Luca~De Coi, Daniel Olmedilla, Sergej Zerr, Piero~A. Bonatti, and Luigi
+  Sauro.
+\newblock A trust management package for policy-driven protection {\&}
+  personalization of web content.
+\newblock In {\em POLICY\/} \cite{DBLP:conf/policy/2008}, pages 228--230.
+
+\bibitem{DBLP:conf/policy/2008}
+{\em 9th IEEE International Workshop on Policies for Distributed Systems and
+  Networks (POLICY 2008), 2-4 June 2008, Palisades, New York, USA}. IEEE
+  Computer Society, 2008.
+
+\bibitem{DBLP:conf/esws/Hartig09}
+Olaf Hartig.
+\newblock Querying trust in rdf data with tsparql.
+\newblock In {\em Proceedings of the 6th European Semantic Web Conference
+  (ESWC-2009), LNCS 5554}, pages 5--20, 2009.
+
+\bibitem{DBLP:conf/esws/2009}
+Lora Aroyo, Paolo Traverso, Fabio Ciravegna, Philipp Cimiano, Tom Heath, Eero
+  Hyv{\"o}nen, Riichiro Mizoguchi, Eyal Oren, Marta Sabou, and Elena
+  Paslaru~Bontas Simperl, editors.
+\newblock {\em The Semantic Web: Research and Applications, 6th European
+  Semantic Web Conference, ESWC 2009, Heraklion, Crete, Greece, May 31-June 4,
+  2009, Proceedings}, volume 5554 of {\em Lecture Notes in Computer Science}.
+  Springer, 2009.
+
+\bibitem{DBLP:journals/ws/CarrollBHS05}
+Jeremy Carroll, Christian Bizer, Patrick Hayes, and Patrick Stickler.
+\newblock Named graphs.
+\newblock {\em J. Web Sem.}, 3(4):247--267, 2005.
+
+\bibitem{DBLP:conf/f-egc/BuffaFK10}
+Michel Buffa, Catherine Faron-Zucker, and Anna Kolomoyskaya.
+\newblock Gestion s{\'e}mantique des droits d'acc{\`e}s au contenu :
+  l'ontologie {AMO}.
+\newblock In Yahia and Petit \cite{DBLP:conf/f-egc/2010}, pages 471--482.
+
+\bibitem{DBLP:conf/f-egc/2010}
+Sadok~Ben Yahia and Jean-Marc Petit, editors.
+\newblock {\em Extraction et gestion des connaissances (EGC'2010), Actes, 26 au
+  29 janvier 2010, Hammamet, Tunisie}, volume RNTI-E-19 of {\em Revue des
+  Nouvelles Technologies de l'Information}. C{\'e}padu{\`e}s-{\'E}ditions,
+  2010.
+
+\bibitem{Giunchiglia_ontologydriven}
+Fausto Giunchiglia, Rui Zhang, and Bruno Crispo.
+\newblock Ontology driven community access control.
+\newblock In {\em Proceedings of the 1st Workshop on Trust and Privacy on the
+  Social and Semantic Web (SPOT-2009)}, 2009.
+
+\bibitem{Breslin_et_al_2009}
+John Breslin, Alexandre Passant, and Stefan Decker.
+\newblock {\em The Social Semantic Web}.
+\newblock Springer, Heidelberg, 2009.
+
+\bibitem{DBLP:journals/compsec/CarminatiFHKT11}
+Barbara Carminati, Elena Ferrari, Raymond Heatherly, Murat Kantarcioglu, and
+  Bhavani~M. Thuraisingham.
+\newblock Semantic web-based social network access control.
+\newblock {\em Computers {\&} Security}, 30(2-3):108--115, 2011.
+
+\bibitem{Miller_2008_ODC}
+Paul Miller, Rob Styles, and Tom Heath.
+\newblock Open data commons, a license for open data.
+\newblock In {\em Proceedings of LDOW}, 2008.
+
+\bibitem{ccRel}
+Hal Abelson, Ben Adida, Mike Linksvayer, and Nathan Yergler.
+\newblock ccrel: The creative commons rights expression language.
+\newblock Technical report, Technical report, Creative Commons, 2008.
+  http://wiki. creativecommons. org/Image: Ccrel-1.0. pdf, 2008.
+
+\bibitem{odc}
+Paul Miller, Rob Styles, and Tom Heath.
+\newblock Open data commons, a license for open data.
+\newblock {\em LDOW}, 369, 2008.
+\newblock \url{http://download.opencontentlawyer.com/ODC_PDDL.pdf}.
+
+\bibitem{omv}
+Raul Palma, Jens Hartmann, and Peter Haase.
+\newblock Omv-ontology metadata vocabulary for the semantic web.
+\newblock Technical report, Technical report, Universidad Polit{\'e}cnica de
+  Madrid, University of Karlsruhe, 2008. Version 2.4. Available at http://omv.
+  ontoware. org, 2008.
+
+\bibitem{intpro}
+Richard Raysman, Edward~A. Pisacreta, and Kenneth~A. Adler.
+\newblock {\em Intellectual Property Licensing: Forms and Analysis}.
+\newblock Law Journal Press, 1999.
+
+\bibitem{DBLP:conf/semweb/VillataG12}
+Serena Villata and Fabien Gandon.
+\newblock Towards licenses compatibility and composition in the web of data.
+\newblock In Glimm and Huynh \cite{DBLP:conf/semweb/2012p}.
+
+\bibitem{DBLP:conf/semweb/2012p}
+Birte Glimm and David Huynh, editors.
+\newblock {\em Proceedings of the ISWC 2012 Posters {\&} Demonstrations Track,
+  Boston, USA, November 11-15, 2012}, volume 914 of {\em CEUR Workshop
+  Proceedings}. CEUR-WS.org, 2012.
+
+\bibitem{DBLP:conf/semweb/VillataG12a}
+Serena Villata and Fabien Gandon.
+\newblock Licenses compatibility and composition in the web of data.
+\newblock In {\em Proceedings of COLD}, CEUR Workshop Proceedings 905, 2012.
+
+\bibitem{DBLP:conf/semweb/2012cold}
+Juan Sequeda, Andreas Harth, and Olaf Hartig, editors.
+\newblock {\em Proceedings of the Third International Workshop on Consuming
+  Linked Data, COLD 2012, Boston, MA, USA, November 12, 2012}, volume 905 of
+  {\em CEUR Workshop Proceedings}. CEUR-WS.org, 2012.
+
+\bibitem{DBLP:conf/semweb/2013-1}
+Harith Alani, Lalana Kagal, Achille Fokoue, Paul~T. Groth, Chris Biemann,
+  Josiane~Xavier Parreira, Lora Aroyo, Natasha~F. Noy, Chris Welty, and
+  Krzysztof Janowicz, editors.
+\newblock {\em The Semantic Web - ISWC 2013 - 12th International Semantic Web
+  Conference, Sydney, NSW, Australia, October 21-25, 2013, Proceedings, Part
+  I}, volume 8218 of {\em Lecture Notes in Computer Science}. Springer, 2013.
+
+\bibitem{DBLP:conf/semweb/2013cold}
+Olaf Hartig, Juan Sequeda, Aidan Hogan, and Takahide Matsutsuka, editors.
+\newblock {\em Proceedings of the Fourth International Workshop on Consuming
+  Linked Data, COLD 2013, Sydney, Australia, October 22, 2013}, volume 1034 of
+  {\em CEUR Workshop Proceedings}. CEUR-WS.org, 2013.
+
+\bibitem{DBLP:conf/acl/SocherBMN13}
+Richard Socher, John Bauer, Christopher~D. Manning, and Andrew~Y. Ng.
+\newblock Parsing with compositional vector grammars.
+\newblock In {\em ACL (1)}, pages 455--465, 2013.
+
+\bibitem{DBLP:conf/ekaw/GerberN12}
+Daniel Gerber and Axel-Cyrille~Ngonga Ngomo.
+\newblock Extracting multilingual natural-language patterns for rdf predicates.
+\newblock In {\em EKAW}, pages 87--96, 2012.
 
 \end{thebibliography}
