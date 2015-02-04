@@ -7,6 +7,31 @@ Krzysztof Janowicz, Pascal Hitzler, Benjamin Adams, Dave Kolas, and
 \newblock {\em Semantic Web Journal}, 2014.
 \newblock \url{http://geog.ucsb.edu/~jano/swj653.pdf}.
 
+\bibitem{anamaria08}
+Ana-Maria Olteanu.
+\newblock {\em Fusion de connaissances imparfaites pour l'appariement de
+  donn\'{e}es g\'{e}ographiques}.
+\newblock PhD thesis, Universite Paris-Est, France, October 2008.
+
+\bibitem{MC10}
+Maria del Carmen. Su\'{a}rez-Figueroa.
+\newblock {\em NeOn Methodology for Building Ontology Networks: Specification,
+  Scheduling and Reuse}.
+\newblock PhD thesis, Universidad Politecnica de Madrid, Spain, June 2010.
+\newblock \url{http://oa.upm.es/3879/}.
+
+\bibitem{bpgld}
+Bernadette Hyland, Ghislain Atemezing, and Boris Villazon-Terrazas (eds).
+\newblock Best practices for publishing linked data.
+\newblock W3C Working Group Note, 2014.
+\newblock \url{http://www.w3.org/TR/ld-bp/ }.
+
+\bibitem{AquinJoWS12}
+Mathieu D\'Aquin and {Natasha F.} Noy.
+\newblock Where to publish and find ontologies? a survey of ontology libraries.
+\newblock {\em Web Semantics: Science, Services and Agents on the World Wide
+  Web}, 11(0):96--111, 2012.
+
 \bibitem{timld}
 Tim Berners-Lee.
 \newblock Design issues for linked data, 2006.
@@ -91,7 +116,7 @@ Manolis Koubarakis, Manos Karpathiotakis, Kostis Kyzirakos, Charalampos
 \newblock In {\em Reasoning Web. Semantic Technologies for Advanced Query
   Answering - 8th International Summer School 2012, Vienna, Austria, September
   3-8, 2012. Proceedings}, pages 290--328, 2012.
-\newblock \url{http://dx.doi.org/10.1007/978-3-642-33158-9\_8}.
+\newblock \url{http://dx.doi.org/10.1007/978-3-642-33158-9_8}.
 
 \bibitem{exhibit2007}
 David~F Huynh, David~R Karger, and Robert~C Miller.
@@ -105,12 +130,6 @@ Bernadette Hyland, Ghislain Atemezing, Michael Pendleton, and Biplav~Srivastava
 \newblock Linked data glossary.
 \newblock W3C Working Group Note, 2013.
 \newblock \url{http://www.w3.org/TR/ld-glossary/ }.
-
-\bibitem{bpgld}
-Bernadette Hyland, Ghislain Atemezing, and Boris Villazon-Terrazas (eds).
-\newblock Best practices for publishing linked data.
-\newblock W3C Working Group Note, 2014.
-\newblock \url{http://www.w3.org/TR/ld-bp/ }.
 
 \bibitem{dcube}
 Richard Cyganiak and Dave~Reynolds (eds).
@@ -135,12 +154,6 @@ Peter~A Burrough, Rachael McDonnell, Peter~A Burrough, and Rachael McDonnell.
 \newblock {\em Principles of geographical information systems}, volume 333.
 \newblock Oxford university press Oxford, 1998.
 
-\bibitem{anamaria08}
-Ana-Maria OLTEANU.
-\newblock {\em Fusion de connaissances imparfaites pour l'appariement de
-  donn\'{e}es g\'{e}ographiques}.
-\newblock PhD thesis, Universite Paris-Est, France, October 2008.
-
 \bibitem{esri98}
 ESRI.
 \newblock Esri shapefile technical description.
@@ -160,6 +173,22 @@ Howard Butler~(Hobu Inc.), Martin~Daly (Cadcorp), Allan~Doyle (MIT), Sean
 \newblock The geojson format specification, 2008.
 \newblock \url{http://geojson.org/geojson-spec.html}.
 
+\bibitem{wgs84ref}
+Muneendra Kumar.
+\newblock World geodetic system 1984: A modern and accurate global reference
+  frame.
+\newblock {\em Marine Geodesy}, 12(2):117--126, 1988.
+
+\bibitem{iso19115}
+{International Organization for Standardization}.
+\newblock {ISO 19115 Geographic Information - Metadata}, 2003.
+
+\bibitem{knippers09}
+R.A. Knippers.
+\newblock Geometric aspects of mapping.
+\newblock Non-published educational notes, 2009.
+\newblock \url{http://kartoweb.itc.nl/geometrics/index.html}.
+
 \bibitem{demter-2012-ekaw}
 Jan Demter, S{\"o}ren Auer, Michael Martin, and Jens Lehmann.
 \newblock {LODStats -- An Extensible Framework for High-performance Dataset
@@ -167,19 +196,25 @@ Jan Demter, S{\"o}ren Auer, Michael Martin, and Jens Lehmann.
 \newblock In {\em 18$^{th}$ International Conference on Knowledge Engineering
   and Knowledge Management (EKAW)}, pages 353--362, Galway, Ireland, 2012.
 
-\bibitem{Atemezing:TC12}
-Auguste~Ghislain Atemezing and Rapha\"el Troncy.
-\newblock {Comparing Vocabularies for Representing Geographical Features and
-  Their Geometry}.
-\newblock In {\em 5$^{th}$ International Terra Cognita Workshop}, Boston, USA,
-  2012.
-
 \bibitem{inspire2009}
 {INSPIRE Thematic WG CRS and Geographical Grid Systems }.
 \newblock {Guidelines INSPIRE Specification on Coordinate Reference Systems },
   2009.
 \newblock
   \url{http://inspire.ec.europa.eu/documents/Data_Specifications/INSPIRE_Specification_CRS_v3.0.pdf}.
+
+\bibitem{isaURI}
+Phil Archer, Stijn Goedertier, and Nikolaos Loutas.
+\newblock {Study on persistent URIs, with identification of best practices and
+  recommendations on the topic for the MSs and the EC}.
+\newblock Deliverable, 2012.
+
+\bibitem{Atemezing:TC12}
+Auguste~Ghislain Atemezing and Rapha\"el Troncy.
+\newblock {Comparing Vocabularies for Representing Geographical Features and
+  Their Geometry}.
+\newblock In {\em 5$^{th}$ International Terra Cognita Workshop}, Boston, USA,
+  2012.
 
 \bibitem{iso2004}
 {International Organization for Standardization }.
@@ -212,8 +247,8 @@ Jhonny Saavedra, Luis~M. Vilches-Bl\'azquez, and Alberto Boada.
 
 \bibitem{iso2012}
 {International Organization for Standardization }.
-\newblock {ISO 19152, Geographic information — Land Administration Domain
-  Model (LADM)}, 2012.
+\newblock {ISO 19152, Geographic information: Land Administration Domain Model
+  (LADM)}, 2012.
 \newblock \url{http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalo
   gue_detail.htm?csnumber=51206}.
 
@@ -224,6 +259,12 @@ Fay\c{c}al Hamdi, Nathalie Abadie, B\'{e}n\'{e}dicte Bucher, and Abdelfettah
   web.
 \newblock In {\em Proceedings of the 1st International Workshop on Geospatial
   Linked Data, 1 September, Leipzig, Germany}, 2014.
+
+\bibitem{turtle14}
+E~Prud'hommeaux, G~Carothers, D~Beckett, and T~Berners-Lee.
+\newblock Rdf 1.1 turtle--terse rdf triple language.
+\newblock {\em W3C Recommendation}, 2014.
+\newblock \url{http://www.w3.org/TR/turtle/}.
 
 \bibitem{euzenat2007}
 J{\'e}r{\^o}me Euzenat, Pavel Shvaiko, et~al.
@@ -273,8 +314,8 @@ Volker Walter and Dieter Fritsch.
 
 \bibitem{reynaud2007}
 Chantal Reynaud and Brigitte Safar.
-\newblock Techniques structurelles d’alignement pour portails web.
-\newblock {\em Revue RNTI W-3, Fouille du Web}, 2007.
+\newblock Techniques structurelles d'alignement pour portails web.
+\newblock {\em Revue RNTI W3, Fouille du Web}, 2007.
 
 \bibitem{hamdi2010}
 Fay{\c{c}}al Hamdi, Chantal Reynaud, and Brigitte Safar.
@@ -301,6 +342,18 @@ Carlos~Buil Aranda, Aidan Hogan, J{\"{u}}rgen Umbrich, and Pierre{-}Yves
 \newblock {SPARQL} web-querying infrastructure: Ready for action?
 \newblock In Alani et~al. \cite{semweb/2013-2}, pages 277--293.
 
+\bibitem{ashworth99}
+M~Ashworth.
+\newblock Information technology, database languages, sql multimedia, and
+  application packages, part 3: Spatial, iso.
+\newblock {\em IEC 13249}, 3, 1999.
+
+\bibitem{rtree84}
+Antonin Guttman.
+\newblock {\em R-trees: a dynamic index structure for spatial searching},
+  volume~14.
+\newblock ACM, 1984.
+
 \bibitem{battle12}
 Robert Battle and Dave Kolas.
 \newblock Enabling the geospatial semantic web with parliament and geosparql.
@@ -313,24 +366,12 @@ George Garbis, Kostis Kyzirakos, and Manolis Koubarakis.
 \newblock In {\em The Semantic Web - {ISWC} 2013 - 12th International Semantic
   Web Conference, Sydney, NSW, Australia, October 21-25, 2013, Proceedings,
   Part {II}}, pages 343--359, 2013.
+\newblock \url{http://dx.doi.org/10.1007/978-3-642-41338-4_22}.
 
 \bibitem{strabon12}
 Kostis Kyzirakos, Manos Karpathiotakis, and Manolis Koubarakis.
 \newblock Strabon: a semantic geospatial dbms.
 \newblock In {\em The Semantic Web--ISWC 2012}, pages 295--311. Springer, 2012.
-
-\bibitem{scharffe_2012}
-Fran\c{c}ois Scharffe, Ghislain Atemezing, Rapha\"{e}l Troncy, Fabien Gandon,
-  Serena Villata, B\'{e}n\'{e}dicte Bucher, Fay\c{c}al Hamdi, Laurent Bihanic,
-  Gabriel K\'{e}p\'{e}klian, Franck Cotton, J\'{e}r\^{o}me Euzenat, Zhengjie
-  Fan, Pierre-Yves Vandenbussche, and Bernard Vatant.
-\newblock Enabling linked-data publication with the datalift platform.
-\newblock In {\em 26th Conference on Artificial Intelligence (AAAI-12)}, 2012.
-
-\bibitem{lov11}
-Pierre-Yves Vandenbussche, Bernard Vatant, and L.~Rozat.
-\newblock {Linked open vocabularies: an initiative for the web of data}.
-\newblock In {\em QetR Workshop}, Chambery, France, 2011.
 
 \bibitem{ontowiki14}
 Bert~Van Nuffelen, Valentina Janev, Michael Martin, Vuk Mijovic, and Sebastian
@@ -360,6 +401,26 @@ GeoKnow Project.
 \newblock
   \url{https://github.com/GeoKnow/GeoLift/blob/master/GeoLiftManual/GeoLiftManual.pdf}.
 
+\bibitem{scharffe_2012}
+Fran\c{c}ois Scharffe, Ghislain Atemezing, Rapha\"{e}l Troncy, Fabien Gandon,
+  Serena Villata, B\'{e}n\'{e}dicte Bucher, Fay\c{c}al Hamdi, Laurent Bihanic,
+  Gabriel K\'{e}p\'{e}klian, Franck Cotton, J\'{e}r\^{o}me Euzenat, Zhengjie
+  Fan, Pierre-Yves Vandenbussche, and Bernard Vatant.
+\newblock Enabling linked-data publication with the datalift platform.
+\newblock In {\em 26th Conference on Artificial Intelligence (AAAI-12)}, 2012.
+
+\bibitem{lov11}
+Pierre-Yves Vandenbussche, Bernard Vatant, and L.~Rozat.
+\newblock {Linked open vocabularies: an initiative for the web of data}.
+\newblock In {\em QetR Workshop}, Chambery, France, 2011.
+
+\bibitem{alexander09}
+Keith Alexander and Michael Hausenblas.
+\newblock Describing linked datasets: on the design and usage of void, the
+  vocabulary of interlinked datasets.
+\newblock In {\em In Linked Data on the Web Workshop (LDOW 09), in conjunction
+  with 18th International World Wide Web Conference (WWW 09}. Citeseer, 2009.
+
 \bibitem{marti2009}
 Marti~A. Hearst.
 \newblock {\em Search User Interfaces}.
@@ -370,9 +431,15 @@ Marti Hearst, Ame Elliott, Jennifer English, Rashmi Sinha, Kirsten Swearinged,
   and Ka-Ping Yee.
 \newblock Finding the flow in web site search, 2002.
 
+\bibitem{odm14}
+Ulrich Atz, Tom Heath, Michael Heil, Jack Hardinges, and Jamie Fawcett.
+\newblock Best practice visualisation, dashboard and key figures report.
+\newblock WP2: Research studies and stakeholder analysis, 2014.
+\newblock \url{http://project.opendatamonitor.eu}.
+
 \bibitem{lars2010}
 Lars Grammel and Margaret-Anne Storey.
-\newblock Choosel – web-based visualization construction and coordination for
+\newblock Choosel: Web-based visualization construction and coordination for
   information visualization novices.
 \newblock Poster: IEEE Information Visualization Conference, 2010.
 
@@ -397,6 +464,11 @@ Tetherless Constellation.
 Aba-Sah Dadzie and Matthew Rowe.
 \newblock Approaches to visualising linked data: A survey.
 \newblock {\em Semantic Web}, 2(2):89--124, 2011.
+
+\bibitem{ldapi}
+Dave Reynolds, Jeni Tennison, Leigh Dodds, and et. al.
+\newblock Linked data api, 2012.
+\newblock \url{https://code.google.com/p/linked-data-api/}.
 
 \bibitem{Martin2012}
 G.~Martin Skjaeveland.
@@ -576,12 +648,6 @@ Boris Villaz\'{o}n-Terrazas; et~al.
 \newblock Methodological guidelines for publishing government linked data.
 \newblock \url{http://link.springer.com/chapter/10.1007/978-1-4614-1767-5_2}.
 
-\bibitem{AquinJoWS12}
-Mathieu D\'Aquin and {Natasha F.} Noy.
-\newblock Where to publish and find ontologies? a survey of ontology libraries.
-\newblock {\em Web Semantics: Science, Services and Agents on the World Wide
-  Web}, 11(0):96--111, 2012.
-
 \bibitem{Bizer2009}
 Christian Bizer, Tom Heath, and Tim Berners-Lee.
 \newblock {Linked Data - The Story So Far}.
@@ -593,13 +659,6 @@ Keith Alexander, Richard Cyganiak, Michael Hausenblas, and Jun Zhao.
 \newblock {Describing linked datasets}.
 \newblock In {\em 2$^{nd}$ Workshop on Linked Data on the Web (LDOW)}, Madrid,
   Spain, 2009.
-
-\bibitem{MC10}
-Maria del Carmen. Su\'{a}rez-Figueroa.
-\newblock {\em NeOn Methodology for Building Ontology Networks: Specification,
-  Scheduling and Reuse}.
-\newblock PhD thesis, Universidad Politecnica de Madrid, Spain, June 2010.
-\newblock http://oa.upm.es/3879/.
 
 \bibitem{Datalift:D22}
 Bernard Vatant and Pierre-Yves Vandenbussche.
@@ -1077,12 +1136,12 @@ Nicoletta Fornara and Marco Colombetti.
 \bibitem{opmManual09}
 Moreau et~al.
 \newblock {\em The Open Provenance Model Core Specification (v1.1)}, 2009.
-\newblock http://eprints.ecs.soton.ac.uk/18332/1/opm.pdf.
+\newblock \url{http://eprints.ecs.soton.ac.uk/18332/1/opm.pdf}.
 
 \bibitem{opmManual10}
 Jun Zhao.
 \newblock {\em Guide to the Open Provenance Vocabulary}, 2010.
-\newblock http://purl.org/net/opmv/guide.
+\newblock url{http://purl.org/net/opmv/guide}.
 
 \bibitem{Miller08}
 P.~Miller, R.~Styles, and T.~Heath.
@@ -1092,7 +1151,7 @@ P.~Miller, R.~Styles, and T.~Heath.
 \bibitem{ODRL}
 Renato Iannella.
 \newblock {\em Open Digital Rights Language (ODRL)}, 2002.
-\newblock http://odrl.net/1.1/ODRL-11.pdf.
+\newblock \url{http://odrl.net/1.1/ODRL-11.pdf}.
 
 \bibitem{ccManual08}
 Hal Abelson, Ben Adida, Mike Linksvayer, and Nathan Yergler.
@@ -1100,7 +1159,7 @@ Hal Abelson, Ben Adida, Mike Linksvayer, and Nathan Yergler.
 
 \bibitem{talis}
 {\em ODC Public Domain Dedication and License}, 2008.
-\newblock http://download.opencontentlawyer.com/ODC\_PDDL.pdf.
+\newblock \url{http://download.opencontentlawyer.com/ODC_PDDL.pdf}.
 
 \bibitem{DBLP:conf/dlog/ZhangAGC09}
 Rui Zhang, Alessandro Artale, Fausto Giunchiglia, and Bruno Crispo.
@@ -1220,7 +1279,7 @@ Hal Abelson, Ben Adida, Mike Linksvayer, and Nathan Yergler.
 Paul Miller, Rob Styles, and Tom Heath.
 \newblock Open data commons, a license for open data.
 \newblock {\em LDOW}, 369, 2008.
-\newblock \url{http://download.opencontentlawyer.com/ODC\_PDDL.pdf}.
+\newblock \url{http://download.opencontentlawyer.com/ODC_PDDL.pdf}.
 
 \bibitem{omv}
 Raul Palma, Jens Hartmann, and Peter Haase.
