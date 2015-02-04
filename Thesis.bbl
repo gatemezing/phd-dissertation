@@ -154,6 +154,15 @@ Peter~A Burrough, Rachael McDonnell, Peter~A Burrough, and Rachael McDonnell.
 \newblock {\em Principles of geographical information systems}, volume 333.
 \newblock Oxford university press Oxford, 1998.
 
+<<<<<<< HEAD
+=======
+\bibitem{anamaria08}
+Ana-Maria Olteanu.
+\newblock {\em Fusion de connaissances imparfaites pour l'appariement de
+  donn\'{e}es g\'{e}ographiques}.
+\newblock PhD thesis, Universite Paris-Est, France, October 2008.
+
+>>>>>>> 43ed60ea64f4e89f1f4c8478ead5180b33e8735a
 \bibitem{esri98}
 ESRI.
 \newblock Esri shapefile technical description.
@@ -660,6 +669,16 @@ Keith Alexander, Richard Cyganiak, Michael Hausenblas, and Jun Zhao.
 \newblock In {\em 2$^{nd}$ Workshop on Linked Data on the Web (LDOW)}, Madrid,
   Spain, 2009.
 
+<<<<<<< HEAD
+=======
+\bibitem{MC10}
+Maria del Carmen. Su\'{a}rez-Figueroa.
+\newblock {\em NeOn Methodology for Building Ontology Networks: Specification,
+  Scheduling and Reuse}.
+\newblock PhD thesis, Universidad Politecnica de Madrid, Spain, June 2010.
+\newblock \url{http://oa.upm.es/3879/}.
+
+>>>>>>> 43ed60ea64f4e89f1f4c8478ead5180b33e8735a
 \bibitem{Datalift:D22}
 Bernard Vatant and Pierre-Yves Vandenbussche.
 \newblock {Catalogue de Vocabulaires}.
@@ -798,62 +817,6 @@ Harith Alani, Lalana Kagal, Achille Fokoue, Paul~T. Groth, Chris Biemann,
   Conference, Sydney, NSW, Australia, October 21-25, 2013, Proceedings, Part
   {II}}, volume 8219 of {\em Lecture Notes in Computer Science}. Springer,
   2013.
-
-\bibitem{DBLP:conf/semweb/2013cold}
-Olaf Hartig, Juan Sequeda, Aidan Hogan, and Takahide Matsutsuka, editors.
-\newblock {\em Proceedings of the Fourth International Workshop on Consuming
-  Linked Data, COLD 2013, Sydney, Australia, October 22, 2013}, volume 1034 of
-  {\em CEUR Workshop Proceedings}. CEUR-WS.org, 2013.
-
-\bibitem{DBLP:conf/icail/2007}
-{\em The Eleventh International Conference on Artificial Intelligence and Law,
-  Proceedings of the Conference, June 4-8, 2007, Stanford Law School, Stanford,
-  California, USA}. ACM, 2007.
-
-\bibitem{DBLP:conf/icdt/2001}
-Jan~Van den Bussche and Victor Vianu, editors.
-\newblock {\em Database Theory - ICDT 2001, 8th International Conference,
-  London, UK, January 4-6, 2001, Proceedings}, volume 1973 of {\em Lecture
-  Notes in Computer Science}. Springer, 2001.
-
-\bibitem{DBLP:conf/semweb/2010om}
-Pavel Shvaiko, J{\'e}r{\^o}me Euzenat, Fausto Giunchiglia, Heiner
-  Stuckenschmidt, Ming Mao, and Isabel~F. Cruz, editors.
-\newblock {\em Proceedings of the 5th International Workshop on Ontology
-  Matching (OM-2010), Shanghai, China, November 7, 2010}, volume 689 of {\em
-  CEUR Workshop Proceedings}. CEUR-WS.org, 2010.
-
-\bibitem{DBLP:conf/dalt/2009}
-Matteo Baldoni, Jamal Bentahar, M.~Birna van Riemsdijk, and John Lloyd,
-  editors.
-\newblock {\em Declarative Agent Languages and Technologies VII, 7th
-  International Workshop, DALT 2009, Budapest, Hungary, May 11, 2009. Revised
-  Selected and Invited Papers}, volume 5948 of {\em Lecture Notes in Computer
-  Science}. Springer, 2010.
-
-\bibitem{DBLP:conf/dlog/2009}
-Bernardo~Cuenca Grau, Ian Horrocks, Boris Motik, and Ulrike Sattler, editors.
-\newblock {\em Proceedings of the 22nd International Workshop on Description
-  Logics (DL 2009), Oxford, UK, July 27-30, 2009}, volume 477 of {\em CEUR
-  Workshop Proceedings}. CEUR-WS.org, 2009.
-
-\bibitem{DBLP:conf/policy/2008}
-{\em 9th IEEE International Workshop on Policies for Distributed Systems and
-  Networks (POLICY 2008), 2-4 June 2008, Palisades, New York, USA}. IEEE
-  Computer Society, 2008.
-
-\bibitem{DBLP:conf/f-egc/2010}
-Sadok~Ben Yahia and Jean-Marc Petit, editors.
-\newblock {\em Extraction et gestion des connaissances (EGC'2010), Actes, 26 au
-  29 janvier 2010, Hammamet, Tunisie}, volume RNTI-E-19 of {\em Revue des
-  Nouvelles Technologies de l'Information}. C{\'e}padu{\`e}s-{\'E}ditions,
-  2010.
-
-\bibitem{DBLP:conf/semweb/2012p}
-Birte Glimm and David Huynh, editors.
-\newblock {\em Proceedings of the ISWC 2012 Posters {\&} Demonstrations Track,
-  Boston, USA, November 11-15, 2012}, volume 914 of {\em CEUR Workshop
-  Proceedings}. CEUR-WS.org, 2012.
 
 \bibitem{vandenbussche:11}
 P.Y. Vandenbussche, B.~Vatant, and L.~Rozat.
@@ -1054,6 +1017,11 @@ N.~Cristianini and J.~Shawe-Taylor.
   Kernel-based Learning Methods}.
 \newblock Cambridge University Press, 2010.
 
+\bibitem{DBLP:conf/icail/2007}
+{\em The Eleventh International Conference on Artificial Intelligence and Law,
+  Proceedings of the Conference, June 4-8, 2007, Stanford Law School, Stanford,
+  California, USA}. ACM, 2007.
+
 \bibitem{DBLP:journals/ijdc/GrothGCM12}
 Paul~T. Groth, Yolanda Gil, James Cheney, and Simon Miles.
 \newblock Requirements for provenance on the web.
@@ -1122,16 +1090,37 @@ Lora Aroyo, Chris Welty, Harith Alani, Jamie Taylor, Abraham Bernstein, Lalana
   Conference, Bonn, Germany, October 23-27, 2011, Proceedings, Part I}, volume
   7031 of {\em Lecture Notes in Computer Science}. Springer, 2011.
 
+\bibitem{DBLP:conf/icdt/2001}
+Jan~Van den Bussche and Victor Vianu, editors.
+\newblock {\em Database Theory - ICDT 2001, 8th International Conference,
+  London, UK, January 4-6, 2001, Proceedings}, volume 1973 of {\em Lecture
+  Notes in Computer Science}. Springer, 2001.
+
 \bibitem{DBLP:conf/semweb/SantosE10}
 C{\'a}ssia~Trojahn dos Santos and J{\'e}r{\^o}me Euzenat.
 \newblock Consistency-driven argumentation for alignment agreement.
 \newblock In Shvaiko et~al. \cite{DBLP:conf/semweb/2010om}.
+
+\bibitem{DBLP:conf/semweb/2010om}
+Pavel Shvaiko, J{\'e}r{\^o}me Euzenat, Fausto Giunchiglia, Heiner
+  Stuckenschmidt, Ming Mao, and Isabel~F. Cruz, editors.
+\newblock {\em Proceedings of the 5th International Workshop on Ontology
+  Matching (OM-2010), Shanghai, China, November 7, 2010}, volume 689 of {\em
+  CEUR Workshop Proceedings}. CEUR-WS.org, 2010.
 
 \bibitem{DBLP:conf/dalt/FornaraC09}
 Nicoletta Fornara and Marco Colombetti.
 \newblock Ontology and time evolution of obligations and prohibitions using
   semantic web technology.
 \newblock In Baldoni et~al. \cite{DBLP:conf/dalt/2009}, pages 101--118.
+
+\bibitem{DBLP:conf/dalt/2009}
+Matteo Baldoni, Jamal Bentahar, M.~Birna van Riemsdijk, and John Lloyd,
+  editors.
+\newblock {\em Declarative Agent Languages and Technologies VII, 7th
+  International Workshop, DALT 2009, Budapest, Hungary, May 11, 2009. Revised
+  Selected and Invited Papers}, volume 5948 of {\em Lecture Notes in Computer
+  Science}. Springer, 2010.
 
 \bibitem{opmManual09}
 Moreau et~al.
@@ -1165,6 +1154,12 @@ Hal Abelson, Ben Adida, Mike Linksvayer, and Nathan Yergler.
 Rui Zhang, Alessandro Artale, Fausto Giunchiglia, and Bruno Crispo.
 \newblock Using description logics in relation based access control.
 \newblock In Grau et~al. \cite{DBLP:conf/dlog/2009}.
+
+\bibitem{DBLP:conf/dlog/2009}
+Bernardo~Cuenca Grau, Ian Horrocks, Boris Motik, and Ulrike Sattler, editors.
+\newblock {\em Proceedings of the 22nd International Workshop on Description
+  Logics (DL 2009), Oxford, UK, July 27-30, 2009}, volume 477 of {\em CEUR
+  Workshop Proceedings}. CEUR-WS.org, 2009.
 
 \bibitem{sacco2011}
 Owen Sacco and Alexandre Passant.
@@ -1221,6 +1216,11 @@ Juri Luca~De Coi, Daniel Olmedilla, Sergej Zerr, Piero~A. Bonatti, and Luigi
   personalization of web content.
 \newblock In {\em POLICY\/} \cite{DBLP:conf/policy/2008}, pages 228--230.
 
+\bibitem{DBLP:conf/policy/2008}
+{\em 9th IEEE International Workshop on Policies for Distributed Systems and
+  Networks (POLICY 2008), 2-4 June 2008, Palisades, New York, USA}. IEEE
+  Computer Society, 2008.
+
 \bibitem{DBLP:conf/esws/Hartig09}
 Olaf Hartig.
 \newblock Querying trust in rdf data with tsparql.
@@ -1246,6 +1246,13 @@ Michel Buffa, Catherine Faron-Zucker, and Anna Kolomoyskaya.
 \newblock Gestion s{\'e}mantique des droits d'acc{\`e}s au contenu :
   l'ontologie {AMO}.
 \newblock In Yahia and Petit \cite{DBLP:conf/f-egc/2010}, pages 471--482.
+
+\bibitem{DBLP:conf/f-egc/2010}
+Sadok~Ben Yahia and Jean-Marc Petit, editors.
+\newblock {\em Extraction et gestion des connaissances (EGC'2010), Actes, 26 au
+  29 janvier 2010, Hammamet, Tunisie}, volume RNTI-E-19 of {\em Revue des
+  Nouvelles Technologies de l'Information}. C{\'e}padu{\`e}s-{\'E}ditions,
+  2010.
 
 \bibitem{Giunchiglia_ontologydriven}
 Fausto Giunchiglia, Rui Zhang, and Bruno Crispo.
@@ -1298,6 +1305,12 @@ Serena Villata and Fabien Gandon.
 \newblock Towards licenses compatibility and composition in the web of data.
 \newblock In Glimm and Huynh \cite{DBLP:conf/semweb/2012p}.
 
+\bibitem{DBLP:conf/semweb/2012p}
+Birte Glimm and David Huynh, editors.
+\newblock {\em Proceedings of the ISWC 2012 Posters {\&} Demonstrations Track,
+  Boston, USA, November 11-15, 2012}, volume 914 of {\em CEUR Workshop
+  Proceedings}. CEUR-WS.org, 2012.
+
 \bibitem{DBLP:conf/semweb/VillataG12a}
 Serena Villata and Fabien Gandon.
 \newblock Licenses compatibility and composition in the web of data.
@@ -1316,6 +1329,12 @@ Harith Alani, Lalana Kagal, Achille Fokoue, Paul~T. Groth, Chris Biemann,
 \newblock {\em The Semantic Web - ISWC 2013 - 12th International Semantic Web
   Conference, Sydney, NSW, Australia, October 21-25, 2013, Proceedings, Part
   I}, volume 8218 of {\em Lecture Notes in Computer Science}. Springer, 2013.
+
+\bibitem{DBLP:conf/semweb/2013cold}
+Olaf Hartig, Juan Sequeda, Aidan Hogan, and Takahide Matsutsuka, editors.
+\newblock {\em Proceedings of the Fourth International Workshop on Consuming
+  Linked Data, COLD 2013, Sydney, Australia, October 22, 2013}, volume 1034 of
+  {\em CEUR Workshop Proceedings}. CEUR-WS.org, 2013.
 
 \bibitem{DBLP:conf/acl/SocherBMN13}
 Richard Socher, John Bauer, Christopher~D. Manning, and Andrew~Y. Ng.
