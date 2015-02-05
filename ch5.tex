@@ -348,11 +348,11 @@ Figure \ref{fig:gkpReverse} shows the GKP for Greece, and the results of crawlin
 \label{sec:evaluation}
 We conducted a user survey in order to compare what users think should be the important properties to display for a particular entity and what the GKP shows.
 
-\subsubsection{User survey.}
+\paragraph{User survey.}
 \label{sec:survey}
 We set up a survey\footnote{The survey is at \url{http://eSurv.org?u=entityviz}} on February 25th, 2014 and for three weeks in order to collect the preferences of users in term of the properties they would like to be shown for a particular entity. We select only one representative entity for nine classes: \texttt{TennisPlayer}, \texttt{Museum}, \texttt{Politician}, \texttt{Company}, \texttt{Country}, \texttt{City}, \texttt{Film}, \texttt{SoccerClub} and \texttt{Book}. 152 participants have provided answers, 72\% from academia, 20\% coming from the industry and 8\% having not declared their affiliation. 94\% of the respondents have heard about the Semantic Web while 35\% were not familiar with specific visualization tools. The detailed results\footnote{\url{https://github.com/ahmadassaf/KBE/blob/master/results/agreement-gkp-users.xls}} show the ranking of the top properties for each entity. We only keep the properties having received at least 10\% votes for comparing with the properties depicted in a KGP. We observe that users do not seem to be interested in the \texttt{INSEE code} identifying a French city while they expect to see the \texttt{population} or the \texttt{points of interest} of this city.
 
-\subsubsection{Comparison with the Knowledge Graphs.}
+\paragraph{Comparison with the Knowledge Graphs.}
 \label{sec:comparison}
 The results of the Google Knowledge Panel (GKP) extraction\footnote{\url{https://github.com/ahmadassaf/KBE/blob/master/results/survey.json}} clearly show a long tail distribution of the properties depicted by Google, with a top N properties (N being 4, 5 or 6 depending on the entity) counting for 98\% of the properties shown for this type. We compare those properties with the ones revealed by the user study. Table~\ref{tab:agreement} shows the agreement between the users and the choices made by Google in the GKP for the 9 classes. The highest agreement concerns the type \texttt{Museum} (66.97\%) while the lowest one is for the \texttt{TennisPlayer} (20\%) concept. We think properties for museums or books are more stable than for types such as person/agent which vary significantly. We acknowledge the fact that more than one instance should be tested in order to draw meaningful conclusion regarding what are the important properties for a type.
 
@@ -370,7 +370,7 @@ The results of the Google Knowledge Panel (GKP) extraction\footnote{\url{https:/
 
 With this set of 9 concepts, we are covering $301,189$ DBpedia entities that have an existence in Freebase, and for each of them, we can now empirically define the most important properties when there is an agreement between one of the biggest knowledge base (Google) and users preferences.
 
-\subsubsection{Modeling the preferred properties with Fresnel.}
+\paragraph{Modeling the preferred properties with Fresnel.}
 \label{sec:fresnel}
 Fresnel\footnote{\url{http://www.w3.org/2005/04/fresnel-info/}} is a presentation vocabulary for displaying RDF data. It specifies \textit{what} information contained in an RDF graph should be presented with the core concept \texttt{fresnel:Lens}. We use the Fresnel and PROV-O ontologies\footnote{\url{http://www.w3.org/TR/prov-o/}} to explicitly represent what properties should be depicted when displaying an entity. This dataset can now be re-used as a configuration for any consuming application.
 
@@ -440,14 +440,16 @@ The user first select the endpoint to visualize. GeoRDFviz picks up randomly a r
 
 
 
-\section{Application consuming Event datasets: Confomaton}
+\section{An application consuming event datasets: Confomaton}
 \label{sec:confomaton}
 
-In this section, we aim at creating a rich environment to enable users to navigate events as well as their various representative media such as photos, slides and tweets. A typical usage is to gather data about a scientific conference and investigate the added value of collecting scientific related media. A non trivial task in such application is to connect structured data with extremely noisy content, especially in the case of a major conference.
+In this section, our goal is to create a rich environment that enables users to navigate events and their various representative media such as photos, slides and tweets. A typical usage is to gather data about a scientific conference and investigate the added value of collecting scientific-related media. A non-trivial task in such applications is to connect structured data with extremely noisy content, especially in the case of a major conference.
 
 \subsection{Background and Motivation}
 
- We consider a scientific conference, the International Semantic Web Conference (ISWC 2011), which took place in Bonn, Germany in November 2011. Broadly speaking, considering all co-authors, people who have participated in the reviewing process, people who physically attended the conference or tried to follow it on social networks, we estimate that it attracted more than 1,500 participants. The conference organizers publish a lot of structured data regarding the conference including the list of accepted papers, their authors and institutions, the detailed program composed of sub-events with the exact timetable and the location (rooms) of the talks. This data is modeled using the \texttt{SWC} ontology\footnote{\url{http://data.semanticweb.org/ns/swc/ontology}}, which is designed to describe academic events, and uses classes and properties from other ontologies such as \texttt{FOAF} (for people) and \texttt{SWRC} (BibTeX elements for the papers). The main conference of type \texttt{swc:ConferenceEvent} is related to a set of sub-events, namely (\texttt{WorkshopEvent}, \texttt{TutorialEvent}, \texttt{SessionEvent}, \texttt{TalkEvent}) via the property \texttt{swc:isSuperEventOf}. Table~\ref{tab:dataset-stats} shows some statistics about the data provided by the Dog Food server regarding the ISWC 2011 conference. We first notice that the data is incomplete. The conference has hosted 16 workshops in total, but the 75 papers are only associated to 8 of them while the 8 others did not have any papers according to the corpus. Furthermore, we find 133 papers that are not connected to any of the events via the predicate \texttt{swc:hasRelatedDocument}. Finally, some useful information is also missing such as the keynote speakers and the \emph{Semantic Web Death Match} (panel) event. This lack of knowledge is also a motivation for our work: can we collect and analyse social network activities in order to complete the factual description of this event?
+ We consider a scientific conference, the International Semantic Web Conference  which took place in Bonn, Germany in November 2011. We estimate that it attracted more than 1,500 participants including all co-authors, people who have participated in the reviewing process, people who physically attended the conference or tried to follow it on social networks. The conference organizers publish a lot of structured data about the conference including the list of accepted papers, their authors and institutions, the detailed program composed of sub-events with the exact timetable and the location (rooms) of the talks. This data is modeled using the \texttt{SWC} ontology\footnote{\url{http://data.semanticweb.org/ns/swc/ontology}}, which was designed to describe academic events, and uses classes and properties from other ontologies such as \texttt{FOAF} (for people) and \texttt{SWRC} (BibTeX elements for the papers). The main conference (type \texttt{swc:ConferenceEvent}) is related to a set of sub-events, namely (\texttt{WorkshopEvent}, \texttt{TutorialEvent}, \texttt{SessionEvent}, \texttt{TalkEvent} via the property \texttt{swc:isSuperEventOf}. Table~\ref{tab:dataset-stats} shows some statistics about the data provided by the DogFood server about the ISWC 2011 conference. 
+ 
+ We first notice that the data is incomplete. The conference hosted 16 workshops in total, but the 75 papers are only associated with 8 of them while the 8 others did not have any papers according to the corpus. Furthermore, we find 133 papers that are not connected to any of the events via the predicate \texttt{swc:hasRelatedDocument}. Finally, some useful information is also missing such as the keynote speakers and the \emph{Semantic Web Death Match} (panel) event. This lack of knowledge is also a motivation for our work: can we collect and analyse social network activities in order to complete the factual description of this event?
 
 \begin{table}[htbp]
 \footnotesize{
@@ -472,7 +474,7 @@ In this section, we aim at creating a rich environment to enable users to naviga
 \end{table}
 
 
-We collected social network data in real time during the six days of the conference using the main tags advertised by the organizers (\texttt{\#iswc2011}, \texttt{\#cold2011}, \texttt{\#derive2011}, etc.). Table~\ref{tab:media-statistics} shows some statistics about the different media services used by the attendees along with the number of items from a number of distinct users. As expected, Twitter is by far the most used service: we have been able to collect 3,390 tweets from 519 different users. A significant proportion of tweets contains hyperlinks that we have further analysed. Hence, we extracted 384 different websites indexed by so-called URL shorteners (such as Bitly) found in 1,464 tweets (43\% of tweets). These links represent a rich source of media, as they pointed to various Web resources categories such as blogs, slides, photos, publications and projects. For example, 25\% of these links pointed to PDF documents that are generally one of the conference papers but could also be related papers relevant for the followers of the conference. We also analyse these links to extract the various media services used by Twitter.
+We collected social network data in real time during the six days of the conference using the main tags advertised by the organizers (\texttt{\#iswc2011}, \texttt{\#cold2011}, \texttt{\#derive2011}, etc.). Table~\ref{tab:media-statistics} shows some statistics about the different media services used by the attendees along with the number of items from a number of distinct users. As expected, Twitter is by far the most used service: we have been able to collect 3,390 tweets from 519 different users. A significant proportion of tweets contain hyperlinks that we have further analysed. Hence, we extracted 384 different websites indexed by so-called URL shorteners (such as Bit.ly) found in 1,464 tweets (43\% of tweets). These links represent a rich source of media, as they point to various Web resources categories including blogs, slides, photos, publications and projects. For example, 25\% of these links pointed to a PDF document, typically  one of the conference papers but could also be related papers relevant for the followers of the conference. We also analyse those links to extract the various media services used by Twitter.
 
 \begin{table}[htbp]
 \centering{
@@ -490,18 +492,19 @@ We collected social network data in real time during the six days of the confere
 \hline
 \end{tabular}
 \vspace{1mm}
-\caption{Media services used during ISWC 2011 conference}
+\caption{Media services used during the ISWC 2011 conference}
 \label{tab:media-statistics}
 }
 \end{table}
 
-The name \emph{Confomaton} is a word play on the French term \emph{Photomaton} (English photo booth) and \emph{conference}. Just like a Photomaton illustrates the scene inside of the photo booth, the \emph{Confomaton} illustrates an event such as a conference enriched with social media. \emph{Confomaton} is a Semantic Web application that produces and consumes Linked Data and is composed of four main components (Figure~\ref{fig:architecture}):
-\begin{itemize}
+\emph{Confomaton} is a Semantic Web application that produces and consumes Linked Data. The name \emph{Confomaton} is a word play on the French term \emph{Photomaton} (English photo booth) and \emph{conference}. Just like a Photomaton illustrates the scene inside of the photo booth, the \emph{Confomaton} illustrates an event such as a conference enriched with social media. The system is available at \url{http://semantics.eurecom.fr/confomaton/iswc2011}. It is composed of four main components (Figure~\ref{fig:architecture}):
+\begin{enumerate}
 \item an Event Collector that extracts events descriptions such as the ones available in the Semantic Web Dog Food corpus;
- \item a media collector that collects social media content and represents it in RDF using various vocabularies;
+ \item a Media Collector that collects social media content and represents it in RDF using various vocabularies;
  \item  a Reconciliation Module playing the role of associating social media with sub-events and external knowledge;
   \item a User Interface powered by an instance of the Linked Data API as a logical layer connecting all the data in the triple store with the front-end visualizations.
-\end{itemize}
+\end{enumerate}
+
 
 \begin{figure*}[t!h]
  \centering
@@ -512,8 +515,8 @@ The name \emph{Confomaton} is a word play on the French term \emph{Photomaton} (
 
 \subsection{Collecting and Modeling Data in Confomation}
 
-\subsubsection{Media Collector: A Media Crawler}                                                \label{sec:media-collector}
-In the context of \emph{Confomaton}, we have developed the so-called \emph{media collector} with the purpose of searching various social networks and media platforms for event-related media items such as photos, videos, and slides. We currently support 4 social networks (Google+, MySpace, Facebook, and Twitter) and 7 media platforms (Instagram, YouTube, Flickr, MobyPicture, img.ly, yfrog and Twitpic). Our approach being agnostic of media providers, we offer a common alignment schema for all of them:
+\paragraph{Media Collector: A Media Crawler}                                                \label{sec:media-collector}
+In the context of \emph{Confomaton}, we have developed a \emph{media collector} with the purpose of searching various social networks and media platforms for event-related media items such as photos, videos, and slides. We currently support 4 social networks (Google+, MySpace, Facebook, and Twitter) and 7 media platforms (Instagram, YouTube, Flickr, MobyPicture, img.ly, yfrog and Twitpic). Our approach is agnostic of media providers, as we offer a common alignment schema for all of them:
 \begin{itemize}
   \item	\textbf{Media URI}, the deep link to the media item, e.g. \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}
   \item \textbf{Type}, the type of the media item, e.g.  ``photo''
@@ -524,7 +527,7 @@ In the context of \emph{Confomaton}, we have developed the so-called \emph{media
   \item \textbf{Published}, the timestamp of when the micropost was authored, or the media item was uploaded, e.g. \texttt{2011-10-27T12:24:41Z}
 \end{itemize}
 
-\begin{lstlisting}[caption={Sample output of the media collector showing Google+ and Flickr results using \#iswc2011 as query term.}, language=json, label={lst:media}]
+\begin{lstlisting}[caption={Sample output of the media collector showing Google+ and Flickr results using \#iswc2011 as the query term.}, language=json, label={lst:media}]
 {
   "GooglePlus": [
     {
@@ -541,11 +544,12 @@ In the context of \emph{Confomaton}, we have developed the so-called \emph{media
  }
 \end{lstlisting}
 
-In order to retrieve data from media providers, we use the particular media provider's search Application Programming Interfaces (API) where they are available, and fall back to Web scraping the media provider's website if not. In some cases, we initially use the search API, but then have to fall back to Web scraping in order to get more details on the results, such as the \textbf{Media URI}, which is not exposed by all APIs. From all media providers, Twitter plays a special role, as it can serve as a host for other media providers. For example, it is very common for tweets to contain links to media items hosted on external media providers such as \textsc{Twitpic}. Other media providers treat media items as first class objects, i.e. have dedicated object keys in their API results for media items, which is not in all cases true for Twitter. We handle this by searching for a list of URIs of known media providers in combination with the actual search term. To illustrate this, when searching for media items for the search term ``ISWC 2012'' on Twitter, we would actually search for ``iswc 2012 AND (twitpic.com OR flic.kr)'' in the background, whereas on all other media providers, the search term ``iswc 2012'' is sufficient. The media collector can be tested at \url{http://webmasterapp.net/social/}.
+In order to retrieve data from media providers, we use the particular media provider's search Application Programming Interfaces (API) where available, and otherwise fall back to Web scraping the media provider's website. In some cases, we initially use the search API, but then have to fall back to Web scraping in order to get more details on the results, such as the \textbf{Media URI}, which is not exposed by all APIs. Of the media providers, Twitter plays a special role, as it can serve as a host for other media providers. For example, it is very common for tweets to contain links to media items hosted on external media providers such as Twitpic. Other media providers treat media items as first class objects, i.e. have dedicated object keys in their API results for media items, which is not in all cases true for Twitter. We handle this by searching for a list of URIs of known media providers in combination with the actual search term. To illustrate this, when searching for media items for the search term ``ISWC 2012'' on Twitter, we would actually search for ``iswc 2012 AND (twitpic.com OR flic.kr)'' in the background, whereas on all other media providers, the search term ``iswc 2012'' is sufficient. The media collector can be tested at \url{http://webmasterapp.net/social/}.
 
-\subsubsection{Data Modeling of Confomaton}
-The Event Collector takes as input the Dog Food corpus described using the SWC ontology and converts all events into the LODE ontology\footnote{\url{http://linkedevents.org/ontology/}}, a minimal model that encapsulates the most useful properties for describing events. We use the \texttt{Room} ontology\footnote{\url{http://vocab.deri.ie/rooms}} for describing the various rooms contained in the conference centre. An explicit relationship between an event and its representative media (photo, slide, micropost, etc.) is realised through the \texttt{lode:illustrate} property. For describing those media, we re-use two popular vocabularies: the W3C Ontology for Media Resources\footnote{\url{http://www.w3.org/TR/mediaont-10/}} for photos and videos, and SIOC\footnote{\url{http://rdfs.org/sioc/spec/}} for tweets, status, posts and slides. The example below shows how a tweet is represented in \emph{Confomaton}.
-{\footnotesize 	
+\paragraph{Data Modeling of Confomaton}
+The Event Collector takes as input the Dog Food corpus described using the SWC ontology and converts all events into the LODE ontology\footnote{\url{http://linkedevents.org/ontology/}}, a minimal model that encapsulates the most useful properties for describing events. We use the \texttt{Room} ontology\footnote{\url{http://vocab.deri.ie/rooms}} for describing the various rooms contained in the conference centre. An explicit relationship between an event and its representative media (photo, slide, micropost, etc.) is realised through the \texttt{lode:illustrate} property. For describing those media, we re-use two popular vocabularies: the W3C Ontology for Media Resources\footnote{\url{http://www.w3.org/TR/mediaont-10/}} for photos and videos, and SIOC\footnote{\url{http://rdfs.org/sioc/spec/}} for tweets, status, posts and slides. Listing \ref{lst:eventresource} below shows how a tweet is represented in \emph{Confomaton}.
+
+\begin{lstlisting}[caption={Sample output describing a resource.}, language=json, label={lst:eventresource}]	
 \begin{verbatim}
 <http://data.linkedevents.org/tweet/af557cef-5d5b-49c6-a4c3-bc9c41ce1555>
  a sioc:Post;
@@ -555,10 +559,9 @@ The Event Collector takes as input the Dog Food corpus described using the SWC o
  lode:illustrate <http://data.semanticweb.org/workshop/ssn/2011>;
  gc:hashtag      "#ssn2011";
  owl:sameAs      <http://twitter.com/BadmotorF/status/128071685235671040>.
-\end{verbatim}
-}
+\end{lstlisting}
 
-Figure~\ref{fig:natasha-example} depicts how all these vocabularies are used together. The ISWC 2011 conference is illustrated by a photo shared on Flickr, has for sub-event the EvoDyn 2011 workshop in which one of the tweets posted mentioned the recognised named entity Nathasha Noy who is also a general chair of the conference. All the data is available in the \emph{Confomaton} graph in a public SPARQL endpoint available at \url{http://semantics.eurecom.fr/sparql}.
+Figure~\ref{fig:natasha-example} depicts how all these vocabularies are used together. The ISWC 2011 conference is illustrated by a photo shared on Flickr, has a sub-event, EvoDyn 2011 workshop, in which one of the tweets posted mentioned the recognised named entity Nathasha Noy who is also a general chair of the conference. All the data in the \emph{Confomaton} graph is in a public SPARQL endpoint available at \url{http://semantics.eurecom.fr/sparql}.
 \begin{figure*}[t!h]
  \centering
  \includegraphics[scale=0.3]{img/natasha_example.png}
@@ -568,18 +571,18 @@ Figure~\ref{fig:natasha-example} depicts how all these vocabularies are used tog
 
 
 
-\subsubsection{Event Media Reconciliation Module}
-The event media reconciliation module aims to align the incoming stream of social media with their appropriate events and to interlink some descriptions with general knowledge available in the LOD cloud\footnote{\url{http://lod-cloud.net/}} (e.g. people and institutions descriptions). Attaching social media to fine-grained events is a challenging problem. We tackle it by pre-processing the data with two successive filters in order to reduce the noise: one of them relies on keyword search applied to some fields such as title and tag, while the other one filters data based on temporal clues. The reconciliation is then ensured through a pre-configured mapping between a set of keywords and their associated events. This map enables us to associate media with the macro-events that people explicitly refer to in their posts or photos. For example, we connect all media items containing the tag \texttt{\#iswc2011} with the general ISWC 2011 conference. However, this method is absolutely not convenient to associate media items with sub-events. For instance, in the ISWC 2011 conference, there are 99 sub-events of type \texttt{TalkEvent}, which could be the presentation of a paper, a keynote speech or any other kind of talk. Social network users typically do not specify a particular tag for such events. We hence advocate the need for more advanced classifiers to associate media with sub-events. These classifiers can exploit a variety of parameters such as social network graphs and named entities extracted from media content.
+\paragraph{Event Media Reconciliation Module}
+The event media reconciliation module aims to align the incoming stream of social media with their appropriate events and to interlink some descriptions with general knowledge available in the LOD cloud\footnote{\url{http://lod-cloud.net/}} (e.g. people and institutions descriptions). Attaching social media to fine-grained events is a challenging problem. We tackle it by pre-processing the data with two successive filters in order to reduce the noise: one filter relies on keyword search applied to some fields such as title and tag, while the other one filters data based on temporal clues. The reconciliation is then ensured through a pre-configured mapping between a set of keywords and their associated events. This map enables us to associate media with the macro-events that people explicitly refer to in their posts or photos. For example, we connect all media items containing the tag \texttt{\#iswc2011} with the general ISWC 2011 conference. However, this method is not at all convenient for associating media items with sub-events. For instance, in the ISWC 2011 conference, there are 99 sub-events of type \texttt{TalkEvent}, which could be the presentation of a paper, a keynote speech or any other kind of talk. Social network users typically do not specify a particular tag for such events. We hence advocate the need for more advanced classifiers to associate media with sub-events. These classifiers can exploit a variety of parameters such as social network graphs and named entities extracted from media content.
 
 \subsection{Graphical User Interface}
 The Graphical User Interface (GUI) of \emph{Confomaton} is built around four perspectives characterising an event:
-\begin{itemize}
-\item (i) \textit{``Where does the event take place?''},
-\item (ii) \textit{``What is the event about?''},
-\item (iii) \textit{``When does the event take place?''}, and finally
-\item (iv) \textit{``Who are the attendees of the event?''}.
-\end{itemize}
-In addition, the user interface offers full text search for these four dimensions. The \emph{Confomaton} user interface is powered by the Linked Data API\footnote{\url{http://code.google.com/p/linked-data-api/wiki/Specification}}, which provides a configurable way to access RDF data using simple RESTful URLs that are translated into queries to our SPARQL endpoint. More precisely, we use the Elda\footnote{\url{http://code.google.com/p/elda}} implementation developed by Epimorphics. Elda comes with some pre-built samples and documentation, which allow to build specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through structure of the URI, or through query parameters.
+\begin{enumerate}
+\item  \textit{``Where does the event take place?''},
+\item  \textit{``What is the event about?''},
+\item  \textit{``When does the event take place?''}, and finally
+\item  \textit{``Who are the attendees of the event?''}.
+\end{enumerate}
+In addition, the user interface offers full text search for these four dimensions. The \emph{Confomaton} user interface is powered by the Linked Data API\footnote{\url{http://code.google.com/p/linked-data-api/wiki/Specification}}, which provides a configurable way to access RDF data using simple RESTful URLs that are translated into queries to our SPARQL endpoint. More precisely, we use the Elda\footnote{\url{http://code.google.com/p/elda}} implementation developed by Epimorphics. Elda comes with some pre-built samples and documentation, which allow to build specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that first extracts data from the SPARQL endpoint using one or more SPARQL queries and then serializes the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources, either through the structure of the URI, or through the query parameters.
 
 \autoref{lst:config} shows an example of the configuration file of the \emph{Confomaton} API specifying the event, media and tweet viewers followed by the events and media properties access.
 \begin{lstlisting}[caption={Example configuration file of the \emph{Confomaton} API, specifying event properties access.},label={lst:config}]
@@ -596,31 +599,31 @@ spec:eventViewer a api:Viewer ;
 		api:defaultViewer spec:eventViewer.		
 \end{lstlisting}
 
-The system is available at \url{http://semantics.eurecom.fr/confomaton/iswc2011}. On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the centre, the default view is a map centred on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, this data being provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims at showing all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
+On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the centre, the default view is a map centered on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, based on data provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims to show all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
 
 
 \section{Application consuming Statistics datasets}
 \label{sec:perfectSchool}
 
-In this application, we present the creation of an application consuming statistical dataset in the French context. The vocabulary used to model the data is compatible with the Data Cube vocabulary, useful for retrieving statistical data.
+In this application, we describe the creation of an application consuming statistical dataset in the French context. The vocabulary used to model the data is compatible with the Data Cube vocabulary \cite{dcube}, useful for retrieving statistical data.
 The \texttt{Perfect School} application is intended to provide useful information on schools in France using semantic technologies, with RDF-ized data enriched with other datasets in the wild. The application and the vocabulary have successfully passed the integrity checker\footnote{\url{http://www.w3.org/2011/gld/wiki/Data_Cube_Implementations}} of an implementation for the candidate recommendation of Data Cube vocabulary \cite{dcube}, a recommendation from the W3C.
 
 \subsection{Dataset Modeling}
 
-\subsubsection{Legacy Datasets}
+\paragraph{Legacy Datasets}
 In order to build the application, we had to look at some relevant datasets in \url{http://data.gouv.fr}. The ones selected for building the application are the following:
 
 \begin{itemize}
-\item The file at \url{http://www.data.gouv.fr/DataSet/564055} in CSV format, containing a list of $67, 201$ schools (name, status, type), with geolocation position in Lambert 93, for the academic year 2011-2012. The file contains the following attributes (in French):
+\item The file at \url{http://www.data.gouv.fr/DataSet/564055} in CSV format, containing a list of $67, 201$ schools (name, status, type), with geolocation positions in Lambert 93, for the academic year 2011-2012. The file contains the following attributes (in French):
 	\begin{itemize}
 		\item code of the school (e.g. 0010002X),
 		\item  official name of the school (e.g.: College Saint-Exupery),
 		\item principal name (e.g. COLLEGE),
 		\item patronymic name (e.g. Saint-Exupery),
 		\item status of the school (1 = open, 2 = to be closed and 3 = to be opened),
-		\item label of the type of school (e.g: 1= first degree, 3 = second degree).
+		\item label of the type of school (e.g. 1= first degree, 3 = second degree).
 	\end{itemize}
-\item \url{http://www.data.gouv.fr/DataSet/572165}, in .CSV format giving results for professional schools, indicators), from one academic year (2011-2012). The file contains the following attributes:
+\item A dataset at \url{http://www.data.gouv.fr/DataSet/572165} in .CSV format, giving results for professional schools, indicators), from one academic year (2011-2012). The file contains the following attributes:
 	\begin{itemize}
 		\item name of school,
 		\item  city code,
@@ -629,10 +632,10 @@ In order to build the application, we had to look at some relevant datasets in \
 		\item sector (PR= PRivate, PU= PUblic),
 		\item several observation measures with statistics on success rates, school versus academic/national rates, name of the academy it belongs to, as well as the department.
 	\end{itemize}
-   \item \url{http://www.data.gouv.fr/DataSet/572162} (.CSV) containing statistics for  $2296$ public high schools and indicators. It complements the statistics from INSEE.
+   \item A dataset at \url{http://www.data.gouv.fr/DataSet/572162} (.CSV) containing statistics for  $2296$ public high schools and indicators. It complements the statistics from INSEE.
 \end{itemize}
 
-\subsubsection{Ontology Modeling}
+\paragraph{Ontology Modeling}
 We have reused some external ontologies for more interoperability:
 \begin{itemize}
 \item \texttt{aiiso}\footnote{\url{http://vocab.org/aiiso/schema}} for the type of school and codes of school.
@@ -651,30 +654,30 @@ The resulting vocabulary is available at \url{http://purl.org/ontology/dvia/ecol
 
 We use the Datalift platform for transforming the different CSV files into RDF. The final data is available  at \url{http://eventmedia.eurecom.fr/sparql} with the named graph \texttt{http://data.eurecom.fr/school}.
 
-\subsubsection{URI Policies}
+\paragraph{URI Policies}
 We use the following patterns for the URIs of the vocabularies or the resources in our namespace.
 \begin{itemize}
-\item URI for vocabulary: \texttt{http://data.eurecom.fr/ontologies/\{SECTOR\}}. \\
+\item Vocabulary: \texttt{http://data.eurecom.fr/ontologies/\{SECTOR\}}. \\
 e.g: \url{<http://data.eurecom.fr/ontologies/ecole>} for the ontology that we have developed.
 
-\item URI for resources: \texttt{http://data.eurecom.fr/id/\{SECTOR\}/\{CLASS\}}. \\
+\item Resources: \texttt{http://data.eurecom.fr/id/\{SECTOR\}/\{CLASS\}}. \\
 e.g: \url{<http://data.eurecom.fr/id/school/>} for the schools URIs, \\
 \url{<http://data.eurecom.fr/id/school/slice/>} for \texttt{qb:Slice}s.
 
-\item URI for taxonomies: we use \texttt{SKOS} for modeling concepts and codes as the following: \\
+\item Taxonomies: we use \texttt{SKOS} for modeling concepts and codes as follows: \\
 \texttt{http://data.eurecom.fr/codes/\{SECTOR\}/\{CONCEPT-TYPE\}/\{CODE\}}.
-e.g.: \url{<http://data.eurecom.fr/codes/ecole/natureUAI>} for the collection of natures of the schools ; \\
-        \url{<http://data.eurecom.fr/codes/ecole/natureUAI/101>} for a particular concept with code \textit{101} and label '''\'{E}cole maternelle".
+e.g. \url{<http://data.eurecom.fr/codes/ecole/natureUAI>} for the collection of natures of the schools ; \\
+        \url{<http://data.eurecom.fr/codes/ecole/natureUAI/101>} for a particular concept with code \textit{101} and label ```\'{E}cole maternelle''.
 
 \end{itemize}
 
-Besides the aforementioned policy, each school in the user interface can be reached on the UI by using directly the following URI:
+Besides the aforementioned URI policy, each school in the user interface can be reached directly in the UI by using directly the following URI:
  \url{http://semantics.eurecom.fr/datalift/PerfectSchool/\#school/{SCHOOL-CODE/}}, with \{SCHOOL-CODE/\} in lowercase.
 
 \paragraph{\textit{Example:}}
-\textit{The school ``Albert Camus'' in the city ''Le Mans'' with the code school $0720800D$ can we viewed in the application directly at} \url{http://semantics.eurecom.fr/datalift/PerfectSchool/\#school/0720800d/}
+\textit{The school ``Albert Camus'' in the city ``Le Mans'' with the code school $0720800D$ can we viewed in the application directly at} \url{http://semantics.eurecom.fr/datalift/PerfectSchool/\#school/0720800d/}
 
-\subsubsection{Sample School Data in RDF }
+\paragraph{Sample School Data in RDF }
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Snapshot in Turtle for the school ID=0750676C, also at \url{http://semantics.eurecom.fr/datalift/PerfectSchool/\#school/0750676c/}}, label=snapshot, captionpos=b}
 \begin{lstlisting}
@@ -712,7 +715,7 @@ _:vb42531960 a  geom:Point;
 \end{lstlisting}
 
 \subsection{Interconnection}
-For the interconnection process, we didn't use the current module. Instead of that we have used the Silk \cite{jentzsch2010silk} platform as it is re-packaged in the workflow of Datalift. We believe the scripts used for this task can be easily reused within the Datalift platform. Two datasets where used for finding \texttt{owl:sameAs} links:
+For the interconnection process, we didn't use the current module. Instead of that we have used the Silk \cite{jentzsch2010silk} platform as it is re-packaged in the workflow of Datalift. We believe the scripts used for this task can be easily reused within the Datalift platform. Two datasets were used for finding \texttt{owl:sameAs} links:
 \begin{enumerate}
 \item DBpedia French chapter\footnote{\url{http://fr.dbpedia.org/sparql}}, as the scope of the application was limited to France. We have found only 7 match links with our schools datasets.
 \item LinkedGeoData\footnote{\url{http://linkedgeodata.org/sparql}}, as the underlying data used comes from the community project Open Street Map (OSM). Here, we got  a total of $601$ matching links in the category of \texttt{lgdo:BuildingSchool}\footnote{\url{http://linkedgeodata.org/ontology/BuildingSchool}}.
@@ -720,11 +723,11 @@ For the interconnection process, we didn't use the current module. Instead of th
 
 
 \subsection{User Interface}
-The target device for the application is Mobile phone, using principally two frameworks: Jquery mobile\footnote{http://jquerymobile.com/} and  backbone javascript\footnote{\url{http://backbonejs.org/}}.
+The target device for the application is Mobile phone, using principally two frameworks: JQuery mobile\footnote{http://jquerymobile.com/} and  backbone JavaScript\footnote{\url{http://backbonejs.org/}}.
 The application provides geolocation, search by city/district, graph charts for stats, table views of relevant results aggregated or group by some other aspects.
 \texttt{Perfect School Application} provides 3 main views:
 \begin{enumerate}
-\item \textbf{Search form:} The interface retrieves the location automatically ( \'{a} la Google Maps API fashion) , and offers box choices based on the School type: First degree / second degree. When choosing first degree, the user can further select one of (primary school, elementary school or other). For the second degree, apart from looking for one of College, high school or other, the user can look for public or private schools. The search button launches the query behind the scene for retrieving the collection of data matching the user's criteria.
+\item \textbf{Search form:} The interface retrieves the location automatically ( \'{a} la Google Maps API fashion) , and offers choices based on the School type: First degree / second degree. When choosing first degree, the user can further select one of (primary school, elementary school or other). For the second degree, apart from looking for one of College, high school or other, the user can look for public or private schools. The search button launches the query behind the scene for retrieving the collection of data matching the user's criteria.
 
 \item \textbf{Results of searching}: The search action returns a collection of schools plotted in a map. A cursor on the left side helps users zoom to get more details about schools retrieved in a given region, or street. When selecting a given school, the name is displayed and with the possibility to see the route from the barycenter of the result on the map.
 \item \textbf{Description of the school:} It is divided in 3 different tabs: (a) General information (name, cycle, principal denomination, nature and patronym used) ; (b) Stats with all the different statistics in form of charts, graphs comparing the school with the others ; and (c) DBpedia-FR\footnote{\url{http://fr.dbpedia.org}} information if available, obtained with the \texttt{owl:sameAs} links for enriching the original dataset with  information such as founder, date of creation, web site, population, head of school etc.
