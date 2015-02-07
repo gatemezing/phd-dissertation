@@ -11,6 +11,7 @@ Log Tracking
 - Break writing from Saturday, 8th November till Tuesday, 18th, November 2014.
 - ~~Resuming on 19th, November, 2014~~.  
 -  Release version v1 on 10th, December, 2014. Link:https://www.dropbox.com/s/znxcvuc8qkb7dex/Thesis-atemezing-v1.pdf?dl=0 
+-  ~~Since January 20th, 2015 ~~ reading to fix typos, while looking for the members of Comittee.
 
 
 
@@ -24,4 +25,4 @@ TODO
 - [x] Extend more the conclusion
 - [x] Reduce the number of sections (esp. Chap2/Chap3) by merging some stuff
 - [x] Add a section on INTERLINKING datasets.
-- [ ] Jodi to read the document, version v1
+- [x] Jodi to read the document, version v1
