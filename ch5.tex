@@ -715,7 +715,7 @@ _:vb42531960 a  geom:Point;
 \end{lstlisting}
 
 \subsection{Interconnection}
-For the interconnection process, we didn't use the current module. Instead of that we have used the Silk \cite{jentzsch2010silk} platform as it is re-packaged in the workflow of Datalift. We believe the scripts used for this task can be easily reused within the Datalift platform. Two datasets were used for finding \texttt{owl:sameAs} links:
+For the interconnection process, we didn't use the current module. Instead of that we have used the SILK \cite{jentzsch2010silk} platform as it is re-packaged in the workflow of Datalift. We believe the scripts used for this task can be easily reused within the Datalift platform. Two datasets were used for finding \texttt{owl:sameAs} links:
 \begin{enumerate}
 \item DBpedia French chapter\footnote{\url{http://fr.dbpedia.org/sparql}}, as the scope of the application was limited to France. We have found only 7 match links with our schools datasets.
 \item LinkedGeoData\footnote{\url{http://linkedgeodata.org/sparql}}, as the underlying data used comes from the community project Open Street Map (OSM). Here, we got  a total of $601$ matching links in the category of \texttt{lgdo:BuildingSchool}\footnote{\url{http://linkedgeodata.org/ontology/BuildingSchool}}.
@@ -727,30 +727,30 @@ The target device for the application is Mobile phone, using principally two fra
 The application provides geolocation, search by city/district, graph charts for stats, table views of relevant results aggregated or group by some other aspects.
 \texttt{Perfect School Application} provides 3 main views:
 \begin{enumerate}
-\item \textbf{Search form:} The interface retrieves the location automatically ( \'{a} la Google Maps API fashion) , and offers choices based on the School type: First degree / second degree. When choosing first degree, the user can further select one of (primary school, elementary school or other). For the second degree, apart from looking for one of College, high school or other, the user can look for public or private schools. The search button launches the query behind the scene for retrieving the collection of data matching the user's criteria.
+\item \textbf{Search form:} The interface retrieves the location automatically ( \`{a} la Google Maps API fashion), and offers choices based on the School type: first degree / second degree. When choosing first degree, the user can further select one of primary school, elementary school or other. For the second degree, apart from looking for one of college, high school etc., the user can look for public or private schools. The search button launches the query behind the scenes for retrieving the collection of data matching the user's criteria.
 
-\item \textbf{Results of searching}: The search action returns a collection of schools plotted in a map. A cursor on the left side helps users zoom to get more details about schools retrieved in a given region, or street. When selecting a given school, the name is displayed and with the possibility to see the route from the barycenter of the result on the map.
-\item \textbf{Description of the school:} It is divided in 3 different tabs: (a) General information (name, cycle, principal denomination, nature and patronym used) ; (b) Stats with all the different statistics in form of charts, graphs comparing the school with the others ; and (c) DBpedia-FR\footnote{\url{http://fr.dbpedia.org}} information if available, obtained with the \texttt{owl:sameAs} links for enriching the original dataset with  information such as founder, date of creation, web site, population, head of school etc.
+\item \textbf{Results of searching}: The search action returns a collection of schools plotted in a map. A cursor on the left side helps users zoom to get more details about schools retrieved in a given region, or street. When selecting a given school, the name is displayed and with the possibility to see the route from the centroid of the result on the map.
+\item \textbf{Description of the school:} This panel is divided in 3 different tabs: (a) General information (name, cycle, principal denomination, nature and patronym used); (b) Stats with all the different statistics in form of charts and graphs comparing the school with the others and (c) information DBpedia-FR\footnote{\url{http://fr.dbpedia.org}}  if available, obtained with the \texttt{owl:sameAs} links for enriching the original dataset with  information such as founder, date of creation, web site, population, head of school etc.
 
 \end{enumerate}
 
-Figure ~\ref{fig:searchingSchool} shows the three different views on a running example when using the application in a Mobile Phone.
+Figure ~\ref{fig:searchingSchool} shows the three different views on a running example when using the application in a mobile phone.
 
 \begin{figure*}[ht!bp]
 \begin{center}
 \subfigure[Search options]{
 \includegraphics[height=62mm,width=42mm]{img/searching.png}
 }
-\subfigure[Results displaying on a map]{
+\subfigure[Results displayed on a map]{
 \includegraphics[height=62mm,width=42mm]{img/result.png}
 }
 \subfigure[Route to the selected school]{
 \includegraphics[height=62mm,width=42mm]{img/routeresult.png}
 }
-\subfigure[Details information with 3 tabs: General, statistics and DBpedia]{
+\subfigure[Details information with 3 tabs: General, Stats and DBpedia]{
 \includegraphics[height=62mm,width=42mm]{img/tab-result.png}
 }
-\caption{Steps for searching high schools in Antibes in a radius of 4000m, France}
+\caption{Steps for searching high schools in Antibes, France in a radius of 4000 meters. }
 \label{fig:searchingSchool}
 \end{center}
 \end{figure*}
@@ -762,17 +762,17 @@ Figure ~\ref{fig:searchingSchool} shows the three different views on a running e
 
 \subsection{Background}
 \label{sec:backcontest}
-One of the challenges in the Apps for Europe -project - and open data projects in general - is the discovery of existing applications using the open data. The discovery of existing applications and ideas is important in order to prevent people from reinventing the wheel, when they instead should put their effort in refining existing applications or developing completely new applications. This will hopefully lead to more diverse applications and furthermore also to higher quality applications, because the existing applications can be enhanced by other people and organizations \cite{apps4eu}.
+One of the challenges in the Apps for Europe project and many open data projects in general is the discovery of existing applications using the open data. The discovery of existing applications and ideas is important in order to prevent people from reinventing the wheel, when they instead should put their effort in refining existing applications or developing completely new applications. This will hopefully lead to more diverse applications and also to higher quality applications, because existing applications can be enhanced by other people and organizations \cite{apps4eu}.
 
 In order to promote the reuse and discovery of open data applications, Apps for Europe has created an RDF vocabulary\footnote{\url{https://github.com/mmlab/apps4eu-vocabulary}}  that can be used for describing open data events and also the applications that have been built on top of the open data. Furthermore, Apps for Europe has also developed a Wordpress plugin\footnote{\url{https://github.com/mmlab/AppsForX }}  that open data event organizers can install on their web pages, to make it simpler to populate the RDF data for the events and applications.
 
 \subsection{Modeling Approaches}
 \label{sec:modeleventsapps}
 
-\subsubsection{Modeling Events and Applications in RDF}
+\paragraph{Modeling Events and Applications in RDF}
 \label{sec:modeleventrdf}
 
-One of the key factors in improving the discovery of open data events is to present the information in a structured machine readable format, so that applications (such as crawlers) can easily consume the data. This follows the Semantic Web movement, where the goal is to convert the current, unstructured documents (readable by humans) into structured documents.
+One of the key factor in improving the discovery of open data events is to present the information in a structured machine readable format, so that applications (such as crawlers) can easily consume the data. This follows the Semantic Web principles where the goal is to convert the current, unstructured documents (readable by humans) into structured documents.
 
 In order to present the event and application information in structured format, Apps for Europe has created an RDF vocabulary available a \url{https://github.com/mmlab/apps4eu-vocabulary/} for modeling the events and applications. The quality of this vocabulary was tested by manually modeling past events  and applications and looking for potential problems and improvements in the ontology. The problems and improvements made to the ontology is presented below.
 
@@ -783,7 +783,7 @@ In order to present the event and application information in structured format, 
 \label{fig:modelA}
 \end{figure}
 
-In \ref{fig:modelA}, the model is complex, because it requires us to specify an extra class (\texttt{:Submission}) in order to use the \texttt{:wonAward-property}, and yet we are unable to specify which prize the application won (\$5000 or \$3000). While in ~\ref{fig:modelB}, the model is straightforward to specify that an application (SBA Gems) won a prize, because we don't need to use the Submission intermediate class. We are also able to specify which prize the application won (\texttt{:FirstPrize}). It should be notice  also that now the jury is connected to a prize by specifying a jury-attribute for prizes (instead of having a prize-attribute for the jury i.e. direction of the arrow changed).
+In \ref{fig:modelA}, the model is complex, because it requires us to specify an extra class (\texttt{:Submission}) in order to use the \texttt{:wonAward-property}, and yet we are unable to specify which prize the application won (\$5000 or \$3000). In Section ~\ref{fig:modelB}, the model is straightforward to specify that an application (SBA Gems) won a prize, because we don't need to use the \texttt{Submission} intermediate class. We are also able to specify which prize the application won (\texttt{:FirstPrize}). Note that now the jury is connected to a prize by specifying a \texttt{jury-attribute} for prizes (instead of having a prize-attribute for the jury i.e. direction of the arrow changed).
 
 \begin{figure}[!htbp]
 \centering{
@@ -793,8 +793,8 @@ In \ref{fig:modelA}, the model is complex, because it requires us to specify an 
 }
 \end{figure}
 
-\subsubsection{Improving the model for specifying winners}
-Open data events often include competitions where the best applications are rewarded, and this information was modeled in the Apps for Europe RDF vocabulary as well. However, we found that the current model for this was unnecessarily complicated and therefore the model was simplified. Previously, winning apps required a separate ``Submission''-class in order to state that they had won a competition. Furthermore, the vocabulary didn't allow to state which position (winner, second, third etc.) the winning application was awarded. These problems were fixed by introducing a new property ``wonPrize'' for applications, so that we can directly state that an application won a prize without needing to have an intermediary ``Submission''-class, and by introducing the new classes ``FirstPrize'', ``SecondPrize'', and ``ThirdPrize'' that are all subclasses of the ``Prize''-class. We concluded that it is satisfactory to be able to state positions one to three for the winning apps, and therefore we didn't implement a more complicated vocabulary that would have enabled to state an arbitrary position (by having a position attribute for the prize for example).
+\paragraph{Improving the model for specifying winners}
+Open data events often include competitions where the best applications are rewarded, and this information was modeled in the Apps for Europe RDF vocabulary as well. However, we found that the current model for this was unnecessarily complicated and therefore the model was simplified. Previously, winning apps required a separate ``Submission''-class in order to state that they had won a competition. Furthermore, the vocabulary didn't allow stating which position (winner, second, third etc.) the winning application was awarded. These problems were fixed by introducing a new property ``wonPrize'' for applications, so that we can directly state that an application won a prize without needing to have an intermediary ``Submission''-class, and by introducing the new classes ``FirstPrize'', ``SecondPrize'', and ``ThirdPrize'' that are all subclasses of the ``Prize''-class. We concluded that it is satisfactory to be able to state positions one to three for the winning apps, and therefore we didn't implement a more complicated vocabulary that would have enabled to state an arbitrary position (by having a position attribute for the prize for example).
 
 Also, we add some other minor changes to the Apps4X vocabulary:
 \begin{itemize}
@@ -806,25 +806,26 @@ Also, we add some other minor changes to the Apps4X vocabulary:
 
 \subsection{Implementation and Application}
 \label{sec:plugin}
+In this section, we describe the implementation of the plugin based on the vocabulary described in the previous section, the RESTful API and the evaluation on creating a knowledge-base in RDF of 112 past open data events in Europe.  
 
-\subsubsection{Universal JavaScript plugin for RDF population}
+\paragraph{Universal JavaScript plugin for RDF population}
 \label{sec:universal}
 
-The inspiration for the JavaScript based solution came from services like \url{https://muut.com/}, which offers embeddable commenting and discussion forums and it can be installed on any web page independent of the CMS. Since almost all people have JavaScript support enabled in their browsers\footnote{ According to a study by Yahoo only about 1\% have JavaScript disabled in their browsers. Source: \url{https://developer.yahoo.com/blogs/ydnfourblog/many-users-javascript-disabled-14121.html} [Referenced 2014-06-02]}  it enables us to implement a solution that can be installed on any web page and also works on almost any browser.
+The inspiration for the JavaScript-based solution came from services like \url{https://muut.com/}, which offers embeddable commenting and discussion forums and it can be installed on any web page independent of the CMS. Since almost all people have JavaScript support enabled in their browsers\footnote{According to a study by Yahoo only about 1\% have JavaScript disabled in their browsers. Source: \url{https://developer.yahoo.com/blogs/ydnfourblog/many-users-javascript-disabled-14121.html} [Referenced 2014-06-02]}  it enables us to implement a solution that can be installed on any web page and also works on almost any browser.
 
-The most striking difference between the CMS based plugin and the JavaScript plugin is the user base, since the JavaScript solution works on any web page while the CMS plugin obviously only can be installed on a dedicated websites. Also the technical approach differs significantly, because in the CMS based approach the server will do all the work for producing the HTML and RDFa markup for the events, while in the JavaScript approach it is the client browser that is responsible for this task.
+The most striking difference between the CMS-based plugin and the JavaScript plugin is the user base, since the JavaScript solution works on any Web page while the CMS plugin obviously only can be installed on a dedicated websites. Also the technical approach differs significantly, because in the CMS-based approach the server will do all the work for producing the HTML and RDFa markup for the events, while in the JavaScript approach it is the client browser that is responsible for this task.
 
 
 \paragraph{Technical description:}
-The JavaScript plugin consists of three distinct parts (Cf. Figure \ref{fig:jsplugin}) that are technically independent of each other, but they can still be deployed on the same server if needed:
+The JavaScript plugin consists of three distinct parts (Figure \ref{fig:jsplugin}) that are technically independent of each other, but they can still be deployed on the same server if needed:
 
 \begin{description}
 \item [RESTful  API] for creating, editing and removing events and applications from the database.
-Both interfaces listed below (2 and 3) communicates and manipulates the data using the RESTful API
+Both interfaces listed below (2 and 3) communicates and manipulates the data using the RESTful API.
 \item [Admin interface] for event organizers.
 Event organizers manage their events and applications through this interface, which is provided as a ``software as a service'' (SaaS\footnote{\url{http://en.wikipedia.org/wiki/Software_as_a_service}}).
-\item [Embeddable script] that will display the event and application information both in human readable form and in computer readable form (RDFa format) on the event organizers web page.
-The script will fetch the event and application information using the RESTful API and then manipulate the document object model (DOM ) after page load and inject the event and application description into the DOM.
+\item [Embeddable script] that displays the event and application information both in human readable form and in computer readable form (RDFa format) on the event organizers' Web page.
+The script fetches the event and application information using the RESTful API and then manipulates the document object model (DOM ) after page load and inject the event and application description into the DOM.
 \end{description}
 
 
@@ -838,12 +839,12 @@ The script will fetch the event and application information using the RESTful AP
 \end{figure}
 
 \paragraph{RESTful API:}
-The API was implemented in Node.js\footnote{\url{http://nodejs.org/}} , which is a platform for running applications written in JavaScript on server side. It is built on Google Chrome's JavaScript runtime and provides very good performance thanks to it's asynchronous data manipulation model . Node.js has become very popular recently and there is a huge number of third party extensions and frameworks written for it. Furthermore, since the programming language is JavaScript, many libraries and frameworks written for browsers will also function in Node.js. For more details on how to configure the plugin, the readers are encouraged to read the Appendix \ref{ch:appendixA}.
+The API on server side was implemented in Node.js\footnote{\url{http://nodejs.org/}}, which is a platform for running applications written in JavaScript. It is built on Google Chrome's JavaScript runtime and provides very good performance thanks to its asynchronous data manipulation model. Node.js has become very popular recently and there are huge number of third party extensions and frameworks written for it. Furthermore, since the programming language is JavaScript, many libraries and frameworks written for browsers will also function in Node.js. For more details on how to configure the plugin, see Appendix \ref{ch:appendixA}.
 
-The data is stored in MongoDB, which is the leading NoSQL database\footnote{\url{http://www.mongodb.com/leading-nosql-database}}. In addition to this Mongoose\footnote{\url{http://mongoosejs.com/index.html}} object data mapper  was used in order to simplify the data manipulation and to give structure to the database. Finally, node-restful  was used to transform the Mongoose schema into a working REST API. Node-restful internally relies on Express , which is the most popular web application framework for Node.js.
+The data is stored in MongoDB, which is the leading NoSQL database\footnote{\url{http://www.mongodb.com/leading-nosql-database}}. In addition, a Mongoose\footnote{\url{http://mongoosejs.com/index.html}} object data mapper  was used in order to simplify the data manipulation and to give structure to the database. Finally, node-restful  was used to transform the Mongoose schema into a working REST API. Node-RESTful internally relies on Express\footnote{url{http://expressjs.com/}} , which is the most popular web application framework for Node.js.
 
 \paragraph{Admin Interface:}
-The admin interface provides an intuitive and easy-to-use interface for event organizers to manager their events and the related applications. It is provided as software as a service and will be hosted and managed by Apps for Europe. Event organizers will register to the service and after this they have access to all the features of the admin interface. Two screenshots of the service is presented in Figure \ref{fig:adminInterface} .
+The admin interface provides an intuitive and easy-to-use interface for event organizers to manager their events and the related applications. It is provided as software as a service and can be hosted and managed on server side. Event organizers will register to the service and after this they have access to all the features of the admin interface. Two screenshots of the service is presented in Figure \ref{fig:adminInterface}.
 
 The admin interface is implemented in HTML, CSS and JavaScript. Bootstrap\footnote{\url{http://getbootstrap.com/}}  was used as a CSS framework. It simplifies the development of responsive websites and also provides clean aesthetics for the website. AngularJS\footnote{\url{https://angularjs.org/}}  was used as a JavaScript framework.
 
@@ -856,7 +857,7 @@ The admin interface is implemented in HTML, CSS and JavaScript. Bootstrap\footno
 
 
 \paragraph{Embeddable script}
-The last component of the puzzle is the embeddable script, that is responsible of displaying the event and application information in human readable form on the event organizer's website. The event organizer will get the embed code from the admin interface, which he will then insert into the HTML code of his website. The embed code is just a reference to an external JavaScript file that will be loaded from the Apps for Europe server and then executed in the browser. A detailed description of how the script works is given below:
+The final component of the puzzle is the embeddable script, that is responsible of displaying the event and application information in human readable form on the event organizer's website. The event organizer will get the embed code from the admin interface, which she will then insert into the HTML code of her website. The embed code is just a reference to an external JavaScript file that will be loaded from the Apps for Europe server and then executed in the browser. A detailed description of how the script works is given below:
 \begin{algorithm}
 \textsl{
 1.The event organizer will embed the code on his own web page.\\
@@ -869,7 +870,7 @@ The last component of the puzzle is the embeddable script, that is responsible o
 \end{algorithm}
 
 
-\subsubsection{Creating the Knowledge-base for Past Events}
+\paragraph{Creating the Knowledge-base for Past Events}
 The final task was to create the knowledge base for past events by using the Apps for Europe RDF vocabulary and generating data to feed the endpoint at \url{http://apps4europe.eurecom.fr/sparql} . The list of events was extracted from the Apps for Europe Google spreadsheet\footnote{\url{https://docs.google.com/spreadsheet/ccc?key=0AiXRLGASq8I0dDlfZURkWGpSODBJaWotQUp3eGNwNGc&usp=sharing}}.
 
 The goal was to populate the events and applications, so that they would follow and fulfill the Apps for Europe vocabulary as well as possible. However, the format and information provided on the event web pages varied, and therefore we were usually only able to populate the following information for most of the events:
