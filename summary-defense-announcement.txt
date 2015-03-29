@@ -1,16 +1,21 @@
 					-----Summary --
  Title: "Publishing and Consuming Geo-Spatial Government Data on the Semantic Web"
-         ===========================================================================
-         
+=======================================================================================
+
 In the last years, the domain of Open Government Data received increasing attention where public administrations understand the benefits of opening and sharing data for citizens. For citizens, open data can help in more transparency by engaging with their governments through the analysis and better governance. However, the reality demonstrates that the publishing of data by governments and public administrations is not enough, as the variety of heterogeneous formats (e.g. XML, CSV, Excel, PDF, Shape Files), the lack of nomenclature make hard to reuse or to interlink with other datasets. In this thesis, we explore how using semantic web standards and technologies can help to address the issues caused by the heterogeneity and diversity of data formats, structures and representations in the geo-spatial domain.
 
-This thesis applies the Linked Data concept in the domain of geographic information (which is a key data domain for open government data) to cover three key challenging aspects in the publishing workflow of geospatial open data publication and consumption, with real word use cases from the French National mapping agency (IGN): (1) How to efficiently represent and store geospatial data on the Web to ensure interoperable applications? (2) What are the best options for a user to interact with semantic content using visualizations and (3) what are the mechanisms to help preserving structured data of a high quality on the Web?
+This thesis applies the Linked Data concept in the domain of geographic information (which is a key data domain for open government data) to cover three key challenging aspects in the publishing workflow of geospatial open data publication and consumption, with real world use cases from the French National mapping agency (IGN): (1) How to efficiently represent and store geospatial data on the Web to ensure interoperable applications? (2) What are the best options for a user to interact with semantic content using visualizations and (3) what are the mechanisms to help preserving structured data of a high quality on the Web?
 Our contributions are thus break down into three main parts, with applications in the geographical domain. We propose and implement three vocabularies for geometries, coordinate reference systems (CRS and topographic entities. The vocabularies extend existing vocabularies and add two additional advantages: an explicit use of CRS identified by URIs for geometry, and the ability to describe structured geometries in RDF. Furthermore, we highlight the publishing of French authoritative data using Datalift platform, a tool to help lay users in the process of "lifting" raw data into RDF. We provide an evaluation of spatial queries in most used endpoints. 
 
 Addressing consuming challenges, after reviewing different categories of visualization (generic and Linked Data specific), we propose a vocabulary for Describing VIsualization Applications (DVIA). Furthermore, we formalize and implement a novel workflow for visualizing generic datasets with the LDVizWiz: a Linked Data Visualization Wizard. 
 
 The last part of the thesis describes contribution to the Linked Open Vocabularies (LOV) catalogue: (1) it presents how LOV can be used with an ontology methodology (e.g., the NeOn methodology) to improve reuse of vocabularies, an heuristic to align vocabularies and a ranking of vocabularies based on information content (IC) metrics. Finally, the thesis provides answers on how to check the license compatibility between vocabularies and datasets in the publication workflow. Through this thesis, we demonstrate the benefits of using semantic technologies and W3C standards to make better discover, interlink and visualize geo-spatial government data for their publication on the Web.
 
+
+
+					-----resume --
+ Title: "Publication et visualisation des donnees gouvernementales geographiques dans le Web Semantique"
+=======================================================================================
 
 
 
