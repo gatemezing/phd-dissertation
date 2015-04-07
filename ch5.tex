@@ -101,7 +101,7 @@ We propose a workflow composed of four principal steps for a Linked Data Visuali
 \end{center}
 \end{figure*}
 
-Let consider a graph $<G,c>$ to be $G=\{(s,p,o)| p \in URI, s \in URI, o \in (URI \cup LIT)\} $ where $URI$ is the set of URIs, $LIT$ is the set of literals, and $c$ is the context. We define $L=\{V_{1}, V_{2}, ...,V_{n} | V_{i}=P_{i} \cup T_{i}\} $ the list of vocabularies in LOV, with $P_{i}$ and $T_{i}$ respectively the properties and terms of a vocabulary $V_{i}$. Let also $D=\{D_{1}, D_{2}, ..,D_{m} \} $ be the domains of vocabularies. We assume $ \forall V \in L, \exists D_{k} \in \Phi(L,D) $. We define a generic function $\Sigma:(G,c)\mapsto B $ to detect categories in a dataset as follows: $\Sigma((G,c))=\{B| ( \exists(s,p,o) \in G: p \in V) \cup (\exists(s, rdf:type,o) \in G: o \in V)\} $ where $B =\{True, False\} $.
+Let consider a graph $<G,c>$ to be $G=\{(s,p,o)| p \in URI, s \in URI, o \in (URI \cup LIT)\} $ where $URI$ is the set of URIs, $LIT$ is the set of literals, and $c$ is the context. We define $L=\{V_{1}, V_{2}, ...,V_{n} | V_{i}=P_{i} \cup T_{i}\} $ the list of vocabularies in LOV, with $P_{i}$ and $T_{i}$ respectively the properties and terms of a vocabulary $V_{i}$. Let also $D=\{D_{1}, D_{2}, ..,D_{m} \} $ be the domains of vocabularies. We assume $\Phi(L,D) =\{ \forall V \in L, \exists D_{k}, \Phi(V) \in D_{k} \} $. We define a generic function $\Sigma:(G,c)\mapsto B $ to detect categories in a dataset as follows: $\Sigma((G,c))=\{B| ( \exists(s,p,o) \in G: p \in V) \cup (\exists(s, rdf:type,o) \in G: o \in V)\} $ where $B =\{True, False\} $.
 
 
 In the following sections, we describe each of the steps involved in the Linked Data Visualization Wizard in more detail.
