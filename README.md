@@ -2,8 +2,8 @@ phd-dissertation
 ================
 
 
-Log Tracking
-============
+Log Dissertation Tracking
+=========================
 - Repository for my PhD Dissertation, manuscript editing starting on 2014/09/19
 - One week off for conference at ISWC ( from October 18th , till October 26th)
 - On October 31, first "dirty" draft of all the document
@@ -15,14 +15,17 @@ Log Tracking
 
 
 
-TODO
-=====
-- [x] Review the first comments of Raphael.
-- [x] Add vocabularies in appendix
-- [x] Remove numbering the introduction in each chapter
-- [x] Introduction: Match contributions with research questions
-- [ ] Be factual and perspectives in each summary, so that the reader is not lost
-- [x] Extend more the conclusion
-- [x] Reduce the number of sections (esp. Chap2/Chap3) by merging some stuff
-- [x] Add a section on INTERLINKING datasets.
-- [x] Jodi to read the document, version v1
+
+Defense
+=======
+- Defense at Eurecom (See announcement) on April 10th.
+- Pictures of the Defense
+- Slides of the Defense
+- Twit about the defense from Eurecom
+
+
+After Defense
+=============
+- Prepare final version (adding summary in French)
+- Send some papers agreement
+
