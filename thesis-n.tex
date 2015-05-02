@@ -1,0 +1,182 @@
+
+\documentclass[a4paper,11pt,twoside]{ThesisStyle}
+%\documentclass[11pt,a4paper]{book}
+\usepackage[francais,english]{babel}% 
+\foreignlanguage{francais}{}
+%\usepackage{eso-pic}
+\usepackage{fancyvrb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\bibliographystyle{unsrt}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+\usepackage{wrapfig,lipsum,booktabs}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{gensymb}
+\usepackage{pifont}
+
+%\usepackage[utf8]{inputenc}
+
+%% loading theorem Axiom %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{deflda}{Axiom}
+\newcommand{\ghis}[1]{\noindent\textcolor{blue}{{\bf \{Ghis}: #1{\bf \}}}}
+\newcommand{\geom}{\textsc{GeomRDF}\xspace}
+\newcommand{\geolift}{\textsc{GeoLift}\xspace}
+\newcommand{\limes}{\textsc{Limes}\xspace}
+
+%% end axiom theorem%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{formatAndDefs}
+\include{myDefinitions}
+
+
+\begin{document}
+
+%\include{titlePageOficial}
+\vspace{3cm}
+%\dominitoc
+\pagenumbering{roman}       
+%\cleardoublepage
+
+
+%\section*{}
+%\vspace{118ex}
+%\begin{center}
+%\copyright \hspace{1ex}2014\\Auguste Atemezing\\ALL RIGHTS RESERVED
+%\end{center}
+%\cleardoublepage
+
+\section*{}
+\vspace{40ex}
+\begin{flushright}
+
+\textit{To all those who helped me \\
+to make this dream coming true. } \\
+
+\textcolor{cyan}{
+\textit{``Things don't have to change \\
+the world to be important''. \\} 
+     -Steve Jobs - 
+}
+ 
+\end{flushright}
+\cleardoublepage
+
+
+%\begin{center}
+%\section*{\LARGE \textbf{\textcolor{cyan}{Acknowledgments}}}
+%\addcontentsline{toc}{section}{Acknowledgements}
+%\markboth{Acknowledgements}{Acknowledgements}
+%\chapter*{Acknowledgements}
+
+%\cleardoublepage
+%\end{center}
+
+\chapter*{Acknowledgements}
+\input{ack}
+
+
+\addcontentsline{toc}{section}{Abstract}
+\markboth{Abstract}{Abstract}
+\chapter*{Abstract}
+\input{abstract}
+\clearpage
+
+%\cleardoublepage
+
+\addcontentsline{toc}{section}{Contents}
+\markboth{Contents}{Contents}
+
+\tableofcontents
+\cleardoublepage
+
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\cleardoublepage
+
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+\cleardoublepage
+
+\addcontentsline{toc}{section}{List of Listings}
+\lstlistoflistings
+\cleardoublepage
+
+\addcontentsline{toc}{section}{List of Publications}
+\markboth{List of Publications}{List of Publications}
+\include{acronyms/publications}
+%\cleardoublepage
+\addcontentsline{toc}{section}{Acronyms}
+\markboth{Acronyms}{Acronyms}
+\include{acronyms/acronyms}
+
+\mainmatter
+
+
+\input{intro}
+\clearpage
+
+\part{ Modeling, Interconnecting and Generating Geodata on the Web}
+%\input{part1}
+%\clearpage 
+
+%%In reality chapter 2 in the document
+%% after the introduction %%%%
+
+\input{ch1}
+\clearpage
+
+\input{ch2}
+\clearpage
+
+%\input{ch3}
+%\clearpage
+
+%\input{part2}
+%\clearpage
+\part{Generating Visualizations for Linked Data}
+
+\input{ch4}
+\clearpage
+
+\input{ch5}
+\clearpage
+
+%\input{part3}
+%\clearpage
+\part{Contribution to Standards}
+
+\input{ch6}
+\clearpage
+
+\input{ch7}
+\clearpage
+
+\input{conclusions}
+
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+\bibliography{thesis}
+\nocite{*}
+\printnomenclature
+
+%\chapter*{}
+%\chaptermark{}
+%\section*{}
+%\sectionmark{}
+%\vspace{-15ex}
+%\appendix
+\appendix
+\include{appendix1}
+\include{appendix2}
+\end{document}
+ 
