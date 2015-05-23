@@ -1,0 +1,48 @@
+
+\documentclass[a4paper,11pt,twoside]{ThesisStyle}
+
+\usepackage[french]{babel}
+\selectlanguage{french}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{fancyvrb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\bibliographystyle{unsrt}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+\usepackage{wrapfig,lipsum,booktabs}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{gensymb}
+\usepackage{pifont}
+
+
+
+
+\begin{document}
+
+\chapter*{R\'{e}sum\'{e}}
+Au cours de ces dernières années, le domaine de l'Open Data a reçu une attention croissante de la part des administrations publiques qui veulent tirer avantage de la publication de données ouvertes sur le Web. Les bénéfices supposés de cette ouverture pour les citoyens font référence à une meilleure transparence dans les prises de décisions publiques, à une meilleure gouvernance ou encore au développement d'un éco-système numérique qui tirerait un profit économique des applications analysant ces données. Cependant, la réalité montre que la simple ouverture et la publication de données par les administrations ne sont pas suffisantes au regard des défis liés à la variété des formats (XML, CSV, Excel, PDF, Shape), des méthodes d'accès (API, base de données) et à l'absence de nomenclature qui permettrait une meilleure réutilisation et interconnexion avec d'autres jeux de données. Dans cette thèse, nous explorons comment l'utilisation des standards et des technologies du web sémantique peut aider à résoudre les problèmes causés par l'hétérogénéité et la diversité des formats de données et des structures de représentations dans le domaine géographique.
+
+Cette thèse applique les principes des « données liées » dans le domaine de l'information géographique, un domaine clef pour les administrations publiques qui couvrent, par définition, un territoire. En particulier, nous traitons de trois aspects essentiels dans le workflow de traitement et de publication de données géo-spatiales et de leur consommation (visualisation), avec des scénarios d'utilisation issus de l’Institut Nationale de l’Information Géographique et Forestière (IGN) : (1) Comment représenter efficacement et stocker des données géospatiales sur le Web pour assurer des applications interopérables ? (2) Quelles sont les meilleures options pour un utilisateur pour interagir avec des données sémantiques interconnectées ? (3) Quels mécanismes peuvent être mis en place pour aider à la préservation des données structurées de haute qualité sur le Web?
+
+Nos contributions sont structurées en trois grandes parties correspondantes aux problématiques susmentionnées, avec des applications spécifiques dans le domaine géographique. Nous proposons et développons trois vocabulaires pour représenter des systèmes de coordonnées de référence (CRS), des entités topographiques et la géométrie associée à ces entités. Ces ontologies étendent d'autres vocabulaires existants et ajoutent deux avantages supplémentaires : l’utilisation explicite de CRS identifiés par des URIs pour représenter la géométrie, et la capacité de décrire des géométries structurées en RDF. Nous avons ainsi publié la base de données GEOFLA, en contribuant et utilisant la plate-forme Datalift, un outil permettant de convertir et publier des données brutes en données liées. Nous avons également évalué de manière systématique la performance des points d'accès SPARQL pour traiter des requêtes spatiales.
+
+Concernant la « consommation » de données RDF, après avoir examiné les différentes catégories des outils de visualisation (génériques et spécifiques à des jeux de données), nous proposons un vocabulaire pour décrire les applications de visualisation (DVIA). En outre, nous formalisons et mettons en œuvre un workflow pour visualiser des données sémantiques interconnectées à travers l'outil LDVizWiz, un assistant de visualisation générique de données liées sur le Web. 
+
+La dernière partie de la thèse décrit des contributions au catalogue des vocabulaires liées (LOV) ainsi qu'une proposition originale pour utiliser LOV avec une méthodologie de création d'ontologie telle que NeOn dans le but d'améliorer la réutilisation des vocabulaires. Nous proposons une heuristique pour aligner les vocabulaires et un classement de ces derniers en fonction de métriques liées au contenu de l'information des termes définis dans les vocabulaires. Enfin, la thèse apporte des réponses sur la façon de vérifier la compatibilité des licences entre les vocabulaires et les jeux de données dans le workflow de publication. Tout au long de la thèse, nous démontrons les avantages de l'utilisation des technologies sémantiques et des standards du W3C pour mieux découvrir, interconnecter et visualiser les données géospatiales gouvernementales pour leur publication sur le Web.
+
+
+
+\part{ Modeling, Interconnecting and Generating Geodata on the Web}
+
+\end{document}
