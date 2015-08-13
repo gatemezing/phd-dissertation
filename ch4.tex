@@ -21,7 +21,7 @@ According to \cite{marti2009} the main goal of information visualization is to t
 In this section, we describe also visualization tools that natively do not take as input RDF data for two reasons:
 \begin{itemize}
 \item those tools are relatively ``popular'' for analyzing data exposed by the government and agencies  (most of them in XLS, CSV) as they quickly make it easy to the users  to build chart  maps and compare with other datasets. One widely application is in the data journalism  where facts are analyzed by those tools without waiting for the semantic publication of the data
-\item Also these tools have many options for visualizing data and are not totally adapted in the Semantic Web community.
+\item Also these tools have many options for visualizing data and are not totally compatible with RDF resources for visualizing graphs.
 
 \end{itemize}
 
@@ -65,12 +65,12 @@ Regarding the tools for visualizing Linked Data,  the paper \cite{aba2011} analy
 
 
 \subsubsection{Linked Data API}
-The Linked Data API (LDA) \cite{ldapi}, provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) the generation of documents (information resources) for publishing of Linked Data; (ii) the provision of sophisticated querying and data extraction features, without the need for end users to write SPARQL queries and (iii) Delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
+The Linked Data API (LDA) \cite{ldapi}, provides a configurable way to access RDF data using simple RESTful URIs that are translated into queries to a SPARQL endpoint. The API layer is intended to be deployed as a proxy in front of a SPARQL endpoint to support:(i) the generation of documents (information resources) for publishing of Linked Data; (ii) the provision of sophisticated querying and data extraction features, without the need for end users to write SPARQL queries and (iii) delivery of multiple output formats from these APIs, including a simple serialization of RDF in JSON syntax.
 
 \textsc{Elda}\footnote{\url{http://www.epimorphics.com/web/tools/elda.html}} is a Java implementation of the LDA by the company Epimorphics. \textsc{Elda} comes with some pre-built samples and documentation, which allow developers to build the specification to leverage the connection between the back-end (data in the triple store) and the front-end (visualizations for the user). The API layer helps to associate URIs with processing logic that extract data from the SPARQL endpoint using one or more SPARQL queries and then serialize the results using the format requested by the client. A URI is used to identify a single resource whose properties are to be retrieved or to identify a set of resources.
 
 \subsubsection{Sgvizler}
-\texttt{Sgvizler} \cite{Martin2012} is a JavaScript library which renders the result of SPARQL SELECT queries into charts or HTML elements. The tool relies on queries against SPARQL endpoints using visualizations based on Google Visualization API, SPARQLer, Snorql\footnote{\url{http://dbpedia.org/snorql/}} and Spark\footnote{\url{http://code.google.com/p/rdf-spark }}. All the major chart types offered by the Google Visualization API are supported by Sgvizler. The user inputs a SPARQL query which is sent to a designated SPARQL endpoint. The endpoint must return the results back in XML format or SPARQL Query Results in JSON format. Sgvizler parses the results into the JSON format that Google prefers and displays the chart using the Google Visualization API or a custom-made visualization or formatting function. Sgvizler needs, in addition to the Google Visualization API, the JavaScript framework jQuery  to work. One of the drawback of Sgvizler that it is up to the user to test the query and embed it into the HTML page.
+\texttt{Sgvizler} \cite{Martin2012} is a JavaScript library which renders the result of SPARQL SELECT queries into charts or HTML elements. The tool relies on queries against SPARQL endpoints using visualizations based on Google Visualization API, SPARQLer, Snorql\footnote{\url{http://dbpedia.org/snorql/}} and Spark\footnote{\url{http://code.google.com/p/rdf-spark }}. All the major chart types offered by the Google Visualization API are supported by Sgvizler. The user inputs a SPARQL query which is sent to a designated SPARQL endpoint. The endpoint must return the results back in XML format or SPARQL Query Results in JSON format. Sgvizler is able to parse the results into Google compatible JSON format  and displays the result chart using the Google Visualization API or any customize visualization. Sgvizler needs, in addition to the Google Visualization API, the JavaScript framework jQuery  to work. One of the drawback of Sgvizler that it is up to the user to test the query and embed it into the HTML page.
 
 \subsubsection{Facete}
 Facete \cite{facete:2014} is an exploration tool for (geographical) Linked Data datasets on the Web. Also called ``Semmap'', the application allows the user to explore the specific slice of data named \textit{`facet'}  of a Linked Data endpoint in a graphical way, available at \url{http://144.76.166.111/facete/}. The facet is created by defining a set of constraints on properties in the database. Once the facet is defined, the information in the facet can be clicked-through in a tabular interface and visualized on a map. The user can choose a SPARQL endpoint and graph for listing the content and visualizing the dataset. The application has three main views:
@@ -116,11 +116,11 @@ There are currently many projects aiming at visualizing (RDF) Linked Data. A sur
 \end{itemize}
 While above-mentioned tools are often extensible and support specific domain datasets, they suffer from the following drawbacks:
 \begin{itemize}
- \item \textit{They are not easy for lay users to set up and use }. Sometimes, users just need a visual summary of a dataset in order to start exploring the data. Our approach to this challenge is to provide such a lightweight JavaScript-based tool that supports a quick exploration task.
+ \item \textit{They are not easy for lay users to set up and use}. Sometimes, users just need a visual summary of a dataset in order to start exploring the data. Our approach to this challenge is to provide such a lightweight JavaScript-based tool that supports a quick exploration task.
  \item \textit{They do not make recommendation based on categories}. A tool similar to our approach is Facete\footnote{\url{http://cstadler.aksw.org/facete/}}\cite{facete:2014} which shows a tree-based structure of a dataset based on some properties of an endpoint more relevant for geodata. A tabular view enables slices of data to be visualized and a map view can be activated when there is geodata. Our approach aims to be more generic, offering more views (tabular, map, graph, charts, etc.) based on a systematic analysis of the high-level categories present in a dataset.
 \end{itemize}
 
-The outcome of this state of the art can then be used to assess different visual tools in the process of creating Web-based visualizations. Some criteria can be used for assessing visual tools, such as (i) usability , (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. In \cite{deliverable2012b}, the readers can find more details on this survey. Table \ref{tab:visuTools} gives an overview of the selected tools studied based on the following features:
+The outcome of this state of the art can then be used to assess different visual tools in the process of creating Web-based visualizations. Some criteria can be used for assessing visual tools, such as (i) usability, (ii) visualization capabilities, (iii) data accessibility, (iv) deployment and (v) extensibility. In \cite{deliverable2012b}, the readers can find more details on this survey. Table \ref{tab:visuTools} gives an overview of the selected tools studied based on the following features:
 \begin{itemize}
 \item \textit{Data Formats} for the format of data taken as input by the tool;
 \item \textit{Data Access}, for the way to access the data from the tool, such as Web service, SPARQL endpoint, etc.
@@ -128,14 +128,14 @@ The outcome of this state of the art can then be used to assess different visual
 \item \textit{Type of views}, the different views potentially accessible when using the tool;
 \item \textit{Imported libraries}, the external libraries available within the tool,
 \item \textit{License} for the Intellectual Property rights of the tool,
-\item \textit{SemWeb Compliant}, whether the tool can be easily extended or is compliant with structured data; and
+\item \textit{SemWeb compliant}, whether the tool can be easily extended or is compliant with structured data; and
 
 \end{itemize}
 
 
 \begin{landscape}
 \begin{table}[htb!]
-  \caption{Survey of some tools used for creating visualizations on the Web.}
+  \caption{Survey of tools used for creating visualizations on the Web.}
   \label{tab:visuTools}
   \centering
   \begin{tabular}{lccc}
@@ -269,7 +269,7 @@ Because most mash-ups are data-specific applications, it is important to  know w
 
 \subsection{Reusable applications} \label{sec:reusable}
 %\todo{ summary of the application survey D6.1: diversity, scope, and countries}
-Many applications are built on top of datasets exposed in different open data governments initiatives. Generally, they are used to provide insight about the datasets and their usefulness. However, some of the applications could be generalized and reused if published adequately. Having some best practices in publishing applications on the Web could booster the interoperability between datasets and visual tools. To achieve this task, we first review some applications that have been developed on top of datasets  opened by governments (UK, USA, France) and public local authorities. We made a random survey of thirteen (13) innovative applications \cite{deliverable2012a} in various domains such as of security, health, finance, transportation, housing, city, foreign aid and education. Table \ref{tab:apps-survey} provides a summary of the surveyed applications; with names, types, countries and brief description.
+Many applications are built on top of datasets exposed in different open data governments initiatives. Generally, they are used to provide insight about the datasets and their usefulness. However, some of the applications could be generalized and reused if published adequately. Having some best practices in publishing applications on the Web could boost the interoperability between datasets and visual tools. To achieve this task, we first review some applications that have been developed on top of datasets  opened by governments (UK, USA, France) and public local authorities. We made a random survey of thirteen (13) innovative applications \cite{deliverable2012a} in various domains such as of security, health, finance, transportation, housing, city, foreign aid and education. Table \ref{tab:apps-survey} provides a summary of the surveyed applications; with names, types, countries and brief description.
 
 The main template used in the survey gathered the following information:
 \begin{itemize}
@@ -353,6 +353,8 @@ We have implemented a vocabulary, DVIA\footnote{\url{http://bit.ly/Vb4L8k}}, tha
 \item \textbf{Platform}: The platform where to host or use the application, could be on the Web (Firefox, Chrome, IE, etc..) or mobile (android, iOS, mobile ) or even desktop
 \item \textbf{VisualTool}: Represents the tool or library used to build the application.
 \end{itemize}
+
+Figure \ref{visuGraphModel} depicts the model used to implement the DVIA vocabulary.
 
 \begin{figure}[!htbp]
 \vspace{-2.5cm}

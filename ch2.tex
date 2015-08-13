@@ -675,7 +675,7 @@ The gazetteer dataset in RDF is part of the BD TOPO\circledR ~database consistin
 
 \subsection{Publishing Addresses of OSM-France in RDF}
 \label{sec:bano2rdf}
-OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project already contains  15 million indirect georeferencing locations. The geometries are POINTs and use WGS84 CRS. One of the requirements is to provide an RDF-ize version of the data, enriching the dataset with existing relevant ones. The goal of \textsc{Bano2RDF} with six basic requirements:
+OpenStreetMap France is working on providing the location addresses of France in different formats: CSV, ShapeFiles in a collaborative and open source fashion. The BANO project already contains  15 million indirect georeferencing locations. The geometries are POINTs and use WGS84 CRS. One of the requirements is to provide an RDF-ize version of the data, enriching the dataset with existing relevant ones. The goal of transforming BANO to RDF (\textsc{Bano2RDF}) consists of six basic requirements:
 \begin{description}
 \item [\ding{117}~Requirement 1-Model:] Model the existing data according to an existing vocabulary, generic enough to cover the scope of the existing dataset.
 \item[\ding{117}~Requirement 2-Provenance:] Add relevance metadata on the published dataset  such as provenance, spatial coverage, licensing, authorship, etc.
@@ -714,7 +714,7 @@ Based on the above requirements, the Location Core Vocabulary \cite{locnvocab} i
 Geometries are provided in three different representations: W3C WGS84, typed literal in WKT and geo URI; all using the property \texttt{loc:geometry}. Currently, the dataset is mainly available as dump files at \url{http://www.openstreetmap.fr/bano/data/}. However, an experimental endpoint has been set up to query at \url{http://eventmedia.eurecom.fr/sparql } with the named graph \url{http://data.osm.fr/bano/}, consisting of nearly 170 million triples.
 
 \paragraph{Interconnection with LinkedGeoData:}
-The first results of mappings with LinkedGeoData amenities using the LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of $0.97$, i.e, we consider \textit{``very closed''} resources with a distance of 30 meter, based on the following equation:  
+The first results of mappings with LinkedGeoData amenities using the LIMES tool against three big cities of France (Paris, Lyon and Marseille). The dataset is loaded in an endpoint, and the postal code is used to filter the relevant location address. Furthermore, the \textsc{Hausdorff} function is used on the geometry (polygons) of the target and source datasets, with a threshold of $0.97$, i.e, we consider \textit{``very close''} resources with a distance of 30 meter, based on the following equation:  
 
 \begin{align*}
 \theta = \frac{1}{1+d} \\
