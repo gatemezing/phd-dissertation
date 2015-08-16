@@ -1,12 +1,5 @@
 \begin{thebibliography}{100}
 
-\bibitem{krzysztof14}
-Krzysztof Janowicz, Pascal Hitzler, Benjamin Adams, Dave Kolas, and
-  Charles~Vardeman II.
-\newblock Five stars of linked data vocabulary use.
-\newblock {\em Semantic Web Journal}, 2014.
-\newblock \url{http://geog.ucsb.edu/~jano/swj653.pdf}.
-
 \bibitem{anamaria08}
 Ana-Maria Olteanu.
 \newblock {\em Fusion de connaissances imparfaites pour l'appariement de
@@ -896,6 +889,13 @@ Krzysztof Janowicz, Sven Schade, Arne Br\"oring, Carsten Kessler, Christoph
 B\'en\'edicte Bucher, Nathalie Abadie, and Ghislain~Auguste Atemezing.
 \newblock Mod\'elisation de connaissances sp\'ecifiques: information spatiale.
 \newblock Rapport de Recherche. D\'elivrable WP2.T.2.3- Projet Datalift, 2013.
+
+\bibitem{krzysztof14}
+Krzysztof Janowicz, Pascal Hitzler, Benjamin Adams, Dave Kolas, and
+  Charles~Vardeman II.
+\newblock Five stars of linked data vocabulary use.
+\newblock {\em Semantic Web Journal}, 2014.
+\newblock \url{http://geog.ucsb.edu/~jano/swj653.pdf}.
 
 \bibitem{wgs84}
 W3C Semantic Web Interest~Group (SWIG).
