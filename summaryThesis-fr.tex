@@ -37,24 +37,174 @@ Cette thèse applique les principes des « données liées » dans le domaine de
 
 Nos contributions sont structurées en trois grandes parties correspondantes aux problématiques susmentionnées, avec des applications spécifiques dans le domaine géographique. Nous proposons et développons trois vocabulaires pour représenter des systèmes de coordonnées de référence (CRS), des entités topographiques et la géométrie associée à ces entités. Ces ontologies étendent d'autres vocabulaires existants et ajoutent deux avantages supplémentaires : l’utilisation explicite de CRS identifiés par des URIs pour représenter la géométrie, et la capacité de décrire des géométries structurées en RDF. Nous avons ainsi publié la base de données GEOFLA, en contribuant et utilisant la plate-forme Datalift, un outil permettant de convertir et publier des données brutes en données liées. Nous avons également évalué de manière systématique la performance des points d'accès SPARQL pour traiter des requêtes spatiales.
 
-Concernant la « consommation » de données RDF, après avoir examiné les différentes catégories des outils de visualisation (génériques et spécifiques à des jeux de données), nous proposons un vocabulaire pour décrire les applications de visualisation (DVIA). En outre, nous formalisons et mettons en œuvre un workflow pour visualiser des données sémantiques interconnectées à travers l'outil LDVizWiz, un assistant de visualisation générique de données liées sur le Web.
+Concernant la « consommation » de données RDF, après avoir examiné les différentes catégories des outils de visualisation (génériques et spécifiques à des jeux de données), nous proposons un vocabulaire pour décrire les applications de visualisation (DVIA). En outre, nous formalisons et mettons en œuvre un workflow pour visualiser des données sémantiques interconnectées à travers l'outil LDVizWiz, un assistant de visualisation générique de données liées sur le Web. 
 
 La dernière partie de la thèse décrit des contributions au catalogue des vocabulaires liées (LOV) ainsi qu'une proposition originale pour utiliser LOV avec une méthodologie de création d'ontologie telle que NeOn dans le but d'améliorer la réutilisation des vocabulaires. Nous proposons une heuristique pour aligner les vocabulaires et un classement de ces derniers en fonction de métriques liées au contenu de l'information des termes définis dans les vocabulaires. Enfin, la thèse apporte des réponses sur la façon de vérifier la compatibilité des licences entre les vocabulaires et les jeux de données dans le workflow de publication. Tout au long de la thèse, nous démontrons les avantages de l'utilisation des technologies sémantiques et des standards du W3C pour mieux découvrir, interconnecter et visualiser les données géospatiales gouvernementales pour leur publication sur le Web.
 
+Our main concern is to tackle the problems within the workflow of publication in two directions, more likely to happen at the beginning and the end: 
+\begin{itemize}
+\item (i) Geographic Information on the Web of Data: as an application of the life-cycle of publishing geodata.
+\item (ii) Visualization tools for building innovative applications consuming structured data: as for leveraging the process of creating applications on-top of semantic data to highlight some relevant knowledge to the users.
+
+\end{itemize}
 
 
-\chapter*{Intégration des données geo-spatiales sur le Web}
+\chapter*{Questions de recherche}
 
-Cette partie est centrée sur .....
+Dans cette thèse, nous proposons des solutions dans les défis liés à la publication des données géographique sur le Web des données, qui sont les suivantes: 
 
-\chapter*{Visualisation des graphes de données sur le Web}
+\begin{enumerate}
+
+\item \textit{Vocabulaires:} Comment modéliser l'information géographique sur le Web? Comment évaluer les ontologies du domaine géographique? Comment sérialiser les géométries complexes dans un environnement comme le Web? 
+\item \textit{Languages de requêtes:} How do we write efficient queries that target geospatial Web? How do we store and index geodata in RDF ?
+\item \textit{Ddonnées:} How do we extract and convert geodata to expose it on the Web? What are the best practices for representing complex geometries on the Web? How can we integrate fully compatibility of Coordinate Reference Systems (CRSs) on datasets? 
+\item \textit{Publication:} How can we develop scalable frameworks for covering the workflow of publishing geodata? What are the appropriate triple stores for handling geodata? What are the metrics to use for interconnecting different geodata resources on the Web?  
+\item \textit{Applications et interfaces utilisateurs:} How do we generate visualizations of linked geospatial data? What are appropriate high-level APIs that ease the development of user interfaces for geospatial data? Can we rely on existing map platforms such as Google Maps, Bing Maps or OpenSteetMap?
+\end{enumerate}
+
+
+Dans cette thèse, nous abordons les enjeux de publication des données du point de vue tant par les éditeurs que des utilisateurs. Les éditeurs et les utilisateurs ont besoin de solutions pragmatiques qui les aident à choisir un vocabulaire, trouver un outil pour convertir des fichiers shape  ShapeFiles selon des vocabulaires existants, puis transformer en RDF et publier les données suivant des bonnes pratiques.
+
+
+After the publication of the dataset using Linked Data paradigm, the logical question is: ``What next''? Publishers and users need to be able to understand their dataset while developers have to build application out of the datasets. There is a huge amount of structured data on the Web, with the expectation to have more and more 
+data to be published as LOD. This huge amount of ``structured big data'' is far to reach non-expert users 
+so far, due to the complexity of different technologies used to model and query the data. Thus, it is 
+important to create visualizations on top of the generated datasets to explore, analyze and showcase 
+some of the potential of linked data to non-expert users. In this process, some challenging research questions have to be addressed, such as the following:
+
+\begin{itemize}
+\item  How to find suitable visualizations according to the datasets without showing the complexity of SPARQL queries?
+ \item  What are the important properties to visualize for entities, depending on the domain and the users' expectations?
+ \item  How to bridge the gap between existing traditional tools of Information Visualization, mostly using CSV/XLS, JSON or proprietary formats to easily integrate RDF models as input?
+ \item How to make interoperable applications built on top of Government Open Data catalogues? How to reuse existing applications?
+\end{itemize}
+ 
+ While trying to answer to the aforementioned challenges, we report the state of the art and related approaches dealing with visualizations for Linked Data. 
+
+
+\section{Contributions}
+\label{sec:contributions}
+In this section, we provide the main contributions of this thesis organized in three main parts of our thesis: model and publication of geospatial data, visualizations of data and applications on the Web and contribution to standards. 
+
+\subsection{Modeling, Publishing and Querying geodata}
+The geolocation is crucial for many applications for both human and software agents. More and more data is opened and interlinked using the Linked Data principles, and it is worth modeling geographic data efficiently by reusing as much as possible from existing ontologies or vocabularies that describe both the geospatial features and their shapes. In the first part of our work, we survey different modeling approaches used by the Geographic Information System (GIS) and the Linked Open Data (LOD) communities. Our aim is to contribute to the actual efforts in representing geographic objects with attributes such as location, points of interest (POI), and addresses on the Web of Data. We focus on the French territory and we provide examples of representative vocabularies that can be used for describing geographic objects. We propose some alignments between various vocabularies (DBpedia, GeoNames, Schema.org, LinkedGeoData, Foursquare, etc.) in order to enable interoperability while interconnecting French geodata with other datasets. 
+
+Regarding this aspect of our research, we have achieved the following tasks:
+ \begin{enumerate}
+ 
+  \item We have proposed an ontology describing features and points of interest for the French territory, by reusing an existing taxonomy (GeOnto) and aligning it to other related vocabularies in the geolocation domain (Section \ref{sec:bpgeo}).
+  \item  We have studied how to extend the existing vocabularies for geographic domain to take into account efficient modeling of complex geometries. By doing so, we tackle the complex geometry representation issues in the Web of Data, describing the state of implementations of geospatial functions in triple stores and comparing them to the new GeoSPARQL standard (Section \ref{sec:specgeosparql}).  We finally make some recommendations and advocate for the reuse of more structured vocabularies for publishing topographic entities to better address the IGN-France requirements. (Section \ref{sec:topofunc}).
+  
+ \item We have made a comparative study of triple stores, comparing their capability to store spatial information and their implementation of topological functions with respect to the ones 
+existing in Open Geospatial Consorcium\footnote{\url{http://www.opengeospatial.org/}} standards (Section \ref{sec:surveytps}).
+ \item  We have designed and implemented vocabularies for describing complex geometries with different coordinate systems, with direct application to the French administrative units (Section \ref{sec:geomfeaturevocab}).
+ 
+ \item We have interlinked French authoritative geodata resources with existing geospatial datasets on the Web, such as LinkedGeodata, GADM, NUTS and Geonames (Section \ref{sec:mapping}).
+ 
+ \item We have contributed to the creation of a French LOD Cloud by publishing 8 datasets representing 340 million triples as LOD covering the French territory (Section \ref{sec:frenchCloud}).
+ 
+
+\end{enumerate}
+
+
+Consuming data on the Web through visualizations is as challenging as applications have to deal with the graph structure of RDF, the underlying semantics of the dataset and the user interaction to easily understand what the data is about. In the following section, we present our contributions on visualization.
+\subsection{Visualization Tools in Linked Government Data} \label{visu}
+
+We first review some innovative applications that have been developed on top of datasets released as Open Data by governments (UK, USA, France) and local authorities. We have then derived and proposed 8 use cases (UCs) that can be developed to consume data from the different main providers in the French level: INSEE, DILA, IGN, FING, etc. We mention that the most interesting use cases are the ones which show the added value of having interconnected datasets. These UCs,  developed and deployed, can be useful to show the benefits of Linked Data in a variety of domains such as education, tourism, cultural heritage, civil administrations, judicial courts, medicine, etc. 
+
+Regarding tools used for visualization, we have identified and classified them in two categories, providing for each of them relevant examples: (i)-tools that operate over RDF data, (ii) and tools that operate over other structured formats. We then provide some basic criteria for assessing a given visualization tool, with some weight attached to each of the criterion. 
+
+Moreover, regarding visualizations on top of datasets, we have contributed as follows:
+\begin{enumerate}
+
+
+\item We have built an application of the French first-round elections in 2012 using data from the \url{http://data.gouv.fr} and other public institutions. The application available at \url{http://www.eurecom.fr/~atemezin/DemoElection/} was built with the Exhibit Framework \cite{exhibit2007}; it aims to showcase the reconciliation of heterogeneous datasets: political results in CSV, unemployment rate, data of candidates, departments of France and more data from DBpedia. The user can filter by candidate image, unemployment rate and department to see the scores, with more enriched information about the department.
+ 
+\item We have implemented a generic tool for exploring geodata on a map, based on the automatic detecting of SPARQL endpoints in the LOD cloud containing geospatial datasets (Section \ref{sec:geordfviz}). 
+
+\item We have implemented an application consuming geodata and statistics combining multiple datasets in education from \url{http://data.gouv.fr} portal (Section \ref{sec:perfectSchool}).
+
+\item we have built an application for conference events (Section \ref{sec:confomaton}) with their associated media reconciled from many social platforms (Instagram, Twitter, etc.).
+
+\item We have built a vocabulary for structuring applications on the Web of Data. The vocabulary can be used for discovering visual tools or charts used to build applications (Section \ref{sec:dvia}). 
+
+\item We have implemented a generic plugin for annotating applications developed for contests to be included in any web page, leveraging  the generation of structured content out of webpages using the vocabulary. 
+
+
+\item We have implemented a wizard that analyses an RDF dataset and recommend visualization based on predefined categories, using generic SPARQL queries for easing the exploration of datasets published as LOD. 
+
+
+\end{enumerate}
+
+\subsection{Contributions to Standards}
+\label{sec:contrib-standard}
+We contributed to the W3C Government Linked Data Working Group (GLD WG)\footnote{http://www.w3.org/2011/gld/} activity from July 2011 until December 2013.  The objective of the Working Group was to \textit{``provide standards and other information which help governments around the world publish their data as effective and usable Linked Data using Semantic Web technologies''}.
+
+We contributed to three task forces as follows:
+\begin{itemize}
+\item Task Force \#1 aims to create a linked data community directory\footnote{http://dir.w3.org} and to maintain it on-line. The directory covers deployments, vendors, contractors, end-user applications. We contributed to define the requirements and providing data for the French organizations in the directory.
+
+\item Task Force \#2 aims at providing best Practices for publishing Linked Data by producing recommendations regarding vocabulary selection, URI construction, a Linked Data Cookbook, versioning, stability and provenance. Here, we have prepared a checklist to help government to select and re-use vocabularies in their project. We have also proposed our vision of the Linked Open Data Life cycle, with best practices for creating URIs. We served as editor for the Linked Data Glossary \cite{glossairegld} published as a W3C Note document, apart from contributing in many sections of the document ``Best Practices for Publishing Linked Data'' \cite{bpgld}.
+
+\item Task Force \#3 goal was to provide relevant vocabularies to be used by governments or local authorities in their process of exposing their data. We have participated actively in the discussions on the different vocabularies published as recommendations by the W3C such as the Data Cube \cite{dcube}, the ORG vocabulary \cite{org} and the DCAT \cite{dcat} vocabulary.
+\end{itemize}
+
+Regarding the use of standard vocabularies we have contributed on: 
+\begin{itemize}
+
+\item  Proposing a method to harmonize prefixes on the Web of Data  with two services: Linked Open Vocabularies (LOV)\footnote{\url{http://lov.okfn.org/dataset/lov/}} and prefix.cc\footnote{\url{http://prefix.cc}}. The former is currently a maintained hub of curated vocabularies on the Web, while the latter is a focal point for developer to register and look-up prefixes for their resources or ontologies. The approach proposed can be extended to any catalogue of vocabulary as long as the vocabularies fulfill the requirements to be inserted into LOV catalogue (Section \ref{sec:prefharmoni}). 
+
+\item  Designing and implementing a new method for ranking vocabularies based on the Information Content (IC) and Partitioned Information Content (PIC) metrics (Section \ref{sec:vocabranking}).
+
+\item We have developed a tool that determined in real-time whether different licenses present in the dataset and vocabularies are either compatible or not (Section \ref{sec:live}). 
+\end{itemize}
+
+\chapter*{Plan de la Thèse} 
+\label{sec:thesis-structure}
+
+The work presented within this thesis is composed of three major parts. The remainder of the thesis proceeds as follows:
+
+
+In the first part of this thesis, we focus on the various models and vocabularies for representing geography and geometry. We survey the state of triple stores and describe particular problems such as coordinate systems, and highlight our contributions: new vocabularies, an online converter between CRS, etc. We also describe how geographic datasets can then be converted into RDF using the Datalift process to be published on the Web. We then show how those datasets can be interlinked (possibly trying different instance matching tools) and  conclude with a thorough analysis of those alignments in the case of the French mapping agency (IGN-France) datasets. More specifically:
+
+ 
+  \textbf{Chapter \ref{ch:ch1}} describes the current limitations of geodata on the Web and the different vocabularies we propose for geometries, coordinate reference systems and feature  types. We also propose  some best practices for publishing geodata on the Web.
+ \textbf{Chapter \ref{ch:ch2}} focuses on tools for publishing and querying geodata, their differences and applications. We describe the Datalift platform, an open source platform to ``lift'' raw data sources to semantic interlinked data sources. After comparing Datalift with the Geoknow stack, we apply it in the process of publishing French Administrative Units and French Gazetteer datasets. We then presents the status of the \textit{French LOD}(\textit{FrLOD}) cloud and some sample of queries over structured geometries published within the \url{http://data.ign.fr} endpoint. 
+ 
+
+%\item 
+ In the second part of the thesis, we cover three main issues regarding how to present RDF to end-users. First, we give a state of the art review of existing tools and solutions for visual representation and exploration of RDF (Visualbox, LODSpeaKr, Map4RDF, Linked Data Visualization Model, etc.) Then, we present our contribution: the wizard for visualizations including the vocabulary for describing visualizations, the prototype itself, etc. Third, we present two applications applied to events and statistics to showcase the consumption of interlinked datasets in a new fashion. Then, we present a mechanism for extracting and reusing application in Open Data events. Finally, we provide some insights on revealing the ``important'' properties of entities for visualization by analyzing the Google Knowledge Panel (GKP) and evaluating with users preferences. This part is divided in two chapters:
+ 
+  \textbf{Chapter \ref{ch:ch4}} provides a survey on visualization tools and applications, with their limitations. We also describe the status of the applications on the Web and provide a classification of so-called ``Linked Data Applications''.
+   In \textbf{Chapter \ref{ch:ch5}}, we present our contribution on new approaches to generate visualizations and applications. We first propose a novel approach for category-based visualizations. We then show an application for geographic domain. Two applications related to events and statistics are also described. Finally, we propose how to improve the discovery of applications in Open Data events, through a model and a universal plugin for annotating Web pages with RDF. 
+
+ In the last part of the thesis in \textbf{Chapter \ref{ch:ch6}}, we describe various contributions to the Linked Open Vocabularies (catalog description, vocabulary publications, APIs and endpoints): vocabulary prefix harmonization, vocabulary ranking metrics using information content. 
+  In \textbf{Chapter \ref{ch:ch7}} we present some insights on checking license compatibility between vocabularies and datasets with the defeasible deontic logic by creating an automatic tool for licenses checking for data on the Web. 
+
+
+ In \textbf{Chapter \ref{ch:conc}}, we conclude by highlighting some limitations and suggest new research directions.
+
+
+\chapter*{Partie I: Intégration des données geo-spatiales sur le Web}
+
+Cette partie est divisée en deux chapitres et consacrée à l'état de l'art sur les formats et les differents vocabulaires utilises dans la littérature pour  
+
+\section*{chap1}
+
+In this chapter, we reviewed the formats and the different vocabularies used to model geospatial data on the Web, based on direct and indirect georeferencing. Afterwards, we identified some limitations the lack of an explicit CRS reference on the data. We then proposed a REST service for converting between different CRSs to help the publishers to be able to handle different projections of their datasets. Then, we proposed and implemented three vocabularies for geometries, CRSs and topographic entities (\texttt{geom}, \texttt{ingf}, \texttt{topo}). The vocabularies extend existing ones and integrate two additional advantages: an explicit use of CRS identified by URIs for geometry, and the ability to describe structured geometries in RDF. Some of our findings and model description are under discussion for standardization at the W3C, such as to extend GeoSPARQL to handle CRS, or the extension of the location and address vocabulary \cite{locnvocab} to support different CRSs properties.
+In the next chapter, we will go through the process of the conversion and the publication of geospatial data on the Web.
+
+\section*{chap2}
+
+\chapter*{Partie II: Visualisation des graphes de données sur le Web}
 
 Dans cette partie, nous explorons ...
 
-\chapter*{Contribution au catalogue des vocabulaires liés}
+\chapter*{Partie III: Contribution au catalogue des vocabulaires liés}
 
 
 
-\chapter*{Conclusion}
+\chapter*{ Conclusion et Perspectives}
+\label{ch:conc}
 
-\end{document} 
+\end{document}
