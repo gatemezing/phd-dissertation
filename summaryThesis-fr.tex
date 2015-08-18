@@ -25,8 +25,10 @@
 \usepackage{gensymb}
 \usepackage{pifont}
 
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
 
-
+\newcommand{\trans}[1]{\noindent\textcolor{red}{{\bf \{TRANS}: #1{\bf \}}}}
 
 \begin{document}
 
@@ -57,7 +59,7 @@ Dans cette thèse, nous proposons des solutions dans les défis liés à la publ
 
 \item \textit{Vocabulaires:} Comment modéliser l'information géographique sur le Web? Comment évaluer les ontologies du domaine géographique? Comment sérialiser les géométries complexes dans un environnement comme le Web? 
 \item \textit{Languages de requêtes:} How do we write efficient queries that target geospatial Web? How do we store and index geodata in RDF ?
-\item \textit{Ddonnées:} How do we extract and convert geodata to expose it on the Web? What are the best practices for representing complex geometries on the Web? How can we integrate fully compatibility of Coordinate Reference Systems (CRSs) on datasets? 
+\item \textit{Données:} How do we extract and convert geodata to expose it on the Web? What are the best practices for representing complex geometries on the Web? How can we integrate fully compatibility of Coordinate Reference Systems (CRSs) on datasets? 
 \item \textit{Publication:} How can we develop scalable frameworks for covering the workflow of publishing geodata? What are the appropriate triple stores for handling geodata? What are the metrics to use for interconnecting different geodata resources on the Web?  
 \item \textit{Applications et interfaces utilisateurs:} How do we generate visualizations of linked geospatial data? What are appropriate high-level APIs that ease the development of user interfaces for geospatial data? Can we rely on existing map platforms such as Google Maps, Bing Maps or OpenSteetMap?
 \end{enumerate}
@@ -65,12 +67,8 @@ Dans cette thèse, nous proposons des solutions dans les défis liés à la publ
 
 Dans cette thèse, nous abordons les enjeux de publication des données du point de vue tant par les éditeurs que des utilisateurs. Les éditeurs et les utilisateurs ont besoin de solutions pragmatiques qui les aident à choisir un vocabulaire, trouver un outil pour convertir des fichiers shape  ShapeFiles selon des vocabulaires existants, puis transformer en RDF et publier les données suivant des bonnes pratiques.
 
-
-After the publication of the dataset using Linked Data paradigm, the logical question is: ``What next''? Publishers and users need to be able to understand their dataset while developers have to build application out of the datasets. There is a huge amount of structured data on the Web, with the expectation to have more and more 
-data to be published as LOD. This huge amount of ``structured big data'' is far to reach non-expert users 
-so far, due to the complexity of different technologies used to model and query the data. Thus, it is 
-important to create visualizations on top of the generated datasets to explore, analyze and showcase 
-some of the potential of linked data to non-expert users. In this process, some challenging research questions have to be addressed, such as the following:
+ 
+Après la publication du jeux de données sur le Web, les éditeurs et les utilisateurs doivent comprendre ces données pendant que les développeurs doivent pouvoir créer des applications. Le Web commence à contenir de plsu en plus de données structurées, qui ne sont pas toujours exploitées par les utilisateurs finaux, à cause de la complexité dans l'usage du modèle RDF et de son langage de requête, le SPARQL. Ainsi, il est important de créer des visualisations pour explorer, analyser et montrer les bénéfices du Linked Data aux non-experts. Dans ce processus, il existe des questions de recherches à résoudre, tels que:
 
 \begin{itemize}
 \item  How to find suitable visualizations according to the datasets without showing the complexity of SPARQL queries?
@@ -86,7 +84,7 @@ some of the potential of linked data to non-expert users. In this process, some 
 \label{sec:contributions}
 In this section, we provide the main contributions of this thesis organized in three main parts of our thesis: model and publication of geospatial data, visualizations of data and applications on the Web and contribution to standards. 
 
-\subsection{Modeling, Publishing and Querying geodata}
+\subsection{Modelisation, Publication et , Publishing and Querying geodata}
 The geolocation is crucial for many applications for both human and software agents. More and more data is opened and interlinked using the Linked Data principles, and it is worth modeling geographic data efficiently by reusing as much as possible from existing ontologies or vocabularies that describe both the geospatial features and their shapes. In the first part of our work, we survey different modeling approaches used by the Geographic Information System (GIS) and the Linked Open Data (LOD) communities. Our aim is to contribute to the actual efforts in representing geographic objects with attributes such as location, points of interest (POI), and addresses on the Web of Data. We focus on the French territory and we provide examples of representative vocabularies that can be used for describing geographic objects. We propose some alignments between various vocabularies (DBpedia, GeoNames, Schema.org, LinkedGeoData, Foursquare, etc.) in order to enable interoperability while interconnecting French geodata with other datasets. 
 
 Regarding this aspect of our research, we have achieved the following tasks:
@@ -162,18 +160,19 @@ Regarding the use of standard vocabularies we have contributed on:
 \chapter*{Plan de la Thèse} 
 \label{sec:thesis-structure}
 
-The work presented within this thesis is composed of three major parts. The remainder of the thesis proceeds as follows:
+Dans la première partie de cette thèse , nous nous concentrons sur l'étude des différents modèles et vocabulaires pour représenter la géographie et de la géométrie . Nous étudions les points d'accès aux données et décrivons les problèmes particuliers tels que les systèmes de coordonnées, et mettons en évidence nos contributions dans ce dommaine: création de nouveaux vocabulaires réutilisant les vocabulaires existants, implémentation d'un convertisseur en ligne entre des différents systèmes de coordonées, etc. Nous décrivons également comment des jeux de données géographiques peuvent ensuite être convertis en RDF en utilisant le processu d'élévation des données du projet Datalift afin de leur publication sur le Web. Nous montrons ensuite comment ces jeux de données peuvent être alignées entre elles et concluons par une analyse approfondie de ces alignements dans le cas des jeux de données de cartographie française fournis par l'Institut Géographique et Forestière (IGN -France ) . 
 
-
-In the first part of this thesis, we focus on the various models and vocabularies for representing geography and geometry. We survey the state of triple stores and describe particular problems such as coordinate systems, and highlight our contributions: new vocabularies, an online converter between CRS, etc. We also describe how geographic datasets can then be converted into RDF using the Datalift process to be published on the Web. We then show how those datasets can be interlinked (possibly trying different instance matching tools) and  conclude with a thorough analysis of those alignments in the case of the French mapping agency (IGN-France) datasets. More specifically:
+Plus précisement:
 
  
-  \textbf{Chapter \ref{ch:ch1}} describes the current limitations of geodata on the Web and the different vocabularies we propose for geometries, coordinate reference systems and feature  types. We also propose  some best practices for publishing geodata on the Web.
+  \textbf{Le Chaptitre 1} describes the current limitations of geodata on the Web and the different vocabularies we propose for geometries, coordinate reference systems and feature  types. We also propose  some best practices for publishing geodata on the Web.
  \textbf{Chapter \ref{ch:ch2}} focuses on tools for publishing and querying geodata, their differences and applications. We describe the Datalift platform, an open source platform to ``lift'' raw data sources to semantic interlinked data sources. After comparing Datalift with the Geoknow stack, we apply it in the process of publishing French Administrative Units and French Gazetteer datasets. We then presents the status of the \textit{French LOD}(\textit{FrLOD}) cloud and some sample of queries over structured geometries published within the \url{http://data.ign.fr} endpoint. 
  
-
-%\item 
- In the second part of the thesis, we cover three main issues regarding how to present RDF to end-users. First, we give a state of the art review of existing tools and solutions for visual representation and exploration of RDF (Visualbox, LODSpeaKr, Map4RDF, Linked Data Visualization Model, etc.) Then, we present our contribution: the wizard for visualizations including the vocabulary for describing visualizations, the prototype itself, etc. Third, we present two applications applied to events and statistics to showcase the consumption of interlinked datasets in a new fashion. Then, we present a mechanism for extracting and reusing application in Open Data events. Finally, we provide some insights on revealing the ``important'' properties of entities for visualization by analyzing the Google Knowledge Panel (GKP) and evaluating with users preferences. This part is divided in two chapters:
+ 
+ Dans la deuxième partie de la thèse, nous couvrons trois principales questions relatives à la façon de présenter les données en RDF aux utilisateurs finaux. Tout d'abord, nous présentons l'état de l'art des outils et des solutions pour la représentation visuelle et l'exploration des données en RDF (Visualbox, LODSpeaKr, Map4RDF, le modèle ``Linked Data Visualization'', etc.). Ensuite, nous présentons notre contribution: un assistant pour faciliter les visualisations automatique des points d'accès aux données sur le Web, y compris le vocabulaire spécifiant les visualisations et le prototype implémenté. Par la suite, nous présentons deux applications dans les domaines événementiel et statistique pour mettre en exergue de manière innovante la réutilisation des jeux de données liés. Enfin, nous implémentons un algorithme permettant de révéler les propriétés les plus ``importantes'' des entités des ressources pour leur visualisation en partant de la Base de Connaissance de Google (GKP) ainsi qu'une évaluation faite sur les préférences des utilisateurs. 
+ 
+ Cette partie est divisée en deux chapitres:
+ 
  
   \textbf{Chapter \ref{ch:ch4}} provides a survey on visualization tools and applications, with their limitations. We also describe the status of the applications on the Web and provide a classification of so-called ``Linked Data Applications''.
    In \textbf{Chapter \ref{ch:ch5}}, we present our contribution on new approaches to generate visualizations and applications. We first propose a novel approach for category-based visualizations. We then show an application for geographic domain. Two applications related to events and statistics are also described. Finally, we propose how to improve the discovery of applications in Open Data events, through a model and a universal plugin for annotating Web pages with RDF. 
@@ -195,6 +194,8 @@ In this chapter, we reviewed the formats and the different vocabularies used to 
 In the next chapter, we will go through the process of the conversion and the publication of geospatial data on the Web.
 
 \section*{chap2}
+
+In this chapter, we have surveyed tools for extracting and converting geospatial data in RDF. Then, we described GeomRDF, a tool developed within the Datalift project which goes beyond the state of the art by providing structured geometries and conforming to GeoSPARQL. Moreover, we have described the limitation of the existing data models by discussing some recommendations to publishers of geodata on storage aspects. Similarly, an extensive description of the Datalift tool used to publish data on the Web has been provided, with a special focus of our contribution to build the French LOD cloud with datasets in 4-5 stars according to Linked Data principles. Finally, we have shown some real world use-cases of SPARQL queries making use of either structured geometries or built-in geospatial functions. Depending on the requirements of the users and the underlying datasets, the user can choose between the simplicity of SPARQL query, with limitations to the endpoint (for e.g., when using built-in geospatial functions of a given endpoint), or the expressivity of the \texttt{geom} vocabulary regardless the endpoint, with a more longest SPARQL query.
 
 \chapter*{Partie II: Visualisation des graphes de données sur le Web}
 
