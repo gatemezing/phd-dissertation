@@ -256,27 +256,63 @@ Dans ce chapitre, nous présentons une étude des outils d'extraction et de conv
 
 \chapter*{Partie II: Visualisation des graphes de données sur le Web}
 
-Dans cette partie, nous explorons ...
+\section*{Chapitre III}
+
+In this chapter, we have described different tools used for visualizing data, structured and graph data. We have also discussed different types of applications currently built on top of government open data initiatives. The goal of this survey is to propose some new approaches of generating and discovering visualizations and applications on the Web of Data. We designed and implemented DVIA, a vocabulary that aims to model applications for more interoperability and discovery of applications and tool visualizations on the Web.
+
+\section*{Chapitre IV}
+
+In this chapter we have presented  an approach for creating visualizations on top of Linked Data based on Semantic Web technologies. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with commonly used and domain vocabularies. We then present a description of the main components of a Linked Data Visualization Wizard. We describe a lightweight implementation in JavaScript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow/framework for publishing and linking data on the Web, such as Datalift or the GeoKnow Stack. Besides, we have performed experiments on GKP to look for important properties in entities, and evaluated against users' preferences. Then we presented two applications in the domain of statistics and events, consuming different datasets in RDF on real-world scenario. We discussed on how to improve applications developed for contests, by proposing a vocabulary and a tool for populating the model by using a universal plugin. Some past events have been already semi-automatically curated using both the vocabulary and the plugin.
+
+
 
 \chapter*{Partie III: Contribution au catalogue des vocabulaires liés}
 
+\section*{Chapitre V}
 
+We have presented in this chapter our contribution to Linked Open Vocabularies, as part of implementations of the benefits of using LOV in ontology engineering (case of NeOn methodology), prefixes harmonization and alignment of vocabularies published on the Web, or on ranking vocabularies using the principles of Information Content. By applying this latter to Linked Open Vocabularies, we tried to use features that we consider ``relevant'' to be taken into account when comparing vocabularies (e.g: datasets reused, external vocabularies). We compare with other rankings that are mostly based on the ``popularity'' of vocabularies. This work can path the way for assessing vocabularies with applications in a more systemic approach for recommending classes/properties in ontology management, or in visualization applications to propose the most \textit{``oh yeah?''} suitable property to be visualized for RDF entities when there is large a large number of properties.
+
+\section*{Chapitre VI}
+
+In this chapter, we have presented an online tool to check the compatibility between datasets and vocabularies based on the RDF-defeasible of SPINdle. We have introduced the LIVE framework for licenses compatibility. The goal of the framework is to verify the compatibility of the licenses associated to the vocabularies exploited to create a RDF dataset and the license associated to the dataset itself. Several points have to be taken into account for future work. 
+%More precisely, in the present paper we consider vocabularies as data but this is not the only possible interpretation. For instance, we may see vocabularies as a kind of compiler, such that, after the creation of the dataset then the external vocabularies are no more used. In this case, what is a suitable way of defining a compatibility verification? We will investigate this issue as well as we will evaluate the usability of the online LIVE tool to subsequently improve the user interface
+
+%our contributions on achieving some of the guidelines of the best practices of publishing Linked Data, by presenting the LOV catalogue, the harmonization of LOV with other catalogues, the importance of using semantics to rank vocabularies. Besides, we have presented Data2Ontology, a module aim at helping the reuse of existing vocabularies during the publication of data in Datalift. We finished by presenting \texttt{LIVE},
 
 \chapter*{ Conclusion et Perspectives}
 \label{ch:conc}
 
-This thesis is focused on the challenges of publishing geodata on the Web and a more generic approach to visualize data as Linked Data target to lay-users. The former considers the diversity of different formats used to publish legacy geospatial data, the different projections (or Coordinate Reference Systems) and the representation of complex geometries. The latter approach is different from the state-of-the-art in visualizations where the complexity of SPARQL and RDF is not sufficiently hidden from the users. A deep analysis of the literature has revealed some limitations in the publication of geospatial data and visualization tools, namely:
+
+Cette thèse est consacrée aux défis de la publication des données géospatiales sur le Web et une approche plus générique de visualiser les données liées pour les utilisateurs. La première considère la diversité des différents formats utilisés pour publier les données géospatiales propriétaires, les différentes projections (ou systèmes de coordonnées de référence) et la représentation des géométries complexes. Cette dernière approche est différente de l'état-de-l'art dans les visualisations où la complexité du langage SPARQL et RDF est pas suffisamment cachée des utilisateurs. Une analyse approfondie de la littérature a révélé certaines limites dans la publication des données géospatiales et des outils de visualisation, à savoir:
+
 \begin{itemize}
-\item Limited of complex geometries exposed in structured representation, instead of literals. 
-\item The absence of an explicit reference to CRSs in direct georeference data on the Web.
-\item Absence of visualization tool targeted to lay users to easily grasp the essence of the underlying data published as LOD.  
-\item Many data silos for applications built and published on the Web, lost in many HTML pages.
-\item Few tools that provide an integrated environment for publishing raw data into Linked Data, from data modeling until the final step of storing the dataset in an endpoint.
-\item The difficulty for publishers to understand and check the compatibility of the licenses between vocabularies and datasets.
+\item  
+Une présence limitée des géométries complexes représentées de manière structurée, au lieu de littéraux.
+
+\item 
+L'absence d'une référence explicite aux SCG dans les données au géoréférencement direct sur le Web.
+
+\item 
+Absence d'outil de visualisation destiné aux utilisateurs permettant de comprendre facilement l'essence des données sous-jacentes publiées en LOD.
+
+\item 
+Beaucoup de silos de données pour les applications publiées sur le Web, perdues dans de nombreuses pages HTML.
+
+\item 
+Peu d'outils qui fournissent un environnement intégré pour la publication des données brutes en données liées, partant la modélisation de données jusqu'à l'étape finale de stockage du jeu de données dans un store RDF. 
+
+\item La difficulté pour les éditeurs de données de comprendre et de vérifier la compatibilité des licences entre les vocabulaires et les jeux de données qu'ils réutilisent venant du LOD.
+
   
 \end{itemize}
 
 In this thesis, we have provided different vocabularies that all together support the publication of geodata integrating almost all the CRSs, extending the existing vocabularies. The vocabularies have been used to publish the French Administrative Units, with the data compatible with GeoSPARQL standards. Regarding the visualizations, after reviewing visual tools and existing applications on the Web, we have developed an ontology to better expose the data on the Web for better interoperability. We have also proposed a framework for  automatically generating visualizations based on categories detected on datasets published as Linked Data, using predefined high level categories used in Information Visualization taxonomy and mapped with vocabularies. 
+
+Dans cette thèse, nous avons fourni des vocabulaires qui aident à la modélisation et la publication des données géospatiales intégrant la quasi-totalité des SCG, qui étendent les vocabulaires existants. Les vocabulaires ont été utilisés pour publier les unités administratives françaises, avec les données compatibles au standard GeoSPARQL. En ce qui concerne les visualisations, après avoir examiné des outils visuels et les applications existantes sur le Web, nous avons développé une ontologie pour mieux exposer les données sur le Web pour une meilleure interopérabilité. Nous avons également proposé un framework pour générer automatiquement des visualisations basées sur les catégories détectés sur des jeux de données liées et publiées, en utilisant les catégories prédéfinies de haut niveau  utilisées dans la taxonomie de la visualisation de l'information; celle-ci mappée avec les vocabulaires.
+
+
+
+
 
 \subsection*{Review of the Contributions}
 %\todo{get inspiration with Boris thesis}
@@ -304,12 +340,12 @@ This section reviews the main contributions of this thesis and the solutions to 
 \end{itemize}
 
 
-\section{Future Perspectives}
+\section*{Perspectives}
 \label{sec:future}
 
 In this thesis, we have tackled some open research problems within the context of publishing and consuming open data on the Web but there are still open issues and challenges for future work. We  mention some of the most important from our perspective, based on different aspects related to the workflow of publishing Linked Data, more specifically in the geospatial domain. 
 
-\subsection{Opportunities and Challenges for IGN-France}
+\subsection*{Opportunities and Challenges for IGN-France}
 \label{sec:challenges}
 
 %todo: clarify the context of the opportunities?
@@ -337,10 +373,10 @@ According to Linked Data principles URIs should remain stable, even if administr
 The last issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representational choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
 
 
-\subsection{Generic Visualizations on Linked Data}
+\subsection*{Generic Visualizations on Linked Data}
 We plan to use a more exhaustive set of vocabularies in our generic queries for detecting those categories, plugging into directly the wizard to the LOV catalogue. The aggregation properties can be extended to take other semantic relations (e.g: \texttt{skos:exactMatch}) into account. Additionally, we plan to make an evaluation of the prototype and compare it to related tools such as the ones aiming to build profiles of datasets. We also need to quantify when a category is ``important'' within a dataset. For example, is it enough for a dataset to be classified GEODATA with ten triples containing location? From which number of triples could the categories and hence the visualizations be assigned? These issues can further be investigated to find the best trade-off.  Another drawback of our work on visualizations is the lack of user evaluation, with experiments to understand users' needs, focusing more on the semantic aspects than just the exploration ones (webby-interface). A natural follow-up is use these evaluations and re-adapt the applications/visualizations based on the results. 
  
-\subsection{Vocabularies and LOV}
+\subsection*{Vocabularies and LOV}
 \label{sec:nextSteps}
 Work on the harmonization of prefixes can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far:
 \begin{itemize}
