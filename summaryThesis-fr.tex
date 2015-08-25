@@ -279,7 +279,7 @@ Nous avons présenté dans ce chapitre notre contribution au catalogue des vocab
 
 
 Dans ce chapitre, nous avons présenté un outil en ligne pour vérifier la compatibilité entre des jeux de données et des vocabulaires basés sur la logique ``RDF-defeasible'' de SPINdle. Nous avons implémenté le framework LIVE pour tester la compatibilité des licences sur les données publiés sur le Web. Le but de ce framework est de vérifier la compatibilité des licences associées aux vocabulaires utilisées pour générer un jeu de données RDF et la licence associée au jeu de données final. Plusieurs aspects d'ordre plus juridique doivent être pris en compte pour les travaux futurs.
-Plus précisément, nous considérons que les vocabulaires comme des données à part entière, mais ce n'est pas la seule interprétation possible. Par exemple, nous pouvons voir des vocabulaires comme une sorte de compilateur, de telle sorte qu'après la création du jeu de données, les vocabulaires externes ne sont plus utilisées. Dans ce cas, quel serait le moyen approprié pour définir un système de vérification de compatibilité? Comme travail futur, nous étudierons en profondeur cette question ainsi que nous ferons une évaluation sur la facilité d'utilisation de l'outil de ligne LIVE pour améliorer l'interface utilisateur.
+Plus précisément, nous considérons que les vocabulaires comme des données à part entière, mais ce n'est pas la seule interprétation possible. Par exemple, nous pouvons voir des vocabulaires comme une sorte de compilateur, de telle sorte qu'après la création du jeu de données, les vocabulaires externes ne sont plus utilisées. Dans ce cas, quel serait le moyen approprié pour définir un système de vérification de compatibilité? Comme travail futur, nous étudierons en profondeur cette question ainsi que nous ferons une évaluation sur la facilité d'utilisation de l'outil en ligne LIVE pour améliorer l'interface utilisateur.
 
 \chapter*{ Conclusion et Perspectives}
 \label{ch:conc}
@@ -316,35 +316,74 @@ Dans cette thèse, nous avons fourni des vocabulaires qui aident à la modélisa
 
 
 \subsection*{Revue des contributions}
-%\todo{get inspiration with Boris thesis}
-This section reviews the main contributions of this thesis and the solutions to solved some of the open research problems in publishing and consuming data on the Semantic Web:
+
+Cette section examine les principales contributions de cette thèse et les solutions que nous avons apporté comme contributions dans le contexte de la publication des données géospatiales sur le Web. Nos contributions décrites tout au long de cette thèse sont les suivantes:
 
 \begin{itemize}
-\item We modelled and implemented of a vocabulary for geometry, topological entities and Coordinate Reference Systems (see Section \ref{sec:geomfeaturevocab}).
-\item We have implemented of an API for converting data between different CRSs accessible on the Web (see Section \ref{sec:rest-service}).
-\item We have published different projections systems used in France with unique URIs to improve look up and integration in structured geometries on the Web (see Section \ref{sec:reqs}).
-\item We have contributed in the development of the Datalift platform, an integrated environment to publish raw data on the Web (see Section \ref{sec:toolLD}).
-\item We have provided a comparison of triple stores for geodata against the geometries handled (literal or structured) to assess which one to use when publishing geospatial data (see Section \ref{sec:geotps}). 
-\item We have published French administrative units available as LOD available at \url{http://data.ign.fr} endpoint, based on the vocabularies developed and implemented. Moreover, we have provided interlinking with relevant existing geospatial datasets (see Section \ref{sec:geofla} and \ref{sec:bdtopo} ).
+\item 
+Nous avons modélisé et implémenté un vocabulaire pour la géométrie, les entités topologiques et les systèmes de coordonnées géographiques.
 
-\item We have published in RDF 15 millions of addresses from Open Street Map France using the location address vocabulary (see Section \ref{sec:bano2rdf}).
-\item We have contributed to the \textit{French LOD (FrLOD)} cloud, with more datasets published using the Datalift platform, and covering the French territory (see Section \ref{sec:frenchCloud}).
-\item We surveyed and classified applications built on top of Open government portals, and proposed a vocabulary for semantically annotate and improve the discovery of applications contests in Open Data event (see Section \ref{sec:descApps} and Section \ref{sec:apps}).
-\item We have proposed a generic approach for automatically generating visualizations based on predefined categories (see Section \ref{sec:ldvizwiz}).
-\item We have implemented and evaluated an approach for determining which properties are suitable to use for an entity, based on the Google Knowledge Panel (see Section \ref{sec:propEntities}).
-\item We have developed two innovative applications consuming events and statistical datasets (see Section \ref{sec:confomaton} and Section \ref{sec:perfectSchool}).
-\item We have proposed a generic plugin tool that can improve the discovery of applications contests in Open Data events (see Section \ref{sec:contests}).
-\item We have also proposed an approach to harmonize prefixes used in different catalogues of vocabulary, with an evaluation based on Linked Open Vocabulary (see Section \ref{sec:prefharmoni}).
-\item We have developed new ranking metrics for vocabularies based on Information Content theories and applied in LOV (see Section \ref{sec:vocabranking}).
+\item 
+Nous avons mis en place une API pour convertir des données en ligne entre les différents systèmes de coordonnées accessibles sur le Web.
 
-\item Finally, we have built a more efficient tool for checking license compatibility between vocabularies and datasets (see Section \ref{sec:live}).
+\item 
+Nous avons publié les différents systèmes de projections utilisés en France avec des URI uniques pour améliorer la recherche et l'intégration des géométries structurées sur le Web.
+
+\item 
+Nous avons contribué à l'élaboration de la plate-forme Datalift, un environnement intégré de publication des données brutes de formats hétérogènes sur le Web.
+
+
+\item 
+Nous avons fourni une comparaison des triples stores pour les géodonnées en projectant les types de géométries nativement incorporées (littéral ou structurée) pour aider à la recommandation lors de la publication des données géospatiales.
+
+ 
+\item
+
+Nous avons publié les données sur les circonscriptions administratives françaises selon les bonnes pratiques du LOD accessible au \url{http://data.ign.fr} basées sur les vocabulaires que nous avons développé. En outre, nous avons fourni des alignements avec des jeux de données géospatiales pertinentes existantes, tel que Geonames, GADM, NUTS, INSEE, etc.
+
+\item 
+
+Nous avons publié en RDF 15 millions d'adresses provenant d'Open Street Map France en utilisant le vocabulaire des adresses proposé par le W3C. 
+
+\item 
+ Nous avons contribué à la création du nuage de données dans le contexte  français (FrLOD), en utilisant la plateforme Datalift, ainsi que des alignements avec des jeux de données existantes. Ces données ont la principale caractéristique de couvrir la France.
+ 
+ 
+\item 
+Nous avons revu la littérature et avons classifié les applications construites sur des portails des données ouvertes des gouvernements, et avons proposé un vocabulaire pour annoter sémantiquement et améliorer la recherche et l'extraction d'applications crées dans le cadres des hackathon sur les données en Open Data.
+
+
+\item 
+
+Nous avons proposé une approche générique pour générer automatiquement des visualisations basées sur des catégories prédéfinies à l'aide des requêtes SPARQL.
+
+\item 
+
+Nous avons implémenté et évalué une approche pour déterminer les propriétés qui conviennent le mieux à utiliser pour choisir une entité à visualiser, basé sur une approche similaire à celle mise en oeuvre dans panel de recherche de la base de connaissance Google.
+
+
+\item 
+Nous avons développé deux applications innovantes consommant des des données événementiels et statistiques mutualisées avec des données externes présentes dans le nuage des données liées. 
+
+\item 
+Nous avons proposé un plugin générique pour améliorer la découverte des applications construites dans les hackathons sur les données en Open Data.
+
+\item 
+Nous avons également proposé une approche pour harmoniser les préfixes utilisés dans les différents catalogues de vocabulaire, avec une évaluation faite dans le cas des vocabulaires  sur Linked Open Vocabulary (LOV).
+
+\item 
+Nous avons développé de nouvelles mesures de ranking pour les vocabulaires basées sur le contenu des informations et appliqué dans LOV.
+
+\item 
+Enfin, nous avons construit un outil plus efficace pour vérifier la compatibilité des licences entre les vocabulaires et les jeux de données.
+
 \end{itemize}
 
 
 \section*{Perspectives}
 \label{sec:future}
 
-In this thesis, we have tackled some open research problems within the context of publishing and consuming open data on the Web but there are still open issues and challenges for future work. We  mention some of the most important from our perspective, based on different aspects related to the workflow of publishing Linked Data, more specifically in the geospatial domain. 
+In this thesis, we have tackled some open research problems within the context of publishing and consuming open data on the Web but there are still open issues and challenges for future work. We mention some of the most important from our perspective, based on different aspects related to the workflow of publishing Linked Data, more specifically in the geospatial domain. 
 
 \subsection*{Opportunités et Défis pour IGN-France}
 \label{sec:challenges}
