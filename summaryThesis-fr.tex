@@ -382,14 +382,18 @@ Enfin, nous avons construit un outil plus efficace pour vérifier la compatibili
 
 \section*{Perspectives}
 \label{sec:future}
+ 
 
-In this thesis, we have tackled some open research problems within the context of publishing and consuming open data on the Web but there are still open issues and challenges for future work. We mention some of the most important from our perspective, based on different aspects related to the workflow of publishing Linked Data, more specifically in the geospatial domain. 
+Dans cette thèse, nous avons abordé certains problèmes ouverts de recherche dans le cadre de la publication et la consommation (visualisation) des données ouvertes sur le Web, mais il reste encore des questions en suspens et des défis pour des travaux futurs. Nous mentionnons quelques-uns des plus importants dans la section suivante, basés sur différents aspects liés à la chaîne d'édition des données liées, plus spécifiquement dans le domaine géospatial.
 
 \subsection*{Opportunités et Défis pour IGN-France}
 \label{sec:challenges}
 
-%todo: clarify the context of the opportunities?
- The need for interoperable reference geographic data to share and combine georeferenced environmental spatial information is highlighted by the INSPIRE Directive. The INSPIRE Directive \cite{inspire2009} aims to create a European Union (EU) spatial data infrastructure\footnote{\url{ http://inspire.jrc.ec.europa.eu/index.cfm/pageid/48}}. INSPIRE is based on a number of high level common principles, with some of them very closed to the key concepts of Semantic Web goals, and specifically the Linked Data principles. We provide below the correspondence of our contributions mapped to the five goals of INSPIRE:  
+%todo: clarify the context of the opportunities? 
+
+Le besoin de données de référence géographiques interopérables pour partager et combiner des informations environnementales spatiales géoréférencées est mis en évidence par la directive européenne INSPIRE. La directive INSPIRE vise à créer dans l'espace de l'Union Européenne (UE) une infrastructure de données spatiales\footnote{\url{http://inspire.jrc.ec.europa.eu/index.cfm/pageid/48}}. INSPIRE est basée sur un certain nombre de principes communs de haut niveau, avec certains d'entre eux très propres des principes clés appliqués dans les fondements du Web sémantique, et en particulier dans son implémentations dans les données ouvertes et liées. Nous fournissons ci-dessous la correspondance de nos contributions ayant un lien avec les cinq objectifs de la directive INSPIRE:\footnote{La traduction des objectifs est faite par nos propres soins.}
+
+ 
 \begin{itemize}
 \item \textbf{P1}: \textit{Data should be collected only once and kept where it can be maintained most effectively}. The use of good and stable URI policies can help achieve this principle. IGN as a French geospatial dataset provider, is committed to accurate information, and so will be the URIs chosen for the experimental portal.
 \item \textbf{P2}: \textit{It should be possible to combine seamless spatial information from different sources across Europe and share it with many users and applications}. This is more or less the goal of the interlinking tasks performed with other datasets on the wild. The models developed and well-documented can ease the conversion by other mapping agencies or institutions of their datasets.  
@@ -407,38 +411,59 @@ Moreover, the French national mapping agency (IGN) has different types of licens
 %(i) different license policies attached to datasets and (ii) the use of a security access mechanism on top of the datasets granting access based on a predetermined configuration on named graphs and resources. 
 \begin{enumerate}
 \item Different license policies attached to given datasets: Here the attached license is given directly when published. So for example, if it is an open license, the endpoint is publicly available to be queried without any restriction.
+
 \item The use of a security access mechanism on top of the datasets granting access according to a predetermined configuration list of named graphs, resources and operations allowed. This solution goes along with the work of Rotolo et al.\cite{rotolo2013deontic}, where even if there is an endpoint, a module for configuring the types of queries to perform and access policies have to be defined for subsets with special care to take into account compositions of licenses in the results.
 \end{enumerate}
-According to Linked Data principles URIs should remain stable, even if administrative units change or disappear. This implies adapting the data vocabulary in order to handle data versioning and time scale evolution of the data. This issue will be addressed in our future work, as we are working on releasing a spatio-temporal dataset describing the evolution of communes since the French Revolution. Another issue deals with the automation of the whole publication process, from traditional geographic data to fully interconnected RDF data.
-The last issue deals with the use of multiple geometries for describing a geographic feature: geometries with different levels of detail, different CRS, different representational choices. This has been superficially addressed in our use case with the use of both polygons and points for representing respectively the surface and the centroid of departments, but should be further investigated for both query answering and map design purposes.
+
+
+
+Selon les principes du Linked Data, les URIs devraient rester stables, même si les unités administratives changent ou disparaissent. Cela implique l'adaptation du vocabulaire de données afin de gérer les versions des données, l'évolution temporelle et la granularité des données. Cette question sera abordée dans nos travaux futurs, comme nous travaillons sur la publication du jeu de données spatio-temporelle décrivant l'évolution des communes depuis la Révolution française. Une autre question de recherche porte sur l'automatisation de l'ensemble du processus de publication, partant des données géographiques aux formats traditionnels (SHAPE, CSV, etc) pour arriver à des données RDF pleinement interconnectés .
+
+La dernière question porte sur l'utilisation de plusieurs géométries pour décrire une entité géographique: des géométries avec différents niveaux de détail, avec différents CRS ainsi que des choix différents de représentation. Cela a été superficiellement abordées dans notre cas d'utilisation avec l'utilisation de deux polygones et de points pour représenter respectivement la surface et le centre de gravité des communes, mais doit être étudiée en profondeur pour proposer une solution intégrant à la fois les contraintes de requêtes et d'affichage d'informations sur des fonds de carte en fonction des besoins utilisateurs.
+
 
 
 \subsection*{ Visualisations Génériques des données liées sur le Web}
 
 
-Nous prévoyons d'utiliser un ensemble plus exhaustive des vocabulaires dans nos requêtes génériques pour détecter les catégories, en prenant la liste des vocabulaires du catalogue LOV pour alimenter l'assistant. Les propriétés d'agrégation peuvent être étendues afin de prendre d'autres relations sémantiques (par exemple, prendre en compte \texttt{SKOS:exactMatch}). En outre, nous prévoyons de faire une évaluation du prototype et le comparer à des outils connexes comme celles permettant de produire des statistiques des jeux de données. Nous avons également besoin de quantifier quand une catégorie est «importante» dans un jeu de données. Par exemple, est-ce suffisant pour un jeu de données pour être classé dans la catégorie ``GEODATA'' avec juste dix triplets contenant des adresses? À partir de quel nombre de triplets et donc quelle proportion pourrait-on utiliser les catégories, donc les librairies de visualisations associées? Ces questions peuvent en outre être étudiées pour trouver le meilleur compromis entre le pourcentage de représentativité de certaines catégories et les librairies correspondantes. Un  inconvénient de notre travail sur les visualisations est l'absence d'évaluation au niveau de l'utilisateur final, avec un protocole bien définit pour comprendre les besoins des utilisateurs, en se concentrant davantage sur les aspects sémantiques que sur ceux liés juste à l'exploration (interface web). Un travail futur naturel est d'utiliser ces évaluations et ré-adapter les applications/ visualisations basées sur les résultats d'une étude utilisateur.
+Nous prévoyons d'utiliser un ensemble plus exhaustif des vocabulaires dans nos requêtes génériques pour détecter les catégories, en prenant la liste des vocabulaires du catalogue LOV pour alimenter l'assistant. Les propriétés d'agrégation peuvent être étendues afin de prendre d'autres relations sémantiques (par exemple, prendre en compte \texttt{SKOS:exactMatch}). En outre, nous prévoyons de faire une évaluation du prototype et le comparer à des outils connexes comme celles permettant de produire des statistiques des jeux de données. Nous avons également besoin de quantifier quand une catégorie est «importante» dans un jeu de données. Par exemple, est-ce suffisant pour un jeu de données pour être classé dans la catégorie ``GEODATA'' avec juste dix triplets contenant des adresses? À partir de quel nombre de triplets et donc quelle proportion pourrait-on utiliser les catégories, donc les librairies de visualisations associées? Ces questions peuvent en outre être étudiées pour trouver le meilleur compromis entre le pourcentage de représentativité de certaines catégories et les librairies correspondantes. Un  inconvénient de notre travail sur les visualisations est l'absence d'évaluation au niveau de l'utilisateur final, avec un protocole bien définit pour comprendre les besoins des utilisateurs, en se concentrant davantage sur les aspects sémantiques que sur ceux liés juste à l'exploration (interface web). Un travail futur naturel est d'utiliser ces évaluations et ré-adapter les applications/ visualisations basées sur les résultats d'une étude utilisateur.
 
  
 \subsection*{Vocabulaires et LOV}
 \label{sec:nextSteps}
-Work on the harmonization of prefixes can be extended in several directions. Sticking to the two services we have studied and already contributed to harmonize, the possible next steps would be to automate as far as possible the tasks that have been made semi-automatically so far:
+
+Les travaux sur l'harmonisation des préfixes peut être étendu dans plusieurs directions. En se limitant aux deux services que nous avons étudié et déjà contribué à harmoniser les prefixes, les prochaines étapes possibles seraient d'automatiser autant que possible les tâches qui ont été faites de manière semi-automatique à ce jour:
+
 \begin{itemize}
-\item \emph{i)} developing a unique interface for submitting namespaces and prefixes to both services;
-\item \emph{ii)} bridging the LOV back-office and the prefix-cc database using both services API in order to publish a list of common recommended prefixes. 
-\end{itemize}  The latter goes beyond the limited framework of the two original services since such a list could be consolidated and endorsed by the main actors in vocabulary publication and management, and recommended for use in linked data applications. This could be picked up by the upcoming W3C Vocabulary Management Working Group as part of the new Data Activity\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}}.
+\item \emph{i)}
+le développement d'une interface unique pour soumettre les espaces de noms et les préfixes aux deux services;
+
+\item \emph{ii)} 
+la couverture simulatanée des prefixes dans LOV et prefix.cc pour harmoniser les URIs des vocabulaires présents dans les deux services afin de ne confondre les utilisateurs et les développeurs dans le choix ou la gestion des espaces de noms, et ainsi proposer une liste recommandée namespaces-URIs des vocabulaires les plus importants.
+
+\end{itemize}  
+
+Ce dernier aspect va au-delà du domaine d'application des deux services car une telle liste pourrait être consolidé et approuvé par les principaux acteurs de publication et de gestion du vocabulaire, et recommandé pour une utilisation dans les applications de données liées. Cela pourrait être pris en charge par le prochain groupe de travail du W3C\footnote{\url{http://www.w3.org/2013/05/odbp-charter.html}} chargé de gérer les vocabulaires dans le cadre de la nouvelle activité de gestion des données sur le Web.
+
 
 %\todo{here is the perspective for ranking voabs} \\
 \paragraph{}
- As per ranking vocabularies, we aim to take into account the equivalence axioms (between classes and properties) when computing the Information Content, and more generally, all sort of semantic relationships between terms. Also, we plan to compare our ranking model with other ranking approaches such as graph-based ones (e.g., pagerank). Another future direction is to investigate the dependency ranking between vocabularies, by focusing on a specific type of ``inlinks'' (i.e. extensions, generalizations) and study how they affect the information content (PIC) metrics.
+
+Pour le ranking des vocabulaires, nous souhaitons dprendre en compte les axiomes d'équivalence (entre les classes et les propriétés) lors du calcul du contenu de l'information, et plus généralement, toutes sortes de relations sémantiques entre les termes. En outre, nous prévoyons de comparer notre modèle de classement avec d'autres approches telles que celles de classement fondées sur les graphes  (par exemple, le PageRank). Une autre orientation future est de chercher la dépendance dans la position entre les vocabulaires, en se concentrant sur un type spécifique de ``liens entrants'' (à savoir les extensions, les généralisations) et d'étudier comment ils affectent les métriques que nous avons présenté dans cette thèse.
 
 
 \paragraph{}
-We have made the assumption in this thesis that access to data was either by  querying a SPARQL endpoint, or by browsing or by downloading the dumps. Recently, a new way of accessing the data on the Web is emerging: through triple pattern fragments\footnote{\url{http://linkeddatafragments.org/}}. Linked Data Fragments \cite{verborgh2014ldf} aims at exploring endpoints with simple fragments to solve queries at the client side with server data.
-Servers can offer data at low processing cost in a way that enables client-side querying, thus, moving intelligence from the server to the client. One possible direction of study could be to use client-side concept for evaluating endpoints consuming only structured geometries versus literal for real-world applications. Finally, triple fragment concepts can be applied also to detect also patterns for visualization in different endpoints.
+Nous avons fait l'hypothèse dans cette thèse que l'accès aux données se faisait soit en interrogeant un accès SPARQL, en parcourant le graphe par le principe du ``follow-your-nose'' ou en téléchargeant des dumps. Récemment, une nouvelle façon d'accéder aux données sur le Web est en train d'émerger: à travers  des motifs de fragments triplets liés\footnote{\url{http://linkeddatafragments.org/}}. Ce concept vise à explorer les accès de données avec des fragments simples de données pour résoudre les requêtes côté client avec les données hébergées dans un serveur. Les serveurs peuvent servir des données à faible coût de traitement d'une manière qui permet l'interrogation côté client en déplaçant du même coup l'intelligence passant du serveur vers le client. Un travail futur pourrait être d'utiliser le concept côté client pour évaluer les points d'accès aux données contenant seulement les géométries structurées ou littéraux pour les applications du monde réel. Enfin, le concept de fragments de triplets  peut également être appliqué pour détecter des pattern pour la visualisation des différents point d'accès de données.
+
  
+ 
+
+
 
 %%%% last paragraph visionary suggested by Jodi%%
 %%%%%%%%%%%%%%%%%
 \paragraph{}
-As the Linked Data grows, so will datasets and ontologies on geospatial data. Geodata publishers will release more often and frequently their data on the Web. There will be a need for more analytical tools, especially in data mining to provide feedback to the publishers with respect to triples usage and retrieval. Streaming geospatial data on the Web will require efficient implementations of spatial functions to be able to query on-the-fly data with temporal information. Thus, geo-temporal streaming data modeling, querying and analysis on the Web are likely to be the next challenges that Semantic Web technologies will have to solve.  
+ 
+Avec la croissance continue et soutenue de la publication des données ouvertes et liées sur le Web, il en sera aussi des jeux de données et des ontologies sur des données géospatiales. Les producteurs de données  géographiques vont continuer de libérer de plus en plus fréquemment leurs données sur le Web. Cela va créer un besoin d'outils pour facilement créer des analyses, en particulier dans l'extraction et la fouille de gros volumes de données pour retro-alimenter les éditeurs quant à l'utilisation effective des triplets. La gestion des flux de données géospatiales sur le Web va demander des implémentations plus efficaces dans le domaine des données spatiales pour être en mesure d'interroger à la volée des données contenant aussi de l'information temporelle. Ainsi, la modélisation des flux de données en streaming géo-temporel, l'interrogation et l'analyse sur le Web sont susceptibles d'être les prochains défis que les technologies du Web sémantique devront faire face et résoudre.
+
 \end{document}
