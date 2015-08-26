@@ -395,26 +395,50 @@ Le besoin de données de référence géographiques interopérables pour partage
 
  
 \begin{itemize}
-\item \textbf{P1}: \textit{Data should be collected only once and kept where it can be maintained most effectively}. The use of good and stable URI policies can help achieve this principle. IGN as a French geospatial dataset provider, is committed to accurate information, and so will be the URIs chosen for the experimental portal.
-\item \textbf{P2}: \textit{It should be possible to combine seamless spatial information from different sources across Europe and share it with many users and applications}. This is more or less the goal of the interlinking tasks performed with other datasets on the wild. The models developed and well-documented can ease the conversion by other mapping agencies or institutions of their datasets.  
-\item \textbf{P3}:  \textit{It should be possible for information collected at one level/scale to be shared with all levels/scales; detailed for thorough investigations, general for strategic purposes}. One of the drawback of the models proposed is that they don't currently admit many geometries attached to a feature. This will certainly be one of the extension foreseen for the models. However, the precise classifications for the features is a starter to fulfill this principle.
-\item \textbf{P4}: \textit{Geographic information needed for good governance at all levels should be readily and transparently available}. Publishing \url{data.ign.fr} is one of the objective to have also data both in human and machine readable manner using semantic concepts and technologies.
-\item \textbf{P5}: \textit{Easy to find what geographic information is available, how it can be used to meet a particular need, and under which conditions it can be acquired and used.} Publishing data on the web contribute \textit{per se} in leveraging their discovery and integration. Moreover, an explicit license attached to datasets published help achieving this principle.
+\item \textbf{P1}: \textit{Les données doivent être collectées une seule fois et conservées où elles peuvent être maintenues le plus efficacement possible}. 
+L'utilisation de bonnes politiques et des URIs stables peuvent aider à atteindre ce principe. IGN comme un fournisseur de données géospatiales en France est commis à des informations exactes, ainsi que seront donc les URIs choisis et utilisés pour le portail sémantique.
+
+
+\item \textbf{P2}: \textit{Il devrait être possible de combiner des informations spatiales transparente provenant de différentes sources à travers l'Europe et les partager avec de nombreux utilisateurs et applications}.
+Ce principe est plus ou moins l'objectif des tâches d'interconnexion avec d'autres jeux de données dans le Web. Il faudrait restreindre les domaines de recherche dans les données européenes. Les modèles développés et bien documentés peuvent faciliter la conversion des données par d'autres organisations ou institutions utilisant ou produisant les données cartographiques.
+
+\item \textbf{P3}:  \textit{Il devrait être possible pour l'information recueillie à un niveau d'échelle être partagée à tous les autres niveaux ou échelles; détaillée pour des recherches approfondies et générale à des fins stratégiques}. 
+Un des inconvénients des modèles proposés est qu'ils n'admettent pas actuellement de nombreuses géométries attachées à une entité géographique ou adresse. Ce sera certainement l'une des extensions prévue pour les vocabulaires développés. Cependant, une classification précise des entités géographiques et topologiques est un début pour remplir ce principe.
+
+
+\item \textbf{P4}: \textit{L'information géographique nécessaire pour la bonne gouvernance à tous les niveaux devrait être facilement disponible et transparente}. La publication du portail \url{http://data.ign.fr}  est l'un des objectifs afin d'avoir également des données à la fois processable par la machine et lisible par l'homme avec l'aide des concepts et des technologies sémantiques.
+
+
+\item \textbf{P5}: \textit{Accès facile pour retrouver quelle l'information géographique est disponible, comment elle peut être utilisé pour répondre à un besoin particulier, et dans quelles conditions elle peut être acquise et utilisée.} La publication des données sur le Web contribue en soit à tirer profit de leur découverte et intégration . En outre, une licence explicite attachée à aux jeux de données publiées contribue à atteindre de ce principe. 
+
 \end{itemize}
-For geographic data producers, the benefit of publishing their data on the Web according to Linked Data  (LD) principles is twofold:
+
+Pour les fournisseurs de données géographiques, les avantages de publier leur donnée sur le Web selon les principes du Linked Data sont de deux sortes:
+
 \begin{enumerate}
-\item First, their data are interoperable with other published datasets and they can be referenced by external resources and used as spatial reference data, which would not have been straightforward when published according to spatial data infrastructures (SDI) standards.
-\item Second, the use of Semantic Web technologies can help addressing interoperability issues which are not solved yet by geographic information standards. 
+\item 
+Tout d'abord, leurs données sont interopérables avec d'autres jeux de données publiées et peuvent être référencées par des ressources externes et utilisées comme des données à référence spatiale, ce qui n'auraient pas été le cas si elles étaient publiées selon les normes des infrastructures de données spatiales (SDI).
+
+
+\item 
+Deuxièmement, l'utilisation des technologies du Web sémantique peut aider à résoudre les problèmes d'interopérabilité qui ne sont pas encore résolus par les normes et standards actuels dans le domaine de l'information géographique.
+ 
 \end{enumerate}
  
-Moreover, the French national mapping agency (IGN) has different types of license policies for accessing data from their professional portal\footnote{\url{http://professionnels.ign.fr/}}  (e.g., research purpose, commercial use, access on demand, etc.), with some of them not necessary ``open'' or free to access: (e.g., BD TOPO\circledR). Although there is a clear understanding of the benefits of publishing and interconnecting data on the Web, ongoing investigations on how to combine licenses on datasets are under consideration at IGN. Two solutions are under investigation: 
-%(i) different license policies attached to datasets and (ii) the use of a security access mechanism on top of the datasets granting access based on a predetermined configuration on named graphs and resources. 
+
+En outre, l'agence nationale de cartographie française (IGN) dispose de différents types de politiques de licence pour accéder aux données à partir de leur portail professionnel\footnote{\url{http://professionnels.ign.fr/}} (par exemple pour des fins de recherche, l'utilisation commerciale, l'accès à la demande, etc.), avec certains accès pas nécessairement `` ouvert '' ou libre d'accès: (par exemple, BD TOPO\circledR). Bien qu'il y ait une compréhension claire des avantages de la publication et de l'alignement des données sur le Web, les recherches à l'IGN sont en cours sur la manière de combiner les licences sur des jeux de données. Deux solutions sont à l'étude:
+
+
 \begin{enumerate}
-\item Different license policies attached to given datasets: Here the attached license is given directly when published. So for example, if it is an open license, the endpoint is publicly available to be queried without any restriction.
 
-\item The use of a security access mechanism on top of the datasets granting access according to a predetermined configuration list of named graphs, resources and operations allowed. This solution goes along with the work of Rotolo et al.\cite{rotolo2013deontic}, where even if there is an endpoint, a module for configuring the types of queries to perform and access policies have to be defined for subsets with special care to take into account compositions of licenses in the results.
+\item 
+Les différentes politiques de licence attachées aux jeux de données: Ici, la licence attachée est donnée directement lors de la publication. Ainsi, par exemple, s'il s'agit d'une licence libre, le point d'accès SPARQL est publiquement disponible et peut être interrogé sans aucune restriction.
+
+\item 
+L'utilisation d'un mécanisme d'accès aux données donnant accès selon une liste de configuration prédéterminée de graphes dédiés, des ressources et des opérations autorisées. Cette solution va en droite ligne avec les propositions des chercheurs comme Rotolo et al. dans l'application de la logique déontique.  Cette solution suggère que même s'il y a un point d'accès, un module de configuration des types de requêtes à réaliser et des politiques d'accès doivent être définis pour les sous-ensembles de données avec un soin particulier pour tenir compte des compositions de licences dans les résultats.
+
+
 \end{enumerate}
-
 
 
 Selon les principes du Linked Data, les URIs devraient rester stables, même si les unités administratives changent ou disparaissent. Cela implique l'adaptation du vocabulaire de données afin de gérer les versions des données, l'évolution temporelle et la granularité des données. Cette question sera abordée dans nos travaux futurs, comme nous travaillons sur la publication du jeu de données spatio-temporelle décrivant l'évolution des communes depuis la Révolution française. Une autre question de recherche porte sur l'automatisation de l'ensemble du processus de publication, partant des données géographiques aux formats traditionnels (SHAPE, CSV, etc) pour arriver à des données RDF pleinement interconnectés .
