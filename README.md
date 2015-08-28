@@ -21,7 +21,7 @@ Defense
 - Defense at Eurecom (See announcement) on April 10th.
 - Pictures of the Defense
 - Slides of the Defense
-- Twit about the defense from Eurecom
+- Tweet about the defense from Eurecom
 
 
 After Defense
