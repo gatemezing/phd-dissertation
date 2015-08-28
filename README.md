@@ -30,7 +30,6 @@ After Defense
 - Send some papers agreement
 - After some months out, I resume reparing final version of the document on August 14th, 2015
 - Finished first draft of summary in French on August, 26th
--
 
 HOWTO generate the final document
 =================
