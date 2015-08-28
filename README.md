@@ -33,6 +33,6 @@ After Defense
 
 HOWTO generate the final document
 =================
-- ~~Concat the two files: thesis-n.pdf and couverture/couverture.pdf (concat these-n.pdf >> couverture/couverture.pdf)~~
+- Concat the two files: thesis-n.pdf and couverture/couverture.pdf 
 - Rename these-n.pdf to these-final.pdf (mv these-n.pdf these-final.pdf)
 
