@@ -5,7 +5,6 @@
 \textit{``A Semantic Web application is one whose schema is expected to change.''} \\ (David Karger, MIT CSAIL)\footnote{A statement during his keynote at ESWC 2013 conference}
 \end{flushright}
 
-
 \section*{Introduction}
 \label{sec:introch5}
 The objective of visualization is to develop insights from collected data. Moreover, according to Information Theory, human vision is the sense that has the largest bandwidth (100 Mbits/s), which makes it the best suited channel to convey information to the brain \cite{Ware:2014}. Based on the Visual Information Seeking Mantra of Shneiderman: \textit{``overview first, zoom and filter, then details on demand''} \cite{Shneiderman99}, we advocate for more visual interactive representations of RDF graphs using SPARQL endpoints.   At the same time,  we use the term ``Linked Data Visualization'', to refer to a \textit{combination of charts, graphics, and other visual elements built on top of 4-5 star datasets accessible via a SPARQL endpoint}.
@@ -15,11 +14,9 @@ Despite the presence of more and more datasets published as Linked Data, there i
 
 In this chapter, we present our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and in section~\ref{sec:mappingviz} a set of mapping views associated with vocabularies. In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been generated from numerous SPARQL endpoints (Section~\ref{sec:evaluation}). We do reverse engineer the GKP (Section \ref{sec:propEntities}) to look for the most important properties of an Entity. Then, we present two domain applications around events (Section \ref{sec:confomaton}) and statistics (Section \ref{sec:perfectSchool}). Finally, we discuss how to improve the discovery of applications developed in open Data events (Section \ref{sec:contests}) by proposing a vocabulary and a plugin to easily annotate their Web pages and generate RDF data.
 
-
 \section{Wizard for Visualizations: Theorical foundations}
 \label{sec:wizviz}
 
-%\ghis{find a good justifying example} \\
 \subsection*{Background}
 With the growing adoption of the Linked Data principles, there is a real need to support data consumers in quickly exploring a dataset through visualizations. In order to involve more general Web users into the Semantic Web and Linked Data world, tools that reuse existing visualization libraries are needed for showing the key information about RDF datasets. Many datasets are published on top of SPARQL endpoints and yet, are not ``visually'' accessible. Thus, understanding the underlying graphs and consuming them require lay users to have some knowledge in writing queries.
 
@@ -39,11 +36,8 @@ When developing an application, there are some \textit{``important''} classes/ca
  \item{[\textbf{Knowledge classification}]}: This category refers to dataset describing schemas, classifications or taxonomies using the \texttt{SKOS} vocabulary.
 \end{itemize}
 
-
 \subsection{Mapping Datatype, Views and Vocabularies}
 \label{sec:mappingviz}
-%\todo{add ref. to "Interactive Data Visualization" by Ward et al.}
-
 The On-line Library of Information Visualization Environments (OLIVE)\footnote{\url{http://lte-projects.umd.edu/Olive/}} is a web site describing eight categories of information visualization environments differentiated by data type and collected by students, following a visualization course given at Maryland College Park, mostly inspired from the work of Ben Shneiderman \cite{Shneiderman99}. Based on the classification provided by OLIVE, we propose a set of mappings between those categories (excluding the workspace dimension), views that can be applied to this category and a suitable list of vocabularies from the Linked Open Vocabularies catalogue \cite{lov11}\footnote{\url{lov.okfn.org/dataset/lov/}} that correspond to those categories. Those vocabularies are easy to be found as there is a manual classification of vocabularies by the curators of the catalogue based on the content and scope of the terms and properties. According to the seven categories defined in Section ~\ref{sec:vizTypes}, we have identified some of their corresponding one to one mapping with the set of vocabularies:
  \begin{itemize}
  \item \textbf{Geography} space, consisting of 21 vocabularies for features: \texttt{geo}, \texttt{gn}, \texttt{gf}, \texttt{om}, \texttt{geop}, \texttt{md}, \texttt{lgdo}, \texttt{loc}, \texttt{igeo}, \texttt{osadm}, \texttt{geod}, \texttt{ostop}, \texttt{place}, \texttt{geos}, \texttt{locn}, \texttt{coun}, \texttt{postcode}, \texttt{osr}, \texttt{geof}, \texttt{g50k} and \texttt{ad}.
@@ -52,9 +46,9 @@ The On-line Library of Information Visualization Environments (OLIVE)\footnote{\
  \item \textbf{Event} space, containing vocabularies such  as \texttt{event}, \texttt{lode}, \texttt{music}, \texttt{sem}, \texttt{situ}, \texttt{sport}, \texttt{stories}, \texttt{theatre}, \texttt{tis} and \texttt{tisc}.
  \item \textbf{Government} space, with 9 vocabularies (\texttt{cgov}, \texttt{ctorg}, \texttt{elec}, \texttt{few}, \texttt{gc}, \texttt{gd}, \texttt{oan}, \texttt{odd}, \texttt{parl}) and the \texttt{org} vocabulary belonging to the W3C recommendation vocabularies at \url{ http://lov.okfn.org/dataset/lov/lov#W3C}.
  \end{itemize}
- Vocabularies used to provide metadata information, such as \texttt{rdfs}, \texttt{dcterms} or \texttt{dce} can be used in association with any of the visual elements to give a basic description of the resource of a given dimension. For example, popup information can be shown on a map view to display the relevant information of a geodata resource such as the label, the abstract or the description.
-Another application is to detect which visualization is best suited for geodata. Geodata belongs to a  two-dimension visual representation. Geodata is usually displayed using geographical-based visualizations (map, geo charts, etc.) and it is often modeled by vocabularies in the space named \texttt{Geometry} and \texttt{Geography}\footnote{All the prefixes used for the vocabularies are the same used in LOV catalog.}   vocabularies in RDF datasets. Hence those vocabularies can be combined to detect whether a dataset contains geographic information, and thus determine whether to recommend a map view. Table~\ref{tab:taxonomy} gives an overview of those mappings. The tabular representation is the ``default'' visual representation of RDF data and can be used by any vocabulary without restriction.
+Vocabularies used to provide metadata information, such as \texttt{rdfs}, \texttt{dcterms} or \texttt{dce} can be used in association with any of the visual elements to give a basic description of the resource of a given dimension. For example, popup information can be shown on a map view to display the relevant information of a geodata resource such as the label, the abstract or the description.
 
+Another application is to detect which visualization is best suited for geodata. Geodata belongs to a  two-dimension visual representation. Geodata is usually displayed using geographical-based visualizations (map, geo charts, etc.) and it is often modeled by vocabularies in the space named \texttt{Geometry} and \texttt{Geography}\footnote{All the prefixes used for the vocabularies are the same used in LOV catalog.}   vocabularies in RDF datasets. Hence those vocabularies can be combined to detect whether a dataset contains geographic information, and thus determine whether to recommend a map view. Table~\ref{tab:taxonomy} gives an overview of those mappings. The tabular representation is the ``default'' visual representation of RDF data and can be used by any vocabulary without restriction.
 
 \begin{table}[!htbp]
 \centering{
@@ -77,11 +71,9 @@ Another application is to detect which visualization is best suited for geodata.
 }
 \end{table}
 
-
 \section{LDVizWiz: a Linked Data Visualization Wizard}
 \label{sec:ldvizwiz}
 
-%\todo{present in detail the queries for detecting ALL the categories} \\
 \subsection{Workflow}
 \label{sec:wizard-wflow}
 We propose a workflow composed of four principal steps for a Linked Data Visualization Wizard, as depicted in Figure~\ref{fig:workflow}. Our goal is to provide a tool that hides the complexity of SPARQL from lay users and at the same time, can be embedded in the existing Linked Data infrastructure and workflow. First, we proposed detecting the presence of data belonging to one of the seven categories (Table~\ref{tab:taxonomy}) by using generic SPARQL queries. More precisely, we perform \texttt{ASK} queries to test whether or not a particular query pattern has a solution. Second, we look at entities in a dataset that have \texttt{owl:sameAs} links with external objects and we retrieve the properties associated to those objects. We argue that the objects that are interlinked with other datasets are of primary importance in a visualization. We show the results of this mining process to the user (the categories that have been detected, the properties going with the categories and the external domain). Based on this information, the user can make a personalized ``mashup'' by aggregating suitable visualization widgets. Some default visualizations are available according to the top categories detected. The last step is to publish the visualization and a report in RDF/XML, Turtle or N3.
@@ -95,14 +87,12 @@ We propose a workflow composed of four principal steps for a Linked Data Visuali
 \includegraphics[width=0.4 \textwidth]{img/architecture-ldwizard.pdf}
 }
 
-
 \caption{Big picture and architecture of the Linked Data visualization wizard.}
 \label{fig:workflow}
 \end{center}
 \end{figure*}
 
 Let consider a graph $<G,c>$ to be $G=\{(s,p,o)| p \in URI, s \in URI, o \in (URI \cup LIT)\} $ where $URI$ is the set of URIs, $LIT$ is the set of literals, and $c$ is the context. We define $L=\{V_{1}, V_{2}, ...,V_{n} | V_{i}=P_{i} \cup T_{i}\} $ the list of vocabularies in LOV, with $P_{i}$ and $T_{i}$ respectively the properties and a vocabulary $V_{i}$. Let also $D=\{D_{1}, D_{2}, ..,D_{m} \} $ be the domains of vocabularies. We assume $\Phi(L,D) =\{ \forall V \in L, \exists D_{k}, \Phi(V) \in D_{k} \} $. A domain of a vocabulary is considered to be the primary scope covered by the vocabulary.  We define a generic function $\Sigma:(G,c)\mapsto B $ to detect categories in a dataset as follows: $\Sigma((G,c))=\{B| ( \exists(s,p,o) \in G: p \in V) \cup (\exists(s, rdf:type,o) \in G: o \in V)\} $ where $B =\{True, False\} $.
-
 
 In the following sections, we describe each of the steps involved in the Linked Data Visualization Wizard in more detail.
 
@@ -130,7 +120,7 @@ ASK WHERE {
 }
 \end{lstlisting}
 
- Listing~\ref{geodata} shows seven classes of different vocabularies are used, respectively for the namespaces \texttt{dbpedia-owl, geo, gn, admingeo, spatial} and \texttt{vcard}, with relevant classes to check the presence of geographic data.
+Listing~\ref{geodata} shows seven classes of different vocabularies are used, respectively for the namespaces \texttt{dbpedia-owl, geo, gn, admingeo, spatial} and \texttt{vcard}, with relevant classes to check the presence of geographic data.
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {Generic query to detect time data from a SPARQL endpoint, using \texttt{time, dbpedia-owl, intervals} vocabularies.}, label=timedata, captionpos=b}
 \begin{lstlisting}
@@ -172,9 +162,7 @@ PREFIX org:<http://www.w3.org/ns/org#>
 \begin{lstlisting}
     ASK WHERE{?x a ?o. filter (?o= lode:Event || ?o=event:Event ||
     ?o=dbpedia-owl:Event)}	
-
-  \end{lstlisting}
-
+\end{lstlisting}
 
 For detecting data organized as taxonomy, \texttt{skos} vocabulary is used along with the most used classes and properties as showed in Listing \ref{skosdata}.
 
@@ -211,13 +199,9 @@ The publisher module aims at exporting the combined visualizations, along with t
 In this section, we describe the experiments and report the evaluation on detecting categories on 444 endpoints. We then describe a prototype as a ``\texttt{proof-of-concept}'' of the proposal.
 
 \subsubsection{Implementation}
-%\todo{add a page explaining how to use the tool and alert message} \\
-%\todo{Evaluation with real word users (e.g: usability evaluation) and datasets online and offline} \\
-
 A first prototype, implemented with Javascript and the Bootstrap framework\footnote{\url{http://getbootstrap.com/}}, is available at \url{http://semantics.eurecom.fr/datalift/rdfViz/apps/}, as a proof of concept. We aim at providing a lightweight tool for lay users to quickly understand what the data is about and so that they get first visualizations based on categories detected in the datasets. We also reuse \textit{sgvizler}~\cite{Martin2012} for generating charts according to the categories retrieved by the wizard. In the current implementation, the user can enter any SPARQL endpoint, and with a ``click'', the user can receive the list of categories detected together with sample resources. In the second step, the wizard retrieves the properties from the objects and subjects part of \texttt{owl:sameAs} links. The last step shows different tabs with the summary of the previous steps, the visualizations available for each categories, and a report both in human and machine readable formats. Figure~\ref{fig:visuSample} depicts a sample visualization generated by the wizard for geo data and statistics data.
 
 The system can be used in any tool consuming Linked Data in which the complexity of SPARQL analysis and visualizations of RDF datasets is hidden to the lay users, with the benefits of showing that information encoded in triples is not only "beautiful", but also useful in the sense of traditional wizard-based tools.
-
 
 \begin{figure}[ht!b]
 \includegraphics[scale=.6]{img/result-wizviz.pdf}
@@ -225,13 +209,10 @@ The system can be used in any tool consuming Linked Data in which the complexity
 \caption{Categories detected and visualization generated by the Linked Data visualization wizard in the case of EventMedia endpoint service. }
 \end{figure}
 
-
 \subsubsection{Experiment Set Up}
-%\todo{explain and discuss in detail the experiment} \\
 We have evaluated our approach on the list of $444$ endpoints referenced at \url{http://sparqles.okfn.org/} monitoring the availability, performance, interoperability and discoverability of SPARQL Endpoints registered in Datahub \cite{buil2013}. We have implemented a script in Python to speed up the process and obtain the results. Every ASK query for the different category is implemented in a separate function requesting a JSON response.
 
-
-\subsubsection{Evaluation }
+\subsubsection{Evaluation}
 We evaluate our algorithm of detecting categories using SPARQL queries against endpoints retrieved from the LOD cloud. From the $444$ endpoints used on the detection category module, $278$ endpoints (62.61\%) were able to give satisfactory (yes/no on one of the seven categories) results based on the queries. However, almost 37.38\% of the endpoints were either down at the time of our experiments or the response header was in XML instead of JSON (as set up in the script). This result shows that our proposal with the current implementation (not covering all the vocabularies in LOV) make use of most popular vocabularies reused in the Linked Data.
 \begin{table}[!htbp]
 \centering{
@@ -279,16 +260,7 @@ Table \ref{tab:catendpoints} summarizes some findings for $8$ DBpedia chapters e
 
 \section{Finding Important Properties for an Entity}
 \label{sec:propEntities}
-In many knowledge bases, entities are described with numerous properties. However, not all properties have the same importance. Some properties are considered as keys for performing instance matching tasks while other properties are generally chosen for quickly providing a summary of the key facts attached to an entity. Our motivation is to provide a method enabling to select what properties should be used when depicting the summary of an entity, for example in a multimedia question answering system such as QakisMedia\footnote{\url{http://qakis.org/}} or in a second screen application providing more information about a particular TV program\footnote{\url{http://www.linkedtv.eu/demos/linkednews/}}. Our approach consists in: (i) reverse engineering the Google Knowledge Panel by extracting the properties that Google considers as sufficiently important to show (Section~\ref{sec:knowledge-graph}), and (ii) analyzing users' preferences by conducting a user survey and comparing the results (Section~\ref{sec:evaluation}). We finally show how we can explicitly represent this knowledge of preferred properties to attach to an entity using the Fresnel vocabulary~\cite{pietriga2006}. \\
-
-%\todo{ADD figure of GKP search + result of crawling in JSON or implementation code}
-%\begin{figure}
-%\centering{
-%\includegraphics[scale=.9]{img/gkpGreece.png}
-%\label{fig:gkpGreece}
-%\caption{Google's Knowledge Panel for Greece}
-%}
-%\end{figure}
+In many knowledge bases, entities are described with numerous properties. However, not all properties have the same importance. Some properties are considered as keys for performing instance matching tasks while other properties are generally chosen for quickly providing a summary of the key facts attached to an entity. Our motivation is to provide a method enabling to select what properties should be used when depicting the summary of an entity, for example in a multimedia question answering system such as QakisMedia\footnote{\url{http://qakis.org/}} or in a second screen application providing more information about a particular TV program\footnote{\url{http://www.linkedtv.eu/demos/linkednews/}}. Our approach consists in: (i) reverse engineering the Google Knowledge Panel by extracting the properties that Google considers as sufficiently important to show (Section~\ref{sec:knowledge-graph}), and (ii) analyzing users' preferences by conducting a user survey and comparing the results (Section~\ref{sec:evaluation}). We finally show how we can explicitly represent this knowledge of preferred properties to attach to an entity using the Fresnel vocabulary~\cite{pietriga2006}.
 
 \subsection{Reverse Engineering the Google KG Panel}
 \label{sec:knowledge-graph}
@@ -307,8 +279,6 @@ We aim at capturing the properties depicted in the Google Knowledge Panel (GKP) 
 \label{fig:gkpReverse}
 \end{center}
 \end{figure*}
-
-
 
 \begin{algorithm}[h]
 \scriptsize
@@ -335,9 +305,7 @@ We aim at capturing the properties depicted in the Google Knowledge Panel (GKP) 
     \ENDFOR
     \STATE RETURN $gkpProperties$
 \end{algorithmic}
-
 \end{algorithm}
-
 
 For each of these concepts, we retrieve $n$ instances (in our experiment, $n$ was equal to 100 random instances). For each of these instances, we issue a search query to Google containing the instance label. Google does not serve the GKP for all user agents and we had to mimic a browser behavior by setting the $User-Agent$ to a particular browser. We use CSS selectors to check the existence of and to extract data from a GKP. An example of a query selector is $.\_om$ (all elements with class name $\_om$) which returns the property DOM element(s) for the concept described in the GKP. From our experiments, we found out that we do not always get a GKP in a SERP. If this happens, we try to disambiguate the instance by issuing a new query with the concept type attached. However, if no GKP was found again, we capture that for manual inspection later on. Listing~\ref{algoscrapping} gives the high level algorithm for extracting the GKP. The full implementation can be found at \url{https://github.com/ahmadassaf/KBE}. We finally observe that this experiment is only valid for the English Google.com search results since GKP varies according to top level names.
 
@@ -387,17 +355,11 @@ Fresnel\footnote{\url{http://www.w3.org/2005/04/fresnel-info/}} is a presentatio
     <http://www.google.com/insidesearch/features/search/knowledge.html> .	
 \end{lstlisting}
 
-%\normalsize
-
 \section{GeoRDFviz: Map visualization of Geodata Endpoints}
 \label{sec:geordfviz}
-
 With the growing interest of publishing geolocation data according to linked data principles, many endpoints are provided without any visual interface to help navigating on top of the data. This lead to make it difficult for lay users to grab the essence of the data without learning some SPARQL queries. Visual depiction of a location in a map makes it easier to identifier a resource or a group of resources in a given bounding box. We adapted the LDVIzWiz in the geospatial datasets published in the Linked Open Data cloud. We implemented \texttt{GeoRDFviz}, which is a lightweight tool that help understanding the geodata resources in any endpoint with a more attractive way for non-experts users.
 
 \subsection{Back-End Description}
-
-%\todo{describe how the data is retrieved, queries before sent for visualization}
-
 \texttt{GeoRDFviz} is an application of the generic wizard for Linked Data presented in section \ref{sec:ldvizwiz}. First, we take the result of the output of the analysis of endpoints, based on the geodata category as defined in listing \ref{geodata}. For each of the endpoints containing geodata, we trigger a SELECT query to take randomly one resource with latitude and longitude according to the \textit{geo} vocabulary, as depicted in listing \ref{selectgeo}.
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=single, caption= {SPARQL query runs against each endpoint containing geodata to retrieve a random location.}, label=selectgeo, captionpos=b}
@@ -419,7 +381,6 @@ After we output the result of this process in a JSON file containing not only th
 \lstinputlisting[breaklines=true,language=json]{vocabs/sampleGeordfviz-data.json}
 
 \subsection{Front-End Interface}
-
 GeoRDFviz is built using generic queries in SPARQL and three visual actions: (i) zooming, (ii) filtering and (iii) describing of resources with geometry. GeoRDFviz prototype is available at \url{http://semantics.eurecom.fr/datalift/GeoRDFviz/}.
 The user first select the endpoint to visualize. GeoRDFviz picks up randomly a resource with its location contained in the endpoint and direct the user to that position in a map. From that point, the user can zoom-in to find list of resources around that area of the map, and progressively can reach a more specific resource. By clicking on the resource, a pop-up menu shows more connections of the resource modeled as \texttt{SKOS} concepts, obtained from the DESCRIBE query on the resource. The application is a client application implemented using Backbone.js library\footnote{\url{http://backbonejs.org/}} and can be used to explore the geospatial LOD cloud by zooming, selecting and viewing resources.
 
@@ -431,25 +392,14 @@ The user first select the endpoint to visualize. GeoRDFviz picks up randomly a r
 \end{center}
 \end{figure*}
 
-
-%\subsection{Comparison with Existing Approaches}
-%\label{sec:eval}
-%\todo{add this work - in discussion http://oai.cwi.nl/oai/asset/13425/13425B.pdf, that seems to have some similar ideas, as well as the work on LDVM pipeline}
-
-
-
-
-
 \section{An application consuming event datasets: Confomaton}
 \label{sec:confomaton}
-
 In this section, our goal is to create a rich environment that enables users to navigate events and their various representative media such as photos, slides and tweets. A typical usage is to gather data about a scientific conference and investigate the added value of collecting scientific-related media. A non-trivial task in such applications is to connect structured data with extremely noisy content, especially in the case of a major conference.
 
 \subsection{Background and Motivation}
+We consider a scientific conference, the International Semantic Web Conference  which took place in Bonn, Germany in November 2011. We estimate that it attracted more than 1,500 participants including all co-authors, people who have participated in the reviewing process, people who physically attended the conference or tried to follow it on social networks. The conference organizers publish a lot of structured data about the conference including the list of accepted papers, their authors and institutions, the detailed program composed of sub-events with the exact timetable and the location (rooms) of the talks. This data is modeled using the \texttt{SWC} ontology\footnote{\url{http://data.semanticweb.org/ns/swc/ontology}}, which was designed to describe academic events, and uses classes and properties from other ontologies such as \texttt{FOAF} (for people) and \texttt{SWRC} (BibTeX elements for the papers). The main conference (type \texttt{swc:ConferenceEvent}) is related to a set of sub-events, namely (\texttt{WorkshopEvent}, \texttt{TutorialEvent}, \texttt{SessionEvent}, \texttt{TalkEvent} via the property \texttt{swc:isSuperEventOf}. Table~\ref{tab:dataset-stats} shows some statistics about the data provided by the DogFood server about the ISWC 2011 conference.
 
- We consider a scientific conference, the International Semantic Web Conference  which took place in Bonn, Germany in November 2011. We estimate that it attracted more than 1,500 participants including all co-authors, people who have participated in the reviewing process, people who physically attended the conference or tried to follow it on social networks. The conference organizers publish a lot of structured data about the conference including the list of accepted papers, their authors and institutions, the detailed program composed of sub-events with the exact timetable and the location (rooms) of the talks. This data is modeled using the \texttt{SWC} ontology\footnote{\url{http://data.semanticweb.org/ns/swc/ontology}}, which was designed to describe academic events, and uses classes and properties from other ontologies such as \texttt{FOAF} (for people) and \texttt{SWRC} (BibTeX elements for the papers). The main conference (type \texttt{swc:ConferenceEvent}) is related to a set of sub-events, namely (\texttt{WorkshopEvent}, \texttt{TutorialEvent}, \texttt{SessionEvent}, \texttt{TalkEvent} via the property \texttt{swc:isSuperEventOf}. Table~\ref{tab:dataset-stats} shows some statistics about the data provided by the DogFood server about the ISWC 2011 conference. 
- 
- We first notice that the data is incomplete. The conference hosted 16 workshops in total, but the 75 papers are only associated with 8 of them while the 8 others did not have any papers according to the corpus. Furthermore, we find 133 papers that are not connected to any of the events via the predicate \texttt{swc:hasRelatedDocument}. Finally, some useful information is also missing such as the keynote speakers and the \emph{Semantic Web Death Match} (panel) event. This lack of knowledge is also a motivation for our work: can we collect and analyse social network activities in order to complete the factual description of this event?
+We first notice that the data is incomplete. The conference hosted 16 workshops in total, but the 75 papers are only associated with 8 of them while the 8 others did not have any papers according to the corpus. Furthermore, we find 133 papers that are not connected to any of the events via the predicate \texttt{swc:hasRelatedDocument}. Finally, some useful information is also missing such as the keynote speakers and the \emph{Semantic Web Death Match} (panel) event. This lack of knowledge is also a motivation for our work: can we collect and analyse social network activities in order to complete the factual description of this event?
 
 \begin{table}[htbp]
 \footnotesize{
@@ -473,8 +423,7 @@ In this section, our goal is to create a rich environment that enables users to 
 \end{center}}
 \end{table}
 
-
-We collected social network data in real time during the six days of the conference using the main tags advertised by the organizers (\texttt{\#iswc2011}, \texttt{\#cold2011}, \texttt{\#derive2011}, etc.). Table~\ref{tab:media-statistics} shows some statistics about the different media services used by the attendees along with the number of items from a number of distinct users. As expected, Twitter is by far the most used service: we have been able to collect 3,390 tweets from 519 different users. A significant proportion of tweets contain hyperlinks that we have further analysed. Hence, we extracted 384 different websites indexed by so-called URL shorteners (such as Bit.ly) found in 1,464 tweets (43\% of tweets). These links represent a rich source of media, as they point to various Web resources categories including blogs, slides, photos, publications and projects. For example, 25\% of these links pointed to a PDF document, typically  one of the conference papers but could also be related papers relevant for the followers of the conference. We also analyse those links to extract the various media services used by Twitter.
+We collected social network data in real time during the six days of the conference using the main tags advertised by the organizers (\texttt{\#iswc2011}, \texttt{\#cold2011}, \texttt{\#derive2011}, etc.). Table~\ref{tab:media-statistics} shows some statistics about the different media services used by the attendees along with the number of items from a number of distinct users. As expected, Twitter is by far the most used service: we have been able to collect 3,390 tweets from 519 different users. A significant proportion of tweets contain hyperlinks that we have further analysed. Hence, we extracted 384 different web sites indexed by so-called URL shorteners (such as Bit.ly) found in 1,464 tweets (43\% of tweets). These links represent a rich source of media, as they point to various Web resources categories including blogs, slides, photos, publications and projects. For example, 25\% of these links pointed to a PDF document, typically  one of the conference papers but could also be related papers relevant for the followers of the conference. We also analyse those links to extract the various media services used by Twitter.
 
 \begin{table}[htbp]
 \centering{
@@ -505,7 +454,6 @@ We collected social network data in real time during the six days of the confere
   \item a User Interface powered by an instance of the Linked Data API as a logical layer connecting all the data in the triple store with the front-end visualizations.
 \end{enumerate}
 
-
 \begin{figure*}[t!h]
  \centering
  \includegraphics[scale=0.35]{img/architecture.png}
@@ -513,8 +461,7 @@ We collected social network data in real time during the six days of the confere
  \label{fig:architecture}
 \end{figure*}
 
-\subsection{Collecting and Modeling Data in Confomation}
-
+\subsection{Collecting and Modeling Data in Confomaton}
 \paragraph{Media Collector: A Media Crawler}                                                \label{sec:media-collector}
 In the context of \emph{Confomaton}, we have developed a \emph{media collector} with the purpose of searching various social networks and media platforms for event-related media items such as photos, videos, and slides. We currently support 4 social networks (Google+, MySpace, Facebook, and Twitter) and 7 media platforms (Instagram, YouTube, Flickr, MobyPicture, img.ly, yfrog and Twitpic). Our approach is agnostic of media providers, as we offer a common alignment schema for all of them:
 \begin{itemize}
@@ -547,10 +494,9 @@ In the context of \emph{Confomaton}, we have developed a \emph{media collector} 
 In order to retrieve data from media providers, we use the particular media provider's search Application Programming Interfaces (API) where available, and otherwise fall back to Web scraping the media provider's website. In some cases, we initially use the search API, but then have to fall back to Web scraping in order to get more details on the results, such as the \textbf{Media URI}, which is not exposed by all APIs. Of the media providers, Twitter plays a special role, as it can serve as a host for other media providers. For example, it is very common for tweets to contain links to media items hosted on external media providers such as Twitpic. Other media providers treat media items as first class objects, i.e. have dedicated object keys in their API results for media items, which is not in all cases true for Twitter. We handle this by searching for a list of URIs of known media providers in combination with the actual search term. To illustrate this, when searching for media items for the search term ``ISWC 2012'' on Twitter, we would actually search for ``iswc 2012 AND (twitpic.com OR flic.kr)'' in the background, whereas on all other media providers, the search term ``iswc 2012'' is sufficient. The media collector can be tested at \url{http://webmasterapp.net/social/}.
 
 \paragraph{Data Modeling of Confomaton}
-The Event Collector takes as input the Dog Food corpus described using the SWC ontology and converts all events into the LODE ontology\footnote{\url{http://linkedevents.org/ontology/}}, a minimal model that encapsulates the most useful properties for describing events. We use the \texttt{Room} ontology\footnote{\url{http://vocab.deri.ie/rooms}} for describing the various rooms contained in the conference centre. An explicit relationship between an event and its representative media (photo, slide, micropost, etc.) is realised through the \texttt{lode:illustrate} property. For describing those media, we re-use two popular vocabularies: the W3C Ontology for Media Resources\footnote{\url{http://www.w3.org/TR/mediaont-10/}} for photos and videos, and SIOC\footnote{\url{http://rdfs.org/sioc/spec/}} for tweets, status, posts and slides. Listing \ref{lst:eventresource} below shows how a tweet is represented in \emph{Confomaton}.
+The Event Collector takes as input the Dog Food corpus described using the SWC ontology and converts all events into the LODE ontology\footnote{\url{http://linkedevents.org/ontology/}}, a minimal model that encapsulates the most useful properties for describing events. We use the \texttt{Room} ontology\footnote{\url{http://vocab.deri.ie/rooms}} for describing the various rooms contained in the conference center. An explicit relationship between an event and its representative media (photo, slide, micropost, etc.) is realised through the \texttt{lode:illustrate} property. For describing those media, we re-use two popular vocabularies: the W3C Ontology for Media Resources\footnote{\url{http://www.w3.org/TR/mediaont-10/}} for photos and videos, and SIOC\footnote{\url{http://rdfs.org/sioc/spec/}} for tweets, status, posts and slides. Listing \ref{lst:eventresource} below shows how a tweet is represented in \emph{Confomaton}.
 
 \begin{lstlisting}[caption={Sample output describing a resource.}, language=json, label={lst:eventresource}]	
-\begin{verbatim}
 <http://data.linkedevents.org/tweet/af557cef-5d5b-49c6-a4c3-bc9c41ce1555>
  a sioc:Post;
  dcterms:created "2011-10-23T13:34:03+00:00";
@@ -568,8 +514,6 @@ Figure~\ref{fig:natasha-example} depicts how all these vocabularies are used tog
  \caption{Example of data modeled in \emph{Confomaton} re-using multiple vocabularies}
  \label{fig:natasha-example}
 \end{figure*}
-
-
 
 \paragraph{Event Media Reconciliation Module}
 The event media reconciliation module aims to align the incoming stream of social media with their appropriate events and to interlink some descriptions with general knowledge available in the LOD cloud\footnote{\url{http://lod-cloud.net/}} (e.g. people and institutions descriptions). Attaching social media to fine-grained events is a challenging problem. We tackle it by pre-processing the data with two successive filters in order to reduce the noise: one filter relies on keyword search applied to some fields such as title and tag, while the other one filters data based on temporal clues. The reconciliation is then ensured through a pre-configured mapping between a set of keywords and their associated events. This map enables us to associate media with the macro-events that people explicitly refer to in their posts or photos. For example, we connect all media items containing the tag \texttt{\#iswc2011} with the general ISWC 2011 conference. However, this method is not at all convenient for associating media items with sub-events. For instance, in the ISWC 2011 conference, there are 99 sub-events of type \texttt{TalkEvent}, which could be the presentation of a paper, a keynote speech or any other kind of talk. Social network users typically do not specify a particular tag for such events. We hence advocate the need for more advanced classifiers to associate media with sub-events. These classifiers can exploit a variety of parameters such as social network graphs and named entities extracted from media content.
@@ -599,7 +543,7 @@ spec:eventViewer a api:Viewer ;
 		api:defaultViewer spec:eventViewer.		
 \end{lstlisting}
 
-On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the centre, the default view is a map centered on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, based on data provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims to show all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
+On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the center, the default view is a map centered on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, based on data provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims to show all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
 
 
 \section{Application consuming statistical datasets}
@@ -641,9 +585,9 @@ We have reused some external ontologies for more interoperability:
 \item \texttt{aiiso}\footnote{\url{http://vocab.org/aiiso/schema}} for the type of school and codes of school.
 \item \texttt{geofla}\footnote{\url{http://data.ign.fr/def/geofla\#}} since the schools are considered as a topographic entities,
 
-\item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie\#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf\#} . 
-\item \texttt{skos:Concept} for describing the 30 types of nature of schools. 
-\item \texttt{qb:DimensionProperty} and \texttt{qb:MeasureProperty} \cite{dcube} for modeling the dimensions and different indicators available for a given school. 
+\item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie\#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf\#} .
+\item \texttt{skos:Concept} for describing the 30 types of nature of schools.
+\item \texttt{qb:DimensionProperty} and \texttt{qb:MeasureProperty} \cite{dcube} for modeling the dimensions and different indicators available for a given school.
 
 \item \texttt{geom}\footnote{\url{http://data.ign.fr/def/geometrie\#}} for representing the different geometries (points with latitude and longitude) in a given coordinate reference systems with \texttt{ignf} ontology at \url{http://data.ign.fr/def/ignf\#} .
 \item \texttt{skos:Concept} for describing the 30 types of nature of schools.
@@ -710,8 +654,6 @@ _:vb42531960 a  geom:Point;
 	geom:systCoord ignfr:ntflamb2e ;
 	geom:coordX "655410.1"^^xsd:double;
 	geom:coordY "6861755.9"^^xsd:double .
-
-	
 \end{lstlisting}
 
 \subsection{Interconnection}
@@ -754,8 +696,6 @@ Figure ~\ref{fig:searchingSchool} shows the three different views on a running e
 \label{fig:searchingSchool}
 \end{center}
 \end{figure*}
-
-
 
 \section{Improving the discovery of applications contests in Open Data Events}
 \label{sec:contests}
@@ -806,15 +746,14 @@ Also, we add some other minor changes to the Apps4X vocabulary:
 
 \subsection{Implementation and Application}
 \label{sec:plugin}
-In this section, we describe the implementation of the plugin based on the vocabulary described in the previous section, the RESTful API and the evaluation on creating a knowledge-base in RDF of 112 past open data events in Europe.  
+In this section, we describe the implementation of the plugin based on the vocabulary described in the previous section, the RESTful API and the evaluation on creating a knowledge-base in RDF of 112 past open data events in Europe.
 
 \paragraph{Universal JavaScript plugin for RDF population}
 \label{sec:universal}
 
 The inspiration for the JavaScript-based solution came from services like \url{https://muut.com/}, which offers embeddable commenting and discussion forums and it can be installed on any web page independent of the CMS. Since almost all people have JavaScript support enabled in their browsers\footnote{According to a study by Yahoo only about 1\% have JavaScript disabled in their browsers. Source: \url{https://developer.yahoo.com/blogs/ydnfourblog/many-users-javascript-disabled-14121.html} [Referenced 2014-06-02]}  it enables us to implement a solution that can be installed on any web page and also works on almost any browser.
 
-The most striking difference between the CMS-based plugin and the JavaScript plugin is the user base, since the JavaScript solution works on any Web page while the CMS plugin obviously only can be installed on a dedicated websites. Also the technical approach differs significantly, because in the CMS-based approach the server will do all the work for producing the HTML and RDFa markup for the events, while in the JavaScript approach it is the client browser that is responsible for this task.
-
+The most striking difference between the CMS-based plugin and the JavaScript plugin is the user base, since the JavaScript solution works on any Web page while the CMS plugin obviously only can be installed on a dedicated web sites. Also the technical approach differs significantly, because in the CMS-based approach the server will do all the work for producing the HTML and RDFa markup for the events, while in the JavaScript approach it is the client browser that is responsible for this task.
 
 \paragraph{Technical description:}
 The JavaScript plugin consists of three distinct parts (Figure \ref{fig:jsplugin}) that are technically independent of each other, but they can still be deployed on the same server if needed:
@@ -855,7 +794,6 @@ The admin interface is implemented in HTML, CSS and JavaScript. Bootstrap\footno
  \label{fig:adminInterface}
 \end{figure}
 
-
 \paragraph{Embeddable script}
 The final component of the puzzle is the embeddable script, that is responsible of displaying the event and application information in human readable form on the event organizer's website. The event organizer will get the embed code from the admin interface, which she will then insert into the HTML code of her website. The embed code is just a reference to an external JavaScript file that will be loaded from the Apps for Europe server and then executed in the browser. A detailed description of how the script works is given below:
 \begin{algorithm}
@@ -868,7 +806,6 @@ The final component of the puzzle is the embeddable script, that is responsible 
 }
 
 \end{algorithm}
-
 
 \paragraph{Creating the Knowledge-base for Past Events}
 The final task was to create the knowledge base for past events by using the Apps for Europe RDF vocabulary and generating data to feed the endpoint at \url{http://apps4europe.eurecom.fr/sparql} . The list of events was extracted from the Apps for Europe Google spreadsheet\footnote{\url{https://docs.google.com/spreadsheet/ccc?key=0AiXRLGASq8I0dDlfZURkWGpSODBJaWotQUp3eGNwNGc&usp=sharing}}.
@@ -892,10 +829,9 @@ The original idea was to automate the triple store data population as far as pos
 \item Second, many links to the event pages were broken, and thus manual work was required in order to relocate the actual page.
 \end{enumerate}
 
+In order to be as efficient as possible in the data population a semi-automatic approach was used. Here, the key idea was to populate event pages with only a few application entries (less than 10) manually using the JavaScript plugin, and for the rest of the event pages web scraping was used to populate the application entries (the scraping script had to be configured for each event web site separately). More details of the script can be found in Appendix A.
 
-In order to be as efficient as possible in the data population a semi-automatic approach was used. Here, the key idea was to populate event pages with only a few application entries (less than 10) manually using the JavaScript plugin, and for the rest of the event pages web scraping was used to populate the application entries (the scraping script had to be configured for each event website separately). More details of the script can be found in Appendix A.
-
-The goal was to populate all the past events (112 in total). However, many of the websites for the past events had already disappeared or didn't include enough information for data population. Furthermore, the data population process turned out to take much more time than anticipated, and therefore we managed to populate only 28 events and in total 889 application entries. The average number of application entries per event was 34 and the median 22.
+The goal was to populate all the past events (112 in total). However, many of the web sites for the past events had already disappeared or didn't include enough information for data population. Furthermore, the data population process turned out to take much more time than anticipated, and therefore we managed to populate only 28 events and in total 889 application entries. The average number of application entries per event was 34 and the median 22.
 
 Visualizations and applications could be built on top of the knowledge base, but because of the small size of the current knowledge base, it is difficult to extract quantitative data from the knowledge base. Some ideas for visualizations are presented below:
 \begin{itemize}
@@ -922,16 +858,4 @@ The RDF information about events and applications is populated only if event org
 
 \section{Summary}
 \label{sec:summarych5}
-%\todo{extend to reflect all the content of the chapter}
-
 In this chapter we have presented  an approach for creating visualizations on top of Linked Data based on Semantic Web technologies. We first defined seven categories of objects worth viewing in a dataset, and we propose to associate them with commonly used and domain vocabularies. We then present a description of the main components of a Linked Data Visualization Wizard. We describe a lightweight implementation in JavaScript as a \textit{proof-of-concept} of our proposal, with the benefits to be usable on-line or being extensible. We advocate that such a tool can be easily integrated  in any workflow/framework for publishing and linking data on the Web, such as Datalift or the GeoKnow Stack. Besides, we have performed experiments on GKP to look for important properties in entities, and evaluated against users' preferences. Then we presented two applications in the domain of statistics and events, consuming different datasets in RDF on real-world scenario. We discussed on how to improve applications developed for contests, by proposing a vocabulary and a tool for populating the model by using a universal plugin. Some past events have been already semi-automatically curated using both the vocabulary and the plugin.
-
-
-
-% deploy the vocab and setting up a hub for mashups
-% find patterns for applications
-% develop a recommender for creating applications according to some criteria
-
-%\textcolor{red}{We have presented in this paper an approach that could help reusing tools and libraries in the domain of applications built on top of datasets in Linked Open Data. We first presented our motivation as to demonstrate to the end users or decision makers, there is always a need to develop a showcase, hence sometimes looking for analogous or similar applications in the area to ease the process of creation the mashup. We proceeded by surveying some applications to extract relevant common facts worth reusable, from which we proposed a small vocabulary (DVIA)  to semantically describe visual applications. }
-
-%\textcolor{red}{We need to validate the DVIA by scrapping and reconciling data from all innovative applications websites and exposed them in RDF, starting with some of those we studied and others applications submitted at the Semantic Web Challenge the past three years. We strongly believe that having such a a hub  describing the tools, datasets, etc.  used to build  applications consuming 4-5 stars datasets will contribute to interoperable Applications leading to a Linked Open Visualizations (LOVIZ) on the LOD cloud.}

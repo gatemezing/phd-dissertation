@@ -1,4 +1,3 @@
-
 \chapter{Contributions to Linked Open Vocabularies (LOV)}
 \label{ch:ch6}
 
@@ -7,11 +6,7 @@
  Tim Berners-Lee
  \end{flushright}
 
-%\todo{Start here with the GLD diagram in the publication life-cycle, with emphasis on Datalift one}
-
 \section*{Introduction}
-%What this chapter is about, what we are achieving and introduce the various sections
-
 In recent years, governments worldwide have mandated publication of open government content to the public Web for the purpose of facilitating open societies and to support governmental accountability and transparency initiatives. In order to realize the goals of open government initiatives, the W3C Government Linked Data Working Group have provided some guidance to aid in the access and re-use of open government data. Since Linked Data can provide a simple mechanism for combining data from multiple sources across the Web, it also addresses many objectives of open government transparency initiatives through the use of international Web standards for the publication, dissemination and reuse of structured data \cite{bpgld}.
 
 To publish data on the Web, stakeholders have to follow different tasks sometimes included in different life-cycle models. As described in \cite{bpgld}, different proposals for life-cycles all share common activities, summarized in the need to specify, model and publish data in standard open Web formats. Below are details about four different life cycles.
@@ -32,7 +27,6 @@ To publish data on the Web, stakeholders have to follow different tasks sometime
 	\item  Exploitation, such as visualizing the dataset, re-publishing and versioning.
 	
 	\end{enumerate}
-
 \end{itemize}
 
 \begin{figure}
@@ -48,16 +42,12 @@ To publish data on the Web, stakeholders have to follow different tasks sometime
 Although the process of lifting raw data to interlinked data in Datalift seems to be linear, it can also be cyclic with a maintenance task in the life cycle. Table \ref{tab:lifecycle} summarizes the ten best practices to be taken into account to publish data as Linked Data on the Web. Figure \ref{fig:bp-workflow} depicts the four main steps to consider when publishing Linked Data according to Table \ref{tab:lifecycle}.
 
 \begin{figure}
-
 \centering{
 \includegraphics[scale=.65]{img/bp-worflow.pdf}
 \label{fig:bp-workflow}
 \caption{Four steps to follow for publishing Linked Data by Governments and Institutions.}
 }
-
 \end{figure}
-
-
 
 \begin{table}[ht!b]
 \centering{
@@ -93,13 +83,8 @@ Recognize your responsibility in maintaining data once it is published. Ensure t
 
 In this chapter, we mainly present our contributions around Linked Open Vocabularies (LOV). Section \ref{sec:lov-approach} describes the scope and the how LOV can be used with an ontology methodology (e.g., the NeOn methodology) to improve the search and the quality of the reused vocabularies. In section \ref{sec:prefharmoni}, we propose and implement an heuristic to align vocabularies on the Web of Data and a ranking of vocabularies based on information content (IC) metrics. Then, we describe a module of Datalift that reuses the LOV catalogue in the process of converting raw dataset for reusing terms already defined in other vocabularies (Section \ref{sec:data2rdf}). Finally we  conclude the chapter in Section \ref{ch6:conclusion}.
 
-
-%citing glossary uses \cite{glossairegld}
-%\section{Life cycle for publishing }
-
 \section{Catalog of Vocabularies}
 \label{sec:catalog}
-
 A vocabulary is a collection of ``terms'' with more or less complex semantics used to model a domain \cite{glossairegld}. Vocabularies can range from simple such as the widely used RDF Schema, \texttt{FOAF} and Dublin Core Metadata Element Set to complex vocabularies with thousands of terms, such as those used in healthcare to describe symptoms, diseases and treatments. Vocabularies play a very important role in Linked Data, specifically to help with data integration. Its can also overlap with Ontology in the context of Linked Data. Regarding the catalog of vocabularies, we refer the reader to~\cite{AquinJoWS12} for a systematic survey of ontology libraries, but we give our own classification of ontology repositories (Table~\ref{tab:catalogs}).
 In particular, we distinguish six categories of catalogs:
 \begin{enumerate}
@@ -180,7 +165,7 @@ The LOV dataset is synchronized with the information presented in human readable
 
 \subsection{Linked Open Vocabularies}     \label{sec:lov}
 
-%Started in March 2011, in the framework of the DataLift research project \cite{scharffe_2012} hosted by the Open Knowledge Foundation, the Linked Open Vocabularies (LOV) initiative is now standing as an innovative observatory of the vocabularies ecosystem. 
+%Started in March 2011, in the framework of the DataLift research project \cite{scharffe_2012} hosted by the Open Knowledge Foundation, the Linked Open Vocabularies (LOV) initiative is now standing as an innovative observatory of the vocabularies ecosystem.
 LOV gathers and makes visible indicators not yet harvested before, such as interconnection between vocabularies, versioning history and maintenance policy, past and current referent (individual or organization) if any. The number of vocabularies indexed by LOV is constantly growing (390 as of January 2014) thanks to a community effort and it is the only catalog, to the best of our knowledge, that provides all types of search criteria (metadata search, within/across ontologies search), both an API and a SPARQL endpoint access. According to the categories of ontology libraries defined in~\cite{AquinJoWS12}, LOV falls under the category of \textit{``curated ontology directory''}  and \textit{``application platform''}. Figure \ref{fig:graphEvolution} depicts the evolution of vocabularies inserted into LOV catalogue by the curators.
 
 The development of LOV has highlighted a number of interesting research issues such as \textit{``where to find the best domain vocabulary to reuse?"}, and \textit{``is it possible to create a curated catalogue of vocabularies that are links?"}
@@ -252,7 +237,7 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
  \item [Ontology Search.] Main LOV's feature is the search of vocabulary terms. These vocabularies are categorized within LOV according to the domain they address. In this way, LOV contributes to ontology search by means of (a) keyword search and (b) domain browsing.
  \item [Ontology Assessment.] LOV provides a score for each term retrieved by a keyword search. This score can be used during the assessment stage and includes a unique term statistical feature\footnote{\url{http://lov.okfn.org/dataset/lov/stats/}} which provides for each term registered in LOV the following information: (a) ``LOV distribution'' that represents the number of vocabularies in LOV that refer to a particular element; (b) ``LOV popularity'' that shows the number of other vocabulary elements that refers to a particular one; and (c) ``LOD distribution'' that refers to the number of datasets in LOD which use a particular vocabulary; and (d) ``LOD popularity'' that refers to the number of vocabulary element occurrences in the LOD.
  \item [Ontology Mapping.] In LOV vocabularies rely on each other in seven different ways. These relationships are explicitly stated using VOAF vocabulary. This data could be useful to find alignments between ontologies, for example one user might be interested in finding equivalent classes for a given class or all the equivalent classes among two ontologies. Listing \ref{list:alignment} shows the retrieved data when asking for all the equivalent classes and properties between the vocabularies \texttt{foaf} and \texttt{dcterms} by means of the related VOAF query\footnote{\url{http://goo.gl/sTIGQ6}. Prefixes are omitted for readability purpose. You can find the correct namespace for a prefix in LOV.}:
-     
+
 \begin{lstlisting}[float=htb,caption={SPARQL query asking for all the equivalent classes and properties between the vocabularies foaf and dcterms. },label=list:alignment]
     SELECT DISTINCT ?elem1 ?alignment ?elem2 {
 	   {?elem1 <http://www.w3.org/2002/07/owl#equivalentClass> ?elem2}
@@ -275,7 +260,7 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
       \caption{Equivalent classes and properties between foaf and dcterms}
       \label{fig:eqCR}
     \end{figure}
-    
+
  \item [Ontology Localization.] Labels in different languages are stored in the LOV endpoint for the ontology terms that provide such information. These annotations can be used when translating terms into different languages. This information could be extracted by querying the SPARQL endpoint as shown in Listing \ref{list:person}\footnote{\url{http://goo.gl/JJCJ01}} where all the labels defined for the terms that have at least one \emph{rdfs:label} containing strictly ``person":
 		
     \begin{lstlisting}[float=htb,caption={SPARQL query  for all the labels defined for the terms containing person. },label=list:person]
@@ -294,7 +279,7 @@ LOV is a catalog and API that can fits well within the Neon methodology for buil
      \caption{Translations example for foaf:Person}
      \label{fig:translations}
    \end{figure}
-   
+
 \end{description}
 
 Figure \ref{fig:LOVandNeOn} shows the activities LOV can support within the overall NeOn methodology activities workflow.
@@ -436,9 +421,9 @@ Several vocabularies are maintained by a community of users. As part of the alig
 }
 \end{table}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%   Finding Vocabularies in Prefix.cc  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Finding Vocabularies in Prefix.cc}   \label{sec:finding}
 We want to find out in prefix.cc, which of the couples (prefix, URI) could be potentially a vocabulary to be further assess to be included in the LOV catalog. To address this question, we first compute all the differences on prefix.cc NOT in LOV, i.e. $PREFIX.CC$ MINUS $(LOV <INTERSECT> PREFIX.CC)$, performing using a SPARQL query. This results in $742$ URIs to be checked\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/input/notInLOV.json}}.
@@ -553,7 +538,6 @@ From the list of URIs that were not LOV-able vocabularies, we wanted to do more 
 }
 \end{table}
 
-
 \section{Vocabulary Ranking Metrics}
 \label{sec:vocabranking}
 
@@ -563,8 +547,6 @@ The linked data principles have gained significant momentum over the last few ye
 To the best of our knowledge, recommending vocabularies to reuse are limited to ``popular'' or ``well-known'' ones. We propose a metric combining different features such as how vocabularies are interlinked, or how they are used in real world datasets. This contribution originates also in the desire to bring the traditional concept of Information Content (IC) into the field of the semantic web applied to vocabularies. Many catalogs of ontologies already provide some ranking metrics based on some features. However, we are interested in applying the principles of IC on vocabularies to investigate if such techniques can give more insights in ontology ranking and ontology usage (e.g in visualization applications).
 
 This Section is organized as follows: Section~\ref{sec:theory} defines the theory of Information Content, and the features used for applying Partition Information Content to vocabularies. We present our experiments on the LOV catalogue in the Section~\ref{sec:experiments}. We discuss how this ranking metric can be used for vocabulary design and maintenance in Section~\ref{sec:application}. We compare our results with other rankings for vocabularies in Section~\ref{sec:related}.
-
-
 
 \subsection{Information Content Metrics}
 \label{sec:theory}
@@ -582,7 +564,7 @@ This experiment aims at bringing the concept of informativeness in the field of 
 \end{equation}
 where $N$ is set to be the maximum value corresponding to the term occurrence in the LOV aggregator (as of June 2014, this value is $3958$, and it corresponds to the popularity of the \texttt{skos:prefLabel} property); and $\varphi(t)$ is the occurrence of the term (but not its popularity).
 
-For computing $\varphi(t)$, we use two types of SPARQL queries depending on whether the term is a class (Listing~\ref{list:classCount}) or a property (Listing~\ref{list:propCount} considers \texttt{owl:ObjectProperty}, \texttt{owl:Data\-typeProperty} and \texttt{rdfs:Property}). Note that we do not yet take into account the \texttt{owl:equivalentClass} and \texttt{owl:equi\-valentProperty} axioms that may appear in some vocabularies. 
+For computing $\varphi(t)$, we use two types of SPARQL queries depending on whether the term is a class (Listing~\ref{list:classCount}) or a property (Listing~\ref{list:propCount} considers \texttt{owl:ObjectProperty}, \texttt{owl:Data\-typeProperty} and \texttt{rdfs:Property}). Note that we do not yet take into account the \texttt{owl:equivalentClass} and \texttt{owl:equi\-valentProperty} axioms that may appear in some vocabularies.
 %We leave this as a future work.
 
 \begin{lstlisting}[float=htb,caption={SPARQL query for computing the occurrence of a class },label=list:classCount]
@@ -606,8 +588,6 @@ For computing the PIC value, we use the following formula:
 where $w_{f}$ is the weight related to vocabulary $f$.
 
 We consider very important that a vocabulary is being reused by other vocabularies and implemented within real world datasets. For example, the \texttt{foaf} ontology is weighted $6$ because it reuses vocabularies (1), it has been used in some datasets (2) and it is being reused by other vocabularies (3). The \texttt{dul}\footnote{\url{http://www.ontologydesignpatterns.org/ont/dul/DUL.owl}} vocabulary is weighted $3$ because it doesn't reuse any vocabulary although it is used by several other vocabularies.
-
-
 
 \subsubsection{Experiments on Vocabularies}
 \label{sec:experiments}
@@ -705,8 +685,6 @@ The Table~\ref{tab:top20} shows the Top 20 namespaces of vocabularies according 
 \end{algorithmic}
 \end{algorithm}
 
-
-
 \subsubsection{Application of Information Content on Vocabularies}
 \label{sec:application}
 We envision various applications using the ranking method based on the Information Content metric while designing semantic web applications, vocabulary life-cycle management or novel recommendation services. We make the following recommendations when using the PIC ranking method on vocabularies:
@@ -717,8 +695,6 @@ We envision various applications using the ranking method based on the Informati
  \item Such a ranking can be used to rank organizations or publishers of vocabularies in a time period (e.g. annual) as a way to encourage good qualities vocabularies and/or datasets on the cloud.
 \end{itemize}
 The use of the information content on LOV vocabularies can be applied in the datasets interlinking task and visualization applications workflow. For interlinking datasets, this method can help detecting properties with a lower PIC which will be a candidate for the interlinking tool. The PIC score can further be used to track the vocabularies terms status (i.e. \texttt{vs:term\_status} ) or \texttt{owl:deprecated} properties by dataset maintainers. From the list of namespaces having deprecated terms (Table~\ref{tab:deprecated}), we observe some correlations with the PIC rank for the vocabularies \texttt{dcat (8), vcard (36), gr (6), wl (2), pav (1)} and \texttt{bibo (1)}\footnote{As of June 2014, there are 60 terms deprecated in LOV with the query \url{http://bit.ly/1aqcDf3}}. More precisely, the presence of \texttt{gr} and \texttt{bibo} provides evidence of such a correlation, while the presence of \texttt{dcat} and \texttt{card} can be explained by the fact that those two vocabularies are in a review process at W3C and subject to re-modeling respectively. Table~\ref{tab:deprecated} gives an overview of some namespaces with their deprecated terms.
-
-
 
 \subsubsection{Related Work and Discussion}
 \label{sec:related}
@@ -771,8 +747,6 @@ The LODStats ranking is focused on covering the number of datasets reused in the
 
 Closer to our work, Schaible \emph{et al.} reported on an empirical study involving 75 linked data experts and practitioners assessing reuse strategies based on various ranking decisions~\cite{Schaible:ESWC14}. The goal is to find objective criteria for choosing which vocabularies to reuse and how many can be combined. LODStats and LOV are used to obtain the number of datasets using a specific vocabulary while \textit{vocab.cc} is used for getting the number of occurrence of a vocabulary term. We propose a different metric to rank existing vocabularies that can be furthermore added as a new feature in such a study. One drawback in the model is to use the same weight for two vocabularies with different number of datasets reused. This could be address in the future by using a ``function based'' weighting for datasets reused (e.g. inverse logarithm) for computing the PIC score.
 
-
-
 \section{Datalift Module for Selecting Vocabularies}
 \label{sec:data2rdf}
 Datalift platform comes with a module to map data objects and properties to ontology classes and predicates available in the LOV catalogue. Data2Ontology takes an input a ``raw RDF'', that is a dataset that has been converted directly from legacy format to triples. The goal is to help to publishers reusing existing ontologies for converting their dataset for easy discovery and interlinking. It consists of three main components assisting the publisher in selecting properties suitable for the dataset to be published. \begin{description}
@@ -789,30 +763,14 @@ Datalift platform comes with a module to map data objects and properties to onto
 \end{description}
 Figure \ref{fig:matchingprocess} illustrates the process of matching the properties with ontologies. Depending on the data properties and object properties used to map the elements of the datasets, Data2Ontology can also automatically infer the class model. However, the user can still distribute the predicate matches among several interconnected classes, as well as to add new predicates and values. Once the properties are matched with the desired predicates and their classes, the resulting model can be viewed as a graph.
 
- \begin{figure}
+\begin{figure}
  \centering{
  \includegraphics[scale=.4]{img/data2ontologyMatch.png}
  \caption{Matching data properties with ontology predicates in Data2Ontology module}
  \label{fig:matchingprocess}
-
  }
-
- \end{figure}
-
+\end{figure}
 
 \section{Summary}
 \label{ch6:conclusion}
 We have presented in this chapter our contribution to Linked Open Vocabularies, as part of implementations of the benefits of using LOV in ontology engineering (case of NeOn methodology), prefixes harmonization and alignment of vocabularies published on the Web, or on ranking vocabularies using the principles of Information Content. By applying this latter to Linked Open Vocabularies, we tried to use features that we consider ``relevant'' to be taken into account when comparing vocabularies (e.g: datasets reused, external vocabularies). We compare with other rankings that are mostly based on the ``popularity'' of vocabularies. This work can path the way for assessing vocabularies with applications in a more systemic approach for recommending classes/properties in ontology management, or in visualization applications to propose the most \textit{``oh yeah?''} suitable property to be visualized for RDF entities when there is large a large number of properties.
-
-%\todo{add what next?}
-%\section{URI Patterns}
-%\label{sec:uris}
-
-%Note: Not sure to add this section. Propose the suggestion of patterns in the BP document.
-%\todo{Reuse this: The use of a URIs has added advantages:
-%a.	it can be used by automated systems to look up additional data (linked data);
-%b.	a triple store may store only one copy of the URI, whereas if a string is used, a copy of that string is always stored for each and every person in the database. Thus, in large data sets, the saving on memory capacity and the improvement in transmission efficiency can be substantial. }
-
-
-
-
