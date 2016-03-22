@@ -1,8 +1,7 @@
 \documentclass[a4paper,11pt,twoside]{ThesisStyle}
-
-%\usepackage{graphicx}
-
-
+\usepackage[english,french]{babel}
+\input{formatAndDefs}
+\input{myDefinitions}
 \usepackage{fancyvrb}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -13,7 +12,7 @@
 \usepackage{listings}
 \usepackage{tabularx}
 \usepackage{pdflscape}
-%\usepackage{subfigure}
+\usepackage{subfigure}
 \usepackage{wrapfig,lipsum,booktabs}
 \usepackage{multirow}
 \usepackage{booktabs}
@@ -22,19 +21,66 @@
 \usepackage{gensymb}
 \usepackage{pifont}
 
-%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
 
+%% loading theorem Axiom
 \newtheorem{deflda}{Axiom}
 \newcommand{\ghis}[1]{\noindent\textcolor{blue}{{\bf \{Ghis}: #1{\bf \}}}}
 \newcommand{\geom}{\textsc{GeomRDF}\xspace}
 \newcommand{\geolift}{\textsc{GeoLift}\xspace}
 \newcommand{\limes}{\textsc{Limes}\xspace}
+%% end axiom theorem
 
-\include{formatAndDefs}
-\include{myDefinitions}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{} \vspace{2mm}\\}
+
+\renewcommand*{\backrefalt}[4]{%
+\ifcase #1 %
+Not cited.%
+\or
+(Cited on page #2.)%
+\else
+(Cited on pages #2.)%
+\fi
+}
+
+\newcommand{\nofootnote}[1]{~(#1)}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand\Hash{\footnotesize{\#}\normalsize}
+\renewcommand\And{\textbf{and}}
+\renewcommand\theadalign{cb}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\renewcommand\textnumero{n$^{\textsf{{\tiny O}}}$}
+\newcommand\BackgroundPic{
+\includegraphics[height=\paperheight,width=\paperwidth]{couverture/BackgroundTPT_Premiere.pdf}
+}
+\definecolor{cverbbg}{gray}{0.97}
+\newenvironment{cverbatim}
+ {\SaveVerbatim{cverb}}
+ {\endSaveVerbatim
+  \flushleft\fboxrule=0pt\fboxsep=.5em
+  \colorbox{cverbbg}{\BUseVerbatim{cverb}}%
+  \endflushleft
+}
+
+%\setstretch{1.16}
+\setlength{\parindent}{0.2in}
+
 \begin{document}
+\newgeometry{left=1.3cm,top=0cm,right=1.3cm,bottom=1.2cm}
+%\cleardoublepage
 
-\include{TitlePage2}
+\input{couverture/TPT_Premiere}
+\cleardoublepage
+
+\newgeometry{left=1.4in,right=1.3in,top=1.1in,bottom=1.1in,includefoot,includehead,headheight=13.6pt}
+
+\selectlanguage{english}
 \vspace{3cm}
 %\dominitoc
 \pagenumbering{roman}
@@ -63,46 +109,38 @@ the world to be important''. \\}
 \end{flushright}
 \cleardoublepage
 
-
-%\begin{center}
-%\section*{\LARGE \textbf{\textcolor{cyan}{Acknowledgments}}}
-%\addcontentsline{toc}{section}{Acknowledgements}
-%\markboth{Acknowledgements}{Acknowledgements}
-%\chapter*{Acknowledgements}
-
-%\cleardoublepage
-%\end{center}
-
 \chapter*{Acknowledgements}
 \input{ack}
 
-
+\phantomsection
 \addcontentsline{toc}{section}{Abstract}
 \markboth{Abstract}{Abstract}
 \chapter*{Abstract}
 \input{abstract}
 \clearpage
 
-%\cleardoublepage
-
+\phantomsection
 \addcontentsline{toc}{section}{Contents}
 \markboth{Contents}{Contents}
-
 \tableofcontents
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Figures}
 \listoffigures
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Tables}
 \listoftables
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Listings}
 \lstlistoflistings
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Publications}
 \markboth{List of Publications}{List of Publications}
 \include{acronyms/publications}
@@ -113,28 +151,18 @@ the world to be important''. \\}
 
 \mainmatter
 
-
 \input{intro}
 \clearpage
 
-\part{ Modeling, Interconnecting and Generating Geodata on the Web}
-%\input{part1}
-%\clearpage
+\part{Modeling, Interconnecting and Generating Geodata on the Web}
 
-%%In reality chapter 2 in the document
-%% after the introduction %%%%
-
+%In reality chapter 2 in the document after the introduction%
 \input{ch1}
 \clearpage
 
 \input{ch2}
 \clearpage
 
-%\input{ch3}
-%\clearpage
-
-%\input{part2}
-%\clearpage
 \part{Generating Visualizations for Linked Data}
 
 \input{ch4}
@@ -143,8 +171,6 @@ the world to be important''. \\}
 \input{ch5}
 \clearpage
 
-%\input{part3}
-%\clearpage
 \part{Contribution to Standards}
 
 \input{ch6}
@@ -161,8 +187,19 @@ the world to be important''. \\}
 \nocite{*}
 \printnomenclature
 
+%\chapter*{}
+%\chaptermark{}
+%\section*{}
+%\sectionmark{}
+%\vspace{-15ex}
+%\appendix
 \appendix
 \include{appendix1}
 \include{appendix2}
-\end{document}
 
+\selectlanguage{french}
+\input{summaryThesis-fr}
+
+%\selectlanguage{english}
+
+\end{document}
