@@ -103,7 +103,6 @@ We observe that the existing catalogs of vocabularies in the literature have som
 %What is this? asked Jodi
 vocab.cc\footnote{\url{http://vocab.cc}} is a service which is similar to prefix.cc since it enables to look up and search for Linked Data vocabularies while providing more specific information about the usage of a particular class or property in the Billion Triple Challenge Dataset (BTCD). It also provides the ranking of those properties or classes. The authors mentioned that ``common prefixes are resolved with data from prefix.cc''. Although they don't give further details, this service is  related to prefix.cc. Triple-Checker\footnote{\url{https://github.com/cgutteridge/TripleChecker}} is a web service based on prefix.cc which aims at finding typos and common errors in RDF data. It parses a given URI/URL and the output is divided into two sections: the namespaces and the term section. The former matches against prefix.cc to determine whether they are ``common prefixes'' and the latter provides the term definition.
 
-
 \begin{landscape}
 \begin{table}[!htbp]
 \centering{
@@ -142,8 +141,6 @@ Web Prot\'{e}g\'{e} & 69 & No & --//-- & Yes \\
 \end{table}
 \end{landscape}
 
-
-
 \section{Linked Open Vocabulary (LOV) and Vocabularies}        \label{sec:lov-approach}
 The Linked Open Vocabularies (LOV) initiative aims to bring more insights about published vocabularies in order to foster their reuse. Compared to other projects, LOV benefits from a community\footnote{\url{https://plus.google.com/communities/108509791366293651606}}
 \begin{itemize}
@@ -164,8 +161,6 @@ The LOV-Bot is the tool that automatically keeps up-to-date the relationships an
 The LOV dataset is synchronized with the information presented in human readable format. The Linked Open Vocabularies initiative not only monitors the current state of the ecosystem, but also aims at storing and giving access to vocabulary history. To achieve this goal, the LOV database contains each different version of a vocabulary over the time since its first issue. For each version, a user can access the file and a log of modifications since the previous version.
 
 \subsection{Linked Open Vocabularies}     \label{sec:lov}
-
-%Started in March 2011, in the framework of the DataLift research project \cite{scharffe_2012} hosted by the Open Knowledge Foundation, the Linked Open Vocabularies (LOV) initiative is now standing as an innovative observatory of the vocabularies ecosystem.
 LOV gathers and makes visible indicators not yet harvested before, such as interconnection between vocabularies, versioning history and maintenance policy, past and current referent (individual or organization) if any. The number of vocabularies indexed by LOV is constantly growing (390 as of January 2014) thanks to a community effort and it is the only catalog, to the best of our knowledge, that provides all types of search criteria (metadata search, within/across ontologies search), both an API and a SPARQL endpoint access. According to the categories of ontology libraries defined in~\cite{AquinJoWS12}, LOV falls under the category of \textit{``curated ontology directory''}  and \textit{``application platform''}. Figure \ref{fig:graphEvolution} depicts the evolution of vocabularies inserted into LOV catalogue by the curators.
 
 The development of LOV has highlighted a number of interesting research issues such as \textit{``where to find the best domain vocabulary to reuse?"}, and \textit{``is it possible to create a curated catalogue of vocabularies that are links?"}
@@ -217,7 +212,6 @@ Interaction with Contributors & No &  - & No & Yes \\
 \label{tab:lovfeatures}
 }
 \end{table}
-
 
 \subsection{LOV vs NeOn Methodology}
 \label{sec:Lovandneon}
@@ -290,9 +284,8 @@ Figure \ref{fig:LOVandNeOn} shows the activities LOV can support within the over
   \label{fig:LOVandNeOn}
 \end{figure}
 
-\subsection{Prefixes harmonization}
+\subsection{Prefix Harmonization}
 \label{sec:prefharmoni}
-
 RDF vocabularies bring their meaning to linked data by defining classes and properties, and their formal semantics. Relying on W3C standards RDFS or OWL, those vocabularies are a fundamental layer in the architecture of the Semantic Web. Without the explicit semantics declared in vocabularies, linked data, even using RDF, would be just linked pieces of information where links have no meaning. Interoperability between data and datasets rely heavily on shared vocabularies, but given the distributed nature of the Web, vocabularies are published by independent parties and there is no centralized coordination of this publication, nor should it be. Various independent services have been developed in order to discover vocabularies and provide information about them, and the community of data publishers and vocabulary managers have all interest in complementarity and coordination between such services. In this section, we focus on a specific aspect of vocabularies: their identification by namespaces and associated prefixes.
 
 In the original XML syntax of RDF, prefixes are simply local shortcuts associated with XML namespaces using \texttt{xmlns} declarations. The usage of prefixes has been further extended to other syntaxes of RDF such as N3 and Turtle. Although a prefix to namespace association is syntactically limited to the local context of the file in which it is declared, common prefixes such as \texttt{rdf:}, \texttt{rdfs:}, \texttt{owl:}, \texttt{skos:}, \texttt{foaf:} and many more have become de facto standards. For example, RDFa 1.1 has a default profile made of 11 well-used vocabularies based on their general usage on the Semantic Web according to the crawl of Yahoo! and Sindice as of March 2013\footnote{\url{http://www.w3.org/2010/02/rdfa/profile/data/}}. Similarly, the YASGUI SPARQL editor has a list of built-in prefix-namespace associations to ease the construction of SPARQL queries. However, this list of ``standard'' prefixes is open-ended. Interfaces such as SPARQL endpoints (e.g. Virtuoso) use a list of built-in prefixes declaration for more and more namespaces but the choice of entries in this list is all but transparent. Hence, the reason of a given namespace being or not in this list could be interpreted in many ways, a potential source of technical and social conflicts. Therefore, the notion has been slowly spreading, at least implicitly, that common prefixes could and indeed should have a global use, implying some kind of governance and good practices. More and more vocabularies explicitly recommend the prefix that should be used for their namespace, generally using a common if not written good practice to avoid frontal clashes by recommending a prefix not already used. But there is no global policy except implicit rules of fair use to avoid potential conflicts resulting from polysemy (different namespaces using or recommending the same prefix) or synonymy (different prefixes used for the same namespace).
@@ -315,7 +308,7 @@ In this section, we present how we perform the alignment between the two service
 We propose to perform SPARQL queries over all the files of prefix.cc at\\
  \url{http://prefix.cc/popular/all.file.vann} in the FROM clause and compare them to the content of the LOV SPARQL endpoint\footnote{\url{http://lov.okfn.org/endpoint/lov}} via a SERVICE\footnote{\url{http://www.w3.org/2009/sparql/docs/fed/service}} call. The SERVICE keyword defined in the SPARQL 1.1 Query Language instructs a federated query processor to invoke a portion of a SPARQL query against a remote SPARQL endpoint~\cite{eric2013}. Results are returned to the federated query processor and are combined with results from the rest of the query. To be more generic and standards-compliant, the queries could be run with the Jena ARQ command-line tool to produce a CSV or a JSON serialization that could be easily consumed either by the prefix.cc backend via phpMyAdmin or by the LOV backend.
 
-\subsubsection{First Task: prefixes in LOV not present in Prefix.cc}  \label{sec:notInPrefix}
+\subsubsection{First Task: Prefixes in LOV not Present in Prefix.cc}  \label{sec:notInPrefix}
 First, we compute $<LOV> INTERSECTS <PREFIX.CC>$ and $<LOV> MINUS \, \{<LOV> INTERSECTS <PREFIX.CC> \}$. The following SPARQL query finds namespace URIs in LOV that do not exist in prefix.cc along with their LOV prefix.
 
 \lstset{basicstyle=\scriptsize, backgroundcolor=\color{white}, frame=shadowbox, caption= {Query to find namespaces in LOV not in prefix.cc}, language=json, label=querya, captionpos=b}
@@ -340,7 +333,7 @@ ORDER BY ?prefix
 \end{lstlisting}
 The first results\footnote{This query was performed in two weeks between March, 2nd and March, 20th 2013 and at this time, card(LOV) = 321 vocabularies while card(Prefix.cc) = 925} show the following: $card(LOV) \bigcap card(PREFIX.cc) = 188$\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/firstAlignments/intersection-prefixLOV-02-03.csv}} and $card (LOV) - card( PREFIX.cc) = 133$\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/firstAlignments/inLovNotINPrefixcc-02-03.csv}} prefixes in LOV not yet registered in prefix.cc. At this point, a first batch of $80$ prefixes/namespaces from LOV were safely imported in prefix.cc since there were no conflicts. For the remaining ones, they needed more in-depth analysis due to the conflicts.
 
-\subsubsection{Second Task: Dealing with Conflicts between Prefix.cc and LOV}  \label{sec:conflicts}
+\subsubsection{Second Task: Dealing with Conflicts Between Prefix.cc and LOV}  \label{sec:conflicts}
 In the process of alignment, there were two types of conflicts and we provide appropriate actions and/or solutions accordingly:
 \begin{itemize}
  \item Clashes: cases where we have in both services the same prefix but different URIs;
@@ -420,10 +413,6 @@ Several vocabularies are maintained by a community of users. As part of the alig
 \label{tab:contact-editors}
 }
 \end{table}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%   Finding Vocabularies in Prefix.cc  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Finding Vocabularies in Prefix.cc}   \label{sec:finding}
 We want to find out in prefix.cc, which of the couples (prefix, URI) could be potentially a vocabulary to be further assess to be included in the LOV catalog. To address this question, we first compute all the differences on prefix.cc NOT in LOV, i.e. $PREFIX.CC$ MINUS $(LOV <INTERSECT> PREFIX.CC)$, performing using a SPARQL query. This results in $742$ URIs to be checked\footnote{\url{http://www.eurecom.fr/~atemezin/iswc2013/experiments/input/notInLOV.json}}.
@@ -540,8 +529,6 @@ From the list of URIs that were not LOV-able vocabularies, we wanted to do more 
 
 \section{Vocabulary Ranking Metrics}
 \label{sec:vocabranking}
-
-\label{sec:introduction}
 The linked data principles have gained significant momentum over the last few years as a best practice for sharing and publishing structured data on the Semantic Web~\cite{Bizer2009}. Before being published, data is modeled and ontologies or vocabularies are one of the key elements of a dataset. Vocabularies are the artefact that bring semantics to raw data. One of the major barriers to the deployment of linked data is the difficulty for data publishers to determine which vocabularies should be used since developing new vocabularies has a cost. Catalogues of ontologies are therefore a useful resource for searching terms (classes and properties) defined in those vocabularies. The Linked Open Vocabulary (LOV) initiative~\cite{scharffe_2012} is playing a significant role in providing such services to users who can search within curated vocabularies, fostering ontologies reuse. LOV focuses only on vocabularies submitted by users, which are then reviewed and validated by curators. In addition, LOV computes dependencies between vocabularies, keeps track of different versions of them in order to enable their temporal evolution.
 
 To the best of our knowledge, recommending vocabularies to reuse are limited to ``popular'' or ``well-known'' ones. We propose a metric combining different features such as how vocabularies are interlinked, or how they are used in real world datasets. This contribution originates also in the desire to bring the traditional concept of Information Content (IC) into the field of the semantic web applied to vocabularies. Many catalogs of ontologies already provide some ranking metrics based on some features. However, we are interested in applying the principles of IC on vocabularies to investigate if such techniques can give more insights in ontology ranking and ontology usage (e.g in visualization applications).

@@ -13,7 +13,7 @@ The license of a dataset in the Web of Data can be specified within the data, or
 
 We answer this question by proposing an online framework called LIVE\footnote{The online tool is available at \url{http://www.eurecom.fr/~atemezin/licenseChecker/}} (LIcenses VErification) that exploits the formal approach to licenses composition proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13} to verify the compatibility of a set of heterogeneous licenses. LIVE, after retrieving the licenses associated to the vocabularies used in the dataset under analysis, supports data providers in verifying whether the license assigned to the dataset is compatible with those of the vocabularies, and returns a warning when this is not the case.
 
-\section{Statistics about licensed vocabularies}
+\section{Statistics About Licensed Vocabularies}
 \label{sec:stats-license}
 The first step to be addressed consists in analyzing how many vocabularies are licensed, and what is the distribution of such licenses. To achieve this goal, we started our analysis on the Linked Open Vocabularies repository. The LOV initiative stands as an observatory for the re-usable linked vocabularies ecosystem. The initiative goes beyond collecting and highlighting vocabulary metadata, and it now plays a major social role in promoting good practice and improving overall ecosystem quality of publishing vocabularies\footnote{For more details about LOV, see \url{http://ercim-news.ercim.eu/en96/special/linked-open-vocabularies}}. We crawled the LOV repository together with the LODstats one searching for licensed vocabularies. The results we obtained are as follows:
 \begin{description}
@@ -30,7 +30,7 @@ The first step to be addressed consists in analyzing how many vocabularies are l
 
 We are aware that the obtained results are referred to the data available on LOV and LODstats, and that such repositories of vocabularies are not exhaustive. However, they provide us a reliable picture of what is the ongoing trend in licensing vocabularies\footnote{We refer the reader interested into statistics about the distribution of licenses on the Web of Data to~\cite{DBLP:conf/semweb/Rodriguez-DoncelGM13,DBLP:conf/semweb/GovernatoriRVG13}.}. This is particularly true in the case of LOV that furthermore supports a number of good practices for the publication of a vocabulary, among which the addition of the license associated to the vocabulary is highly encouraged.
 
-\section{Related work about licenses in the Web of Data}
+\section{Related Work About Licenses in the Web of Data}
 \label{sec:soalicense}
 In the Web scenario, a number of works address the problem of representing and/or reasoning over licensing information. Iannella~\footnote{\url{http://odrl.net/1.1/ODRL-11.pdf}} presents the Open Digital Rights Language (ODRL) for expressing rights information over content, and Gangadharan et al.~\cite{ODRLS} further extend ODRL developing the ODRL-S language to implement the clauses of service licensing.
 %
@@ -63,7 +63,7 @@ The second module takes as input the set of licenses (i.e. the licenses of the v
 \label{fig:framework}
 \end{figure}
 
-\subsection{Licensing information from vocabularies and datasets}
+\subsection{Licensing Information from Vocabularies and Datasets}
 Two use-cases are taken into account: a SPARQL endpoint, or a VoID file in Turtle syntax.
 In the first use case, the tool retrieves the named graphs present in the repository, and then the user is asked to select the URI of the graph that needs to be checked. Having that information, a SPARQL query is triggered, looking for entities declared as \texttt{owl:Ontology}, \texttt{voaf:Vocabulary} or object  of the \texttt{void:vocabulary} property. The final step is to look up the LOV catalogue to check whether they declare any license. There are two options for checking the license: \textit{(i)} a \textit{``strict checking'' } where the \texttt{FILTER} clause contains exactly the namespace of the submitted vocabulary, or \textit{(ii)} a \textit{``domain checking''}, where only the domain of the vocabulary is used in the \texttt{FILTER} clause. This latter option is recommended in case only one vocabulary has to be checked for the license.
 %
@@ -80,7 +80,7 @@ Figure \ref{fig:livetoolUI} shows the user interface for quering a graph and sam
 }
 \end{figure}
 
-\subsection{Licenses compatibility verification.}
+\subsection{Licenses Compatibility Verification}
 The logic proposed in~\cite{DBLP:conf/semweb/GovernatoriRVG13}
 and the licenses compatibility verification process has been implemented using SPINdle~\cite{spindle}
 -- a defeasible logic reasoner capable of inferencing defeasible theories with hundredth of thousand rules.

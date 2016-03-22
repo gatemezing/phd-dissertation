@@ -14,14 +14,13 @@ Despite the presence of more and more datasets published as Linked Data, there i
 
 In this chapter, we present our contribution on consuming datasets by generating applications target to lay-users. The remainder  of this chapter is structured as follows. We first propose in section~\ref{sec:vizTypes} some important categories that are worth visualizing and in section~\ref{sec:mappingviz} a set of mapping views associated with vocabularies. In Section~\ref{sec:ldvizwiz}, we describe the implementation of a wizard that can work on top of any RDF dataset. We detail the results of an experiment where high level categories and associated visualizations have been generated from numerous SPARQL endpoints (Section~\ref{sec:evaluation}). We do reverse engineer the GKP (Section \ref{sec:propEntities}) to look for the most important properties of an Entity. Then, we present two domain applications around events (Section \ref{sec:confomaton}) and statistics (Section \ref{sec:perfectSchool}). Finally, we discuss how to improve the discovery of applications developed in open Data events (Section \ref{sec:contests}) by proposing a vocabulary and a plugin to easily annotate their Web pages and generate RDF data.
 
-\section{Wizard for Visualizations: Theorical foundations}
+\section{Wizard for Visualizations: Theoretical Foundations}
 \label{sec:wizviz}
 
 \subsection*{Background}
 With the growing adoption of the Linked Data principles, there is a real need to support data consumers in quickly exploring a dataset through visualizations. In order to involve more general Web users into the Semantic Web and Linked Data world, tools that reuse existing visualization libraries are needed for showing the key information about RDF datasets. Many datasets are published on top of SPARQL endpoints and yet, are not ``visually'' accessible. Thus, understanding the underlying graphs and consuming them require lay users to have some knowledge in writing queries.
 
 In this section, we propose a first step towards making available a semi-automatic way for the production of possible visualization of linked data sets of high-level categories grouping objects that are worth viewing and we associate them with some very well known vocabularies. Then, we describe the implementation of a Linked Data Visualization Wizard and its main components. This wizard can be used to easily visualize slices of datasets based on generic types detected.
-
 
 \subsection{Dataset Analysis}
 \label{sec:vizTypes}
@@ -392,7 +391,7 @@ The user first select the endpoint to visualize. GeoRDFviz picks up randomly a r
 \end{center}
 \end{figure*}
 
-\section{An application consuming event datasets: Confomaton}
+\section{An Application Consuming Event Datasets: Confomaton}
 \label{sec:confomaton}
 In this section, our goal is to create a rich environment that enables users to navigate events and their various representative media such as photos, slides and tweets. A typical usage is to gather data about a scientific conference and investigate the added value of collecting scientific-related media. A non-trivial task in such applications is to connect structured data with extremely noisy content, especially in the case of a major conference.
 
@@ -545,8 +544,7 @@ spec:eventViewer a api:Viewer ;
 
 On the left side of the main view, the user can select the main conference event or one of the sub-events as provided by the Dog Food metadata corpus. In the center, the default view is a map centered on where the event took place (e.g. Bonn, Germany) and the user is also encouraged to explore potential other types of events (concerts, exhibitions, sports, etc.) happening nearby, based on data provided by EventMedia~\cite{Troncy:ISEMANTICS10}. The \textit{What} tab is media-centred and allows to quickly see what illustrates a selected event (tweets, photos, slides). Zooming in an event triggers a popup window that contains the title and timetable of the event, the precise room location and a slideshow gallery of all the media items collected for this event. For the \textit{When} tab, a timeline is provided in order to filter events according to a day time period. Finally, the \textit{Who} tab aims to show all the participants of the conference. This is intrinsically bound to a social component, aiming not only to present relevant information about participants (their affiliations, homepages, or roles at the conference), but also the relationships between participants themselves and with events.
 
-
-\section{Application consuming statistical datasets}
+\section{Application Consuming Statistical Datasets}
 \label{sec:perfectSchool}
 
 In this application, we describe the creation of an application consuming statistical dataset in the French context. The vocabulary used to model the data is compatible with the Data Cube vocabulary \cite{dcube}, useful for retrieving statistical data.
@@ -697,7 +695,7 @@ Figure ~\ref{fig:searchingSchool} shows the three different views on a running e
 \end{center}
 \end{figure*}
 
-\section{Improving the discovery of applications contests in Open Data Events}
+\section{Improving the Discovery of Applications Contests in Open Data Events}
 \label{sec:contests}
 
 \subsection{Background}

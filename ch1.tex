@@ -14,8 +14,6 @@ In France, the National Geographic Institute (IGN) has started to publish data i
 
 In this chapter, we first describe the notion of geographic information, with its specificity and diversity of formats (Section \ref{sec:geointro}). Then, we survey the models used on the Web to model existing geodata, by pointing some limitations (Section \ref{sec:vocgeoreview} and Section \ref{sec:currentmodel}. We then move to distinguish two levels of georeferencing data (direct and indirect), and the importance of CRSs in the interpretation of geodata (Section \ref{sec:georef}). The contributions start with a REST service for converting geodata in Section \ref{sec:rest-service}, followed by vocabularies developed for handling both geometries and features on the Web (Section \ref{sec:geomfeaturevocab}). The chapter closes with a brief summary.
 
-
-
 \section{Geographic Information}
 \label{sec:geointro}
 Geographical phenomena require two descriptors to represent the real world; \textit{what is represented,} and \textit{where it is.} as reported by authors in \cite{burrough98}. For the former, concepts such as ``town'', ``school'', ``river'', are used to recognize the phenomena and described in terms of well-established ``objects'' or ``entities''. At the same time, the type of concepts used to describe a phenomena vary from one scale of resolution to another, depending on the perception of the human observation of the world. The \textit{where it is} of the phenomena may be defined in terms of a geometrically exact or a relative location. The \textit{what is represented} uses local or world coordinate systems - local or internationally accepted projections that uses geometrical coordinates of latitude and longitude - defined using a standard system of spheroids, projections, and coordinates \cite{burrough98}. Figure \ref{fig:geomtypes} depicts different geometries for representing features. Two approaches are generally used to represent geographical primitives in GIS: vector and raster approaches. In the vector data model, a space is represented by a geometry that describes the location and implicitly the shape, and information attributes such as the name, nature, length, or surface. In general, the geometry of a geographic object can be described using three primitives:
@@ -112,7 +110,7 @@ The Earth is shaped like a flattened sphere. This shape is called an ellipsoid. 
 \end{figure}
 A point (location) is referenced by its longitude and latitude values. Longitude and latitude are angles measured from the earth's center to a point on the earth's surface. The angles often are measured in degrees (or in grads). It is important to keep in mind that latitude and longitude are always specified in terms of a datum. The latitude and longitude of one current position are different for different datums. For example, the \emph{``Th\'{e}\^{a}tre National de Nice''} in Nice, France is at \emph{43.700594\degree N, 7.277959\degree E} in WGS 84 coordinates and \emph{43.700570\degree N, 4.941204\degree E} in NTF coordinates, an old France CRS. If the latter coordinates are used in WGS 84, they will point to a position which is approximately \textit{295.17 kilometers} away from the theater. So when working with latitude/longitude coordinates and getting an error of a couple of hundred meters, it is most likely that the wrong datum is in used. Figure \ref{fig:geocordsystem} shows an illustration of the 2D geographic coordinate system \cite{knippers09} with latitudes and longitudes given in angular degrees.
 
-\subsection{Why a REST service is needed}
+\subsection{Why a REST Service is Needed?}
 As we have seen, geodata interpretation relies on a coordinate reference system, and while the WGS84 CRS is the \textit{de-facto} standard for GPS devices, many other CRS are in used. For example LAMBERT 93, RGM 04 or RGR 92 are respectively used for georeferencing points of interests in France continental, Mayotte or La Reunion. We have developed a REST service that is capable of transforming one dataset using a particular CRS into another one.
 
 Previous closed-source software called Circ\'e\footnote{\url{http://geodesie.ign.fr/?p=53&page=circe}}, published by IGN-France, provides the abilities to convert coordinate between CRSs in France and WGS 84. It has two conversions modes: standard and grid. In each mode the user is required to input the source CRS values in order to convert. Based on what datum and projection method used, the number of required fields are different. Circ\'e also has a batch converting mode which is done by supplying a file. The format of the content of the file is simple. The available formats are converted into \textsl{[location name] {Lat/Lon} {Lon/Lat} [Altitude/Height]}. There is an option to choose which format to use. But due to the fact that it is a closed source software, no one can use the software as a service for their system.
@@ -260,7 +258,7 @@ UK administrative-geography &   3 &  229 689 & OS dataset \\
 }
 \end{table*}
 
-\subsubsection{GeoSPARQL Standard and specifications}
+\subsubsection{GeoSPARQL Standard and Specifications}
 \label{sec:specgeosparql}
 OGC-Simple Features Access standard aims to support both representing and querying geospatial data on the Semantic Web. The standard~\cite{ogc2012} contains 30 requirements. It also defines a vocabulary for representing geospatial data in RDF and provides an extension to the SPARQL query language for processing geospatial data. Moreover, GeoSPARQL defines functions that request or check properties of a geometry (e.g. isSimple, isEmpty, Dimension, GeometryType, SRID), function that test test topological relations (e.g., contains), and functions that construct new geometries from existing ones (e.g. buffer). The proposed standard follows a modular design with five components:
 \begin{itemize}
@@ -374,11 +372,11 @@ The geometry of a point of interest is also modeled in different ways. We includ
 \label{sec:georef}
 Georeferencing data either by direct or indirect spatial reference requires some reference datasets that can be used as the spatial frame for anchoring these thematic data. Especially, it requires data on both CRSs and named places, which must be published on the Web of Data.
 
-\subsubsection{Identifying and describing CRSs on the Web}
+\subsubsection{Identifying and Describing CRSs on the Web}
 In order to fulfill the need for CRS identification and description on the Web, OGC maintains a set of URIs for identifying the most commonly used CRS. While very useful, the main disadvantage of this proposal is that the URIs defined by OGC are not very intuitive for users who are not familiar with Spatial Reference System Identifiers defined by geographic information authorities like OGC or EPSG, such as ``4326'' (which actually refers to a WGS84 CRS defined by the EPSG). Moreover, many CRS commonly used locally, such as deprecated French projected CRS, are not available in that registry. In addition to OGC proposal, several registries have been proposed by the geographic information community for cataloguing existing CRSs.
 The EPSG Geodetic Parameter Registry\footnote{\url{http://www.epsg-registry.org/}} allows querying the Geodetic Parameter Dataset gathered by the EPSG. CRSs can be retrieved by name, by code, by type or by coverage area, and their characteristics are displayed on a HTML form. Unfortunately, there is no direct access to these data through dereferenceable URIs.
 
-\subsubsection{CRS requirements for the  French Territory} \label{sec:reqs}
+\subsubsection{CRS Requirements for the French Territory} \label{sec:reqs}
 
 As explained in Section \ref{sec:context}, making explicit the CRS used in a given dataset is a very important issue when dealing with direct location data. This is especially important in the field of geographical information where different CRSs are commonly used due to technical or legal requirements. For INSPIRE Directive, CRS are considered as reference data used for linking thematic data \cite{inspire2009}, and must be described according to the ISO 19111 standard. To be consistent with Linked Data principles, CRS should be identified by URIs, like in OGC proposal. Moreover, as Linked Data users are not always familiar with CRS identifiers commonly used within the geographic information community, URIs used to identify CRS should use more intuitive names\footnote{\url{http://philarcher.org/diary/2013/uripersistence/}} by following some best practices \cite{isaURI}. Finally, consistently with our goal of contributing to better georeferencing of data on the French territory, we need access to the descriptions of all French CRSs, including some deprecated but still used CRSs like ``Lambert 1''.
 
@@ -416,13 +414,13 @@ References to equivalent definitions provided by the EPSG registry are explicitl
 %\paragraph{Publishing a dataset on French CRSs}
 As no existing registry fulfilled all our requirements, we have designed a vocabulary\footnote{\url{http://data.ign.fr/def/ignf}}, inspired from the ISO 19111 schema for CRSs description. Then we have converted IGNF CRSs registry into RDF, and published this dataset on the Web with the Datalift platform\footnote{A service to lookup CRS in RDF can be found at \url{http://www.eurecom.fr/~atemezin/ignf-lookup/}}. Therefore, the description of the ``NTF Lambert 2 \'{e}tendu'' projected CRS can be retrieved at this URL \url{http://data.ign.fr/id/ignf/crs/NTFLAMB2E}.
 
-\subsubsection{Direct georeferencing of data on the Web}
+\subsubsection{Direct Georeferencing of Data on the Web}
 \label{sec:directgeo}
 Modeling direct location information such as coordinates or vector data geometries in RDF still poses some challenges. In~\cite{Atemezing:TC12}, we have conducted a survey of the vocabularies used for representing geographical features from vocabularies of feature types to vocabularies for geometric primitives which provide ways for representing extents, shapes and boundaries of those features.
 
 Most of vocabularies dedicated to geometry representation reuse W3C Geo vocabulary which allows only WGS84 coordinates, such as NeoGeo\footnote{\url{http://geovocab.org/doc/neogeo/}}. With the rise of the Open Data movement, more and more publishers including governments and local authorities are releasing legacy data that are georeferenced using others CRSs. For example, IGN France releases data using different projected CRSs depending on the geographic extent of each dataset. In order to overcome this limitation on CRSs, the vocabulary designed by OGC GeoSPARQL standard  does not reuse W3C Geo vocabulary but proposes another class, ``Point'', instead. Geometries of geographical data represented in RDF with the GeoSPARQL vocabulary are represented by literals encoded consistently with other OGC standards. \texttt{gsp:wktLiteral} and \texttt{gsp:gmlLiteral} are thus respectively derived from Well-Known Text and GML encoding rules. In \texttt{wktLiteral} and \texttt{gmlLiteral}, the CRS used to define the coordinates of the point is identified by a dereferenceable URI which is explicitly stated at the beginning of the literal. This way of associating coordinate reference systems with geometries has the advantage of being consistent with Linked Data principles: each CRS is identified with a dereferencable URI. The main drawback is that such literals cannot be easily queried with SPARQL, unless using regular expression-based filters.  To overcome this limitation, we associate each geometry to the CRS used by its coordinates with the property \texttt{geom:crs} in the geometry vocabulary presented in Section \ref{sec:geomvocab}.
 
-\subsubsection{Indirect georeferencing of data on the Web}
+\subsubsection{Indirect Georeferencing of Data on the Web}
 \label{sec:indirectgeo}
 
 \paragraph{Location Vocabulary:}
@@ -447,7 +445,7 @@ In~\cite{Atemezing:TC12}, we already surveyed numerous vocabularies for represen
 \end{itemize}
 In addition to these recommendations, we also suggest that the domain of the property used to link a feature to its geometry should be left empty in order to accept links between any type of resource and a geometry. This would be useful for example, to associate a person to the coordinates of their birthplace.
 
-\subsection{A vocabulary for geometries} \label{sec:geomvocab}
+\subsection{A vocabulary for Geometries} \label{sec:geomvocab}
 On the current usage of georeferencing resources on the Web of Data, it is assumed that the coordinates should be in WGS84, and hence the definition of the point. However, publishers might have data in different CRSs according to the location. Thus, our proposal is to define a more generic class for a POINT  with the benefit of choosing the CRS of the underlying data, as depicted in the Listing 2.3. The naming convention used for the \texttt{geom} vocabulary follows the terms used by the Simple Features vocabulary. The French translation of terms is based on the glossary of multilingual terminology of ISO/TC 211 available at \url{http://www.isotc211.org/Terminology.htm}.
 
 \begin{deflda}
@@ -511,7 +509,7 @@ geom:Point a owl:Class;
 
 \end{deflda}
 
-\subsubsection*{Extending GeoSPARQL vocabulary}
+\subsubsection*{Extending GeoSPARQL Vocabulary}
 In order to fulfill these recommendations, we have developed a new vocabulary that re-uses and extends the existing vocabularies for representing geometries, namely:
 \begin{itemize}
  \item \url{http://www.opengis.net/ont/geosparql#} (prefix \texttt{gsp}). This vocabulary provides the basic concepts to represent geographical data such as SpatialObject, Feature or \texttt{Geometry}. A Feature is linked to a Geometry via the relation \texttt{gsp:hasGeometry}. The geometries are typed strings (\texttt{gsp:gmlLiteral} or \texttt{gsp:wktLiteral} corresponding respectively to the properties \texttt{gsp:asGML} and \texttt{gsp:asWKT}). The vocabulary contains also spatial functions.
@@ -535,7 +533,7 @@ We have also defined a property \texttt{geom:geometry} with an empty domain. Thu
   \end{center}
 \end{figure}
 
-\subsection{A vocabulary for Topographic Entities}
+\subsection{A Vocabulary for Topographic Entities}
 \label{sec:topovocab}
 
 A topographic entity \texttt{topo:EntiteTopographique} is the class associated to a phenomenon with an associated location on the Earth\footnote{The names used in the description of the classes or properties are rdfs:label[@lang='en'] of the actual URIs in the models.}. The \texttt{topo}\footnote{\url{http://data.ign.fr/def/topo}} vocabulary contains $8$ direct subclasses: Buildings and structures, Cableway transport line, Energy transport infrastructure, Inland hydrographic feature, Relief feature, Road transport feature, Transport by rail feature, Vegetation area and Working area of interest. Furthermore, we use a second level of classes to model direct subclasses of the previous ones. For example, a Building is specialized in $6$ different classes: Cemetery, Sports ground, Structure, Tank and Taxiway. A building is then connected with the property \texttt{topo:typeDeBatiment} (type of building) to different \textit{`nature'} of buildings, which are modeled as SKOS concepts. SKOS is intensively used to easily group concepts into different schemes (using \texttt{skos:hasTopConcept}) and provide semantic relationships (e.g: \texttt{skos:broader}, \texttt{skos:narrowMatch}) among them. This gives flexibility in the model by defining few high level classes and restrictions for the properties. Table ~\ref{tab:skosConcepts} gives a listing of the different SKOS namespaces defined to capture some high level concepts.

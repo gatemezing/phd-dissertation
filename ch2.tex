@@ -188,7 +188,7 @@ gsp:asWKT "<http://data.ign.fr/id/ignf/crs/WGS84GDD> MULTIPOLYGON (((7.308745254
 \end{lstlisting}
 
 
-\subsection{Limitations of existing tools}
+\subsection{Limitations of Existing Tools}
 \label{sec:limitations}
 
 Currently, the tools achieving the transformations of geospatial data into RDF still suffer from some limitations. On one hand, they are all compatible with the GeoSPARQL standard, which in turns has a handful of endpoints that implement all the requirements. Moreover, geometries are exposed as literals (e.g., wktLiteral, gmlLiteral) with CRS embedded in the literal. On the other hand, tools based on the NeoGeo vocabulary output structured geometries that can be easily handled by existing Triple Stores and SPARQL queries. However, NeoGeo only allows geometry in WGS84 CRS. The ideal scenario would be a tool that provides output consistent with both GeoSPARQL and structured geometries handling multiple CRSs. Figure \ref{fig:rdfshapeconverter} shows a generic architecture for tools to convert ESRI ShapeFiles into a different flavor of RDF. Tools differ mainly in the presence or not of the CRS reprojection, the vocabularies used for the RDF output, and the compatibility with GML and WKT representations.
@@ -207,7 +207,7 @@ We present in this section different criteria that can be used to interlink geos
 
 In this thesis, our linking approach is mainly based on geolocation properties comparison, although is by either combining well-known functions implemented in SILK and LIMES. The result of this interlinking process is a list of \textit{``owl:sameAs''} links between entities of each datasets, with a certain score.
 
-\subsection{Criteria for interlinking geospatial Data}
+\subsection{Criteria for Interlinking Geospatial Data}
 Data interlinking task is generally performed by comparing the property values of each resource of a source dataset with corresponding property of the resources described in the target datasets \cite{scharffe2010}. For geographic databases, data matching is also performed by comparing properties, and especially geometries (points, lines, polygons, etc.) that are used to represent the shape and the location of geographic features. This task is usually based on the distance measures chosen according to the type of the geometric primitives that must be compared \cite{mustiere2008,anamaria08,Julius09,walter1999}.
 
 In \cite{anamaria08}, Olteanu mentions many different forms of interlinking geospatial datasets. We highlight below four important criteria to be taken into account in the process of interlinking two geospatial datasets:
@@ -318,7 +318,7 @@ The RDF store Parliament\footnote{\url{http://parliament.semwebcentral.org}} dev
 \subsubsection{Strabon}
 Strabon\footnote{\url{http://www.strabon.di.uoa.gr}} is a semantic spatio-temporal RDF store for \texttt{stRDF}\footnote{\url{http://strdf.di.uoa.gr/ontology}} and \texttt{stSPARQL} \cite{strabon12}. Strabon extends the well-known RDF store Sesame\footnote{\url{http://rdf4j.org/}}, allowing it to manage both thematic and spatial data expressed in \texttt{stRDF}. PostGIS is used as the relational backend of Strabon. stRDF uses OGC standards (the OGC SFA specification in particular) for the representation of geospatial data. The datatypes strdf:WKT and strdf:GML are introduced to represent geometries serialized using the OGC standards WKT and GML. Strabon allows geometries to be expressed in any coordinate reference system defined by the EPSG (European Petroleum Survey Group) or OGC. In addition, the latest version of Strabon implements the GeoSPARQL Core, Geometry extension and Geometry topology extension components.
 
-\subsection{Assessing Triple Stores }
+\subsection{Assessing Triple Stores}
 There are many criteria that can be used to assess triple stores based on the requirements dataset publishers. Most importantly are the compatibility with the set of standards for RDF and SPARQL (e.g., SPARQL1.0, SPARQL1.1). Table \ref{tab:generictriples} provides an overview comparing ``generic'' triple stores. Currently, none of the triple stores listed supports security mechanisms built natively. Regarding specific geospatial triple stores (or extensions of geospatial in RDF stores), more specific requirements are needed to index and provide native functions/operations over geometries. In Table \ref{tab:generictriples}, we compare triple stores based on the following features:
 \begin{itemize}
 \item the types of geometries supported,
@@ -435,7 +435,7 @@ Figure \ref{fig:liftprocess} gives an overview of the different steps in lifting
 }
 \end{figure}
 
-\subsection{Functionalities of the Datalift platform}
+\subsection{Functionalities of the Datalift Platform}
 The architecture of Datalift is modular. Several levels of abstraction allow decoupling between the different stages from raw data to semantic data. The dataset selection allows us to identify the data to be published and migrate them to a first RDF version. The ontologies selection step asks the user to input a set of vocabularies', terms that will be used to describe the lifted data. Once the terms are selected, they can be mapped to the raw RDF and then converted to properly formatted RDF. The data is then published on the Datalift SPARQL endpoint. Finally, the process aims at providing links from the newly published data to other datasets already published as Linked Data on the Web. Figure \ref{fig:liftprocess} corresponds to a visual depiction of the workflow to convert raw data into \textit{``structured''} RDF data. Figure \ref{fig:dataliftarch} depicts the architecture of Datalift, consisting of different modules for:
 
 \begin{figure}[ht!b]
@@ -523,12 +523,12 @@ As a dataset dedicated to administrative units, GEOFLA is very likely to be reus
 \label{sec:dconversion}
 GEOFLA  is delivered as a set of 4 shapefiles  that describe the boundaries and properties of administrative units of mainland France (for CRS reasons, overseas territories are delivered within different shapefiles): communes, cantons, arrondissements and departements. For the sake of our application, we have generated another shapefile describing regions by aggregating the geometries of the instances of departments based on their region's foreign key value. GEOFLA is updated every year.  Publishing this data in RDF with unique identifiers on the Web will ease the interlinking with some existing datasets describing French boundaries in the wild. We follow a two-step conversion: we use the SHP2RDF module of Datalift to obtain a raw RDF from shapefiles, and the RDF2RDF module of Datalift  using a set of SPARQL construct queries\footnote{ \url{https://github.com/gatemezing/ign-iswc2014/tree/master/rdf2rdf}} for getting a refined RDF datasets using suitable vocabularies.
 
-\subsubsection{URI design policy} \label{sec:urigeofla}
+\subsubsection{URI Design Policy} \label{sec:urigeofla}
 One of the requirements to publish data is to have unique identifiers and stable URIs\footnote{\url{http://www.w3.org/TR/ld-bp/}}. Since our legacy databases have unique IDs to refer to the objects, we had to make sure they were unique at Web level. Thus, the base scheme for vocabularies URIs is: \url{http://data.ign.fr/def/}. Besides, the base schema for identifying a real world resource uses \url{http://{BASE}/id/}. For example, IGN main buildings  are located in the commune with the URI \url{rgeofla:commune/94067}, corresponding to Saint-Mand\'{e}, and \url{rgeofla:departement/94} corresponding to the department ``Val de Marne'' to which the commune belongs.
 We had to make choices based on the set of best practices related to URI design\footnote{\url{http://www.w3.org/TR/ld-bp/\#HTTP-URIS}} which should guarantee both stable and human readable identifiers.
 
 
-\subsubsection{Interlinking with existing GeoData} \label{sec:mapping}
+\subsubsection{Interlinking with Existing GeoData} \label{sec:mapping}
 We interlinked our datasets with the NUTS, DBpedia FR\footnote{\url{http://fr.dbpedia.org/}} and GADM datasets. SILK \cite{jentzsch2010silk} is used to interlink the departments in our dataset with departments in DBpedia FR, using labels and INSEE Code. We obtained $93$ matches (all correct) while three resources are missing for the departments 07, 09 and 75\footnote{\url{https://github.com/gatemezing/ign-iswc2014/tree/master/interlinking/matched}}. The
 LIMES tool\footnote{\url{https://github.com/AKSW/LIMES.}} is then used to perform the rest of the interlinking tasks \cite{ngon13} with the trigrams function based on the labels with restriction to France.
 
@@ -559,7 +559,7 @@ The results in Table \ref{tab:mappingEval} show good precision of the matching a
 
 The SPARQL endpoint for the French Administrative dataset is available for querying at \url{http://data.ign.fr/id/sparql}.
 
-\subsection{Publishing  French Gazetteer} \label{sec:bdtopo}
+\subsection{Publishing the French Gazetteer} \label{sec:bdtopo}
 In this section, we present some first tests of converting BDTOPO\circledR ~into RDF and interlinking with LinkedGeoData using LIMES. The results confirm the need for geographic publishers to publish georeference data on the Web.
 
 \paragraph{Data conversion, URIs and Interlinking:}
@@ -729,7 +729,7 @@ Table \ref{tab:bano-gld} shows the first results of the mappings. For each type 
   \label{tab:bano-gld}
 \end{table}
 
-\subsection{Status of French LOD cloud (FrLOD) }
+\subsection{Status of the French LOD cloud (FrLOD)}
 \label{sec:frenchCloud}
 We summarize in this section our contributions for a \textit{French LOD (FrLOD)} cloud, consisting of the different datasets published in RDF based on best practices for publishing data in 4-5 stars\footnote{\url{http://5stardata.info/}} on the Web. Datasets published belong to different domains: geographical, governmental, statistical and educational. A \texttt{VOID} \cite{alexander09} description of the FrLOD gives details of the different datasets published\footnote{An interactive version can be accessed at \url{http://www.eurecom.fr/~atemezin/work/frenchLOD.svg}}, as well as links and applications/visualizations built on top of them. Figure  \ref{fig:frenchLOD} depicts a static diagram of the FrLOD, while in Table \ref{tab:frLOD} gives an overview of the datasets, number of triples and domains. Altogether, the FrLOD represents 340 million RDF triples, which is nearly \textbf{10\%} of the DBpedia 2014 release\footnote{\url{http://wiki.dbpedia.org/Datasets}}. It is expected to add the FrLOD datasets in the Linking Open Data Cloud at \url{http://datahub.io/group/lodcloud}
 
@@ -768,7 +768,6 @@ French District Evolution & 150, 356 & Geography \\
 
 \section{Evaluation of Spatial Queries}
 \label{sec:geoqueries}
-
 We illustrate in this section different queries making use of geospatial data and geometries functions implemented in three triple stores (Virtuoso, OWLIM, Sesame). Within the queries, we use the following points in WGS84, in the the form (longitude latitude): Eurecom, located at (7.0463, 43.6266) and Eiffel Tower, located at (2.2942 48.8628). We perform the time for retrieving the results as well as the expressivity of the types of SPARQL quieries available to users to get the results.
 
 \subsection{Querying LinkedGeodata}
