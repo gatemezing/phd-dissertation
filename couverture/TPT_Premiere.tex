@@ -1,40 +1,14 @@
-% Couverture Thèse TPT Latex v2
-% Fabrice Linot 04/12/11 
-
-\documentclass[11pt,a4paper]{book}
-\usepackage[left=1.3cm,top=0cm,right=1.3cm,bottom=1.2cm]{geometry}
-\usepackage{graphicx}
-\usepackage{eso-pic}
-\usepackage{array}
-\usepackage[french]{babel}
-\usepackage[utf8x]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{textcomp}
-\usepackage{helvet}	% or \usepackage{lmodern}
-\renewcommand\textnumero{n$^{\textsf{{\tiny O}}}$}
-\renewcommand{\familydefault}{\sfdefault}
-
-\usepackage{ifpdf}
-\newcommand\BackgroundPic{
-\ifpdf
-	\includegraphics[height=\paperheight,width=\paperwidth]{BackgroundTPT_Premiere.pdf}
-\else
-	\includegraphics[height=\paperheight,width=\paperwidth]{BackgroundTPT_Premiere.pdf}
-\fi
-}
-
-\pagestyle{empty}
-
-\begin{document}
+\begin{titlepage}
+\fontfamily{\sfdefault}\selectfont
 \AddToShipoutPicture*{\BackgroundPic}
 ~
 
 
 \begin{flushright}
 
-\includegraphics[scale=0.45]{logo_TPT.pdf}
+\includegraphics[scale=0.45]{couverture/logo_TPT.pdf}
 
-{\small {2015-EURECOM-00xx~~~~}}
+{\small {2015-ENST 0022}}
 \end{flushright}
 
 
@@ -44,7 +18,7 @@
 %
 
 
-\includegraphics[scale=0.65]{logo_edite.pdf} \\
+\includegraphics[scale=0.65]{couverture/logo_edite.pdf} \\
 {\small {EDITE - ED 130}}
 
 
@@ -77,7 +51,7 @@
 %
 {\LARGE {\bf TELECOM ParisTech}}\\
 \vspace{0.6cm}
-{\Large {\bf Spécialité \og Informatique \fg}}\\
+{\Large {\bf Spécialité \og Sciences de l'information \fg}}\\
 %
 %
 %
@@ -157,4 +131,4 @@ Directeur de thèse:					{\bf Raphaël TRONCY}\\
 %
 %
 %
-\end{document}
+\end{titlepage}

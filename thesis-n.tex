@@ -1,8 +1,9 @@
-
 \documentclass[a4paper,11pt,twoside]{ThesisStyle}
-%\documentclass[11pt,a4paper]{book}
-\usepackage[francais,english]{babel}% 
-\foreignlanguage{francais}{}
+\usepackage[english,french]{babel}
+\input{formatAndDefs}
+\input{myDefinitions}
+
+%\foreignlanguage{francais}{}
 %\usepackage{eso-pic}
 \usepackage{fancyvrb}
 \usepackage{amsmath}
@@ -23,7 +24,9 @@
 \usepackage{gensymb}
 \usepackage{pifont}
 
-%\usepackage[utf8]{inputenc}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
 
 %% loading theorem Axiom %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,13 +38,62 @@
 
 %% end axiom theorem%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\include{formatAndDefs}
-\include{myDefinitions}
+
+%% copied from Houda's template%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{} \vspace{2mm}\\}
+
+\renewcommand*{\backrefalt}[4]{%
+\ifcase #1 %
+Not cited.%
+\or
+(Cited on page #2.)%
+\else
+(Cited on pages #2.)%
+\fi
+}
+
+
+\newcommand{\nofootnote}[1]{~(#1)}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand\Hash{\footnotesize{\#}\normalsize}
+\renewcommand\And{\textbf{and}}
+\renewcommand\theadalign{cb}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\renewcommand\textnumero{n$^{\textsf{{\tiny O}}}$}
+\newcommand\BackgroundPic{
+\includegraphics[height=\paperheight,width=\paperwidth]{couverture/BackgroundTPT_Premiere.pdf}
+}
+
+\definecolor{cverbbg}{gray}{0.97}
+\newenvironment{cverbatim}
+ {\SaveVerbatim{cverb}}
+ {\endSaveVerbatim
+  \flushleft\fboxrule=0pt\fboxsep=.5em
+  \colorbox{cverbbg}{\BUseVerbatim{cverb}}%
+  \endflushleft
+}
+
+%\setstretch{1.16}
+\setlength{\parindent}{0.2in}
 
 
 \begin{document}
+\newgeometry{left=1.3cm,top=0cm,right=1.3cm,bottom=1.2cm}
+%\cleardoublepage
 
-%\include{titlePageOficial}
+\input{couverture/TPT_Premiere}
+\cleardoublepage
+
+\newgeometry{left=1.4in,right=1.3in,top=1.1in,bottom=1.1in,includefoot,includehead,headheight=13.6pt}
+
+\selectlanguage{english}
 \vspace{3cm}
 %\dominitoc
 \pagenumbering{roman}       
@@ -72,6 +124,10 @@ the world to be important''. \\}
 \cleardoublepage
 
 
+%\selectlanguage{english}
+%\pagenumbering{roman}
+%\include{util/TitlePage}
+
 %\begin{center}
 %\section*{\LARGE \textbf{\textcolor{cyan}{Acknowledgments}}}
 %\addcontentsline{toc}{section}{Acknowledgements}
@@ -84,7 +140,7 @@ the world to be important''. \\}
 \chapter*{Acknowledgements}
 \input{ack}
 
-
+\phantomsection
 \addcontentsline{toc}{section}{Abstract}
 \markboth{Abstract}{Abstract}
 \chapter*{Abstract}
@@ -93,24 +149,28 @@ the world to be important''. \\}
 
 %\cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{Contents}
 \markboth{Contents}{Contents}
-
 \tableofcontents
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Figures}
 \listoffigures
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Tables}
 \listoftables
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Listings}
 \lstlistoflistings
 \cleardoublepage
 
+\phantomsection
 \addcontentsline{toc}{section}{List of Publications}
 \markboth{List of Publications}{List of Publications}
 \include{acronyms/publications}
@@ -179,7 +239,10 @@ the world to be important''. \\}
 \include{appendix1}
 \include{appendix2}
 
-\part{R\'{e}sum\'{e} en Fran\c cais}
+\selectlanguage{french}
+\input{summaryThesis-fr}
+
+%\selectlanguage{english}
 
 \end{document}
  
